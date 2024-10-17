@@ -14,7 +14,7 @@ const router = createRouter({
             name: "main",
             component: WebMain,
             meta: {
-                title: '秋光自挽的主页'
+                title: 'AsterCasc | Software Developer | Personal Portfolio | 秋光自挽 | 软件开发工程师 | 个人人作品集'
             },
         },
         {
