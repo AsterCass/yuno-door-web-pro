@@ -1,0 +1,76 @@
+{
+  "name": "admin-door",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "patch-package",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "juice": "^10.0.0",
+    "raw-loader": "^4.0.2",
+    "html-to-pdfmake": "^2.5.7",
+    "pdfmake-cn": "^0.2.11",
+    "sockjs-client": "^1.6.1",
+    "webstomp-client": "^1.2.6",
+    "qrcode-vue3": "^1.6.8",
+    "jsqr": "^1.4.0",
+    "sql-ddl-to-json-schema": "^4.1.0",
+    "@fontsource/roboto-slab": "^4.5.11",
+    "@quasar/extras": "^1.16.11",
+    "animate.css": "^4.1.1",
+    "axios": "^1.6.0",
+    "core-js": "^3.8.3",
+    "crypto-js": "^4.2.0",
+    "dplayer": "^1.27.1",
+    "highlight.js": "^11.8.0",
+    "marked-highlight": "^2.0.1",
+    "marked-gfm-heading-id": "^3.0.4",
+    "marked": "^6.0.0",
+    "mitt": "^3.0.0",
+    "patch-package": "^7.0.0",
+    "pinia": "^2.0.35",
+    "qs": "^6.11.1",
+    "quasar": "^2.16.1",
+    "video.js": "^8.3.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "compression-webpack-plugin": "^11.1.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "sass": "1.77.0",
+    "sass-loader": "^14.2.1",
+    "vue-cli-plugin-quasar": "~5.1.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {
+      "no-unused-vars": "off"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

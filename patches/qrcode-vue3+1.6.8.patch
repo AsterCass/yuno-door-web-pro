@@ -1,0 +1,17 @@
+diff --git a/node_modules/qrcode-vue3/dist/index.es.js b/node_modules/qrcode-vue3/dist/index.es.js
+index 835f1f2..3a797f1 100644
+--- a/node_modules/qrcode-vue3/dist/index.es.js
++++ b/node_modules/qrcode-vue3/dist/index.es.js
+@@ -1197,9 +1197,9 @@ function wi(e, t, n, r, o, i, s, a, { p: l, um: w, o: { createElement: D } }) {
+ }
+ let qn = !1;
+ function _n(e, t, n, r, o, i, s, a, l, w, D = !1) {
+-  process.env.NODE_ENV !== "production" && !qn && (qn = !0, console[console.info ? "info" : "log"](
+-    "<Suspense> is an experimental feature and its API will likely change."
+-  ));
++  // process.env.NODE_ENV !== "production" && !qn && (qn = !0, console[console.info ? "info" : "log"](
++  //   "<Suspense> is an experimental feature and its API will likely change."
++  // ));
+   const {
+     p: u,
+     m: M,
