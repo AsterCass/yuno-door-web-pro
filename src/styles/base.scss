@@ -1,0 +1,17 @@
+//https://colors.artyclick.com/color-name-finder/
+//quasar color
+$primary: #027BE3;
+$secondary: #26A69A;
+$accent: #9C27B0;
+$dark: #1D1D1D;
+$positive: #21BA45;
+$negative: #C10015;
+$info: #31CCEC;
+$warning: #F2C037;
+
+html, body, aside {
+  margin: 0;
+  font-family: Roboto Slab, sans-serif !important;
+  transition: background-color 1s ease;
+}
+

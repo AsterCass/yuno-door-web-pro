@@ -1,0 +1,73 @@
+@import "@/styles/base";
+
+//============================== error page ==============================
+.error-page-container {
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: white;
+  width: 100%;
+
+  .error-page-btn {
+    background: hsla(0, 0%, 100%, .1) !important;
+    border-radius: .5rem;
+  }
+
+  h1 {
+    margin: 0 0 1rem 0;
+    font-size: 5.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.05rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.05rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    line-height: 1.625;
+    font-weight: 400;
+  }
+}
+
+.error-page-mask {
+  position: absolute;
+  background-position: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.6;
+  background-image: linear-gradient(195deg, #42424a, #191919)
+}
+
+@mixin error-page-main($url) {
+  background-image: $url;
+  background-size: cover;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.error-page-main-404 {
+  @include error-page-main($url: url("@/assets/img/404-bg.jpg"))
+}
+
+.error-page-main-600 {
+  @include error-page-main($url: url("@/assets/img/600-bg.jpg"))
+}
+
+.error-page-main-601 {
+  @include error-page-main($url: url("@/assets/img/601-bg.jpg"))
+}
