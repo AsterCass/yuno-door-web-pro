@@ -1,0 +1,16 @@
+@import "@/styles/base";
+
+:root {
+  --background-color: white;
+  --text-color: black;
+}
+
+[data-theme="dark"] {
+  --background-color: black;
+  --text-color: white;
+}
+
+[data-theme="custom-green"] {
+  --background-color: white;
+  --text-color: green;
+}
