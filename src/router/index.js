@@ -3,6 +3,7 @@ import NoAuth from "@/ui/pages/NoAuth.vue";
 import NotFound from "@/ui/pages/NotFound.vue";
 import NoLogin from "@/ui/pages/NoLogin.vue";
 import WebMain from "@/ui/pages/WebMain.vue";
+import TestComponents from "@/ui/pages/TestComponents.vue";
 
 
 const router = createRouter({
@@ -16,6 +17,20 @@ const router = createRouter({
             meta: {
                 title: 'AsterCasc | Software Developer | Personal Portfolio | 秋光自挽 | 软件开发工程师 | 个人人作品集'
             },
+        },
+        {
+            path: '/test',
+            name: 'test',
+            children: [
+                {
+                    path: 'components',
+                    name: 'testComponents',
+                    component: TestComponents,
+                    meta: {
+                        title: '组件测试'
+                    },
+                },
+            ]
         },
         {
             path: "/404",

@@ -1,4 +1,5 @@
 //https://colors.artyclick.com/color-name-finder/
+
 //quasar color
 $primary: #027BE3;
 $secondary: #26A69A;
@@ -9,9 +10,14 @@ $negative: #C10015;
 $info: #31CCEC;
 $warning: #F2C037;
 
-html, body, aside {
-  margin: 0;
-  font-family: Roboto Slab, sans-serif !important;
-  transition: background-color 1s ease;
-}
+//cask color
+$cask-light-white: rgb(239, 239, 239);
+$cask-light-black: rgb(42, 42, 42);
+$cask-dark-white: rgb(239, 239, 239);
+$cask-dark-black: rgb(16, 16, 16);
+$cask-green: rgb(71, 112, 102);
+$cask-warning: rgb(207, 160, 48);
+$cask-negative: rgb(223, 87, 87);
+
+
 

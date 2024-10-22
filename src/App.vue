@@ -8,7 +8,7 @@ import {RouterView} from "vue-router";
 
 <style lang="scss">
 @import "@fontsource/roboto-slab/index.css";
-@import "@/styles/base-theme";
+@import "@/styles/base-components";
 
 
 </style>
