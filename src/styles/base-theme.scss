@@ -35,7 +35,7 @@ html, body, aside {
   color: var(--text-color);
   background: var(--background-color);
   font-family: Roboto Slab, sans-serif !important;
-  transition: background-color 1s ease;
+  transition: background-color .5s ease;
 
   ::selection {
     background-color: var(--text-color-select);
