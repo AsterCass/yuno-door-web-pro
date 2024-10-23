@@ -1,7 +1,11 @@
 @import "@/styles/base-theme";
 
-
-.full-component-base {
+.base-component-full {
   color: var(--full-container-text-color) !important;
   background: var(--full-container-background-color) !important;
+}
+
+.base-component-separator {
+  background-color: var(--text-color) !important;
+  opacity: .3;
 }
