@@ -2,22 +2,36 @@
 
 //==================== base ====================
 
-@mixin component-full-btn-base($thisWidth: 6rem) {
-  height: 2rem !important;
+@mixin component-full-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+  height: $thisHeight !important;
+  min-height: $thisHeight !important;
   width: $thisWidth !important;
   padding: 0 !important;
   color: var(--full-container-text-color) !important;
   background: var(--full-container-background-color) !important;
-  border-radius: .3rem !important;
+  border-radius: 4px !important;
   border: 2px solid var(--full-container-background-color) !important;
 }
 
-@mixin component-outline-btn-base($thisWidth: 6rem) {
-  height: 2rem !important;
+@mixin component-outline-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+  height: $thisHeight !important;
+  min-height: $thisHeight !important;
   width: $thisWidth !important;
   padding: 0 !important;
   border: 2px solid var(--full-container-background-color) !important;
+  border-radius: 4px !important;
+}
+
+@mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+  height: $thisHeight !important;
+  min-height: $thisHeight !important;
+  padding: 0 .6rem !important;
   border-radius: .3rem !important;
+}
+
+@mixin component-full-input-base($thisWidth: 8rem, $thisHeight: 2.8rem) {
+
+
 }
 
 .component-separator-base {
@@ -36,7 +50,16 @@
   @include component-outline-btn-base()
 }
 
-.component-outline-btn-short {
-  @include component-outline-btn-base(3rem)
+.component-none-btn-std {
+  @include component-none-btn-base()
+}
+
+.component-outline-btn-mini {
+  @include component-outline-btn-base($thisWidth: 2.2rem, $thisHeight: 1.8rem)
+}
+
+
+.component-full-input-std {
+  @include component-full-input-base()
 }
 

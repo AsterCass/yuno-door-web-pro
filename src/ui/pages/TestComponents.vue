@@ -16,7 +16,7 @@
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-mx-md component-outline-btn-std">
+      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-std">
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-up" size=".9rem"/>
           <div class="q-mx-xs">
@@ -26,11 +26,29 @@
       </q-btn>
 
 
-      <q-btn no-caps unelevated class="q-mx-md component-outline-btn-short">
+      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-mini">
         <div class="row items-center">
-          <q-icon name="fa-solid fa-ellipsis" size=".9rem"/>
+          <q-icon name="fa-solid fa-angle-left" size=".9rem"/>
         </div>
       </q-btn>
+
+      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-mini">
+        <div class="row items-center">
+          <q-icon name="fa-solid fa-angle-right" size=".9rem"/>
+        </div>
+      </q-btn>
+
+      <q-btn no-caps unelevated class="q-mx-md  component-none-btn-std">
+        <div class="row items-center">
+          <div class="q-mx-xs">
+            Show more
+          </div>
+          <q-icon name="fa-solid fa-caret-down" size="1.2rem"/>
+        </div>
+      </q-btn>
+
+      <q-input v-model="input" class="q-mx-md component-full-input-std" dense
+               standout="bg-grey-10 text-grey-3"/>
 
 
     </div>
@@ -84,6 +102,9 @@
 
 <script setup>
 import {switchTheme} from "@/utils/base-tools";
+import {ref} from "vue";
+
+let input = ref("")
 
 </script>
 
