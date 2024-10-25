@@ -57,7 +57,16 @@
       <!--      selected class use component-outline-input-std, no selected component-outline-input-std-->
 
 
-      <!--      todo-->
+      <q-select outlined clearable class="q-ma-md component-outline-input-std"
+                dropdown-icon="fa-solid fa-caret-down"
+                popup-content-class="component-extra-card-std"
+                clear-icon="fa-solid fa-xmark"
+                menu-anchor="bottom start" :menu-offset="[0, 5]"
+                v-model="selected" :options="options">
+        <template v-slot:prepend>
+          Go to
+        </template>
+      </q-select>
 
       <q-select outlined clearable class="q-ma-md component-outline-select-std"
                 dropdown-icon="fa-solid fa-caret-down"
@@ -70,6 +79,17 @@
         </template>
       </q-select>
 
+      <q-select outlined clearable multiple use-chips class="q-ma-md component-outline-input-std"
+                dropdown-icon="fa-solid fa-caret-down"
+                popup-content-class="component-extra-card-std"
+                clear-icon="fa-solid fa-xmark"
+                menu-anchor="bottom start" :menu-offset="[0, 5]"
+                v-model="selectedMulti" :options="options">
+        <template v-slot:prepend>
+          Multiple Go to
+        </template>
+      </q-select>
+
 
     </div>
 
@@ -79,41 +99,41 @@
       This is Text
     </div>
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <h1>
-      This is h1
-    </h1>
+    <!--    <h1>-->
+    <!--      This is h1-->
+    <!--    </h1>-->
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <h2>
-      This is h2
-    </h2>
+    <!--    <h2>-->
+    <!--      This is h2-->
+    <!--    </h2>-->
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <h3>
-      This is h3
-    </h3>
+    <!--    <h3>-->
+    <!--      This is h3-->
+    <!--    </h3>-->
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <h4>
-      This is h4
-    </h4>
+    <!--    <h4>-->
+    <!--      This is h4-->
+    <!--    </h4>-->
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <h5>
-      This is h5
-    </h5>
+    <!--    <h5>-->
+    <!--      This is h5-->
+    <!--    </h5>-->
 
-    <q-separator class="component-separator-base" spaced="2rem" size=".15rem"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size=".15rem"/>-->
 
-    <h6>
-      This is h6
-    </h6>
+    <!--    <h6>-->
+    <!--      This is h6-->
+    <!--    </h6>-->
 
 
   </div>
@@ -126,6 +146,7 @@ import {ref} from "vue";
 
 let input = ref("")
 let selected = ref("")
+let selectedMulti = ref([])
 let options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
 
 </script>

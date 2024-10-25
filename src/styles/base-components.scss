@@ -35,7 +35,7 @@
   $thisBorder: 2px solid var(--full-container-background-color)
 ) {
 
-  width: $thisWidth !important;
+  min-width: $thisWidth !important;
   border-radius: 4px !important;
 
   .q-field__native {
