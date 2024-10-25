@@ -38,6 +38,14 @@
         </div>
       </q-btn>
 
+      <q-btn no-caps unelevated class="q-ma-md component-none-btn-std">
+        <div class="row items-center">
+          <q-icon name="fa-solid fa-bell" size="1.5rem"/>
+        </div>
+      </q-btn>
+
+      <q-btn no-caps unelevated class="q-ma-md component-none-btn-std" icon="fa-solid fa-wand-sparkles"/>
+
       <q-btn no-caps unelevated class="q-ma-md  component-none-btn-std">
         <div class="row items-center">
           <div class="q-mx-xs">
@@ -89,6 +97,12 @@
           Multiple Go to
         </template>
       </q-select>
+
+
+      <div class="row">
+        <div id="one"></div>
+        <div id="two"></div>
+      </div>
 
 
     </div>
@@ -148,9 +162,56 @@ let input = ref("")
 let selected = ref("")
 let selectedMulti = ref([])
 let options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
+let currentTab = ref("")
 
 </script>
 
 <style scoped lang="scss">
 
+
+#one {
+  height: 5rem;
+  width: 10rem;
+  border: #1D1D1D solid 2px;
+  background: red;
+  position: relative;
+}
+
+#two {
+  height: 5rem;
+  width: 10rem;
+  border: #1D1D1D solid 2px;
+  position: relative;
+}
+
+#one::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  animation: fillColor 3s forwards;
+}
+
+#two::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: red;
+  animation: fillColor 3s forwards;
+}
+
+@keyframes fillColor {
+  0% {
+    width: 0; /* 从0宽度开始 */
+  }
+  100% {
+    width: 100%; /* 填满宽度 */
+  }
+}
 </style>
