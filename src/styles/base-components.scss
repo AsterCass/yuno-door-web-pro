@@ -26,11 +26,39 @@
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   padding: 0 .6rem !important;
-  border-radius: .3rem !important;
+  border-radius: 4px !important;
 }
 
-@mixin component-full-input-base($thisWidth: 8rem, $thisHeight: 2.8rem) {
+@mixin component-outline-input-base($thisWidth: 12rem, $thisHeight: 2.2rem) {
 
+
+  width: $thisWidth !important;
+  border-radius: 4px !important;
+
+  .q-field__native {
+    color: var(--text-color) !important;
+    height: $thisHeight !important;
+  }
+
+  .q-field__control {
+    color: $cask-green !important;
+    height: $thisHeight !important;
+  }
+
+  .q-field__control:before {
+    border: 2px solid var(--full-container-background-color) !important;
+  }
+
+  .q-field__prepend {
+    height: $thisHeight !important;
+    color: var(--full-container-background-color);
+  }
+
+  &.q-field--highlighted {
+    .q-field__prepend {
+      color: $cask-green;
+    }
+  }
 
 }
 
@@ -58,8 +86,7 @@
   @include component-outline-btn-base($thisWidth: 2.2rem, $thisHeight: 1.8rem)
 }
 
-
-.component-full-input-std {
-  @include component-full-input-base()
+.component-outline-input-std {
+  @include component-outline-input-base();
 }
 

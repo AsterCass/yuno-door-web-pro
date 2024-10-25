@@ -47,8 +47,12 @@
         </div>
       </q-btn>
 
-      <q-input v-model="input" class="q-mx-md component-full-input-std" dense
-               standout="bg-grey-10 text-grey-3"/>
+      <q-input v-model="input" tabindex="0" dense outlined
+               class="q-mx-md component-outline-input-std">
+        <template v-slot:prepend>
+          <q-icon name="fa-solid fa-magnifying-glass" size=".9rem"/>
+        </template>
+      </q-input>
 
 
     </div>
