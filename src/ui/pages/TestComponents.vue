@@ -7,7 +7,7 @@
 
     <div class="row items-center">
 
-      <q-btn no-caps unelevated class="q-mx-md shadow-2 component-full-btn-std ">
+      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-std ">
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-down" size=".9rem"/>
           <div class="q-mx-xs">
@@ -16,7 +16,7 @@
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-std">
+      <q-btn no-caps unelevated class="q-ma-md shadow-1 component-outline-btn-std">
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-up" size=".9rem"/>
           <div class="q-mx-xs">
@@ -26,33 +26,49 @@
       </q-btn>
 
 
-      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-mini">
+      <q-btn no-caps unelevated class="q-ma-md shadow-1 component-outline-btn-mini">
         <div class="row items-center">
           <q-icon name="fa-solid fa-angle-left" size=".9rem"/>
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-mx-md shadow-1 component-outline-btn-mini">
+      <q-btn no-caps unelevated class="q-ma-md shadow-1 component-outline-btn-mini">
         <div class="row items-center">
           <q-icon name="fa-solid fa-angle-right" size=".9rem"/>
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-mx-md  component-none-btn-std">
+      <q-btn no-caps unelevated class="q-ma-md  component-none-btn-std">
         <div class="row items-center">
           <div class="q-mx-xs">
             Show more
           </div>
-          <q-icon name="fa-solid fa-caret-down" size="1.2rem"/>
+          <q-icon name="fa-solid fa-caret-down" size="1rem"/>
         </div>
       </q-btn>
 
-      <q-input v-model="input" tabindex="0" dense outlined
-               class="q-mx-md component-outline-input-std">
+      <q-input v-model="input" tabindex="0" dense outlined placeholder="Search"
+               class="q-ma-md component-outline-input-std">
         <template v-slot:prepend>
           <q-icon name="fa-solid fa-magnifying-glass" size=".9rem"/>
         </template>
       </q-input>
+
+      <!--      selected class use component-outline-input-std, no selected component-outline-input-std-->
+
+
+      <!--      todo-->
+
+      <q-select outlined clearable class="q-ma-md component-outline-select-std"
+                dropdown-icon="fa-solid fa-caret-down"
+                popup-content-class="component-extra-card-std"
+                clear-icon="fa-solid fa-xmark"
+                menu-anchor="bottom start" :menu-offset="[0, 5]"
+                v-model="selected" :options="options">
+        <template v-slot:prepend>
+          Go to
+        </template>
+      </q-select>
 
 
     </div>
@@ -109,6 +125,8 @@ import {switchTheme} from "@/utils/base-tools";
 import {ref} from "vue";
 
 let input = ref("")
+let selected = ref("")
+let options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
 
 </script>
 

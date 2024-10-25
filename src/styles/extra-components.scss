@@ -1,0 +1,38 @@
+@import "@/styles/base-theme";
+
+.component-extra-card-std {
+  border-radius: 4px !important;
+  color: var(--container-text-color) !important;
+  background-color: var(--container-background-color) !important;
+  backdrop-filter: saturate(200%) blur(30px) !important;
+
+  .q-item--active {
+    color: inherit !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--text-color-select);
+  }
+
+}
+
+.component-extra-card-std-angle {
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    border-image: linear-gradient(135deg, red 5%, transparent 10%, transparent 90%, red 95%) 1;
+
+    pointer-events: none;
+  }
+
+}
+

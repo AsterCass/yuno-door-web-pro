@@ -2,7 +2,7 @@
 
 //==================== base ====================
 
-@mixin component-full-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+@mixin component-full-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   width: $thisWidth !important;
@@ -13,7 +13,7 @@
   border: 2px solid var(--full-container-background-color) !important;
 }
 
-@mixin component-outline-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+@mixin component-outline-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   width: $thisWidth !important;
@@ -22,15 +22,18 @@
   border-radius: 4px !important;
 }
 
-@mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
+@mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   padding: 0 .6rem !important;
   border-radius: 4px !important;
 }
 
-@mixin component-outline-input-base($thisWidth: 12rem, $thisHeight: 2.2rem) {
-
+@mixin component-outline-input-base(
+  $thisWidth: 12rem,
+  $thisHeight: 2.4rem,
+  $thisBorder: 2px solid var(--full-container-background-color)
+) {
 
   width: $thisWidth !important;
   border-radius: 4px !important;
@@ -41,22 +44,48 @@
   }
 
   .q-field__control {
-    color: $cask-green !important;
+    color: $thisBorder !important;
     height: $thisHeight !important;
   }
 
   .q-field__control:before {
-    border: 2px solid var(--full-container-background-color) !important;
+    border: $thisBorder !important;
   }
 
   .q-field__prepend {
+    font-size: .9rem;
     height: $thisHeight !important;
-    color: var(--full-container-background-color);
+    color: var(--container-text-color);
+  }
+
+  .q-field__append {
+    height: $thisHeight !important;
+    color: var(--text-color);
+
+    .q-icon {
+      font-size: 1rem;
+    }
   }
 
   &.q-field--highlighted {
     .q-field__prepend {
-      color: $cask-green;
+      color: var(--container-text-color);
+    }
+
+    .q-field__append {
+      .q-icon {
+        color: var(--container-text-color);
+      }
+    }
+  }
+
+  &.q-field--auto-height {
+    .q-field__control {
+      min-height: $thisHeight !important;
+    }
+
+    .q-field__native {
+      min-height: $thisHeight !important;
     }
   }
 
@@ -83,10 +112,19 @@
 }
 
 .component-outline-btn-mini {
-  @include component-outline-btn-base($thisWidth: 2.2rem, $thisHeight: 1.8rem)
+  @include component-outline-btn-base(
+          $thisWidth: 2.2rem,
+          $thisHeight: 1.8rem,
+  )
 }
 
 .component-outline-input-std {
   @include component-outline-input-base();
+}
+
+.component-outline-select-std {
+  @include component-outline-input-base(
+          $thisBorder: 2px dashed var(--full-container-background-color),
+  );
 }
 
