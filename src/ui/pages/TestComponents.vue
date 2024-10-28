@@ -99,10 +99,8 @@
       </q-select>
 
 
-      <div class="row">
-        <div id="one"></div>
-        <div id="two"></div>
-      </div>
+      <an-tab/>
+      <an-tab/>
 
 
     </div>
@@ -157,61 +155,16 @@
 <script setup>
 import {switchTheme} from "@/utils/base-tools";
 import {ref} from "vue";
+import AnTab from "@/ui/components/AnTab.vue";
 
 let input = ref("")
 let selected = ref("")
 let selectedMulti = ref([])
 let options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
-let currentTab = ref("")
 
 </script>
 
 <style scoped lang="scss">
 
 
-#one {
-  height: 5rem;
-  width: 10rem;
-  border: #1D1D1D solid 2px;
-  background: red;
-  position: relative;
-}
-
-#two {
-  height: 5rem;
-  width: 10rem;
-  border: #1D1D1D solid 2px;
-  position: relative;
-}
-
-#one::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: white;
-  animation: fillColor 3s forwards;
-}
-
-#two::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: red;
-  animation: fillColor 3s forwards;
-}
-
-@keyframes fillColor {
-  0% {
-    width: 0; /* 从0宽度开始 */
-  }
-  100% {
-    width: 100%; /* 填满宽度 */
-  }
-}
 </style>
