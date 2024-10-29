@@ -31,12 +31,17 @@
 
 @mixin component-outline-input-base(
   $thisWidth: 12rem,
+  $thisMinWidth: 12rem,
   $thisHeight: 2.4rem,
   $thisBorder: 2px solid var(--full-container-background-color)
 ) {
-
-  min-width: $thisWidth !important;
+  width: $thisWidth !important;
+  min-width: $thisMinWidth !important;
   border-radius: 4px !important;
+
+  &.q-field--with-bottom {
+    padding-bottom: 0;
+  }
 
   .q-field__native {
     color: var(--text-color) !important;
@@ -46,6 +51,10 @@
   .q-field__control {
     color: $thisBorder !important;
     height: $thisHeight !important;
+
+    .q-field__control-container {
+      padding: 0 3px !important;
+    }
   }
 
   .q-field__control:before {
@@ -65,6 +74,10 @@
     .q-icon {
       font-size: 1rem;
     }
+  }
+
+  .q-field__messages {
+    color: var(--negative);
   }
 
   &.q-field--highlighted {
@@ -122,8 +135,24 @@
   @include component-outline-input-base();
 }
 
-.component-outline-select-std {
+.component-outline-input-mini {
   @include component-outline-input-base(
+          $thisWidth: 9.5rem,
+          $thisMinWidth: 9.5rem,
+  );
+}
+
+.component-outline-input-grow {
+  @include component-outline-input-base(
+          $thisWidth: auto,
+          $thisMinWidth: 12rem,
+  );
+}
+
+.component-outline-select-grow {
+  @include component-outline-input-base(
+          $thisWidth: auto,
+          $thisMinWidth: 12rem,
           $thisBorder: 2px dashed var(--full-container-background-color),
   );
 }

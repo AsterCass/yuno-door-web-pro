@@ -58,14 +58,14 @@
       <q-input v-model="input" tabindex="0" dense outlined placeholder="Search"
                class="q-ma-md component-outline-input-std">
         <template v-slot:prepend>
-          <q-icon name="fa-solid fa-magnifying-glass" size=".9rem"/>
+          <q-icon name="fa-solid fa-magnifying-glass" size="1rem"/>
         </template>
       </q-input>
 
       <!--      selected class use component-outline-input-std, no selected component-outline-input-std-->
 
 
-      <q-select outlined clearable class="q-ma-md component-outline-input-std"
+      <q-select outlined clearable class="q-ma-md component-outline-input-grow"
                 dropdown-icon="fa-solid fa-caret-down"
                 popup-content-class="component-extra-card-std"
                 clear-icon="fa-solid fa-xmark"
@@ -76,7 +76,7 @@
         </template>
       </q-select>
 
-      <q-select outlined clearable class="q-ma-md component-outline-select-std"
+      <q-select outlined clearable class="q-ma-md component-outline-select-grow"
                 dropdown-icon="fa-solid fa-caret-down"
                 popup-content-class="component-extra-card-std"
                 clear-icon="fa-solid fa-xmark"
@@ -87,7 +87,7 @@
         </template>
       </q-select>
 
-      <q-select outlined clearable multiple use-chips class="q-ma-md component-outline-input-std"
+      <q-select outlined clearable multiple use-chips class="q-ma-md component-outline-input-grow"
                 dropdown-icon="fa-solid fa-caret-down"
                 popup-content-class="component-extra-card-std"
                 clear-icon="fa-solid fa-xmark"
@@ -99,6 +99,8 @@
       </q-select>
 
       <cask-tabs class="q-ma-md" :tabs="tabs" v-model="tab"/>
+
+      <cask-date-picker v-model="timeInput"/>
 
     </div>
 
@@ -153,11 +155,12 @@
 import {switchTheme} from "@/utils/base-tools";
 import {ref} from "vue";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
+import CaskDatePicker from "@/ui/components/CaskDatePicker.vue";
 
 const input = ref("")
 const selected = ref("")
 const selectedMulti = ref([])
-const options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
+const options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen-Long",])
 const tabs = ref([
   {code: 'Beijing', label: 'Beijing-TianAnMeng',},
   {code: 'Shanghai', label: 'Shanghai-DongFangMingZhu',},
@@ -165,6 +168,7 @@ const tabs = ref([
   {code: 'Shenzhen', label: 'Shenzhen',}
 ])
 const tab = ref('Beijing');
+const timeInput = ref('')
 
 </script>
 

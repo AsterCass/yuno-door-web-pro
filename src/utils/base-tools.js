@@ -8,3 +8,9 @@ export function switchTheme() {
     }
     document.documentElement.setAttribute('data-theme', themeName);
 }
+
+
+export function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
