@@ -1,0 +1,29 @@
+@import "@/styles/base-theme";
+
+//==================== cask tabs ====================
+
+.component-cask-tabs {
+
+  .q-tab:not(.q-tab--active) {
+    color: var(--text-color);
+  }
+
+  .q-tab--active {
+    color: var(--full-container-text-color);
+  }
+
+  .component-cask-tabs-btn {
+    margin: 4px 0;
+    border-radius: 4px;
+  }
+
+}
+
+.component-cask-tab-mask {
+  position: absolute;
+  height: calc(100% - 8px);
+  background-color: var(--full-container-background-color);
+  border-radius: 4px;
+  transition: all .5s ease;
+  z-index: 0;
+}

@@ -98,10 +98,7 @@
         </template>
       </q-select>
 
-
-      <an-tab/>
-      <an-tab/>
-
+      <cask-tabs class="q-ma-md" :tabs="tabs" v-model="tab"/>
 
     </div>
 
@@ -155,12 +152,19 @@
 <script setup>
 import {switchTheme} from "@/utils/base-tools";
 import {ref} from "vue";
-import AnTab from "@/ui/components/AnTab.vue";
+import CaskTabs from "@/ui/components/CaskTabs.vue";
 
-let input = ref("")
-let selected = ref("")
-let selectedMulti = ref([])
-let options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
+const input = ref("")
+const selected = ref("")
+const selectedMulti = ref([])
+const options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen",])
+const tabs = ref([
+  {code: 'Beijing', label: 'Beijing-TianAnMeng',},
+  {code: 'Shanghai', label: 'Shanghai-DongFangMingZhu',},
+  {code: 'Hangzhou', label: 'Hangzhou', icon: 'mail'},
+  {code: 'Shenzhen', label: 'Shenzhen',}
+])
+const tab = ref('Beijing');
 
 </script>
 
