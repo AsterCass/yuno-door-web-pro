@@ -9,7 +9,7 @@
           <q-popup-proxy cover transition-show="scale" transition-hide="scale"
                          style="background-color:transparent; border:0; padding:1rem;
                                    box-shadow: none; backdrop-filter: none"
-                         @hide="saveDateTime()"
+                         @hide="saveDate()"
           >
             <div>
               <div class="row">
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, ref, watch} from "vue";
+import {defineEmits, defineProps, ref} from "vue";
 import {date} from "quasar";
 
 const emit = defineEmits(['update:modelValue']);
@@ -44,15 +44,13 @@ const props = defineProps({
 })
 
 const pickTime = ref(props.modelValue)
-watch(() => props.modelValue, name => {
-  if (props.modelValue !== pickTime.value) {
-    pickTime.value = props.modelValue
-  }
-})
+// watch(() => props.modelValue, () => {
+//   pickTime.value = props.modelValue
+// })
 
 let dateUiInput = ref("")
 
-function saveDateTime() {
+function saveDate() {
   if (dateUiInput.value) {
     const timeStamp = new Date(dateUiInput.value)
     const dateStr = date.formatDate(timeStamp, 'YYYY-MM-DD')

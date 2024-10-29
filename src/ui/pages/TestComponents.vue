@@ -100,7 +100,9 @@
 
       <cask-tabs class="q-ma-md" :tabs="tabs" v-model="tab"/>
 
-      <cask-date-picker v-model="timeInput"/>
+      <cask-date-picker class="q-ma-md" v-model="dateInput"/>
+
+      <cask-time-picker class="q-ma-md" v-model="timeInput"/>
 
     </div>
 
@@ -156,6 +158,7 @@ import {switchTheme} from "@/utils/base-tools";
 import {ref} from "vue";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import CaskDatePicker from "@/ui/components/CaskDatePicker.vue";
+import CaskTimePicker from "@/ui/components/CaskTimePicker.vue";
 
 const input = ref("")
 const selected = ref("")
@@ -168,7 +171,9 @@ const tabs = ref([
   {code: 'Shenzhen', label: 'Shenzhen',}
 ])
 const tab = ref('Beijing');
+const dateInput = ref('')
 const timeInput = ref('')
+
 
 </script>
 

@@ -78,7 +78,7 @@ function updateCurrentTab(thisTab) {
   updateIndicator()
 }
 
-watch(() => props.modelValue, name => {
+watch(() => props.modelValue, () => {
   tab.value = props.modelValue
 })
 

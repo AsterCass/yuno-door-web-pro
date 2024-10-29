@@ -27,3 +27,45 @@
   transition: all .5s ease;
   z-index: 0;
 }
+
+//==================== cask time ====================
+
+.component-cask-time {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  color: var(--full-container-text-color);
+  background: white;
+  outline: 0;
+  width: 290px;
+  min-width: 290px;
+  max-width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+
+  .component-cask-time-header {
+    height: 86px;
+    color: var(--full-container-text-color);
+    background: var(--full-container-background-color);
+    border-radius: 4px 4px 0 0;
+    padding: 16px;
+
+    .component-cask-time-header-label {
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.00833em;
+    }
+  }
+
+  .component-cask-time-main {
+    color: var(--text-color) !important;
+    background: var(--container-background-color);
+
+    .component-cask-time-view {
+      height: 100%;
+      width: 100%;
+      min-height: 290px;
+      padding: 16px;
+    }
+
+  }
+}
