@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-input v-model="pickTime" tabindex="0" dense outlined
+    <q-input v-model="pickDate" tabindex="0" dense outlined
              class="component-outline-input-mini" :placeholder="placeholder"
-             no-error-icon mask="date"
+             no-error-icon mask="date" @update:modelValue="updateUiInput"
     >
       <template v-slot:append>
         <q-icon name="fa-regular fa-calendar" size="1rem" class="cursor-pointer">
@@ -43,18 +43,27 @@ const props = defineProps({
   },
 })
 
-const pickTime = ref(props.modelValue)
+const pickDate = ref(props.modelValue)
 // watch(() => props.modelValue, () => {
-//   pickTime.value = props.modelValue
+//   pickDate.value = props.modelValue
 // })
 
 let dateUiInput = ref("")
 
+function updateUiInput() {
+  if (pickDate.value && pickDate.value.length >= 10) {
+    const thisDate = date.extractDate(pickDate.value, 'YYYY/MM/DD')
+    //这里的thisDate不一定对，需要自动矫正
+    pickDate.value = date.formatDate(thisDate, 'YYYY/MM/DD')
+    dateUiInput.value = pickDate.value
+  }
+}
+
 function saveDate() {
   if (dateUiInput.value) {
     const timeStamp = new Date(dateUiInput.value)
-    const dateStr = date.formatDate(timeStamp, 'YYYY-MM-DD')
-    pickTime.value = dateStr
+    const dateStr = date.formatDate(timeStamp, 'YYYY/MM/DD')
+    pickDate.value = dateStr
     emit('update:modelValue', dateStr);
   }
 }

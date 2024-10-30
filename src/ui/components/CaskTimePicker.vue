@@ -2,7 +2,7 @@
   <div>
     <q-input v-model="pickTime" tabindex="0" dense outlined
              class="component-outline-input-mini" :placeholder="placeholder"
-             no-error-icon mask="time"
+             no-error-icon mask="time" @update:modelValue="updateUiInput"
     >
       <template v-slot:append>
         <q-icon name="fa-regular fa-clock" size="1.1rem" class="cursor-pointer">
@@ -27,6 +27,7 @@
 <script setup>
 import {defineEmits, defineProps, ref} from "vue";
 import CaskTime from "@/ui/components/CaskTime.vue";
+import {date} from "quasar";
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -48,6 +49,15 @@ const pickTime = ref(props.modelValue)
 // })
 
 let timeUiInput = ref("")
+
+function updateUiInput() {
+  if (pickTime.value && pickTime.value.length >= 5) {
+    const thisDate = date.extractDate(pickTime.value, 'HH:mm')
+    //这里的thisDate不一定对，需要自动矫正
+    pickTime.value = date.formatDate(thisDate, 'HH:mm')
+    timeUiInput.value = pickTime.value
+  }
+}
 
 function saveTime() {
   if (timeUiInput.value) {

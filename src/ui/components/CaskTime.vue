@@ -105,13 +105,17 @@ const timeStr = ref(props.modelValue)
 const syncHourStr = ((hour) => {
   hourInputStr.value = String(hour).padStart(2, '0')
   timeStr.value = hourInputStr.value + ":" + minuteInputStr.value
-  emit('update:modelValue', timeStr.value);
+  if (!timeStr.value.includes("-")) {
+    emit('update:modelValue', timeStr.value);
+  }
 })
 
 const syncMinuteStr = ((minute) => {
   minuteInputStr.value = String(minute).padStart(2, '0')
   timeStr.value = hourInputStr.value + ":" + minuteInputStr.value
-  emit('update:modelValue', timeStr.value);
+  if (!timeStr.value.includes("-")) {
+    emit('update:modelValue', timeStr.value);
+  }
 })
 
 </script>
