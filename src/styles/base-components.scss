@@ -80,6 +80,17 @@
     color: var(--negative);
   }
 
+  .q-chip {
+    color: var(--full-container-text-color);
+    background-color: var(--full-container-background-color);
+    opacity: .9;
+
+    .q-icon {
+      color: var(--full-container-text-color);
+      opacity: .9;
+    }
+  }
+
   &.q-field--highlighted {
     .q-field__prepend {
       color: var(--container-text-color);
