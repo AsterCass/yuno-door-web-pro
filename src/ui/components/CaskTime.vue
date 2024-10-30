@@ -47,7 +47,7 @@
 
           <div class="row justify-between">
             <h5>
-              Minute
+              {{ $t('cask_time_minute') }}
             </h5>
             <h5 class="component-cask-time-selected text-center">
               {{ minuteInputStr }}

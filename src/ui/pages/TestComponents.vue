@@ -10,7 +10,7 @@
 
     <div class="row items-center">
 
-      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-std ">
+      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-std">
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-down" size=".9rem"/>
           <div class="q-mx-xs">
@@ -109,6 +109,12 @@
 
       <cask-date-time-picker class="q-ma-md" v-model="datetimeInput"/>
 
+      <cask-cascade-selector class="q-ma-md" v-model="cascadeInput"
+                             :cascadeLevel="3"
+                             :cascade-options="cascadeOptions"
+                             @next-list="cascadeOptionsMore"
+      />
+
     </div>
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
@@ -159,27 +165,51 @@
 </template>
 
 <script setup>
-import {switchTheme, switchLanguage} from "@/utils/base-tools";
+import {switchTheme, switchLanguage, delay} from "@/utils/base-tools";
 import {ref} from "vue";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import CaskDatePicker from "@/ui/components/CaskDatePicker.vue";
 import CaskTimePicker from "@/ui/components/CaskTimePicker.vue";
 import CaskDateTimePicker from "@/ui/components/CaskDateTimePicker.vue";
+import CaskCascadeSelector from "@/ui/components/CaskCascadeSelector.vue";
 
 const input = ref("")
 const selected = ref("")
 const selectedMulti = ref([])
 const options = ref(["Beijing", "Shanghai", "Hangzhou", "Shenzhen-Long",])
 const tabs = ref([
-  {code: 'Beijing', label: 'Beijing-TianAnMeng',},
-  {code: 'Shanghai', label: 'Shanghai-DongFangMingZhu',},
-  {code: 'Hangzhou', label: 'Hangzhou', icon: 'mail'},
-  {code: 'Shenzhen', label: 'Shenzhen',}
+  {value: 'Beijing', label: 'Beijing-TianAnMeng',},
+  {value: 'Shanghai', label: 'Shanghai-DongFangMingZhu',},
+  {value: 'Hangzhou', label: 'Hangzhou', icon: 'mail'},
+  {value: 'Shenzhen', label: 'Shenzhen',}
 ])
 const tab = ref('Beijing');
 const dateInput = ref('')
 const timeInput = ref('')
 const datetimeInput = ref('')
+const cascadeInput = ref([])
+const cascadeOptions = ref([[
+  {value: '110000', label: '北京市',},
+  {value: '120000', label: '天津市',},
+  {value: '140000', label: '山西省',},
+]])
+const cascadeOptionsMore = (level, opt) => {
+  delay(500).then(() => {
+    if (level === 1) {
+      cascadeOptions.value[level] = [
+        {value: '150100', label: "鄂尔多斯市",},
+        {value: '150600', label: "乌兰察布市",},
+        {value: '152900', label: "阿拉善",},
+      ]
+    } else {
+      cascadeOptions.value[level] = [
+        {value: '150702', label: "莫力达瓦达斡尔族自治旗",},
+        {value: '150701', label: "扎赉诺尔区",},
+        {value: '150724', label: "新巴尔虎右旗",},
+      ]
+    }
+  })
+}
 
 
 </script>

@@ -160,6 +160,14 @@
   );
 }
 
+.component-none-input-grow {
+  @include component-outline-input-base(
+          $thisWidth: auto,
+          $thisMinWidth: 6rem,
+          $thisBorder: none,
+  );
+}
+
 .component-outline-select-grow {
   @include component-outline-input-base(
           $thisWidth: auto,
