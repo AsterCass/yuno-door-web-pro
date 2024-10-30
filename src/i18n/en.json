@@ -1,0 +1,15 @@
+{
+  "cask_time_hour": "Hour",
+  "cask_time_minute": "Minute",
+  "test_component_switch_theme": "Switch theme",
+  "test_component_switch_lang": "Switch language",
+  "test_component_upload": "Upload",
+  "test_component_import": "Import",
+  "test_component_show_more": "Show more",
+  "test_component_search": "Search",
+  "test_component_go_to": "Go to",
+  "test_component_m_go_to": "Multiple Go to",
+
+
+  "home": "Home"
+}

@@ -64,7 +64,29 @@
       height: 100%;
       width: 100%;
       min-height: 290px;
-      padding: 16px;
+      padding: 24px 16px;
+
+      .component-cask-time-selected {
+        color: var(--full-container-text-color);
+        background: var(--full-container-background-color);
+        border-radius: 4px;
+        width: 50px;
+        box-shadow: inset 0 0 6px 2px var(--full-container-background-color-dark)
+      }
+
+      .q-slider {
+        .q-slider__track {
+          color: var(--text-color) !important;
+        }
+
+        .q-slider__selection {
+          //background-color: transparent !important;
+        }
+
+        .q-slider__thumb {
+          color: var(--text-color) !important;
+        }
+      }
     }
 
   }

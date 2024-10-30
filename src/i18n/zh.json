@@ -1,0 +1,15 @@
+{
+  "cask_time_hour": "小时",
+  "cask_time_minute": "分钟",
+  "test_component_switch_theme": "切换主题",
+  "test_component_switch_lang": "切换语言",
+  "test_component_upload": "上传",
+  "test_component_import": "导入",
+  "test_component_show_more": "展示更多",
+  "test_component_search": "检索",
+  "test_component_go_to": "去到",
+  "test_component_m_go_to": "去多个地点",
+
+
+  "home": "主页"
+}

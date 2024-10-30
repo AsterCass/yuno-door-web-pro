@@ -1,7 +1,10 @@
 <template>
   <div class="q-ma-lg">
 
-    <q-btn @click="switchTheme" color="primary" label="Switch Theme"/>
+    <q-btn no-caps @click="switchTheme" class="q-ma-md" color="primary"
+           :label="$t('test_component_switch_theme') "/>
+    <q-btn no-caps @click="switchLanguage" class="q-ma-md" color="primary"
+           :label="$t('test_component_switch_lang')"/>
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
@@ -11,7 +14,7 @@
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-down" size=".9rem"/>
           <div class="q-mx-xs">
-            Import
+            {{ $t('test_component_import') }}
           </div>
         </div>
       </q-btn>
@@ -20,7 +23,7 @@
         <div class="row items-center">
           <q-icon name="fa-solid fa-arrow-up" size=".9rem"/>
           <div class="q-mx-xs">
-            Upload
+            {{ $t('test_component_upload') }}
           </div>
         </div>
       </q-btn>
@@ -49,7 +52,7 @@
       <q-btn no-caps unelevated class="q-ma-md  component-none-btn-std">
         <div class="row items-center">
           <div class="q-mx-xs">
-            Show more
+            {{ $t('test_component_show_more') }}
           </div>
           <q-icon name="fa-solid fa-caret-down" size="1rem"/>
         </div>
@@ -72,7 +75,7 @@
                 menu-anchor="bottom start" :menu-offset="[0, 5]"
                 v-model="selected" :options="options">
         <template v-slot:prepend>
-          Go to
+          {{ $t('test_component_go_to') }}
         </template>
       </q-select>
 
@@ -83,7 +86,7 @@
                 menu-anchor="bottom start" :menu-offset="[0, 5]"
                 v-model="selected" :options="options">
         <template v-slot:prepend>
-          Go to
+          {{ $t('test_component_go_to') }}
         </template>
       </q-select>
 
@@ -94,7 +97,7 @@
                 menu-anchor="bottom start" :menu-offset="[0, 5]"
                 v-model="selectedMulti" :options="options">
         <template v-slot:prepend>
-          Multiple Go to
+          {{ $t('test_component_m_go_to') }}
         </template>
       </q-select>
 
@@ -154,7 +157,7 @@
 </template>
 
 <script setup>
-import {switchTheme} from "@/utils/base-tools";
+import {switchTheme, switchLanguage} from "@/utils/base-tools";
 import {ref} from "vue";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import CaskDatePicker from "@/ui/components/CaskDatePicker.vue";

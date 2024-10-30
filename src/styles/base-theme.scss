@@ -5,7 +5,9 @@
   --text-color-select: #{$cask-light-black-light};
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
+  --full-container-background-color-dark: #{$cask-light-black-deep};
   --full-container-background-color: #{$cask-light-black};
+  --full-container-background-color-light: #{$cask-light-black-op};
   --container-text-color: #{$cask-light-black};
   --container-background-color: #{$cask-light-white-op};
   --negative: #{$cask-negative};
@@ -17,7 +19,9 @@
   --text-color-select: #{$cask-dark-white-dark};
   --background-color: #{$cask-dark-black};
   --full-container-text-color: #{$cask-dark-white};
+  --full-container-background-color-dark: #{$cask-light-black-deep};
   --full-container-background-color: #{$cask-light-black};
+  --full-container-background-color-light: #{$cask-light-black-op};
   --container-text-color: #{$cask-dark-white};
   --container-background-color: #{$cask-light-black-op};
   --negative: #{$cask-negative};
@@ -29,7 +33,9 @@
   --text-color-select: #{$cask-green-light};
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
+  --full-container-background-color-dark: #{$cask-green-deep};
   --full-container-background-color: #{$cask-green};
+  --full-container-background-color-light: #{$cask-green-op};
   --container-text-color: #{$cask-green};
   --container-background-color: #{$cask-light-white-op};
   --negative: #{$cask-negative};
@@ -46,6 +52,45 @@ html, body, aside {
   ::selection {
     background-color: var(--text-color-select);
   }
+}
+
+h1 {
+  font-weight: 600 !important;
+  font-size: 3rem !important;
+  margin: 0 0 15px 0 !important;
+}
+
+h2 {
+  font-weight: 600 !important;
+  font-size: 2rem !important;
+  margin: 0 0 10px 0 !important;
+}
+
+h3 {
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  margin: 0 0 10px 0 !important;
+}
+
+h4 {
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+  margin: 0 0 5px 0 !important;
+}
+
+h5 {
+  font-weight: 500 !important;
+  font-size: 1.1rem !important;
+  margin: 0 0 5px 0 !important;
+}
+
+h6 {
+  font-size: .95rem !important;
+  margin: 0 !important;
+}
+
+p {
+  margin: 0 0 .3rem 0;
 }
 
 

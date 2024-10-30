@@ -18,50 +18,59 @@
         <div class="component-cask-time-view">
 
           <div class="row justify-between">
-            <div>
-              Hour
-            </div>
-            <div>
+            <h5>
+              {{ $t('cask_time_hour') }}
+            </h5>
+            <h5 class="component-cask-time-selected text-center">
               {{ hourInputStr }}
-            </div>
+            </h5>
           </div>
 
-          <q-slider v-model="hourInput" :min="0" :max="24" @update:modelValue="syncHourStr"/>
+          <q-slider v-model="hourInput" :min="0" :max="23" @update:modelValue="syncHourStr" marker-labels>
+            <template v-slot:marker-label-group="{ markerList }">
+              <div
+                  v-for="val in [0, 12, 23]"
+                  :key="val"
+                  class="cursor-pointer"
+                  :class="markerList[val].classes"
+                  :style="markerList[val].style"
+                  @click="()=>{
+                    hourInput = val
+                    syncHourStr(val)
+                  }"
+              >{{ val }}
+              </div>
+            </template>
+          </q-slider>
+
+          <q-separator class="component-separator-base" spaced="1.5rem"/>
 
           <div class="row justify-between">
-            <div>
-              00
-            </div>
-            <div>
-              12
-            </div>
-            <div>
-              23
-            </div>
-          </div>
-
-          <div class="row justify-between">
-            <div>
+            <h5>
               Minute
-            </div>
-            <div>
+            </h5>
+            <h5 class="component-cask-time-selected text-center">
               {{ minuteInputStr }}
-            </div>
+            </h5>
           </div>
 
-          <q-slider v-model="minuteInput" :min="0" :max="59" @update:modelValue="syncMinuteStr"/>
+          <q-slider v-model="minuteInput" :min="0" :max="59" @update:modelValue="syncMinuteStr" marker-labels>
+            <template v-slot:marker-label-group="{ markerList }">
+              <div
+                  v-for="val in [0, 30, 59]"
+                  :key="val"
+                  class="cursor-pointer"
+                  :class="markerList[val].classes"
+                  :style="markerList[val].style"
+                  @click="()=>{
+                    minuteInput = val
+                    syncMinuteStr(val)
+                  }"
+              >{{ val }}
+              </div>
+            </template>
+          </q-slider>
 
-          <div class="row justify-between">
-            <div>
-              00
-            </div>
-            <div>
-              30
-            </div>
-            <div>
-              59
-            </div>
-          </div>
 
         </div>
       </div>
@@ -78,19 +87,20 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true,
-    default: ''
+    default: '--:--'
   },
 })
 
-const hourInput = ref(0)
-const hourInputStr = ref("--")
-const minuteInput = ref(0)
-const minuteInputStr = ref("--")
-const timeStr = ref("--:--")
+const indexOfColon = props.modelValue.indexOf(":")
+
+const hourInput = ref(indexOfColon !== -1 ? Number(props.modelValue.substring(0, indexOfColon)) : 0)
+const hourInputStr = ref(indexOfColon !== -1 ? props.modelValue.substring(0, indexOfColon) : "--")
+const minuteInput = ref(indexOfColon !== -1 ? Number(props.modelValue.substring(indexOfColon + 1)) : 0)
+const minuteInputStr = ref(indexOfColon !== -1 ? props.modelValue.substring(indexOfColon + 1) : "--")
+const timeStr = ref(props.modelValue)
 // watch(() => props.modelValue, () => {
 //   timeStr.value = props.modelValue
 // })
-
 
 const syncHourStr = ((hour) => {
   hourInputStr.value = String(hour).padStart(2, '0')
