@@ -63,31 +63,31 @@ html, body, aside {
 h1 {
   font-weight: 600 !important;
   font-size: 3rem !important;
-  margin: 0 0 15px 0 !important;
+  margin: 15px 0 !important;
 }
 
 h2 {
   font-weight: 600 !important;
   font-size: 2rem !important;
-  margin: 0 0 10px 0 !important;
+  margin: 10px 0 !important;
 }
 
 h3 {
   font-weight: 600 !important;
   font-size: 1.5rem !important;
-  margin: 0 0 10px 0 !important;
+  margin: 10px 0 !important;
 }
 
 h4 {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   font-size: 1.3rem !important;
-  margin: 0 0 5px 0 !important;
+  margin: 5px 0 !important;
 }
 
 h5 {
   font-weight: 500 !important;
   font-size: 1.1rem !important;
-  margin: 0 0 5px 0 !important;
+  margin: 5px 0 !important;
 }
 
 h6 {
@@ -129,3 +129,12 @@ p {
   color: var(--negative);
   margin-right: 4px;
 }
+
+.cask-simple-quoted-title {
+  padding: .2rem .5rem;
+  border-radius: 0 8px 8px 0;
+  background-color: var(--full-container-background-color-light);
+  color: var(--text-color);
+  border-left: 5px solid var(--text-color);
+}
+

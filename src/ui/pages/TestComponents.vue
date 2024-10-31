@@ -127,6 +127,12 @@
         可以张开嘴吃东西，在第3话的食物对决和39话中分别吃过咖喱和豆大福"/>
       </div>
 
+      <div class="q-ma-md col-4 cask-simple-quoted-title">
+        <h4>
+          个人设置子标题
+        </h4>
+      </div>
+
     </div>
 
 
