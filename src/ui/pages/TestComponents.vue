@@ -108,7 +108,7 @@
     <div class="row items-center">
 
       <cask-upload-input class="q-ma-md" v-model="fileData" :tips="fileInputTips"
-                         accept=".xls,.xlsx,.txt" max-file-size="5120000"/>
+                         accept=".xls,.xlsx,.txt" :max-file-size="5120000"/>
 
       <div class="q-ma-md">
         <cask-announcement-block :text-list="[
@@ -118,6 +118,13 @@
           '第二 ！绝对不漏抓任何一件坏事',
           '第三 ！绝对裁判的公正漂亮',
       ]"/>
+      </div>
+
+
+      <div class="q-ma-md cask-litter-title-asterisk row items-center">
+        什么是蜻蜓队长
+        <badge-tips style="margin-left: 3px" text="没有人知道它的真实身份，就连他是否真的如自称的那样是机器人都没有确凿证据的谜之存在。
+        可以张开嘴吃东西，在第3话的食物对决和39话中分别吃过咖喱和豆大福"/>
       </div>
 
     </div>
@@ -180,6 +187,7 @@ import CaskDateTimePicker from "@/ui/components/CaskDateTimePicker.vue";
 import CaskCascadeSelector from "@/ui/components/CaskCascadeSelector.vue";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 import CaskAnnouncementBlock from "@/ui/components/CaskAnnouncementBlock.vue";
+import BadgeTips from "@/ui/components/BadgeTips.vue";
 
 const input = ref("")
 const selected = ref("")

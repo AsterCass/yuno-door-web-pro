@@ -122,4 +122,10 @@ p {
   min-width: 32px;
 }
 
+//==================== cube ====================
 
+.cask-litter-title-asterisk::before {
+  content: '*';
+  color: var(--negative);
+  margin-right: 4px;
+}

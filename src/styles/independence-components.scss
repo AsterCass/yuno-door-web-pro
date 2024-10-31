@@ -142,3 +142,28 @@
   color: var(--text-color);
 
 }
+
+//==================== cask badge tips ====================
+
+.component-cask-badge-tips {
+
+  color: var(--text-color) !important;
+
+  .q-icon {
+    margin-top: 10%;
+    opacity: .75;
+  }
+
+}
+
+.component-cask-badge-tips-tooltip {
+  border-radius: 1rem !important;
+  color: var(--text-color) !important;
+  background-color: var(--container-background-color) !important;
+  box-shadow: inset 0 0 2px 2px var(--text-color) !important;
+  backdrop-filter: saturate(200%) blur(30px) !important;
+
+  .q-item--active {
+    color: inherit !important;
+  }
+}
