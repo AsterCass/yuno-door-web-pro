@@ -105,8 +105,22 @@
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
-    <cask-upload-input v-model="fileData" :tips="fileInputTips"
-                       accept=".xls,.xlsx,.txt" max-file-size="5120000"/>
+    <div class="row items-center">
+
+      <cask-upload-input class="q-ma-md" v-model="fileData" :tips="fileInputTips"
+                         accept=".xls,.xlsx,.txt" max-file-size="5120000"/>
+
+      <div class="q-ma-md">
+        <cask-announcement-block :text-list="[
+          '活动创建完成后，默认为下架状态，仅已上架且进行中的活动会展示给租客',
+          '进行中的活动不允许编辑/删除，仅允许上下架',
+          '第一 ！绝不意气用事',
+          '第二 ！绝对不漏抓任何一件坏事',
+          '第三 ！绝对裁判的公正漂亮',
+      ]"/>
+      </div>
+
+    </div>
 
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
@@ -165,6 +179,7 @@ import CaskTimePicker from "@/ui/components/CaskTimePicker.vue";
 import CaskDateTimePicker from "@/ui/components/CaskDateTimePicker.vue";
 import CaskCascadeSelector from "@/ui/components/CaskCascadeSelector.vue";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
+import CaskAnnouncementBlock from "@/ui/components/CaskAnnouncementBlock.vue";
 
 const input = ref("")
 const selected = ref("")

@@ -130,3 +130,15 @@
     color: var(--text-color);
   }
 }
+
+//==================== cask announcement block ====================
+
+.component-cask-announcement-block {
+  width: 100%;
+  padding: .2rem 2rem .2rem .5rem;
+  border-radius: 4px;
+
+  background-color: var(--full-container-background-color-light);
+  color: var(--text-color);
+
+}

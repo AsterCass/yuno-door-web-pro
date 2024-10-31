@@ -7,9 +7,11 @@
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-light-black-deep};
   --full-container-background-color: #{$cask-light-black};
-  --full-container-background-color-light: #{$cask-light-black-op};
+  --full-container-background-color-light: #{$cask-dark-white};
   --container-text-color: #{$cask-light-black};
   --container-background-color: #{$cask-light-white-op};
+
+
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
 }
@@ -24,6 +26,8 @@
   --full-container-background-color-light: #{$cask-light-black-op};
   --container-text-color: #{$cask-dark-white};
   --container-background-color: #{$cask-light-black-op};
+
+
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
 }
@@ -35,9 +39,11 @@
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-green-deep};
   --full-container-background-color: #{$cask-green};
-  --full-container-background-color-light: #{$cask-green-op};
+  --full-container-background-color-light: #{$cask-green-light};
   --container-text-color: #{$cask-green};
   --container-background-color: #{$cask-light-white-op};
+
+
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
 }
@@ -90,7 +96,7 @@ h6 {
 }
 
 p {
-  margin: 0 0 .3rem 0;
+  margin: 0 0 .5rem 0 !important;
 }
 
 

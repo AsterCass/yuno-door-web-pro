@@ -1,6 +1,6 @@
 <template>
 
-  <div class="component-cask-upload-input row">
+  <div class="component-cask-upload-input">
     <q-file v-if="fileData" class="q-ma-md component-outline-input-large"
             v-model="fileData" borderless label-slot clearable clear-icon="fa-solid fa-xmark"
             :accept="accept" :max-file-size="maxFileSize"
@@ -53,10 +53,8 @@
 <script setup>
 import {notifyTopNegative} from "@/utils/notification-tools";
 import {defineEmits, defineProps, ref} from "vue";
-import {useI18n} from 'vue-i18n';
 
 const emit = defineEmits(['update:modelValue']);
-const {t} = useI18n();
 const props = defineProps({
   modelValue: {
     required: true,
