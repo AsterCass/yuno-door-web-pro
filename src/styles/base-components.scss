@@ -51,6 +51,7 @@
   .q-field__control {
     color: $thisBorder !important;
     height: $thisHeight !important;
+    border-radius: 4px !important;
 
     .q-field__control-container {
       padding: 0 3px !important;
@@ -153,6 +154,14 @@
   );
 }
 
+.component-outline-input-large {
+  @include component-outline-input-base(
+          $thisWidth: 28rem,
+          $thisMinWidth: 28rem,
+          $thisHeight: 18rem,
+  );
+}
+
 .component-outline-input-grow {
   @include component-outline-input-base(
           $thisWidth: auto,
@@ -172,6 +181,15 @@
   @include component-outline-input-base(
           $thisWidth: auto,
           $thisMinWidth: 12rem,
+          $thisBorder: 2px dashed var(--full-container-background-color),
+  );
+}
+
+.component-outline-select-large {
+  @include component-outline-input-base(
+          $thisWidth: 28rem,
+          $thisMinWidth: 28rem,
+          $thisHeight: 18rem,
           $thisBorder: 2px dashed var(--full-container-background-color),
   );
 }

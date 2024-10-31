@@ -65,21 +65,7 @@
         </template>
       </q-input>
 
-      <!--      selected class use component-outline-input-std, no selected component-outline-input-std-->
-
-
       <q-select outlined clearable class="q-ma-md component-outline-input-grow"
-                dropdown-icon="fa-solid fa-caret-down"
-                popup-content-class="component-extra-card-std"
-                clear-icon="fa-solid fa-xmark"
-                menu-anchor="bottom start" :menu-offset="[0, 5]"
-                v-model="selected" :options="options">
-        <template v-slot:prepend>
-          {{ $t('test_component_go_to') }}
-        </template>
-      </q-select>
-
-      <q-select outlined clearable class="q-ma-md component-outline-select-grow"
                 dropdown-icon="fa-solid fa-caret-down"
                 popup-content-class="component-extra-card-std"
                 clear-icon="fa-solid fa-xmark"
@@ -116,6 +102,12 @@
       />
 
     </div>
+
+    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+
+    <cask-upload-input v-model="fileData" :tips="fileInputTips"
+                       accept=".xls,.xlsx,.txt" max-file-size="5120000"/>
+
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
@@ -172,6 +164,7 @@ import CaskDatePicker from "@/ui/components/CaskDatePicker.vue";
 import CaskTimePicker from "@/ui/components/CaskTimePicker.vue";
 import CaskDateTimePicker from "@/ui/components/CaskDateTimePicker.vue";
 import CaskCascadeSelector from "@/ui/components/CaskCascadeSelector.vue";
+import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 
 const input = ref("")
 const selected = ref("")
@@ -210,6 +203,8 @@ const cascadeOptionsMore = (level, opt) => {
     }
   })
 }
+const fileData = ref(null)
+const fileInputTips = ref(["仅支持xls、xlsx、txt格式", "文件大小不得超过5MB", "文件中数据不能超过3000行",])
 
 
 </script>

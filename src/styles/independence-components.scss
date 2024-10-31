@@ -101,3 +101,32 @@
   border-radius: 4px;
   padding: 0 8px;
 }
+
+
+//==================== cask upload input ====================
+
+.component-cask-upload-input {
+
+  .q-field--float .q-field__label {
+    transform: translateY(-15%) scale(.9) translateX(-6%);
+  }
+
+  .q-field__control {
+    padding: 24px 24px;
+    color: var(--text-color) !important;
+
+    .q-field__label {
+      width: 100%;
+      font-size: inherit;
+    }
+
+    .q-icon {
+      margin-top: 4.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  .q-field__label {
+    color: var(--text-color);
+  }
+}

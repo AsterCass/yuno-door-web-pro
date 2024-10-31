@@ -10,6 +10,9 @@
   "test_component_go_to": "去到",
   "test_component_m_go_to": "去多个地点",
 
+  "file_upload_error_message": "文件不满足条件，请重新上传",
+  "file_upload_title": "将文件拖拽到此处或点击该矩形框完成上传",
+
 
   "home": "主页"
 }

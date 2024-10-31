@@ -5,7 +5,7 @@
             inline-label
             @update:modelValue="it => updateCurrentTab(it)"
     >
-      <!--动画-->
+      <!--animation-->
       <div
           class="component-cask-tab-mask"
           :style="{
@@ -21,10 +21,10 @@
           class="component-cask-tabs-btn"
           :ripple="false"
           v-for="tabItem in tabs"
-          :key="tabItem.code"
-          :name="tabItem.code"
+          :key="tabItem.value"
+          :name="tabItem.value"
           :label="tabItem.label"
-          :ref="el => setTabRef(el, tabItem.code)">
+          :ref="el => setTabRef(el, tabItem.value)">
       </q-tab>
 
     </q-tabs>
@@ -67,9 +67,9 @@ const updateIndicator = () => {
   }
 }
 
-const setTabRef = (el, code) => {
+const setTabRef = (el, value) => {
   if (el) {
-    tabRefs.value[code] = el
+    tabRefs.value[value] = el
   }
 }
 
