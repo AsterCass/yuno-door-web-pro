@@ -133,6 +133,15 @@
         </h4>
       </div>
 
+
+      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow" @click="showDialog = true">
+        <div class="row items-center">
+          <div class="q-mx-xs">
+            {{ $t('test_component_show_dialog') }}
+          </div>
+        </div>
+      </q-btn>
+
     </div>
 
 
@@ -179,7 +188,14 @@
     <!--    </h6>-->
 
 
+    <cask-dialog-judgment :dialog-judgment-data="{title: '和平星争夺战', content: '确认将卡布达设置为本次冠军吗',
+                                                falseLabel: '取消', trueLabel: '确认'}"
+                          :callback-method="(_) => { showDialog = false }"
+                          v-model="showDialog"
+    />
+
   </div>
+
 
 </template>
 
@@ -194,6 +210,7 @@ import CaskCascadeSelector from "@/ui/components/CaskCascadeSelector.vue";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 import CaskAnnouncementBlock from "@/ui/components/CaskAnnouncementBlock.vue";
 import BadgeTips from "@/ui/components/BadgeTips.vue";
+import CaskDialogJudgment from "@/ui/components/CaskDialogJudgment.vue";
 
 const input = ref("")
 const selected = ref("")
@@ -234,6 +251,7 @@ const cascadeOptionsMore = (level, opt) => {
 }
 const fileData = ref(null)
 const fileInputTips = ref(["仅支持xls、xlsx、txt格式", "文件大小不得超过5MB", "文件中数据不能超过3000行",])
+const showDialog = ref(false)
 
 
 </script>

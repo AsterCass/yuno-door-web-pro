@@ -11,6 +11,8 @@
   --container-text-color: #{$cask-light-black};
   --container-background-color: #{$cask-light-white-op};
 
+  --dialog-background-color: #{$cask-light-hsla};
+  --dialog-background-color-frame: #{$cask-light-hsla-frame};
 
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
@@ -27,6 +29,8 @@
   --container-text-color: #{$cask-dark-white};
   --container-background-color: #{$cask-light-black-op};
 
+  --dialog-background-color: #{$cask-dark-hsla};
+  --dialog-background-color-frame: #{$cask-dark-hsla-frame};
 
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
@@ -43,6 +47,8 @@
   --container-text-color: #{$cask-green};
   --container-background-color: #{$cask-light-white-op};
 
+  --dialog-background-color: #{$cask-light-hsla};
+  --dialog-background-color-frame: #{$cask-light-hsla-frame};
 
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};

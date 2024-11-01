@@ -2,22 +2,32 @@
 
 //==================== base ====================
 
-@mixin component-full-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
+@mixin component-full-btn-base(
+  $thisHeight: 2.4rem,
+  $thisWidth: 6rem,
+  $thisMinWidth: 6rem,
+) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   width: $thisWidth !important;
-  padding: 0 !important;
+  min-width: $thisMinWidth !important;
+  padding: 0 .6rem !important;
   color: var(--full-container-text-color) !important;
   background: var(--full-container-background-color) !important;
   border-radius: 4px !important;
   border: 2px solid var(--full-container-background-color) !important;
 }
 
-@mixin component-outline-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
+@mixin component-outline-btn-base(
+  $thisHeight: 2.4rem,
+  $thisWidth: 6rem,
+  $thisMinWidth: 6rem,
+) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   width: $thisWidth !important;
-  padding: 0 !important;
+  min-width: $thisMinWidth !important;
+  padding: 0 .6rem !important;
   border: 2px solid var(--full-container-background-color) !important;
   border-radius: 4px !important;
 }
@@ -128,8 +138,20 @@
   @include component-full-btn-base()
 }
 
+.component-full-btn-grow {
+  @include component-full-btn-base(
+          $thisWidth: auto,
+  )
+}
+
 .component-outline-btn-std {
   @include component-outline-btn-base()
+}
+
+.component-outline-btn-grow {
+  @include component-outline-btn-base(
+          $thisWidth: auto,
+  )
 }
 
 .component-none-btn-std {
