@@ -147,45 +147,14 @@
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
-    <div>
-      This is Text
+    <div class="row">
+      <cask-complex-table :table-base-info="mockTableBaseInfoOrder"
+                          :table-data="mockTableBaseInfoOrderData"
+                          :table-data-sum="1"/>
     </div>
 
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <!--    <h1>-->
-    <!--      This is h1-->
-    <!--    </h1>-->
-
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
-
-    <!--    <h2>-->
-    <!--      This is h2-->
-    <!--    </h2>-->
-
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
-
-    <!--    <h3>-->
-    <!--      This is h3-->
-    <!--    </h3>-->
-
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
-
-    <!--    <h4>-->
-    <!--      This is h4-->
-    <!--    </h4>-->
-
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
-
-    <!--    <h5>-->
-    <!--      This is h5-->
-    <!--    </h5>-->
-
-    <!--    <q-separator class="component-separator-base" spaced="2rem" size=".15rem"/>-->
-
-    <!--    <h6>-->
-    <!--      This is h6-->
-    <!--    </h6>-->
+    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
 
     <cask-dialog-judgment :dialog-judgment-data="{title: '和平星争夺战', content: '确认将卡布达设置为本次冠军吗',
@@ -211,6 +180,8 @@ import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 import CaskAnnouncementBlock from "@/ui/components/CaskAnnouncementBlock.vue";
 import BadgeTips from "@/ui/components/BadgeTips.vue";
 import CaskDialogJudgment from "@/ui/components/CaskDialogJudgment.vue";
+import CaskComplexTable from "@/ui/components/CaskComplexTable.vue";
+import {mockTableBaseInfoOrder, mockTableBaseInfoOrderData} from "@/mock/mock-table-data";
 
 const input = ref("")
 const selected = ref("")
