@@ -13,6 +13,9 @@
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",
+  "complex_table_no_data": "No data available",
+  "complex_table_page_size": "Page size",
+  "complex_table_total_data": "Total rows",
 
 
   "home": "Home"

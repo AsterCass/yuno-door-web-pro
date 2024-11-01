@@ -13,6 +13,9 @@
 
   "file_upload_error_message": "文件不满足条件，请重新上传",
   "file_upload_title": "将文件拖拽到此处或点击该矩形框完成上传",
+  "complex_table_no_data": "无可获得数据",
+  "complex_table_page_size": "单页容量",
+  "complex_table_total_data": "数据总条数",
 
 
   "home": "主页"

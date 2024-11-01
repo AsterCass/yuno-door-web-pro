@@ -3,38 +3,27 @@
 
   <q-table card-class="astercasc-simple-table-pri"
            table-header-class="astercasc-simple-table-header-pri"
-           :loading="tableWatchData.inLoading"
+           :loading="tableDynamicData.inLoading"
            :rows="tableData"
            :columns="tableBaseInfo.tableColumns"
            :row-key="tableBaseInfo.tableKey"
            :pagination="{rowsPerPage: 0}"
-           :selection="tableBaseInfo.selectType"
            v-model:selected="localMultiSelect"
   >
     <template v-slot:bottom>
       <div class="astercasc-simple-table-bottom-pri">
-
         <div class="row justify-between items-center q-mx-lg">
           <div class="row justify-start items-center">
             <div>
-              单页容量：
+              {{ $t('complex_table_page_size') }} :
             </div>
-            <q-btn :class="pageSize === 5 ? 'astercasc-simple-table-bottom-selected-contain' : ''"
-                   flat round dense class="q-mx-sm" label="5" @click="updatePageSize(5)"/>
-            <q-btn :class="pageSize === 10 ? 'astercasc-simple-table-bottom-selected-contain' : ''"
-                   flat round dense class="q-mx-sm" label="10" @click="updatePageSize(10)"/>
-            <q-btn :class="pageSize === 20 ? 'astercasc-simple-table-bottom-selected-contain' : ''"
-                   flat round dense class="q-mx-sm" label="20" @click="updatePageSize(20)"/>
-            <q-btn :class="pageSize === 30 ? 'astercasc-simple-table-bottom-selected-contain' : ''"
-                   flat round dense class="q-mx-sm" label="30" @click="updatePageSize(30)"/>
-            <q-btn :class="pageSize === 50 ? 'astercasc-simple-table-bottom-selected-contain' : ''"
-                   flat round dense class="q-mx-sm" label="50" @click="updatePageSize(50)"/>
+            <q-btn v-for="val in [5, 10, 20, 30, 50]" :key="val"
+                   :class="pageSize === val ? 'astercasc-simple-table-bottom-selected-contain' : ''"
+                   flat round dense class="q-mx-sm" :label="val" @click="updatePageSize(val)"/>
           </div>
-
-
           <div class="row justify-end items-center">
             <div class="q-mr-md">
-              数据总条数：{{ tableDataSum }}
+              {{ $t('complex_table_total_data') }} : {{ tableDataSum }}
             </div>
             <div>
               <q-pagination
@@ -49,38 +38,43 @@
       </div>
     </template>
 
-    <template v-slot:header-selection="scope">
-      <q-checkbox class="astercasc-header-checkbox" keep-color v-model="scope.selected"/>
-    </template>
-
     <template v-slot:no-data>
       <div class="full-width row flex-center q-mt-md q-mb-lg items-center">
-        <q-icon size="1.2rem" class="q-mr-sm" name="fa-solid fa-triangle-exclamation"/>
+        <q-icon size="18px" class="q-mr-sm" name="fa-regular fa-folder-open"/>
         <h6>
-          无可获得数据
+          {{ $t('complex_table_no_data') }}
         </h6>
       </div>
     </template>
 
     <template v-for="(thisSlot, index) in customSlot" :key="index" v-slot:[thisSlot.slotName]="props">
       <q-td :props="props">
-        <div v-if="thisSlot.type === ComplexTableColumnEnum.POINTED" style="color: #1976D2; cursor: pointer"
-             @click="emitter.emit(thisSlot.emitStr, props.row)">
+        <div v-if="thisSlot.slotType === ComplexTableColumnTypeEnum.POINT"
+             style="color: var(--pointer); cursor: pointer"
+             @click="emit('columnClick', thisSlot.name, props.row)">
           {{ props.row[thisSlot.name] }}
         </div>
-        <div v-else-if="thisSlot.type === ComplexTableColumnEnum.STYLE"
-             :style="thisSlot.style[props.row[thisSlot.name]].style">
-          {{ thisSlot.style[props.row[thisSlot.name]].content }}
-        </div>
-        <div v-else-if="thisSlot.type === ComplexTableColumnEnum.EDIT_ICON">
-          <div class="row justify-center items-center">
-            <div>
-              {{ props.row[thisSlot.name] }}
-            </div>
-            <q-btn class="q-mx-xs" round size=".5rem" dense flat icon="fa-solid fa-pen-to-square"
-                   style="color: #1976D2"
-                   @click="emitter.emit(thisSlot.emitStr, props.row)"/>
+        <div class="row justify-center items-center"
+             v-else-if="thisSlot.slotType === ComplexTableColumnTypeEnum.ICON_COLOR"
+             :style="`color: ${props.row[`${thisSlot.name}WebColorName`]}`">
+
+          <q-icon v-if="props.row[`${thisSlot.name}WebIconName`]
+          && thisSlot.iconSite === ComplexTableColumnIconSiteEnum.START"
+                  :name="props.row[`${thisSlot.name}WebIconName`]" style="margin-right: 2px"/>
+          <div>
+            {{ props.row[thisSlot.name] }}
           </div>
+          <q-icon v-if="props.row[`${thisSlot.name}WebIconName`]
+          && thisSlot.iconSite === ComplexTableColumnIconSiteEnum.End"
+                  :name="props.row[`${thisSlot.name}WebIconName`]" style="margin-left: 2px"/>
+        </div>
+        <div v-else-if="thisSlot.slotType === ComplexTableColumnTypeEnum.IMAGE">
+          <q-img :style="thisSlot.imageSize ? `height: ${thisSlot.imageSize}; width: ${thisSlot.imageSize}` : ''"
+                 :src="props.row[`${thisSlot.name}WebImageUrl`]" fit="cover">
+            <template v-slot:loading>
+              <q-spinner size="1rem"/>
+            </template>
+          </q-img>
         </div>
         <div v-else>
           {{ props.row[thisSlot.name] }}
@@ -91,14 +85,13 @@
     <template v-slot:body-cell-operation="props">
       <q-td :props="props">
         <div class="row justify-center">
-          <div v-show="!operation.showCondition ||  props.row[operation.showCondition]"
+          <div v-show="!operation.condition ||  props.row[operation.condition]"
                v-for="(operation, index) in customTableOperation" :key="index"
-               style="color: #1976D2; cursor: pointer; margin: 0 .2rem"
-               @click="emitter.emit(operation.emitStr, props.row)">
+               style="color: var(--pointer); cursor: pointer; margin: 0 .2rem"
+               @click="emit('operationClick', operation.name, props.row) ">
             {{ operation.label }}
           </div>
         </div>
-
       </q-td>
     </template>
 
@@ -110,38 +103,39 @@
 
 <script setup>
 
-import {defineProps, ref} from "vue";
+import {defineEmits, defineProps, onMounted, ref} from "vue";
+import {ComplexTableColumnIconSiteEnum, ComplexTableColumnTypeEnum} from "@/constant/enums/component-enums";
 
-
+const emit = defineEmits(['columnClick', 'operationClick', 'toNewPage']);
 const props = defineProps({
+  //表基本参数
   tableBaseInfo: {
     type: Object,
     required: true,
     default: () => {
     },
   },
-  customSlot: {
-    type: Array,
-    required: false,
-    default: () => [],
-  },
+  //表操作按键
   customTableOperation: {
     type: Array,
     required: false,
     default: () => [],
   },
-  tableWatchData: {
+  //表动态参数
+  tableDynamicData: {
     type: Object,
     required: false,
     default: () => {
       return {inLoading: false}
     },
   },
+  //当前表存储数据
   tableData: {
     type: Array,
     required: false,
     default: () => [],
   },
+  //表总数据条数
   tableDataSum: {
     type: Number,
     required: false,
@@ -152,6 +146,39 @@ const props = defineProps({
 let pageSize = ref(10)
 let pageNo = ref(1)
 let localMultiSelect = ref([])
+let customSlot = ref([])
+
+const toNewPage = () => {
+  emit('toNewPage', {pageNo: pageNo.value, pageSize: pageSize.value})
+}
+
+const buildCustomSlot = () => {
+  if (props.tableBaseInfo && props.tableBaseInfo.tableColumns
+      && props.tableBaseInfo.tableColumns.length > 0) {
+    for (const column of props.tableBaseInfo.tableColumns) {
+      if (column.type && column.type !== ComplexTableColumnTypeEnum.DEFAULT) {
+        customSlot.value.push({
+          name: column.name,
+          slotName: `body-cell-${column.name}`,
+          slotType: column.type,
+          iconSite: column.iconSite ? column.iconSite : ComplexTableColumnIconSiteEnum.START,
+          imageSize: column.imageSize
+        })
+      }
+    }
+  }
+}
+
+const updatePageSize = (updatePageSize) => {
+  pageSize.value = updatePageSize;
+  pageNo.value = 1
+  toNewPage()
+}
+
+onMounted(() => {
+  buildCustomSlot()
+})
+
 
 </script>
 

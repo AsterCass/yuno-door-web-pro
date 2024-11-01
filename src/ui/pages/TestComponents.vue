@@ -150,7 +150,35 @@
     <div class="row">
       <cask-complex-table :table-base-info="mockTableBaseInfoOrder"
                           :table-data="mockTableBaseInfoOrderData"
-                          :table-data-sum="1"/>
+                          :custom-table-operation="mockTableBaseInfoOrderOperation"
+                          :table-data-sum="2"
+
+                          @toNewPage="(pageObj) => {
+                            console.log(pageObj.pageNo, pageObj.pageSize);
+                          }"
+
+                          @columnClick="(name, row) => {
+                            if(name === 'projectId') {
+                              showTableProject.context = `${row.projectId} 被点击了`
+                              showTableProject.isShow = true
+                            }
+                            if(name === 'bookUserName') {
+                              showTableUser.context = `${row.bookUserName} 被点击了`
+                              showTableUser.isShow = true
+                            }
+                          }"
+
+                          @operationClick="(name, row) => {
+                            if(name === 'detail') {
+                              showTableOperation.context = `${row.projectHouseOrderId} 被点击详情了`
+                              showTableOperation.isShow = true
+                            }
+                            if(name === 'delete') {
+                              showTableOperation.context = `${row.projectHouseOrderId} 被点击删除了`
+                              showTableOperation.isShow = true
+                            }
+                          }"
+      />
     </div>
 
 
@@ -161,6 +189,21 @@
                                                 falseLabel: '取消', trueLabel: '确认'}"
                           :callback-method="(_) => { showDialog = false }"
                           v-model="showDialog"
+    />
+    <cask-dialog-judgment :dialog-judgment-data="{title: '表单数据列活动触发', content:`${showTableProject.context}`,
+                                                falseLabel: '取消', trueLabel: '确认'}"
+                          :callback-method="(_) => { showTableProject.isShow = false }"
+                          v-model="showTableProject.isShow"
+    />
+    <cask-dialog-judgment :dialog-judgment-data="{title: '表单数据列用户触发', content:`${showTableUser.context}`,
+                                                falseLabel: '取消', trueLabel: '确认'}"
+                          :callback-method="(_) => { showTableUser.isShow = false }"
+                          v-model="showTableUser.isShow"
+    />
+    <cask-dialog-judgment :dialog-judgment-data="{title: '表单操作列触发', content:`${showTableOperation.context}`,
+                                                falseLabel: '取消', trueLabel: '确认'}"
+                          :callback-method="(_) => { showTableOperation.isShow = false }"
+                          v-model="showTableOperation.isShow"
     />
 
   </div>
@@ -181,7 +224,11 @@ import CaskAnnouncementBlock from "@/ui/components/CaskAnnouncementBlock.vue";
 import BadgeTips from "@/ui/components/BadgeTips.vue";
 import CaskDialogJudgment from "@/ui/components/CaskDialogJudgment.vue";
 import CaskComplexTable from "@/ui/components/CaskComplexTable.vue";
-import {mockTableBaseInfoOrder, mockTableBaseInfoOrderData} from "@/mock/mock-table-data";
+import {
+  mockTableBaseInfoOrder,
+  mockTableBaseInfoOrderData,
+  mockTableBaseInfoOrderOperation
+} from "@/mock/mock-table-data";
 
 const input = ref("")
 const selected = ref("")
@@ -223,6 +270,18 @@ const cascadeOptionsMore = (level, opt) => {
 const fileData = ref(null)
 const fileInputTips = ref(["仅支持xls、xlsx、txt格式", "文件大小不得超过5MB", "文件中数据不能超过3000行",])
 const showDialog = ref(false)
+const showTableProject = ref({
+  isShow: false,
+  context: ""
+})
+const showTableUser = ref({
+  isShow: false,
+  context: ""
+})
+const showTableOperation = ref({
+  isShow: false,
+  context: ""
+})
 
 
 </script>

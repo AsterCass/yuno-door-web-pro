@@ -1,3 +1,5 @@
+import {ComplexTableColumnIconSiteEnum, ComplexTableColumnTypeEnum} from "@/constant/enums/component-enums";
+
 /**
  * [官方]
  * name：当前列code，唯一id同表不重复。用于指定表的主键id、指定自定义槽等功能
@@ -12,10 +14,8 @@
  *      可选项：content, title, subscript, footerRight, footerLeft, footerMiddle
  * type（可选，默认 'default'）：该列渲染方式，
  *      可选项：default, point, iconWithColor, image
- * iconName（可选项）：type=iconWithColor有效
- * colorName（可选项）：type=iconWithColor有效
  * iconSite（可选项，默认 'start'）：type=iconWithColor有效，可选项：start, end
- * imageUrl（可选项）：type=image有效
+ * imageSize（可选项，默认无限制）
  */
 const mockTableBaseInfoOrderCol = [
     {
@@ -29,6 +29,7 @@ const mockTableBaseInfoOrderCol = [
         field: 'projectId',
         label: '活动编号',
         align: 'center',
+        type: ComplexTableColumnTypeEnum.POINT,
     },
     {
         name: 'projectName',
@@ -47,6 +48,7 @@ const mockTableBaseInfoOrderCol = [
         field: 'bookUserName',
         label: '姓名',
         align: 'center',
+        type: ComplexTableColumnTypeEnum.POINT,
     },
     {
         name: 'bookUserPhone',
@@ -55,15 +57,37 @@ const mockTableBaseInfoOrderCol = [
         align: 'center',
     },
     {
+        name: 'userStatusName',
+        field: 'userStatusName',
+        label: '用户状态',
+        align: 'center',
+        type: ComplexTableColumnTypeEnum.ICON_COLOR,
+    },
+    {
         name: 'orderStatusName',
         field: 'orderStatusName',
         label: '订单状态',
         align: 'center',
+        type: ComplexTableColumnTypeEnum.ICON_COLOR,
+    },
+    {
+        name: 'houseImage',
+        field: 'houseImage',
+        label: '房源照片',
+        align: 'center',
+        type: ComplexTableColumnTypeEnum.IMAGE,
+        imageSize: '4rem'
     },
     {
         name: 'createTime',
         field: 'createTime',
         label: '创建时间',
+        align: 'center',
+    },
+    {
+        name: 'operation',
+        field: 'operation',
+        label: '操作',
         align: 'center',
     },
 ]
@@ -80,6 +104,33 @@ export const mockTableBaseInfoOrder = {
     selectType: 'none',
 }
 
+/**
+ * 当 tableColumns 包含 operation 属性生效
+ * [自定义]
+ * label：展示在操作列的操作文字内容
+ * condition：出现条件，比如出现条件为 'cod', 那么只有在该行数据 thisData.cod 判断为 true 的时候才会显示
+ * name：在用户点击时候，会将该字段值传回，用于确定哪个label被点击
+ */
+export const mockTableBaseInfoOrderOperation = [
+    {
+        label: '详情',
+        condition: 'webShowDetailOp',
+        name: 'detail',
+    },
+    {
+        label: '删除',
+        condition: 'webShowDeleteOp',
+        name: 'delete',
+    }
+]
+
+/**
+ * 以下内容字段根据实际逻辑添加
+ * __（可选项）：__为定义在该表customTableOperation中的condition字段决定，通过这个字段控制该行操作列的展示的可点击操作
+ * __WebIconName（可选项）：tableColumns 中 name 为__ 的字段在 type=iconWithColor有效
+ * __WebColorName（可选项）：tableColumns 中 name 为__ 的字段在 type=iconWithColor有效
+ * __WebImageUrl（可选项）：tableColumns 中 name 为__ 的字段在 type=image有效
+ */
 export const mockTableBaseInfoOrderData = [
     {
         projectHouseOrderId: "BPHO1852172497479553",
@@ -89,6 +140,32 @@ export const mockTableBaseInfoOrderData = [
         bookUserName: "张三",
         bookUserPhone: "13811012138",
         orderStatusName: "已完成",
-        createTime: "2024-11-11 11:11"
+        userStatusName: "归西",
+        createTime: "2024-11-11 11:11",
+        houseImage: "photo1",
+        webShowDetailOp: true,
+        webShowDeleteOp: true,
+        userStatusNameWebColorName: "red",
+        userStatusNameWebIconName: "fa-solid fa-xmark",
+        orderStatusNameWebColorName: "rgb(68, 117, 80)",
+        houseImageWebImageUrl: "https://picsum.photos/300/500",
+    },
+    {
+        projectHouseOrderId: "BPHO1852172497420832",
+        projectId: "BP185190954456188928",
+        projectName: "测试活动",
+        houseAddress: "莲花小区1栋1单元9003",
+        bookUserName: "尼古拉斯赵四",
+        bookUserPhone: "13811012139",
+        orderStatusName: "已完成",
+        userStatusName: "存活",
+        houseImage: "photo2",
+        createTime: "2024-11-11 11:11",
+        webShowDetailOp: true,
+        webShowDeleteOp: false,
+        userStatusNameWebColorName: "green",
+        userStatusNameWebIconName: "fa-solid fa-check",
+        orderStatusNameWebColorName: "rgb(68, 117, 80)",
+        houseImageWebImageUrl: "https://picsum.photos/500/300",
     },
 ]
