@@ -1,8 +1,8 @@
 <template>
 
 
-  <q-table card-class="astercasc-simple-table-pri"
-           table-header-class="astercasc-simple-table-header-pri"
+  <q-table card-class="component-cask-complex-table-std"
+           table-header-class="component-cask-complex-table-std-header"
            :loading="tableDynamicData.inLoading"
            :rows="tableData"
            :columns="tableBaseInfo.tableColumns"
@@ -11,14 +11,14 @@
            v-model:selected="localMultiSelect"
   >
     <template v-slot:bottom>
-      <div class="astercasc-simple-table-bottom-pri">
+      <div class="component-cask-complex-table-std-bottom">
         <div class="row justify-between items-center q-mx-lg">
           <div class="row justify-start items-center">
             <div>
               {{ $t('complex_table_page_size') }} :
             </div>
             <q-btn v-for="val in [5, 10, 20, 30, 50]" :key="val"
-                   :class="pageSize === val ? 'astercasc-simple-table-bottom-selected-contain' : ''"
+                   :class="pageSize === val ? 'component-cask-complex-table-std-bottom-contain' : ''"
                    flat round dense class="q-mx-sm" :label="val" @click="updatePageSize(val)"/>
           </div>
           <div class="row justify-end items-center">
@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="astercasc-simple-table-bottom-line"/>
+        <div class="component-cask-complex-table-std-bottom-line"/>
       </div>
     </template>
 

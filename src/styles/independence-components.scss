@@ -181,3 +181,78 @@
   box-shadow: inset 0 0 2px 1px var(--dialog-background-color-frame) !important;
   backdrop-filter: saturate(200%) blur(30px) !important;
 }
+
+
+//==================== cask complex table ====================
+
+.component-cask-complex-table-std {
+  border-radius: 8px !important;
+  background-color: var(--container-background-color) !important;
+  color: var(--text-color) !important;
+
+  .component-cask-complex-table-std-header {
+    background-color: var(--text-color) !important;
+    color: var(--background-color) !important;
+  }
+
+  .q-table__bottom {
+    font-size: .9rem;
+    padding: 0.7rem 0 0 0;
+    background-color: var(--container-background-color);
+    color: var(--text-color);
+
+    .component-cask-complex-table-std-bottom {
+      color: var(--text-color);
+      width: 100%;
+
+      .component-cask-complex-table-std-bottom-contain {
+        color: white !important;
+        background-color: var(--text-color) !important;
+      }
+
+      .component-cask-complex-table-std-bottom-line {
+        min-height: 1rem;
+        margin-top: .5rem;
+        border-radius: 0 0 .5rem .5rem;
+        background-color: var(--text-color) !important;
+      }
+
+      .q-pagination {
+
+        .bg-primary {
+          background-color: var(--text-color) !important;
+        }
+
+        .text-primary {
+          color: var(--text-color) !important;
+        }
+
+        .q-btn {
+          padding: 0.1rem !important;
+          min-height: .8rem !important;
+        }
+      }
+    }
+  }
+
+  .q-checkbox__inner--truthy .q-checkbox__bg {
+    color: transparent;
+  }
+
+  .q-table__linear-progress {
+    height: 7px;
+    color: red !important;
+  }
+
+  .q-linear-progress__model--indeterminate::after {
+    border-radius: 1rem !important;
+  }
+
+  .q-linear-progress__model--indeterminate::before {
+    border-radius: 1rem !important;
+  }
+
+
+}
+
+
