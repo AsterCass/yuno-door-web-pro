@@ -191,8 +191,8 @@
   color: var(--text-color) !important;
 
   .component-cask-complex-table-std-header {
-    background-color: var(--text-color) !important;
-    color: var(--background-color) !important;
+    color: var(--full-container-text-color) !important;
+    background: var(--full-container-background-color) !important;
   }
 
   .q-table__bottom {
@@ -214,7 +214,7 @@
         min-height: 1rem;
         margin-top: .5rem;
         border-radius: 0 0 .5rem .5rem;
-        background-color: var(--text-color) !important;
+        background: var(--full-container-background-color) !important;
       }
 
       .q-pagination {
@@ -235,13 +235,10 @@
     }
   }
 
-  .q-checkbox__inner--truthy .q-checkbox__bg {
-    color: transparent;
-  }
-
   .q-table__linear-progress {
-    height: 7px;
-    color: red !important;
+    height: 4px;
+    border-radius: 4px;
+    color: var(--text-color-select) !important;
   }
 
   .q-linear-progress__model--indeterminate::after {

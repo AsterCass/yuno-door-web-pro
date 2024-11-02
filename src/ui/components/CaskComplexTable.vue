@@ -23,11 +23,11 @@
           </div>
           <div class="row justify-end items-center">
             <div class="q-mr-md">
-              {{ $t('complex_table_total_data') }} : {{ tableDataSum }}
+              {{ $t('complex_table_total_data') }} : {{ tableDynamicData.dataSum }}
             </div>
             <div>
               <q-pagination
-                  v-model="pageNo" :max="Math.ceil(tableDataSum / pageSize)" :max-pages="8"
+                  v-model="pageNo" :max="Math.ceil(tableDynamicData.dataSum / pageSize)" :max-pages="8"
                   boundary-numbers directionLinks size=".85rem"
                   @update:modelValue="toNewPage()"
               />
@@ -126,7 +126,12 @@ const props = defineProps({
     type: Object,
     required: false,
     default: () => {
-      return {inLoading: false}
+      return {
+        inLoading: false,
+        pageNum: 1,
+        pageSize: 10,
+        dataSum: 0,
+      }
     },
   },
   //当前表存储数据
@@ -135,16 +140,10 @@ const props = defineProps({
     required: false,
     default: () => [],
   },
-  //表总数据条数
-  tableDataSum: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
 })
 
-let pageSize = ref(10)
-let pageNo = ref(1)
+let pageSize = ref(props.tableDynamicData.pageSize)
+let pageNo = ref(props.tableDynamicData.pageNum)
 let localMultiSelect = ref([])
 let customSlot = ref([])
 

@@ -149,12 +149,23 @@
 
     <div class="row">
       <cask-complex-table :table-base-info="mockTableBaseInfoOrder"
-                          :table-data="mockTableBaseInfoOrderData"
+                          :table-data="tableData"
                           :custom-table-operation="mockTableBaseInfoOrderOperation"
-                          :table-data-sum="2"
+                          :table-dynamic-data="tableDynamicData"
 
                           @toNewPage="(pageObj) => {
-                            console.log(pageObj.pageNo, pageObj.pageSize);
+                            tableDynamicData.inLoading = true
+
+                            tableDynamicData.pageNo = pageObj.pageNo
+                            tableDynamicData.pageSize = pageObj.pageSize
+                            const start = (tableDynamicData.pageNo - 1) * tableDynamicData.pageSize;
+                            const end = start + tableDynamicData.pageSize;
+
+                            delay(500).then(() => {
+                              tableData = mockTableBaseInfoOrderData.slice(start, end)
+                              tableDynamicData.inLoading = false
+                            })
+
                           }"
 
                           @columnClick="(name, row) => {
@@ -270,6 +281,15 @@ const cascadeOptionsMore = (level, opt) => {
 const fileData = ref(null)
 const fileInputTips = ref(["仅支持xls、xlsx、txt格式", "文件大小不得超过5MB", "文件中数据不能超过3000行",])
 const showDialog = ref(false)
+const tableDynamicData = ref(
+    {
+      inLoading: false,
+      pageNo: 1,
+      pageSize: 10,
+      dataSum: 6,
+    }
+)
+const tableData = ref(mockTableBaseInfoOrderData)
 const showTableProject = ref({
   isShow: false,
   context: ""
