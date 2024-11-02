@@ -1,6 +1,10 @@
 <template>
 
 
+  <!--todo 支持自动卡片形态-->
+  <!--todo 支持图片放大-->
+  <!--todo 支持显示列配置 （右上角加个螺丝）-->
+
   <q-table card-class="component-cask-complex-table-std"
            table-header-class="component-cask-complex-table-std-header"
            :loading="tableDynamicData.inLoading"
@@ -128,7 +132,7 @@ const props = defineProps({
     default: () => {
       return {
         inLoading: false,
-        pageNum: 1,
+        pageNo: 1,
         pageSize: 10,
         dataSum: 0,
       }
@@ -143,7 +147,7 @@ const props = defineProps({
 })
 
 let pageSize = ref(props.tableDynamicData.pageSize)
-let pageNo = ref(props.tableDynamicData.pageNum)
+let pageNo = ref(props.tableDynamicData.pageNo)
 let localMultiSelect = ref([])
 let customSlot = ref([])
 

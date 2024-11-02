@@ -147,8 +147,8 @@
 
     <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
 
-    <div class="row">
-      <cask-complex-table :table-base-info="mockTableBaseInfoOrder"
+    <div class="row justify-center q-pa-md">
+      <cask-complex-table class="col-12" :table-base-info="mockTableBaseInfoOrder"
                           :table-data="tableData"
                           :custom-table-operation="mockTableBaseInfoOrderOperation"
                           :table-dynamic-data="tableDynamicData"
