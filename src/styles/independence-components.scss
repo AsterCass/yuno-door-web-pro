@@ -187,40 +187,58 @@
 
 .component-cask-complex-table-std {
   border-radius: 8px !important;
-  background-color: var(--container-background-color) !important;
+  background-color: transparent !important;
   color: var(--text-color) !important;
 
   .component-cask-complex-table-std-header {
-    color: var(--full-container-text-color) !important;
-    background: var(--full-container-background-color) !important;
+    color: var(--text-color) !important;
+    background: transparent !important;
+
+
+    .text-center {
+      opacity: .8;
+      font-weight: 600 !important;
+      font-size: 15px !important;
+      padding-bottom: 15px !important;
+    }
+
+    .text-left {
+      font-size: 1rem !important;
+    }
+
+    .text-right {
+      font-size: 1rem !important;
+    }
+
   }
 
   .q-table__bottom {
     font-size: .9rem;
-    padding: 0.7rem 0 0 0;
-    background-color: var(--container-background-color);
+    padding: 15px 0 0 0;
+    background-color: transparent;
     color: var(--text-color);
+    opacity: .92;
 
     .component-cask-complex-table-std-bottom {
       color: var(--text-color);
       width: 100%;
 
       .component-cask-complex-table-std-bottom-contain {
-        color: white !important;
-        background-color: var(--text-color) !important;
+        color: var(--full-container-text-color) !important;
+        background-color: var(--full-container-background-color) !important;
       }
 
       .component-cask-complex-table-std-bottom-line {
         min-height: 1rem;
         margin-top: .5rem;
         border-radius: 0 0 .5rem .5rem;
-        background: var(--full-container-background-color) !important;
+        background: transparent !important;
       }
 
       .q-pagination {
 
         .bg-primary {
-          background-color: var(--text-color) !important;
+          background-color: var(--full-container-background-color) !important;
         }
 
         .text-primary {
@@ -247,6 +265,10 @@
 
   .q-linear-progress__model--indeterminate::before {
     border-radius: 1rem !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--text-color-select);
   }
 
 

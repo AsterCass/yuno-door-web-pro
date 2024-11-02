@@ -4,6 +4,8 @@
   <!--todo 支持自动卡片形态-->
   <!--todo 支持图片放大-->
   <!--todo 支持显示列配置 （右上角加个螺丝）-->
+  <!--  todo 字段支持排序-->
+  <!--  todo 多选-->
 
   <q-table card-class="component-cask-complex-table-std"
            table-header-class="component-cask-complex-table-std-header"
@@ -13,6 +15,7 @@
            :row-key="tableBaseInfo.tableKey"
            :pagination="{rowsPerPage: 0}"
            v-model:selected="localMultiSelect"
+           class="shadow-0"
   >
     <template v-slot:bottom>
       <div class="component-cask-complex-table-std-bottom">

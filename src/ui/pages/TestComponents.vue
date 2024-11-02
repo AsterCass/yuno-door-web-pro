@@ -145,7 +145,7 @@
     </div>
 
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
     <div class="row justify-center q-pa-md">
       <cask-complex-table class="col-12" :table-base-info="mockTableBaseInfoOrder"
@@ -193,7 +193,7 @@
     </div>
 
 
-    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>
+    <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
 
     <cask-dialog-judgment :dialog-judgment-data="{title: '和平星争夺战', content: '确认将卡布达设置为本次冠军吗',
