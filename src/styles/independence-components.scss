@@ -209,6 +209,14 @@
 
   }
 
+  .q-table tbody td {
+    height: 60px;
+  }
+
+  .q-table thead tr {
+    height: 60px;
+  }
+
   .q-table__bottom {
     font-size: .9rem;
     padding: 15px 0 0 0;
@@ -262,6 +270,28 @@
 
   .q-linear-progress__model--indeterminate::before {
     border-radius: 1rem !important;
+  }
+
+  .q-table--col-auto-width {
+    padding: 7px 0 7px 7px !important;
+
+    .q-checkbox__svg {
+      color: var(--text-color);
+      opacity: .8;
+    }
+
+    .q-checkbox__bg {
+      color: var(--text-color);
+      opacity: .8;
+    }
+
+    .q-checkbox__inner--indet .q-checkbox__bg {
+      color: transparent;
+    }
+
+    .q-checkbox__inner--truthy .q-checkbox__bg {
+      color: transparent;
+    }
   }
 
   ::-webkit-scrollbar-thumb {

@@ -147,7 +147,31 @@
 
     <!--    <q-separator class="component-separator-base" spaced="2rem" size="2px"/>-->
 
-    <div class="row justify-center q-pa-md">
+    <div class="row q-pa-md">
+      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
+             @click="tableDynamicData.multiple = !tableDynamicData.multiple">
+        <div class="row items-center">
+          <div v-if="tableDynamicData.multiple" class="q-mx-xs">
+            {{ $t('test_component_multiple_close') }}
+          </div>
+          <div v-else>
+            {{ $t('test_component_multiple_open') }}
+          </div>
+        </div>
+      </q-btn>
+
+      <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
+             @click="operationFinish">
+        <div class="row items-center">
+          <div class="q-mx-xs">
+            Operation
+          </div>
+        </div>
+      </q-btn>
+
+      <div class="col-12 q-ma-md"/>
+
+
       <cask-complex-table class="col-12" :table-base-info="mockTableBaseInfoOrder"
                           :table-data="tableData"
                           :custom-table-operation="mockTableBaseInfoOrderOperation"
@@ -240,6 +264,7 @@ import {
   mockTableBaseInfoOrderData,
   mockTableBaseInfoOrderOperation
 } from "@/mock/mock-table-data";
+import {notifyTopNegative, notifyTopPositive} from "@/utils/notification-tools";
 
 const input = ref("")
 const selected = ref("")
@@ -287,6 +312,8 @@ const tableDynamicData = ref(
       pageNo: 1,
       pageSize: 10,
       dataSum: 6,
+      multiple: false,
+      multipleData: [],
     }
 )
 const tableData = ref(mockTableBaseInfoOrderData)
@@ -302,6 +329,19 @@ const showTableOperation = ref({
   isShow: false,
   context: ""
 })
+const operationFinish = () => {
+  tableDynamicData.value.multiple = false;
+  let ids = ""
+  if (tableDynamicData.value.multipleData && tableDynamicData.value.multipleData.length > 0) {
+    for (let obj of tableDynamicData.value.multipleData) {
+      ids += (obj.projectHouseOrderId + ",")
+    }
+    notifyTopPositive(ids, 3000)
+    tableDynamicData.value.multipleData = []
+  } else {
+    notifyTopNegative("no data selected", 3000)
+  }
+}
 
 
 </script>

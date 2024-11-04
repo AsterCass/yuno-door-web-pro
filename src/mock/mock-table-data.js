@@ -21,7 +21,7 @@ const mockTableBaseInfoOrderCol = [
     {
         name: 'projectHouseOrderId',
         field: 'projectHouseOrderId',
-        label: 'OrderNo',
+        label: '订单编号',
         align: 'center',
     },
     {
@@ -75,7 +75,7 @@ const mockTableBaseInfoOrderCol = [
         field: 'houseImage',
         label: '房源照片',
         align: 'center',
-        // type: ComplexTableColumnTypeEnum.IMAGE,
+        type: ComplexTableColumnTypeEnum.IMAGE,
         imageSize: '4rem'
     },
     {
@@ -101,7 +101,7 @@ const mockTableBaseInfoOrderCol = [
 export const mockTableBaseInfoOrder = {
     tableColumns: mockTableBaseInfoOrderCol,
     tableKey: "projectHouseOrderId",
-    selectType: 'none',
+    selectType: 'multiple',
 }
 
 /**

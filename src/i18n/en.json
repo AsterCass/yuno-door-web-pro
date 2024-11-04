@@ -10,6 +10,8 @@
   "test_component_go_to": "Go to",
   "test_component_m_go_to": "Multiple Go to",
   "test_component_show_dialog": "Show Dialog",
+  "test_component_multiple_open": "Open multiple select",
+  "test_component_multiple_close": "Close multiple select",
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",

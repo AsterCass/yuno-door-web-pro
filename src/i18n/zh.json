@@ -10,6 +10,8 @@
   "test_component_go_to": "去到",
   "test_component_m_go_to": "去多个地点",
   "test_component_show_dialog": "展示对话框",
+  "test_component_multiple_open": "开启多选",
+  "test_component_multiple_close": "关闭多选",
 
   "file_upload_error_message": "文件不满足条件，请重新上传",
   "file_upload_title": "将文件拖拽到此处或点击该矩形框完成上传",

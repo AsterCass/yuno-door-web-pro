@@ -4,8 +4,7 @@
   <!--todo 支持自动卡片形态-->
   <!--todo 支持图片放大-->
   <!--todo 支持显示列配置 （右上角加个螺丝）-->
-  <!--  todo 字段支持排序-->
-  <!--  todo 多选-->
+  <!--todo 字段支持排序-->
 
   <q-table card-class="component-cask-complex-table-std"
            table-header-class="component-cask-complex-table-std-header"
@@ -14,9 +13,21 @@
            :columns="tableBaseInfo.tableColumns"
            :row-key="tableBaseInfo.tableKey"
            :pagination="{rowsPerPage: 0}"
-           v-model:selected="localMultiSelect"
+           v-model:selected="tableDynamicData.multipleData"
            class="shadow-0"
+           :selection="tableBaseInfo.selectType"
   >
+
+    <template v-slot:header-selection="scope">
+      <q-checkbox v-show="tableDynamicData.multiple" keep-color
+                  v-model="scope.selected"/>
+    </template>
+
+    <template v-slot:body-selection="scope">
+      <q-checkbox v-show="tableDynamicData.multiple" keep-color
+                  v-model="scope.selected"/>
+    </template>
+
     <template v-slot:bottom>
       <div class="component-cask-complex-table-std-bottom">
         <div class="row justify-between items-center q-mx-lg">
@@ -138,6 +149,8 @@ const props = defineProps({
         pageNo: 1,
         pageSize: 10,
         dataSum: 0,
+        multiple: false,
+        multipleData: [],
       }
     },
   },
@@ -149,10 +162,9 @@ const props = defineProps({
   },
 })
 
-let pageSize = ref(props.tableDynamicData.pageSize)
-let pageNo = ref(props.tableDynamicData.pageNo)
-let localMultiSelect = ref([])
-let customSlot = ref([])
+const pageSize = ref(props.tableDynamicData.pageSize)
+const pageNo = ref(props.tableDynamicData.pageNo)
+const customSlot = ref([])
 
 const toNewPage = () => {
   emit('toNewPage', {pageNo: pageNo.value, pageSize: pageSize.value})
