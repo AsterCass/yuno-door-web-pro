@@ -182,6 +182,21 @@
   backdrop-filter: saturate(200%) blur(30px) !important;
 }
 
+.component-cask-dialog-image-std {
+  min-height: 50rem;
+  min-width: 50rem;
+  padding: 5px;
+  border-radius: 8px !important;
+  color: var(--text-color) !important;
+  opacity: .95;
+  background-color: var(--dialog-background-color) !important;
+  box-shadow: inset 0 0 2px 1px var(--dialog-background-color-frame) !important;
+  backdrop-filter: saturate(200%) blur(30px) !important;
+
+  max-width: 80% !important;
+  max-height: 80% !important;
+}
+
 
 //==================== cask complex table ====================
 

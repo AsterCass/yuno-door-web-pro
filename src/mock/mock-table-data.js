@@ -148,7 +148,7 @@ export const mockTableBaseInfoOrderData = [
         userStatusNameWebColorName: "red",
         userStatusNameWebIconName: "fa-solid fa-xmark",
         orderStatusNameWebColorName: "rgb(68, 117, 80)",
-        houseImageWebImageUrl: "https://picsum.photos/300/500",
+        houseImageWebImageUrl: "https://picsum.photos/1200/100",
     },
     {
         projectHouseOrderId: "BPHO1852172497420832",

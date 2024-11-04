@@ -62,10 +62,17 @@ const props = defineProps({
 
 let showDialogJudgment = ref(props.modelValue);
 watch(() => props.modelValue, () => {
+  if (props.modelValue) {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.overflow = 'hidden';
+  }
   showDialogJudgment.value = props.modelValue
 })
 
 function closeDialogJudgment() {
+  document.body.style.overflow = 'auto';
+  document.body.style.paddingRight = '';
   showDialogJudgment.value = false
   emit('update:modelValue', false);
 }
