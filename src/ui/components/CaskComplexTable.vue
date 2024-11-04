@@ -25,7 +25,7 @@
               {{ $t('complex_table_page_size') }} :
             </div>
             <q-btn v-for="val in [5, 10, 20, 30, 50]" :key="val"
-                   :class="pageSize === val ? 'component-cask-complex-table-std-bottom-contain' : ''"
+                   :class="pageSize === val ? 'component-cask-complex-table-std-bottom-contain shadow-2' : ''"
                    flat round dense class="q-mx-sm" :label="val" @click="updatePageSize(val)"/>
           </div>
           <div class="row justify-end items-center">

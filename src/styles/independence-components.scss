@@ -186,20 +186,17 @@
 //==================== cask complex table ====================
 
 .component-cask-complex-table-std {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   background-color: transparent !important;
   color: var(--text-color) !important;
 
   .component-cask-complex-table-std-header {
     color: var(--text-color) !important;
-    background: transparent !important;
-
 
     .text-center {
       opacity: .8;
-      font-weight: 600 !important;
       font-size: 15px !important;
-      padding-bottom: 15px !important;
+      padding: 15px 0 !important;
     }
 
     .text-left {
@@ -217,7 +214,7 @@
     padding: 15px 0 0 0;
     background-color: transparent;
     color: var(--text-color);
-    opacity: .92;
+    opacity: .9;
 
     .component-cask-complex-table-std-bottom {
       color: var(--text-color);
