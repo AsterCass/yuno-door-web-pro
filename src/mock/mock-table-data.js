@@ -9,6 +9,7 @@ import {ComplexTableColumnIconSiteEnum, ComplexTableColumnTypeEnum} from "@/cons
  * field：绑定数据字段，一般和name相同
  *
  * [自定义]
+ * sortableLite：（可选，默认false）是否支持排序（重写官方逻辑）
  * cardShowLabel（可选，默认true）：卡片方式显示时，是否展示该列label
  * cardSite（可选，默认 'content' ）：卡片方式显示时，该字段在卡片的位置，
  *      可选项：content, title, subscript, footerRight, footerLeft, footerMiddle
@@ -29,6 +30,7 @@ const mockTableBaseInfoOrderCol = [
         field: 'projectId',
         label: '活动编号',
         align: 'center',
+        sortableLite: true,
         type: ComplexTableColumnTypeEnum.POINT,
     },
     {
@@ -82,6 +84,7 @@ const mockTableBaseInfoOrderCol = [
         name: 'createTime',
         field: 'createTime',
         label: '创建时间',
+        sortableLite: true,
         align: 'center',
     },
     {
@@ -214,7 +217,7 @@ export const mockTableBaseInfoOrderData = [
         orderStatusName: "已完成",
         userStatusName: "存活",
         houseImage: "photo2",
-        createTime: "2024-11-11 11:11",
+        createTime: "2024-11-11 11:33",
         webShowDetailOp: false,
         webShowDeleteOp: false,
         userStatusNameWebColorName: "green",
@@ -232,7 +235,7 @@ export const mockTableBaseInfoOrderData = [
         orderStatusName: "已完成",
         userStatusName: "下落不明",
         houseImage: "photo2",
-        createTime: "2024-11-11 11:11",
+        createTime: "2024-11-11 11:22",
         webShowDetailOp: false,
         webShowDeleteOp: true,
         userStatusNameWebColorName: "green",

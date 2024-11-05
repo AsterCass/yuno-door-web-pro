@@ -9,3 +9,9 @@ export const ComplexTableColumnIconSiteEnum = Object.freeze({
     START: 0,
     End: 1,
 });
+
+export const ComplexTableSortedStatus = Object.freeze({
+    DEFAULT: 0,
+    ASC: 1,
+    DESC: 2,
+});

@@ -3,7 +3,6 @@
 
   <!--todo 支持自动卡片形态-->
   <!--todo 支持显示列配置 （右上角加个螺丝）-->
-  <!--todo 字段支持排序-->
 
   <div class="row">
     <q-table card-class="col-12 component-cask-complex-table-std"
@@ -63,6 +62,19 @@
             {{ $t('complex_table_no_data') }}
           </h6>
         </div>
+      </template>
+
+      <template v-for="(thisSlot, index) in allRowSlot" :key="index" v-slot:[thisSlot.slotName]="props">
+        <th :class="`text-${thisSlot.align}`">
+          {{ thisSlot.label }}
+          <q-icon v-if="thisSlot.sortableLite" name="fa-solid fa-sort-up" size="16px"
+                  style="margin-bottom: 3px; transition: opacity 0.3s ease;"
+                  :style="ComplexTableSortedStatus.ASC === thisSlot.sortStatus ? 'opacity: 1' : 'opacity: .5'"/>
+          <q-icon v-if="thisSlot.sortableLite" name="fa-solid fa-sort-down" size="16px" class="cursor-pointer"
+                  style="margin-left: -16px; margin-bottom: 3px; transition: opacity 0.3s ease;"
+                  :style="ComplexTableSortedStatus.DESC === thisSlot.sortStatus ? 'opacity: 1' : 'opacity: .5'"
+                  @click="doSort(thisSlot.name)"/>
+        </th>
       </template>
 
       <template v-for="(thisSlot, index) in customSlot" :key="index" v-slot:[thisSlot.slotName]="props">
@@ -127,10 +139,14 @@
 <script setup>
 
 import {defineEmits, defineProps, onMounted, ref} from "vue";
-import {ComplexTableColumnIconSiteEnum, ComplexTableColumnTypeEnum} from "@/constant/enums/component-enums";
+import {
+  ComplexTableColumnIconSiteEnum,
+  ComplexTableColumnTypeEnum,
+  ComplexTableSortedStatus
+} from "@/constant/enums/component-enums";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 
-const emit = defineEmits(['columnClick', 'operationClick', 'toNewPage']);
+const emit = defineEmits(['columnClick', 'operationClick', 'toNewPage', 'toSort']);
 const props = defineProps({
   //表基本参数
   tableBaseInfo: {
@@ -171,6 +187,7 @@ const props = defineProps({
 const pageSize = ref(props.tableDynamicData.pageSize)
 const pageNo = ref(props.tableDynamicData.pageNo)
 const customSlot = ref([])
+const allRowSlot = ref([])
 const showImg = ref(false)
 const showImgSrc = ref("")
 
@@ -188,9 +205,28 @@ const buildCustomSlot = () => {
           slotName: `body-cell-${column.name}`,
           slotType: column.type,
           iconSite: column.iconSite ? column.iconSite : ComplexTableColumnIconSiteEnum.START,
-          imageSize: column.imageSize
+          imageSize: column.imageSize,
         })
       }
+      allRowSlot.value.push({
+        align: column.align ? column.align : 'center',
+        name: column.name,
+        label: column.label,
+        slotName: `header-cell-${column.name}`,
+        sortableLite: column.sortableLite,
+        sortStatus: ComplexTableSortedStatus.DEFAULT,
+      })
+    }
+  }
+}
+
+const doSort = (name) => {
+  for (const column of allRowSlot.value) {
+    if (column.name === name) {
+      column.sortStatus = (column.sortStatus + 1) % 3
+      emit('toSort', name, column.sortStatus)
+    } else {
+      column.sortStatus = ComplexTableSortedStatus.DEFAULT
     }
   }
 }

@@ -177,6 +177,26 @@
                           :custom-table-operation="mockTableBaseInfoOrderOperation"
                           :table-dynamic-data="tableDynamicData"
 
+                          @toSort="(name, status) => {
+                            tableDynamicData.inLoading = true
+                            delay(500).then(() => {
+                              let sortedData = null
+                              if(status === ComplexTableSortedStatus.ASC) {
+                                sortedData = mockTableBaseInfoOrderData.slice()
+                              .sort((a, b) => a[name].localeCompare(b[name]));
+                              } else if (status === ComplexTableSortedStatus.DESC) {
+                                sortedData = mockTableBaseInfoOrderData.slice()
+                              .sort((a, b) => b[name].localeCompare(a[name]));
+                              } else {
+                                sortedData =mockTableBaseInfoOrderData
+                              }
+                              const start = (tableDynamicData.pageNo - 1) * tableDynamicData.pageSize;
+                              const end = start + tableDynamicData.pageSize;
+                              tableData = sortedData.slice(start, end)
+                              tableDynamicData.inLoading = false
+                            })
+                          }"
+
                           @toNewPage="(pageObj) => {
                             tableDynamicData.inLoading = true
 
@@ -265,6 +285,7 @@ import {
   mockTableBaseInfoOrderOperation
 } from "@/mock/mock-table-data";
 import {notifyTopNegative, notifyTopPositive} from "@/utils/notification-tools";
+import {ComplexTableSortedStatus} from "@/constant/enums/component-enums";
 
 const input = ref("")
 const selected = ref("")
