@@ -2,9 +2,9 @@
   <div>
     <q-dialog :model-value="showDialogImage" @hide="closeDialogImage"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-image-std row justify-center items-center overflow-hidden">
-        <q-img :ratio="0" :src="src" fit="contain" style="width: 100%; height: 100%;"/>
-      </q-card>
+      <div class="component-cask-dialog-image-std">
+        <img :src="src" alt=""/>
+      </div>
     </q-dialog>
   </div>
 </template>
@@ -49,6 +49,5 @@ function closeDialogImage() {
 @import "@fontsource/roboto-slab/index.css";
 @import "@/styles/base-components";
 @import "@/styles/independence-components";
-
 
 </style>
