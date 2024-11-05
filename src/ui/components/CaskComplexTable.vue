@@ -1,6 +1,5 @@
 <template>
 
-
   <!--todo 支持自动卡片形态-->
   <!--todo 支持显示列配置 （右上角加个螺丝）-->
 
@@ -27,10 +26,10 @@
                     v-model="scope.selected"/>
       </template>
 
-      <template v-slot:bottom>
+      <template v-slot:bottom="props">
         <div class="component-cask-complex-table-std-bottom">
           <div class="row justify-between items-center q-mx-lg">
-            <div class="row justify-start items-center">
+            <div class="row justify-start items-center q-mb-md">
               <div>
                 {{ $t('complex_table_page_size') }} :
               </div>
@@ -38,7 +37,28 @@
                      :class="pageSize === val ? 'component-cask-complex-table-std-bottom-contain shadow-2' : ''"
                      flat round dense class="q-mx-sm" :label="val" @click="updatePageSize(val)"/>
             </div>
-            <div class="row justify-end items-center">
+
+            <div class="row justify-end items-center q-mb-md">
+              <q-btn v-if="tableBaseInfo.showTableSetting" no-caps unelevated
+                     class="q-mr-md component-none-btn-grow no-padding">
+                <div class="row items-center q-ma-sm">
+                  <q-icon name="fa-solid fa-gear" size="1.1rem"/>
+                </div>
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale"
+                               style="background-color:transparent; border:0; padding:1rem;
+                                   box-shadow: none; backdrop-filter: none">
+                  <div class="row">
+
+                  </div>
+                </q-popup-proxy>
+              </q-btn>
+              <q-btn v-if="tableBaseInfo.showFullSize" no-caps unelevated
+                     class="q-mr-md component-none-btn-grow no-padding"
+                     @click="props.toggleFullscreen">
+                <div class="row items-center q-ma-sm">
+                  <q-icon :name="props.inFullscreen ? 'fa-solid fa-compress' : 'fa-solid fa-expand'" size="1.1rem"/>
+                </div>
+              </q-btn>
               <div class="q-mr-md">
                 {{ $t('complex_table_total_data') }} : {{ tableDynamicData.dataSum }}
               </div>
@@ -153,6 +173,13 @@ const props = defineProps({
     type: Object,
     required: true,
     default: () => {
+      return {
+        tableColumns: [],
+        tableKey: "",
+        selectType: "",
+        showFullSize: true,
+        showVisibleCol: true,
+      }
     },
   },
   //表操作按键

@@ -202,7 +202,9 @@
 
 .component-cask-complex-table-std {
   border-radius: 0 !important;
-  background-color: transparent !important;
+  //background-color: transparent !important;
+  //for support toggleFullscreen
+  background-color: var(--background-color) !important;
   color: var(--text-color) !important;
 
   .component-cask-complex-table-std-header {

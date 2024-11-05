@@ -100,11 +100,17 @@ const mockTableBaseInfoOrderCol = [
  * tableColumns：列配置
  * tableKey：表单唯一键
  * selectType：行选择类型，可选项：none, single, multiple
+ *
+ * [自定义]
+ * showFullSize：默认false，支持表格全屏
+ * showTableSetting：默认false，支持自定义显示列
  */
 export const mockTableBaseInfoOrder = {
     tableColumns: mockTableBaseInfoOrderCol,
     tableKey: "projectHouseOrderId",
     selectType: 'multiple',
+    showFullSize: true,
+    showTableSetting: true,
 }
 
 /**

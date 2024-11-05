@@ -154,6 +154,13 @@
   )
 }
 
+.component-none-btn-grow {
+  @include component-none-btn-base(
+          $thisWidth: auto,
+          $thisHeight: auto,
+  )
+}
+
 .component-none-btn-std {
   @include component-none-btn-base()
 }
