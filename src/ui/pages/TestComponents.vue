@@ -176,6 +176,11 @@
                           :table-data="tableData"
                           :custom-table-operation="mockTableBaseInfoOrderOperation"
                           :table-dynamic-data="tableDynamicData"
+                          :multiple-select-data="selectedData"
+
+                          @multipleUpdate="(selectedArr) => {
+                            selectedData = selectedArr
+                          }"
 
                           @toSort="(name, status) => {
                             tableDynamicData.inLoading = true
@@ -334,9 +339,9 @@ const tableDynamicData = ref(
       pageSize: 10,
       dataSum: 6,
       multiple: false,
-      multipleData: [],
     }
 )
+const selectedData = ref([])
 const tableData = ref(mockTableBaseInfoOrderData)
 const showTableProject = ref({
   isShow: false,
@@ -353,12 +358,12 @@ const showTableOperation = ref({
 const operationFinish = () => {
   tableDynamicData.value.multiple = false;
   let ids = ""
-  if (tableDynamicData.value.multipleData && tableDynamicData.value.multipleData.length > 0) {
-    for (let obj of tableDynamicData.value.multipleData) {
+  if (selectedData.value && selectedData.value.length > 0) {
+    for (let obj of selectedData.value) {
       ids += (obj.projectHouseOrderId + ",")
     }
     notifyTopPositive(ids, 3000)
-    tableDynamicData.value.multipleData = []
+    selectedData.value = []
   } else {
     notifyTopNegative("no data selected", 3000)
   }

@@ -200,6 +200,29 @@
 
 //==================== cask complex table ====================
 
+.component-cask-complex-table-std-setting {
+  width: 300px;
+  max-height: 800px;;
+  overflow-y: auto;
+  border-radius: 8px !important;
+  color: var(--text-color) !important;
+  background-color: var(--container-background-color) !important;
+  box-shadow: inset 0 0 2px 1px var(--text-color-select) !important;
+  backdrop-filter: saturate(200%) blur(30px) !important;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--text-color-select);
+  }
+
+  .q-checkbox__inner {
+    color: var(--container-text-color) !important;
+  }
+
+  .q-checkbox__inner--truthy {
+    color: var(--text-color) !important;
+  }
+}
+
 .component-cask-complex-table-std {
   border-radius: 0 !important;
   //background-color: transparent !important;

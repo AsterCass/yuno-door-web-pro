@@ -1,7 +1,7 @@
 import {Notify} from "quasar";
 
 
-export function notifyTopNegative(msg, time) {
+export function notifyTopNegative(msg, time = 3000) {
     Notify.create({
         message: msg,
         position: 'top',
@@ -10,11 +10,20 @@ export function notifyTopNegative(msg, time) {
     })
 }
 
-export function notifyTopPositive(msg, time) {
+export function notifyTopPositive(msg, time = 3000) {
     Notify.create({
         message: msg,
         position: 'top',
         type: 'positive',
+        timeout: time
+    })
+}
+
+export function notifyTopWarning(msg, time = 3000) {
+    Notify.create({
+        message: msg,
+        position: 'top',
+        type: 'warning',
         timeout: time
     })
 }

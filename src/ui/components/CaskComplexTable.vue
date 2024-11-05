@@ -1,7 +1,6 @@
 <template>
 
   <!--todo 支持自动卡片形态-->
-  <!--todo 支持显示列配置 （右上角加个螺丝）-->
 
   <div class="row">
     <q-table card-class="col-12 component-cask-complex-table-std"
@@ -11,9 +10,11 @@
              :columns="tableBaseInfo.tableColumns"
              :row-key="tableBaseInfo.tableKey"
              :pagination="{rowsPerPage: 0}"
-             v-model:selected="tableDynamicData.multipleData"
+             v-model:selected="selectedData"
              class="shadow-0"
              :selection="tableBaseInfo.selectType"
+             :visible-columns="visibleColumns"
+             @update:selected="updateSelect"
     >
 
       <template v-slot:header-selection="scope">
@@ -45,10 +46,29 @@
                   <q-icon name="fa-solid fa-gear" size="1.1rem"/>
                 </div>
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale"
-                               style="background-color:transparent; border:0; padding:1rem;
-                                   box-shadow: none; backdrop-filter: none">
-                  <div class="row">
+                               style="background-color:transparent; border:0;
+                               box-shadow: none; backdrop-filter: none">
+                  <div class="row component-cask-complex-table-std-setting q-pa-md">
+                    <div class="col-12 cask-simple-quoted-title q-mb-md"
+                         style="font-size: .95rem;  opacity: .9">
+                      {{ $t('complex_table_change_column_visible') }}
+                    </div>
 
+                    <div class="col-12">
+                      <q-checkbox v-for="(thisSlot, index) in allRowSlot" :key="index"
+                                  v-model="thisSlot.visible" checked-icon="task_alt"
+                                  unchecked-icon="panorama_fish_eye" :label="thisSlot.label"
+                                  @update:model-value="(val) => updateColVisible(thisSlot, val)"
+                      />
+                    </div>
+
+                    <div class="col-12 cask-simple-quoted-title q-my-md"
+                         style="font-size: .95rem;  opacity: .9">
+                      {{ $t('complex_table_more_setting') }}
+                    </div>
+                    <div class="q-mx-xs">
+                      {{ $t('in_develop') }}
+                    </div>
                   </div>
                 </q-popup-proxy>
               </q-btn>
@@ -84,7 +104,7 @@
         </div>
       </template>
 
-      <template v-for="(thisSlot, index) in allRowSlot" :key="index" v-slot:[thisSlot.slotName]="props">
+      <template v-for="(thisSlot, index) in allRowSlot" :key="index" v-slot:[thisSlot.slotName]>
         <th :class="`text-${thisSlot.align}`">
           {{ thisSlot.label }}
           <q-icon v-if="thisSlot.sortableLite" name="fa-solid fa-sort-up" size="16px"
@@ -158,15 +178,18 @@
 
 <script setup>
 
-import {defineEmits, defineProps, onMounted, ref} from "vue";
+import {defineEmits, defineProps, onMounted, ref, watch} from "vue";
 import {
   ComplexTableColumnIconSiteEnum,
   ComplexTableColumnTypeEnum,
   ComplexTableSortedStatus
 } from "@/constant/enums/component-enums";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
+import {notifyTopWarning} from "@/utils/notification-tools";
+import {useI18n} from 'vue-i18n'
 
-const emit = defineEmits(['columnClick', 'operationClick', 'toNewPage', 'toSort']);
+const {t} = useI18n()
+const emit = defineEmits(['columnClick', 'operationClick', 'toNewPage', 'toSort', 'multipleUpdate']);
 const props = defineProps({
   //表基本参数
   tableBaseInfo: {
@@ -199,7 +222,6 @@ const props = defineProps({
         pageSize: 10,
         dataSum: 0,
         multiple: false,
-        multipleData: [],
       }
     },
   },
@@ -209,14 +231,26 @@ const props = defineProps({
     required: false,
     default: () => [],
   },
+  //多选
+  multipleSelectData: {
+    type: Array,
+    required: false,
+    default: () => [],
+  }
 })
 
 const pageSize = ref(props.tableDynamicData.pageSize)
 const pageNo = ref(props.tableDynamicData.pageNo)
+const selectedData = ref(props.multipleSelectData)
 const customSlot = ref([])
 const allRowSlot = ref([])
 const showImg = ref(false)
 const showImgSrc = ref("")
+const visibleColumns = ref([])
+
+watch(() => props.multipleSelectData, () => {
+  selectedData.value = props.multipleSelectData
+})
 
 const toNewPage = () => {
   emit('toNewPage', {pageNo: pageNo.value, pageSize: pageSize.value})
@@ -242,9 +276,30 @@ const buildCustomSlot = () => {
         slotName: `header-cell-${column.name}`,
         sortableLite: column.sortableLite,
         sortStatus: ComplexTableSortedStatus.DEFAULT,
+        visible: true,
       })
+      visibleColumns.value.push(column.name)
     }
   }
+}
+
+const updateSelect = () => {
+  emit('multipleUpdate', selectedData.value)
+}
+
+const updateColVisible = (col, val) => {
+  if (visibleColumns.value.length <= 1 && val === false) {
+    notifyTopWarning(t('complex_table_at_least_column'))
+    col.visible = true
+    return
+  }
+  if (val && !visibleColumns.value.includes(col.name)) {
+    visibleColumns.value.push(col.name)
+  }
+  if (!val && visibleColumns.value.includes(col.name)) {
+    visibleColumns.value = visibleColumns.value.filter(str => str !== col.name);
+  }
+
 }
 
 const doSort = (name) => {
