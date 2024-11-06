@@ -12,6 +12,7 @@
   "test_component_show_dialog": "Show Dialog",
   "test_component_multiple_open": "Open multiple select",
   "test_component_multiple_close": "Close multiple select",
+  "test_component_multiple_operation": "Multiple selected operation",
 
   "in_develop": "Coming soon",
 

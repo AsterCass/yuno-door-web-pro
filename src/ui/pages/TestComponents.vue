@@ -164,7 +164,7 @@
              @click="operationFinish">
         <div class="row items-center">
           <div class="q-mx-xs">
-            Operation
+            {{ $t('test_component_multiple_operation') }}
           </div>
         </div>
       </q-btn>
@@ -365,7 +365,7 @@ const operationFinish = () => {
     notifyTopPositive(ids, 3000)
     selectedData.value = []
   } else {
-    notifyTopNegative("no data selected", 3000)
+    notifyTopNegative("No data selected", 3000)
   }
 }
 

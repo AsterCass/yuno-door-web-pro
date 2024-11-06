@@ -12,6 +12,7 @@
   "test_component_show_dialog": "展示对话框",
   "test_component_multiple_open": "开启多选",
   "test_component_multiple_close": "关闭多选",
+  "test_component_multiple_operation": "多选后操作",
 
   "in_develop": "功能开发中，敬请期待",
 
