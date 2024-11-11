@@ -17,6 +17,8 @@
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
+
+  --scrollbar-width: 16px;
 }
 
 [data-theme="dark"] {
@@ -55,6 +57,10 @@
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
+}
+
+[hide-scrollbar="true"] {
+  --scrollbar-width: 0;
 }
 
 html, body, aside {
@@ -114,7 +120,7 @@ p {
   z-index: 12;
   background: transparent;
   height: 14px;
-  width: 16px;
+  width: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-thumb {

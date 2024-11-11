@@ -15,6 +15,17 @@ export function switchTheme() {
     document.documentElement.setAttribute('data-theme', themeName);
 }
 
+export function hideScrollbar(isHide = true) {
+    let currentIsHide = document.documentElement.getAttribute("hide-scrollbar")
+    if (currentIsHide === 'true' && !isHide) {
+        let toHide = 'false'
+        document.documentElement.setAttribute('hide-scrollbar', toHide);
+    } else if (currentIsHide !== 'true' && isHide) {
+        let toHide = 'true'
+        document.documentElement.setAttribute('hide-scrollbar', toHide);
+    }
+}
+
 export function switchLanguage() {
     if (i18n.global.locale === 'en') {
         i18n.global.locale = 'zh'
