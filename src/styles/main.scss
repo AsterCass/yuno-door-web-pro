@@ -48,8 +48,7 @@
   background-image: linear-gradient(195deg, #42424a, #191919)
 }
 
-@mixin error-page-main($url) {
-  background-image: $url;
+.error-page-main {
   background-size: cover;
   padding: 0;
   position: relative;
@@ -57,17 +56,4 @@
   display: flex;
   align-items: center;
   min-height: 100vh;
-}
-
-
-.error-page-main-404 {
-  @include error-page-main($url: url("@/assets/img/404-bg.jpg"))
-}
-
-.error-page-main-600 {
-  @include error-page-main($url: url("@/assets/img/600-bg.jpg"))
-}
-
-.error-page-main-601 {
-  @include error-page-main($url: url("@/assets/img/601-bg.jpg"))
 }

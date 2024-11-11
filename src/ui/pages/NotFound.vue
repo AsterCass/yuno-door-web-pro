@@ -1,5 +1,5 @@
 <template>
-  <div class="error-page-main-404">
+  <div class="error-page-main" style="background-image: url('/img/404-bg.jpg')">
     <span class="error-page-mask"/>
     <div class="error-page-container">
       <div class="row justify-center">
@@ -32,6 +32,5 @@ const thisRouter = useRouter()
 
 <style lang="scss" scoped>
 @import "@/styles/main";
-
 
 </style>
