@@ -2,9 +2,12 @@ import i18n from '@/i18n';
 import {Quasar} from 'quasar'
 import zh from 'quasar/lang/zh-CN'
 import en from 'quasar/lang/en-US'
+import {useGlobalStateStore} from '@/utils/global-state';
 
 
 export function switchTheme() {
+    const globalState = useGlobalStateStore();
+
     let curThemeName = document.documentElement.getAttribute("data-theme")
     let themeName = 'dark'
     if (curThemeName === 'dark') {
@@ -13,6 +16,7 @@ export function switchTheme() {
         themeName = 'light'
     }
     document.documentElement.setAttribute('data-theme', themeName);
+    globalState.updateTheme(themeName);
 }
 
 export function hideScrollbar(isHide = true) {

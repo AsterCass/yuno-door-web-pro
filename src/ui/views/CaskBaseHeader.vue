@@ -5,7 +5,7 @@
 
     <div class="row items-center justify-center">
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_pre_version') }}
           </div>
@@ -15,28 +15,28 @@
 
     <div class="row items-center justify-center">
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_articles') }}
           </div>
         </div>
       </q-btn>
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_tools') }}
           </div>
         </div>
       </q-btn>
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_videos') }}
           </div>
         </div>
       </q-btn>
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_board') }}
           </div>
@@ -45,25 +45,23 @@
     </div>
 
     <div class="row items-center justify-center">
-
-      <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="switchLanguage()">
-        <div class="row items-center q-ma-xs">
-          <q-icon name="fa-solid fa-language" size="1.5rem" style="margin-top: 2px"/>
-        </div>
-      </q-btn>
-
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_login') }}
           </div>
         </div>
       </q-btn>
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-        <div class="row items-center" style="font-size: 1rem">
+        <div class="row items-center">
           <div class="q-ma-xs">
             {{ $t('main_create_account') }}
           </div>
+        </div>
+      </q-btn>
+      <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="switchLanguage()">
+        <div class="row items-center q-ma-xs">
+          <q-icon name="fa-solid fa-language" size="1.5rem" style="margin-top: 2px"/>
         </div>
       </q-btn>
       <q-btn no-caps unelevated class="q-mx-xs" dense round>
@@ -71,6 +69,7 @@
           <q-icon name="fa-solid fa-gear" size="1.1rem" style="margin-top: 2px"/>
         </div>
       </q-btn>
+
     </div>
 
 
@@ -125,5 +124,14 @@ onUnmounted(() => {
   backdrop-filter: saturate(200%) blur(30px);
 }
 
+
+</style>
+
+<style lang="scss">
+.top-semi-trans-header-base {
+  .q-btn {
+    font-size: 1rem;
+  }
+}
 
 </style>

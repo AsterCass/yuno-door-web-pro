@@ -5,18 +5,23 @@
 
     <div class="cask-main-top-container">
       <q-img :no-native-menu="false" :ratio="16/9" fit="cover"
-             src="/img/bg-1-fixed.jpg" class="cask-main-bg-image">
+             :src="globalState.curThemeName !== 'dark' ?
+             '/img/bg-1-fixed.jpg' : '/img/bg-2-fixed.jpg'" class="cask-main-bg-image">
       </q-img>
 
-      <div style="color: ghostwhite; margin: 5rem 30rem 0 30rem">
+      <div style="color: ghostwhite; margin: 3rem 25rem 0 25rem">
         <div style="font-size: 5rem">
-          AsterCasc
+          {{ $t('main_title') }}
         </div>
-        <div style="font-size: 2rem">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repell
+        <div style="font-size: 1.5rem" class="q-my-md">
+          {{ $t('main_subtitle') }}
         </div>
         <div style="font-size: 1.2rem">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet
+          porro.
+          Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet
+          porro.
           Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
         </div>
       </div>
@@ -43,7 +48,9 @@
 import {ref} from "vue";
 import {hideScrollbar, switchTheme} from "@/utils/base-tools";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
+import {useGlobalStateStore} from "@/utils/global-state";
 
+const globalState = useGlobalStateStore();
 const hideScroller = ref(false)
 
 

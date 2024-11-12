@@ -25,6 +25,7 @@
   "complex_table_more_setting": "More Setting",
   "complex_table_at_least_column": "Please retain at least one column of observable data",
 
+  "main_title": "AsterCasc",
   "main_login":"Sign in",
   "main_create_account":"Create account",
   "main_logout": "Sign out",
@@ -33,6 +34,7 @@
   "main_tools": "Toolkit",
   "main_videos": "Videos",
   "main_board": "Guestbook",
+  "main_subtitle": "Those little hands, without us knowing, have grown stronger than both you and me. Passing through the vine-covered corridor, bidding farewell to the tear-filled days",
 
 
   "home": "Home"
