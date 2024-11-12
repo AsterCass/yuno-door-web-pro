@@ -25,6 +25,15 @@
   "complex_table_more_setting": "更多设置",
   "complex_table_at_least_column": "请至少保留一列可观察数据",
 
+  "main_login":"登录",
+  "main_create_account":"创建账户",
+  "main_logout":"登出",
+  "main_pre_version": "早期版本",
+  "main_articles": "文章",
+  "main_tools": "工具箱",
+  "main_videos": "视频",
+  "main_board": "留言板",
+
 
   "home": "主页"
 }

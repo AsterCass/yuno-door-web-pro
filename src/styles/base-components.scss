@@ -22,13 +22,14 @@
   $thisHeight: 2.4rem,
   $thisWidth: 6rem,
   $thisMinWidth: 6rem,
+  $thisBorder:  2px solid var(--full-container-background-color),
 ) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
   width: $thisWidth !important;
   min-width: $thisMinWidth !important;
   padding: 0 .6rem !important;
-  border: 2px solid var(--full-container-background-color) !important;
+  border: $thisBorder !important;
   border-radius: 4px !important;
 }
 
@@ -151,6 +152,13 @@
 .component-outline-btn-grow {
   @include component-outline-btn-base(
           $thisWidth: auto,
+  )
+}
+
+.component-outline-btn-clear-grow {
+  @include component-outline-btn-base(
+          $thisWidth: auto,
+          $thisBorder: 2px solid var(--full-container-background-color-light),
   )
 }
 

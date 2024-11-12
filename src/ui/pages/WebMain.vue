@@ -8,17 +8,31 @@
              src="/img/bg-1-fixed.jpg" class="cask-main-bg-image">
       </q-img>
 
-      <q-toggle v-model="hideScroller" @update:model-value="it => hideScrollbar(it)"/>
+      <div style="color: ghostwhite; margin: 5rem 30rem 0 30rem">
+        <div style="font-size: 5rem">
+          AsterCasc
+        </div>
+        <div style="font-size: 2rem">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repell
+        </div>
+        <div style="font-size: 1.2rem">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
+          Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+        </div>
+      </div>
 
-      <q-btn no-caps @click="switchTheme" class="q-ma-md" color="primary"
-             :label="$t('test_component_switch_theme') "/>
-
-      <h6 v-for="index in 10" :key="index">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
-        Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-      </h6>
 
     </div>
+
+    <q-toggle v-model="hideScroller" @update:model-value="it => hideScrollbar(it)"/>
+
+    <q-btn no-caps @click="switchTheme" class="q-ma-md" color="primary"
+           :label="$t('test_component_switch_theme') "/>
+
+    <h6 v-for="index in 30" :key="index">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
+      Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+    </h6>
 
 
   </q-layout>
