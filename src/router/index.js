@@ -64,6 +64,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(() => {
+    //make sure scroller site right for header style
     window.scrollTo(0, 0)
 })
 

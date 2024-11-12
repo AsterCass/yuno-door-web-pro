@@ -3,6 +3,7 @@
 :root {
   --text-color: #{$cask-light-black};
   --text-color-select: #{$cask-light-black-light};
+  --text-color-select-op: #{$cask-light-black-light-op};
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-light-black-deep};
@@ -24,6 +25,7 @@
 [data-theme="dark"] {
   --text-color: #{$cask-dark-white};
   --text-color-select: #{$cask-dark-white-dark};
+  --text-color-select-op: #{$cask-dark-white-dark-op};
   --background-color: #{$cask-dark-black};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-light-black-deep};
@@ -43,6 +45,7 @@
 [data-theme="green"] {
   --text-color: #{$cask-green};
   --text-color-select: #{$cask-green-light};
+  --text-color-select-op: #{$cask-green-light-op};
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-green-deep};
@@ -64,14 +67,17 @@
 }
 
 html, body, aside {
-  margin: 0;
-  color: var(--text-color);
-  background: var(--background-color);
   font-family: Roboto Slab, sans-serif !important;
   transition: background-color .5s ease;
+}
+
+body, aside {
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--background-color);
 
   ::selection {
-    background-color: var(--text-color-select);
+    background-color: var(--text-color-select-op);
   }
 }
 
