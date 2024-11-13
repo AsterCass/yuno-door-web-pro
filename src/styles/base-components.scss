@@ -132,6 +132,18 @@
   opacity: .3;
 }
 
+.component-ratio-base {
+
+  .q-radio__inner:not(.q-radio__inner--truthy) {
+    color: var(--text-color);
+    opacity: .7;
+  }
+
+  .q-radio__inner--truthy {
+    color: var(--text-color);
+  }
+}
+
 
 //==================== mix ====================
 

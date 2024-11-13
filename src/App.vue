@@ -4,6 +4,13 @@
 
 <script setup>
 import {RouterView} from "vue-router";
+import {onMounted} from "vue";
+import {initGlobalState} from "@/utils/global-tools";
+
+
+onMounted(() => {
+  initGlobalState()
+})
 </script>
 
 <style lang="scss">

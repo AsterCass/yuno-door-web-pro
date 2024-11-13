@@ -21,13 +21,7 @@
         </div>
       </div>
 
-
     </div>
-
-    <q-toggle v-model="hideScroller" @update:model-value="it => hideScrollbar(it)"/>
-
-    <q-btn no-caps @click="switchTheme" class="q-ma-md" color="primary"
-           :label="$t('test_component_switch_theme') "/>
 
     <h6 v-for="index in 30" :key="index">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
@@ -39,14 +33,10 @@
 </template>
 
 <script setup>
-
-import {ref} from "vue";
-import {hideScrollbar, switchTheme} from "@/utils/base-tools";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 
 const globalState = useGlobalStateStore();
-const hideScroller = ref(false)
 
 
 </script>

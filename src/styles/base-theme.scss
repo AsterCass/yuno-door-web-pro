@@ -19,7 +19,7 @@
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
 
-  --scrollbar-width: 16px;
+  --scrollbar-width: 0;
 }
 
 [data-theme="dark"] {
@@ -62,8 +62,8 @@
   --warning: #{$cask-warning};
 }
 
-[hide-scrollbar="true"] {
-  --scrollbar-width: 0;
+[hide-scrollbar="false"] {
+  --scrollbar-width: 16px;
 }
 
 html, body, aside {
