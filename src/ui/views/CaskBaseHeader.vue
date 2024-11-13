@@ -4,7 +4,7 @@
     <div class="top-semi-trans-header-base-content row justify-between items-center"
          :class="headerInTop ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
-      <div class="row items-center justify-center">
+      <div class="row items-center justify-start col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
           <div class="row items-center">
             <div class="q-ma-xs">
@@ -14,7 +14,7 @@
         </q-btn>
       </div>
 
-      <div class="row items-center justify-center">
+      <div class="row items-center justify-center col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
           <div class="row items-center">
             <div class="q-ma-xs">
@@ -45,33 +45,32 @@
         </q-btn>
       </div>
 
-      <div class="row items-center justify-center">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-          <div class="row items-center">
-            <div class="q-ma-xs">
-              {{ $t('main_login') }}
+      <div class="row items-center justify-end col-4">
+        <div class="row col-11 justify-end items-center">
+          <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+            <div class="row items-center">
+              <div class="q-ma-xs">
+                {{ $t('main_login') }}
+              </div>
             </div>
-          </div>
-        </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
-          <div class="row items-center">
-            <div class="q-ma-xs">
-              {{ $t('main_create_account') }}
+          </q-btn>
+          <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="switchLanguage()">
+            <div class="row items-center q-ma-xs">
+              <q-icon name="fa-solid fa-language" size="1.5rem" style="margin-top: 2px"/>
             </div>
-          </div>
-        </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="switchLanguage()">
-          <div class="row items-center q-ma-xs">
-            <q-icon name="fa-solid fa-language" size="1.5rem" style="margin-top: 2px"/>
-          </div>
-        </q-btn>
-        <q-btn no-caps unelevated class="q-mx-xs" dense round
-               v-morph:btn:withSetting:800.resize="morphWithSetting"
-               @click="showHeaderSetting(true)">
-          <div class="row items-center">
-            <q-icon name="fa-solid fa-gear" size="1.1rem" style="margin-top: 2px"/>
-          </div>
-        </q-btn>
+          </q-btn>
+        </div>
+
+        <div class="col-1 row justify-end items-center">
+          <q-btn no-caps unelevated class="q-mx-xs" dense round
+                 v-morph:btn:withSetting:800.resize="morphWithSetting"
+                 @click="showHeaderSetting(true)">
+            <div class="row items-center">
+              <q-icon name="fa-solid fa-gear" size="1.1rem" style="margin-top: 2px"/>
+            </div>
+          </q-btn>
+        </div>
+
       </div>
     </div>
 
@@ -89,7 +88,7 @@
 
         <div class="row justify-center" style="margin-top: -15px !important">
           <h5>
-            基础设置
+            {{ $t('main_setting_title') }}
           </h5>
         </div>
 
@@ -97,52 +96,59 @@
 
           <div class="q-mt-sm">
             <h6>
-              全屏页仍展示拖动条：
+              {{ $t('main_setting_show_scroller') }}
             </h6>
           </div>
           <div class="q-mb-sm row justify-evenly">
-            <q-radio v-model="globalState.hideScroller" :val="false" label="Yes" class="component-ratio-base"
+            <q-radio v-model="globalState.hideScroller" :val="false" :label="$t('main_setting_yes')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => hideScrollbar(it)"/>
-            <q-radio v-model="globalState.hideScroller" :val="true" label="No" class="component-ratio-base"
+            <q-radio v-model="globalState.hideScroller" :val="true" :label="$t('main_setting_no')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => hideScrollbar(it)"/>
           </div>
 
           <div class="q-mt-sm">
             <h6>
-              主题选择：
+              {{ $t('main_setting_theme') }}
             </h6>
           </div>
           <div class="q-mb-sm row justify-evenly">
-            <q-radio v-model="globalState.curThemeName" val="light" label="Light" class="component-ratio-base"
+            <q-radio v-model="globalState.curThemeName" val="light" :label="$t('main_setting_theme_light')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => updateTheme(it)"/>
-            <q-radio v-model="globalState.curThemeName" val="dark" label="Dark" class="component-ratio-base"
+            <q-radio v-model="globalState.curThemeName" val="dark" :label="$t('main_setting_theme_dark')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => updateTheme(it)"/>
-            <q-radio v-model="globalState.curThemeName" val="green" label="Green" class="component-ratio-base"
+            <q-radio v-model="globalState.curThemeName" val="green" :label="$t('main_setting_theme_green')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => updateTheme(it)"/>
           </div>
 
           <div class="q-mt-sm">
             <h6>
-              是否保存登录状态：
+              {{ $t('main_setting_save_login_data') }}
             </h6>
           </div>
           <div class="q-mb-sm row justify-evenly">
-            <q-radio v-model="globalState.saveLoginData" :val="true" label="Yes" class="component-ratio-base"
+            <q-radio v-model="globalState.saveLoginData" :val="true" :label="$t('main_setting_yes')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => updateSaveLoginData(it)"/>
-            <q-radio v-model="globalState.saveLoginData" :val="false" label="No" class="component-ratio-base"
+            <q-radio v-model="globalState.saveLoginData" :val="false" :label="$t('main_setting_no')"
+                     class="component-ratio-base"
                      checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                      @update:model-value="(it) => updateSaveLoginData(it)"/>
           </div>
 
           <div class="q-mt-sm">
             <h6>
-              页面语言：
+              {{ $t('main_setting_lang') }}
             </h6>
           </div>
           <div class="q-mb-sm row justify-evenly">
