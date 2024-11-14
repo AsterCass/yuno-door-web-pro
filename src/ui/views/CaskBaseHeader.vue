@@ -43,6 +43,16 @@
             </div>
           </div>
         </q-btn>
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_chat_room') }}
+            </div>
+          </div>
+          <q-badge floating rounded v-show="globalState.newMessage"
+                   style="background-color: var(--negative);
+                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0"/>
+        </q-btn>
       </div>
 
       <div class="row items-center justify-end col-4">
@@ -175,8 +185,20 @@
     <div v-click-outside="() => {showHeaderLogin(false)}"
          class="top-semi-trans-header-setting absolute-right"
          v-morph:page:withLogin:500.resize="morphWithLogin">
-
       <div v-show="morphWithLoginContentShow">
+
+        <div class="row justify-end">
+          <q-btn no-caps unelevated dense size="10px" class="q-mt-sm q-mr-sm q-pa-xs" round
+                 icon="fa-solid fa-down-left-and-up-right-to-center"
+                 @click="showHeaderLogin(false)"/>
+        </div>
+
+        <div class="row justify-center" style="margin-top: -15px !important">
+          <h5>
+            {{ $t('main_login') }}
+          </h5>
+        </div>
+
 
       </div>
     </div>

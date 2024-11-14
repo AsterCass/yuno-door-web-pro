@@ -23,6 +23,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         hideScroller: true,
         language: 'en',
         saveLoginData: true,
+        newMessage: false,
     }),
     actions: {
         updateTheme(code) {
@@ -36,6 +37,9 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateSaveLoginData(isSave) {
             this.saveLoginData = isSave;
-        }
+        },
+        updateNewMessage(haveNewMessage) {
+            this.newMessage = haveNewMessage;
+        },
     },
 });
