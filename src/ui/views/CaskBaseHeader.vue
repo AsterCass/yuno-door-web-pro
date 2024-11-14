@@ -64,7 +64,9 @@
         <div class="col-1 row justify-end items-center">
           <q-btn no-caps unelevated class="q-mx-xs" dense round
                  v-morph:btn:withSetting:800.resize="morphWithSetting"
-                 @click="showHeaderSetting(true)">
+                 @click="delay(50).then(() => {
+                   showHeaderSetting(true)
+                 })">
             <div class="row items-center">
               <q-icon name="fa-solid fa-gear" size="1.1rem" style="margin-top: 2px"/>
             </div>
@@ -75,9 +77,9 @@
     </div>
 
 
-    <div
-        class="top-semi-trans-header-setting absolute-right"
-        v-morph:page:withSetting:800.resize="morphWithSetting">
+    <div v-click-outside="() => {showHeaderSetting(false)}"
+         class="top-semi-trans-header-setting absolute-right"
+         v-morph:page:withSetting:500.resize="morphWithSetting">
 
       <div v-show="morphWithSettingContentShow">
         <div class="row justify-end">
