@@ -34,7 +34,7 @@
 }
 
 @mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
-  height: $thisHeight !important;
+  height: $thisHeight;
   min-height: $thisHeight !important;
   padding: 0 .6rem !important;
   border-radius: 4px !important;

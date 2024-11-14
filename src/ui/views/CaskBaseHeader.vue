@@ -47,7 +47,11 @@
 
       <div class="row items-center justify-end col-4">
         <div class="row col justify-end items-center">
-          <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+          <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+                 v-morph:btn:withLogin:800.resize="morphWithLogin"
+                 @click="delay(50).then(() => {
+                   showHeaderLogin(true)
+                 })">
             <div class="row items-center">
               <div class="q-ma-xs">
                 {{ $t('main_login') }}
@@ -166,6 +170,18 @@
 
       </div>
     </div>
+
+
+    <div v-click-outside="() => {showHeaderLogin(false)}"
+         class="top-semi-trans-header-setting absolute-right"
+         v-morph:page:withLogin:500.resize="morphWithLogin">
+
+      <div v-show="morphWithLoginContentShow">
+
+      </div>
+    </div>
+
+
   </q-header>
 
 
@@ -182,6 +198,8 @@ const globalState = useGlobalStateStore();
 const headerInTop = ref(true);
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
+const morphWithLogin = ref('btn')
+const morphWithLoginContentShow = ref(false)
 
 const onScroll = () => {
   headerInTop.value = window.scrollY === 0;
@@ -189,6 +207,7 @@ const onScroll = () => {
 
 const showHeaderSetting = (isShow) => {
   if (isShow) {
+    showHeaderLogin(false)
     morphWithSetting.value = 'page'
     delay(500).then(() => {
       morphWithSettingContentShow.value = true
@@ -196,6 +215,19 @@ const showHeaderSetting = (isShow) => {
   } else {
     morphWithSetting.value = 'btn'
     morphWithSettingContentShow.value = false
+  }
+}
+
+const showHeaderLogin = (isShow) => {
+  if (isShow) {
+    showHeaderSetting(false)
+    morphWithLogin.value = 'page'
+    delay(500).then(() => {
+      morphWithLoginContentShow.value = true
+    })
+  } else {
+    morphWithLogin.value = 'btn'
+    morphWithLoginContentShow.value = false
   }
 }
 
