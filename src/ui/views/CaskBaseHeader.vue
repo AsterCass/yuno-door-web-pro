@@ -46,7 +46,7 @@
       </div>
 
       <div class="row items-center justify-end col-4">
-        <div class="row col-11 justify-end items-center">
+        <div class="row col justify-end items-center">
           <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
             <div class="row items-center">
               <div class="q-ma-xs">
@@ -61,7 +61,7 @@
           </q-btn>
         </div>
 
-        <div class="col-1 row justify-end items-center">
+        <div class="row justify-end items-center" style="min-width: 3rem">
           <q-btn no-caps unelevated class="q-mx-xs" dense round
                  v-morph:btn:withSetting:800.resize="morphWithSetting"
                  @click="delay(50).then(() => {
