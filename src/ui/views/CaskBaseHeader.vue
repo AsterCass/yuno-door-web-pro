@@ -206,7 +206,7 @@
 
         <div class="q-mx-md">
           <q-input v-model="inputAccount" tabindex="0" dense outlined
-                   class="q-ma-md component-outline-input-grow">
+                   class="q-ma-md component-outline-input-grow-on-semi-trans">
             <template v-slot:prepend>
               <div class="row items-center justify-between">
                 <q-icon class="q-mr-sm" name="fa-regular fa-address-card" size="1rem"/>
@@ -218,7 +218,7 @@
           </q-input>
 
           <q-input v-model="inputPassword" tabindex="0" dense outlined type="password"
-                   class="q-ma-md component-outline-input-grow">
+                   class="q-ma-md component-outline-input-grow-on-semi-trans">
             <template v-slot:prepend>
               <div class="row items-center justify-between">
                 <q-icon class="q-mr-sm" name="fa-solid fa-unlock-keyhole" size="1rem"/>
