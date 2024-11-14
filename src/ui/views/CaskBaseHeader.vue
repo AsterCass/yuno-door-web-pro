@@ -183,9 +183,9 @@
 
 
     <div v-click-outside="() => {showHeaderLogin(false)}"
-         class="top-semi-trans-header-setting absolute-right"
+         class="top-semi-trans-header-login absolute-right"
          v-morph:page:withLogin:500.resize="morphWithLogin">
-      <div v-show="morphWithLoginContentShow">
+      <div v-show="morphWithLoginContentShow" class="full-height column justify-evenly">
 
         <div class="row justify-end">
           <q-btn no-caps unelevated dense size="10px" class="q-mt-sm q-mr-sm q-pa-xs" round
@@ -195,8 +195,87 @@
 
         <div class="row justify-center" style="margin-top: -15px !important">
           <h5>
-            {{ $t('main_login') }}
+            astercasc.com
           </h5>
+        </div>
+        <div class="row justify-center q-mx-md text-center q-mb-md">
+          <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
+          <span class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
+          <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
+        </div>
+
+        <div class="q-mx-md">
+          <q-input v-model="inputAccount" tabindex="0" dense outlined
+                   class="q-ma-md component-outline-input-grow">
+            <template v-slot:prepend>
+              <div class="row items-center justify-between">
+                <q-icon class="q-mr-sm" name="fa-regular fa-address-card" size="1rem"/>
+                <div style="opacity: 0.8">
+                  {{ $t('main_login_account') }}
+                </div>
+              </div>
+            </template>
+          </q-input>
+
+          <q-input v-model="inputPassword" tabindex="0" dense outlined type="password"
+                   class="q-ma-md component-outline-input-grow">
+            <template v-slot:prepend>
+              <div class="row items-center justify-between">
+                <q-icon class="q-mr-sm" name="fa-solid fa-unlock-keyhole" size="1rem"/>
+                <div style="opacity: 0.8">
+                  {{ $t('main_login_password') }}
+                </div>
+
+              </div>
+            </template>
+          </q-input>
+
+          <div class="q-my-md row justify-start q-mx-md text-center items-center">
+            <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
+                        checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
+            <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
+            <span class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
+          </div>
+        </div>
+
+
+        <div class="row justify-center">
+          <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow">
+            <div class="row items-center">
+              <div class="q-mr-sm" style="font-size: 14px">
+                {{ $t('main_login') }}
+              </div>
+              <q-icon name="fa-solid fa-arrow-right-to-bracket" size="15px"/>
+            </div>
+          </q-btn>
+        </div>
+
+        <div class="q-mx-md q-mb-md row justify-evenly items-center">
+          <q-separator class="component-separator-base col-grow" inset size="1px"/>
+          <div style="opacity:.9">
+            {{ $t('main_login_more') }}
+          </div>
+          <q-separator class="component-separator-base col-grow" inset size="1px"/>
+        </div>
+
+
+        <div class="q-mb-md row justify-evenly items-center">
+          <q-btn no-caps unelevated class="component-none-btn-grow">
+            <div class="row items-center q-my-sm">
+              <q-icon name="fa-brands fa-github" size="1.8rem"/>
+            </div>
+          </q-btn>
+          <q-btn no-caps unelevated class="component-none-btn-grow">
+            <div class="row items-center q-my-sm">
+              <q-icon name="fa-brands fa-google" size="1.8rem" class="google-logo-text-color"/>
+            </div>
+          </q-btn>
+          <q-btn no-caps unelevated class="component-none-btn-grow">
+            <div class="row items-center q-my-sm">
+              <q-icon name="fa-brands fa-qq" size="1.8rem" style="color: rgb(0, 153, 255)"/>
+            </div>
+          </q-btn>
+
         </div>
 
 
@@ -222,6 +301,10 @@ const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
 const morphWithLogin = ref('btn')
 const morphWithLoginContentShow = ref(false)
+
+const inputAccount = ref('')
+const inputPassword = ref('')
+const agreePrivacy = ref(false)
 
 const onScroll = () => {
   headerInTop.value = window.scrollY === 0;
@@ -311,6 +394,21 @@ onUnmounted(() => {
   font-size: .9rem;
 }
 
+.top-semi-trans-header-login {
+  top: 5rem;
+  height: 500px;
+  width: 390px;
+
+  color: var(--text-color);
+  border-radius: 8px;
+  background-color: var(--container-background-color);
+  box-shadow: inset 0 0 1px 1px var(--background-color);
+  backdrop-filter: blur(30px);
+  padding: 2px;
+
+  font-size: .9rem;
+}
+
 
 </style>
 
@@ -319,6 +417,16 @@ onUnmounted(() => {
   .q-btn {
     font-size: 1rem;
   }
+}
+
+.google-logo-text-color {
+  background: linear-gradient(180deg,
+      #EA4335 0%, #EA4335 30%,
+      #4285F4 30%, #4285F4 70%,
+      #34A853 70%, #34A853 100%
+  );
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 </style>

@@ -121,6 +121,19 @@ p {
 }
 
 
+//change auto-fill account&password style
+.q-field__native:-webkit-autofill {
+  //background-color: transparent !important; //not work
+  box-shadow: 0 0 0 1000px rgb(200, 200, 200) inset;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 1.8rem !important;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
 ::-webkit-scrollbar {
   overflow: visible;
   z-index: 12;
@@ -159,3 +172,12 @@ p {
   border-left: 5px solid var(--text-color);
 }
 
+.cask-jump-link-in-text {
+  color: var(--pointer);
+  cursor: pointer;
+}
+
+.cask-jump-link-in-text:hover,
+.cask-jump-link-in-text:active {
+  text-decoration: underline;
+}

@@ -134,6 +134,15 @@
 
 .component-ratio-base {
 
+  .q-checkbox__inner:not(.q-checkbox__inner--truthy) {
+    color: var(--text-color);
+    opacity: .7;
+  }
+
+  .q-checkbox__inner--truthy {
+    color: var(--text-color);
+  }
+
   .q-radio__inner:not(.q-radio__inner--truthy) {
     color: var(--text-color);
     opacity: .7;

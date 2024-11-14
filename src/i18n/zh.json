@@ -49,5 +49,14 @@
   "main_setting_theme_dark": "夜间",
   "main_setting_theme_green": "春季",
 
+  "main_login_subtitle_pre": "当前新版页面暂时不支持注册，请移步到",
+  "main_login_subtitle_center": "旧版页面",
+  "main_login_subtitle_post": "进行注册操作",
+  "main_login_account": "账号",
+  "main_login_password": "密码",
+  "main_login_privacy_pre": "我同意",
+  "main_login_privacy_center": "隐私保护指引和用户服务协议",
+  "main_login_more": "其他登录方式",
+
   "home": "主页"
 }

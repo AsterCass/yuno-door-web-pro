@@ -49,5 +49,14 @@
   "main_setting_theme_dark": "Dark",
   "main_setting_theme_green": "Green",
 
+  "main_login_subtitle_pre": "The current new version of the page temporarily does not support registration. Please proceed to the",
+  "main_login_subtitle_center": "previous version",
+  "main_login_subtitle_post": "to register",
+  "main_login_account": "Account",
+  "main_login_password": "Password",
+  "main_login_privacy_pre": "I agree to",
+  "main_login_privacy_center": "privacy policy and terms",
+  "main_login_more": "Or",
+
   "home": "Home"
 }
