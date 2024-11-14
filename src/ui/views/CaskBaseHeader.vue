@@ -240,7 +240,8 @@
 
 
         <div class="row justify-center">
-          <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow">
+          <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
+                 style="background-color: var(--semi-bg-container-background-color) !important">
             <div class="row items-center">
               <div class="q-mr-sm" style="font-size: 14px">
                 {{ $t('main_login') }}

@@ -15,6 +15,8 @@
   --dialog-background-color: #{$cask-light-hsla};
   --dialog-background-color-frame: #{$cask-light-hsla-frame};
 
+  --semi-bg-container-background-color: #{$cask-light-black};
+
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
@@ -37,6 +39,8 @@
   --dialog-background-color: #{$cask-dark-hsla};
   --dialog-background-color-frame: #{$cask-dark-hsla-frame};
 
+  --semi-bg-container-background-color: #{$cask-light-black-deep};
+
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
@@ -56,6 +60,8 @@
 
   --dialog-background-color: #{$cask-light-hsla};
   --dialog-background-color-frame: #{$cask-light-hsla-frame};
+
+  --semi-bg-container-background-color: #{$cask-green};
 
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
