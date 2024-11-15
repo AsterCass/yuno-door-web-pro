@@ -63,7 +63,9 @@ const globalState = useGlobalStateStore();
   width: 100%;
   height: 100%;
   z-index: -1 !important;
-  opacity: 0.8;
+  opacity: 0.85;
+
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0));
 }
 
 
