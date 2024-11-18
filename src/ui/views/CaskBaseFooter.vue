@@ -36,13 +36,13 @@
     <q-separator vertical class="component-separator-in-container" size="1px" style="margin: 16px"/>
 
     <div class="row items-center">
-      Mail: astercass@qq.com
+      Mail：astercass@qq.com
     </div>
 
     <q-separator vertical class="component-separator-in-container" size="1px" style="margin: 16px"/>
 
     <div class="row items-center">
-      QQ: 404919617
+      QQ：404919617
     </div>
 
   </div>
