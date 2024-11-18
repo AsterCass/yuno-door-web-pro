@@ -29,12 +29,16 @@
     </h6>
 
 
+    <cask-base-footer/>
+
+
   </q-layout>
 </template>
 
 <script setup>
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
+import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 
 const globalState = useGlobalStateStore();
 

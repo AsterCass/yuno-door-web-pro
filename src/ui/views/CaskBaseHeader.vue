@@ -388,7 +388,7 @@ onUnmounted(() => {
   color: var(--text-color);
   border-radius: 8px;
   background-color: var(--container-background-color);
-  box-shadow: inset 0 0 1px 1px var(--background-color);
+  box-shadow: inset 0 0 2px 2px var(--text-color-select-op);
   backdrop-filter: blur(30px);
   padding: 2px;
 
@@ -403,7 +403,7 @@ onUnmounted(() => {
   color: var(--text-color);
   border-radius: 8px;
   background-color: var(--container-background-color);
-  box-shadow: inset 0 0 1px 1px var(--background-color);
+  box-shadow: inset 0 0 2px 2px var(--text-color-select-op);
   backdrop-filter: blur(30px);
   padding: 2px;
 

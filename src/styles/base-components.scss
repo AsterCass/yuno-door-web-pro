@@ -132,6 +132,11 @@
   opacity: .3;
 }
 
+.component-separator-in-container {
+  background-color: var(--full-container-text-color) !important;
+  opacity: .5;
+}
+
 .component-ratio-base {
 
   .q-checkbox__inner:not(.q-checkbox__inner--truthy) {
