@@ -261,7 +261,7 @@
 
 
         <div class="q-mb-md row justify-evenly items-center">
-          <q-btn no-caps unelevated class="component-none-btn-grow">
+          <q-btn no-caps unelevated class="component-none-btn-grow" @click="notifyTopWarning('test')">
             <div class="row items-center q-my-sm">
               <q-icon name="fa-brands fa-github" size="1.8rem"/>
             </div>
@@ -294,6 +294,7 @@ import {onMounted, onUnmounted, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
+import {notifyTopWarning} from "@/utils/notification-tools";
 
 const globalState = useGlobalStateStore();
 

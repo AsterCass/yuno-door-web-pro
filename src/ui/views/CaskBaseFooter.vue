@@ -2,14 +2,14 @@
 
   <div class="bottom-footer-base row justify-evenly">
 
-    <div class="bottom-footer-base-header column justify-between" style="max-width: 35rem">
+    <div class="bottom-footer-base-header column justify-between q-my-sm" style="max-width: 35rem">
       <div style="font-size: 1.5rem">
         astercasc.com
       </div>
-      <div style="opacity: .5">
+      <div style="opacity: .5" class="q-my-sm">
         {{ $t('main_web_desc') }}
       </div>
-      <div style="opacity: .85">
+      <div style="opacity: .85" class="q-my-sm">
         <div>
           &copy; 2020-{{ curYear }} astercasc.com {{ $t('main-nav-ipc-pre') }}
           <a target="_blank" href="https://beian.miit.gov.cn/">{{ $t('main-nav-ipc-center') }}</a>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="bottom-footer-base-header column">
+    <div class="q-ma-sm column">
       <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
         {{ $t('main-nav-quick-link') }}
       </div>
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="bottom-footer-base-header column">
+    <div class="q-ma-sm column">
       <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
         {{ $t('main-nav-tool') }}
       </div>
@@ -57,19 +57,21 @@
       </div>
     </div>
 
-    <div class="bottom-footer-base-header column">
+    <div class="q-ma-sm column">
       <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
         {{ $t('main-nav-game') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="openLink('https://game.astercasc.com/G-Hextris/')">
         Hextris
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="openLink('https://aidn.jp/mikutap/')">
         Mikutap
       </div>
     </div>
 
-    <div class="bottom-footer-base-header column">
+    <div class="q-ma-sm column">
       <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
         {{ $t('main-nav-personal-res') }}
       </div>
@@ -95,7 +97,7 @@
       </div>
     </div>
 
-    <div class="bottom-footer-base-header column">
+    <div class="q-ma-sm column">
       <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
         {{ $t('main-nav-contact-me') }}
       </div>
@@ -133,7 +135,7 @@ onMounted(() => {
 
 .bottom-footer-base {
   margin-top: 1rem;
-  padding: 1.5rem 2rem 2rem 2rem;
+  padding: 1rem 2rem 1.2rem 2rem;
   background-color: var(--full-container-background-color-dark);
   color: var(--full-container-text-color);
   min-height: 16rem;
