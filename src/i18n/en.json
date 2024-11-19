@@ -37,6 +37,7 @@
   "main_chat_room": "Chatroom",
   "main_subtitle": "Those little hands, without us knowing, have grown stronger than both you and me. Passing through the vine-covered corridor, bidding farewell to the tear-filled days",
   "main_top_content": "Discovering truth through practice, then confirming and developing truth through practice once again. From perceptual knowledge, we actively progress to rational understanding, which then actively guides practice to transform both the subjective and objective worlds. This cycle of practice, understanding, more practice, and further understanding continues endlessly. With each cycle, the content of both practice and understanding advances to a relatively higher level. This is the complete epistemology of dialectical materialism; it is the dialectical materialist view of the unity of knowledge and action",
+  "main_web_desc": "Showcasing practices in software development, coding, and cross-platform applications. Explore projects, blogs, and technical tutorials that delve into innovative tech solutions and programming insights",
 
   "main_setting_title": "Setting",
   "main_setting_show_scroller": "Fullscreen still displays scroller :",
@@ -57,6 +58,27 @@
   "main_login_privacy_pre": "I agree to",
   "main_login_privacy_center": "privacy policy and terms",
   "main_login_more": "Or",
+
+  "main-fa-mail": "Mail",
+  "main-fa-wechat": "WeChat",
+  "main-fa-qq": "QQ",
+
+  "main_tools_qrcode_gen": "QRCode Generator",
+  "main_tools_rgb_con": "Rgb Hex Converter",
+  "main_tools_base64_con": "Base64 Converter",
+  "main_tools_md5_gen": "Md5 Encryption",
+  "main_tools_time_con": "Timestamp Converter",
+
+  "main-nav-ipc-pre": "Internet ICP Filing: ",
+  "main-nav-ipc-center": "Zhejiang ICP No. 2022023127",
+  "main-nav-personal-res": "Personal Repositories",
+  "main-nav-contact-me": "Contacts me",
+  "main-nav-game": "Games",
+  "main-nav-tool": "Toolkits",
+  "main-nav-quick-link": "Quick Links",
+
+
+
 
   "home": "Home"
 }

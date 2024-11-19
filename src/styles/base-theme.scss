@@ -181,9 +181,16 @@ p {
 .cask-jump-link-in-text {
   color: var(--pointer);
   cursor: pointer;
+
+  &:hover, &:active {
+    text-decoration: underline;
+  }
 }
 
-.cask-jump-link-in-text:hover,
-.cask-jump-link-in-text:active {
-  text-decoration: underline;
+.cask-jump-link-in-text-origin {
+  cursor: pointer;
+
+  &:hover, &:active {
+    text-decoration: underline;
+  }
 }
