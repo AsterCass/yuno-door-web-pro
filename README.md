@@ -66,6 +66,7 @@ yarn serve
 * vue：vue
 * vue-router：vue
 * vue-i18n: 多语言支持
+* lottie-web: 动画支持
 
 ## 注意事项
 

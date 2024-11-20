@@ -261,17 +261,17 @@
 
 
         <div class="q-mb-md row justify-evenly items-center">
-          <q-btn no-caps unelevated class="component-none-btn-grow" @click="notifyTopWarning('test')">
+          <q-btn no-caps unelevated class="component-none-btn-grow" @click="notifyTopWarning('This is test1')">
             <div class="row items-center q-my-sm">
               <q-icon name="fa-brands fa-github" size="1.8rem"/>
             </div>
           </q-btn>
-          <q-btn no-caps unelevated class="component-none-btn-grow">
+          <q-btn no-caps unelevated class="component-none-btn-grow" @click="notifyTopWarning('This is test2')">
             <div class="row items-center q-my-sm">
               <q-icon name="fa-brands fa-google" size="1.8rem" class="google-logo-text-color"/>
             </div>
           </q-btn>
-          <q-btn no-caps unelevated class="component-none-btn-grow">
+          <q-btn no-caps unelevated class="component-none-btn-grow" @click="notifyTopWarning('This is test3')">
             <div class="row items-center q-my-sm">
               <q-icon name="fa-brands fa-qq" size="1.8rem" style="color: rgb(0, 153, 255)"/>
             </div>

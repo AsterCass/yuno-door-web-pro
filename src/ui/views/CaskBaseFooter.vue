@@ -19,7 +19,7 @@
     </div>
 
     <div class="q-ma-sm column">
-      <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
+      <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-quick-link') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="q-ma-sm column">
-      <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
+      <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-tool') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
@@ -58,7 +58,7 @@
     </div>
 
     <div class="q-ma-sm column">
-      <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
+      <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-game') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
@@ -72,7 +72,7 @@
     </div>
 
     <div class="q-ma-sm column">
-      <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
+      <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-personal-res') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
@@ -98,7 +98,7 @@
     </div>
 
     <div class="q-ma-sm column">
-      <div class="q-mb-md" style="font-size: 1.2rem;opacity: .85">
+      <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-contact-me') }}
       </div>
       <div class="q-my-xs https://github.com/AsterCass?tab=repositories" style="opacity: .5">
