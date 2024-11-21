@@ -11,4 +11,8 @@ export function openLink(url, newBlank = true) {
 
 }
 
+export function isMiniScreenMethod() {
+    return document.documentElement.clientWidth < 1440
+}
+
 

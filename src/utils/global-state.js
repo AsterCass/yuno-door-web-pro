@@ -24,6 +24,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         language: 'en',
         saveLoginData: true,
         newMessage: false,
+        screenMini: false,
     }),
     actions: {
         updateTheme(code) {
@@ -40,6 +41,9 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateNewMessage(haveNewMessage) {
             this.newMessage = haveNewMessage;
+        },
+        updateScreenMini(isMini) {
+            this.screenMini = isMini;
         },
     },
 });

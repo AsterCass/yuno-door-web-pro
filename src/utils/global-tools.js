@@ -1,9 +1,9 @@
-import {onMounted, onBeforeUnmount} from 'vue';
 import i18n from '@/i18n';
 import {Quasar} from 'quasar'
 import zh from 'quasar/lang/zh-CN'
 import en from 'quasar/lang/en-US'
 import {useGlobalStateStore} from '@/utils/global-state';
+import {isMiniScreenMethod} from "@/utils/base-tools";
 
 export function initGlobalState() {
     const globalState = useGlobalStateStore();
@@ -19,6 +19,8 @@ export function initGlobalState() {
     } else if (lang === 'zh') {
         Quasar.lang.set(zh)
     }
+    //screen size
+    globalState.updateScreenMini(isMiniScreenMethod());
     //login data
 
     //more
@@ -73,6 +75,15 @@ export function updateLanguage(code) {
     }
 }
 
+export function updateScreenSizeMini(isMini) {
+    const globalState = useGlobalStateStore();
+    if (isMini && !globalState.screenMini) {
+        globalState.updateScreenMini(isMini);
+    } else if (!isMini && globalState.screenMini) {
+        globalState.updateScreenMini(isMini);
+    }
+}
+
 export function switchLanguage() {
     const globalState = useGlobalStateStore();
     if (i18n.global.locale === 'en') {
@@ -89,22 +100,4 @@ export function switchLanguage() {
 export function updateSaveLoginData(isSave) {
     const globalState = useGlobalStateStore();
     globalState.updateSaveLoginData(isSave)
-}
-
-
-export function resizeEvent(callback) {
-    const handleResize = () => {
-        if (callback && typeof callback === 'function') {
-            callback();
-        }
-    };
-
-    onMounted(() => {
-        window.addEventListener('resize', handleResize);
-    });
-
-    onBeforeUnmount(() => {
-        console.log("[op:resize] resizeEvent end");
-        window.removeEventListener('resize', handleResize);
-    });
 }
