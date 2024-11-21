@@ -2,8 +2,8 @@
 
 .component-extra-card-std {
   border-radius: 4px !important;
-  color: var(--container-text-color) !important;
-  background-color: var(--container-background-color) !important;
+  color: rgb(var(--container-text-color)) !important;
+  background-color: rgb(var(--container-background-color)) !important;
   backdrop-filter: saturate(200%) blur(30px) !important;
 
   .q-item--active {
@@ -11,7 +11,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--text-color-select);
+    background-color: rgb(var(--text-color-select));
   }
 
 }
@@ -30,7 +30,7 @@
     box-sizing: border-box;
     border: 2px solid transparent;
     border-image: linear-gradient(135deg, red 5%, transparent 10%, transparent 90%, red 95%) 1;
-    //linear-gradient(135deg, var(--text-color) .3%, transparent .9%, transparent 99.1%, var(--text-color) 99.7%)
+    //linear-gradient(135deg, rgb(var(--text-color)) .3%, transparent .9%, transparent 99.1%, rgb(var(--text-color)) 99.7%)
 
     pointer-events: none;
   }

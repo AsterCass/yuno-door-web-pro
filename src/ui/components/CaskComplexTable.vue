@@ -120,7 +120,7 @@
       <template v-for="(thisSlot, index) in customSlot" :key="index" v-slot:[thisSlot.slotName]="props">
         <q-td :props="props">
           <div v-if="thisSlot.slotType === ComplexTableColumnTypeEnum.POINT"
-               style="color: var(--pointer); cursor: pointer"
+               style="color: rgb(var(--pointer)); cursor: pointer"
                @click="emit('columnClick', thisSlot.name, props.row)">
             {{ props.row[thisSlot.name] }}
           </div>
@@ -158,7 +158,7 @@
           <div class="row justify-center">
             <div v-show="!operation.condition ||  props.row[operation.condition]"
                  v-for="(operation, index) in customTableOperation" :key="index"
-                 style="color: var(--pointer); cursor: pointer; margin: 0 .2rem"
+                 style="color: rgb(var(--pointer)); cursor: pointer; margin: 0 .2rem"
                  @click="emit('operationClick', operation.name, props.row) ">
               {{ operation.label }}
             </div>

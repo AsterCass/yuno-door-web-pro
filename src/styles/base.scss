@@ -11,31 +11,26 @@ $info: #31CCEC;
 $warning: #F2C037;
 
 //cask color
-$cask-light-white: rgb(239, 239, 239);
-$cask-light-white-op: rgba(239, 239, 239, 0.75);
-$cask-light-black-deep: rgb(32, 32, 32);
-$cask-light-black: rgb(48, 48, 48);
-$cask-light-black-op: rgba(48, 48, 48, 0.75);
-$cask-light-black-light: rgb(192, 192, 192);
-$cask-light-black-light-op: rgba(192, 192, 192, 0.5);
-$cask-dark-white: rgb(225, 225, 225);
-$cask-dark-black: rgb(18, 18, 18);
-$cask-dark-white-dark: rgb(92, 92, 92);
-$cask-dark-white-dark-op: rgba(92, 92, 92, 0.5);
-$cask-green-deep: rgb(0, 80, 80);
-$cask-green: rgb(43, 121, 111);
-$cask-green-op: rgb(71, 112, 102, 0.75);
-$cask-green-light-light: rgb(193, 216, 215);
-$cask-green-light: rgb(138, 181, 176);
-$cask-green-light-op: rgba(138, 181, 176, 0.5);
+$cask-light-white: 239, 239, 239;
+$cask-light-black-deep: 32, 32, 32;
+$cask-light-black: 48, 48, 48;
+$cask-light-black-light: 192, 192, 192;
+$cask-dark-white: 225, 225, 225;
+$cask-dark-black: 18, 18, 18;
+$cask-dark-white-dark: 92, 92, 92;
+$cask-green-deep: 0, 80, 80;
+$cask-green: 43, 121, 111;
+$cask-green-op: 71, 112, 102, 0.75;
+$cask-green-light-light: 193, 216, 215;
+$cask-green-light: 138, 181, 176;
 
-$cask-warning: rgb(255, 183, 0);
-$cask-negative: rgb(231, 69, 40);
-$cask-pointer: rgb(25, 118, 210);
-$cask-positive: rgb(56, 142, 60);
+$cask-warning: 255, 183, 0;
+$cask-negative: 231, 69, 40;
+$cask-pointer: 25, 118, 210;
+$cask-positive: 56, 142, 60;
 
-$cask-warn-bg-op: rgb(45, 38, 38, 0.7);
-$cask-positive-bg-op: rgba(255, 255, 255, 0.7);
+$cask-warn-bg-op: 45, 38, 38, 0.7;
+$cask-positive-bg-op: 255, 255, 255, 0.7;
 
 //cask color 2
 $cask-light-hsla: hsla(0, 0%, 94%, 0.8);

@@ -6,17 +6,17 @@
   border-radius: 5px !important;
 
   .q-date__header {
-    color: var(--full-container-text-color);
-    background: var(--full-container-background-color);
+    color:rgb(var(--full-container-text-color));
+    background:rgb(var(--full-container-background-color));
     border-radius: 4px 4px 0 0 !important;
   }
 
   .q-date__main {
-    color: var(--text-color) !important;
-    background: var(--container-background-color);
+    color:rgb(var(--text-color)) !important;
+    background:rgb(var(--container-background-color));
 
     .bg-primary {
-      background-color: var(--full-container-background-color) !important;
+      background-color:rgb(var(--full-container-background-color)) !important;
     }
   }
 }
@@ -24,30 +24,30 @@
 .q-notification {
 
   &.bg-warning {
-    color: var(--warning) !important;
+    color: rgb(var(--warning)) !important;
     border-radius: 4px !important;
-    background-color: var(--tips-bg-dark) !important;
+    background-color:rgb(var(--tips-bg-dark)) !important;
     backdrop-filter: blur(20px) !important;
   }
 
   &.bg-negative {
-    color: var(--negative) !important;
+    color: rgb(var(--negative)) !important;
     border-radius: 4px !important;
-    background-color: var(--tips-bg-light) !important;
+    background-color:rgb(var(--tips-bg-light)) !important;
     backdrop-filter: blur(30px) !important;
   }
 
   &.bg-positive {
-    color: var(--positive) !important;
+    color:rgb(var(--positive)) !important;
     border-radius: 4px !important;
-    background-color: var(--tips-bg-light) !important;
+    background-color:rgb(var(--tips-bg-light)) !important;
     backdrop-filter: blur(30px) !important;
   }
 
   &.bg-info {
-    color: var(--pointer) !important;
+    color: rgb(var(--info)) !important;
     border-radius: 4px !important;
-    background-color: var(--tips-bg-light) !important;
+    background-color:rgb(var(--tips-bg-light)) !important;
     backdrop-filter: blur(30px) !important;
   }
 

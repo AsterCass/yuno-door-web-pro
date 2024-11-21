@@ -23,10 +23,16 @@
 
     </div>
 
-    <h6 v-for="index in 30" :key="index">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
-      Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-    </h6>
+    <div>
+
+
+      <h6 v-for="index in 30" :key="index">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
+        Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+      </h6>
+
+
+    </div>
 
 
     <cask-base-footer/>
@@ -55,7 +61,7 @@ const globalState = useGlobalStateStore();
   .cask-main-top-content {
     padding-top: 2rem;
 
-    color: var(--full-container-text-color);
+    color: rgb(var(--full-container-text-color));
     width: 60%
   }
 }

@@ -50,7 +50,7 @@
             </div>
           </div>
           <q-badge floating rounded v-show="globalState.newMessage"
-                   style="background-color: var(--negative);
+                   style="background-color: rgb(var(--negative));
                     padding: 4px; min-height: 8px; margin: 8px 7px 0 0"/>
         </q-btn>
       </div>
@@ -241,7 +241,7 @@
 
         <div class="row justify-center">
           <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
-                 style="background-color: var(--semi-bg-container-background-color) !important">
+                 style="background-color: rgb(var(--semi-bg-container-background-color)) !important">
             <div class="row items-center">
               <div class="q-mr-sm" style="font-size: 14px">
                 {{ $t('main_login') }}
@@ -370,14 +370,14 @@ onUnmounted(() => {
 }
 
 .top-semi-trans-header-base-top {
-  color: var(--full-container-text-color);
+  color: rgb(var(--full-container-text-color));
   background-color: transparent;
 }
 
 .top-semi-trans-header-base-no-top {
-  color: var(--text-color);
-  background-color: var(--container-background-color);
-  box-shadow: inset 0 0 1px 1px var(--background-color);
+  color: rgb(var(--text-color));
+  background-color: rgb(var(--container-background-color));
+  box-shadow: inset 0 0 1px 1px rgb(var(--background-color));
   backdrop-filter: saturate(200%) blur(30px);
 }
 
@@ -386,10 +386,10 @@ onUnmounted(() => {
   height: 410px;
   width: 300px;
 
-  color: var(--text-color);
+  color: rgb(var(--text-color));
   border-radius: 8px;
-  background-color: var(--container-background-color);
-  box-shadow: inset 0 0 2px 2px var(--text-color-select-op);
+  background-color: rgb(var(--container-background-color));
+  box-shadow: inset 0 0 2px 2px rgb(var(--text-color-select-op));
   backdrop-filter: blur(30px);
   padding: 2px;
 
@@ -401,10 +401,10 @@ onUnmounted(() => {
   height: 500px;
   width: 390px;
 
-  color: var(--text-color);
+  color: rgb(var(--text-color));
   border-radius: 8px;
-  background-color: var(--container-background-color);
-  box-shadow: inset 0 0 2px 2px var(--text-color-select-op);
+  background-color: rgb(var(--container-background-color));
+  box-shadow: inset 0 0 2px 2px rgb(var(--text-color-select-op));
   backdrop-filter: blur(30px);
   padding: 2px;
 

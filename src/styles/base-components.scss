@@ -12,17 +12,17 @@
   width: $thisWidth !important;
   min-width: $thisMinWidth !important;
   padding: 0 .6rem !important;
-  color: var(--full-container-text-color) !important;
-  background: var(--full-container-background-color) !important;
+  color: rgb(var(--full-container-text-color)) !important;
+  background: rgb(var(--full-container-background-color)) !important;
   border-radius: 4px !important;
-  border: 2px solid var(--full-container-background-color) !important;
+  border: 2px solid rgb(var(--full-container-background-color)) !important;
 }
 
 @mixin component-outline-btn-base(
   $thisHeight: 2.4rem,
   $thisWidth: 6rem,
   $thisMinWidth: 6rem,
-  $thisBorder:  2px solid var(--full-container-background-color),
+  $thisBorder:  2px solid rgb(var(--full-container-background-color)),
 ) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
@@ -44,7 +44,7 @@
   $thisWidth: 12rem,
   $thisMinWidth: 12rem,
   $thisHeight: 2.4rem,
-  $thisBorder: 2px solid var(--full-container-background-color)
+  $thisBorder: 2px solid rgb(var(--full-container-background-color))
 ) {
   width: $thisWidth !important;
   min-width: $thisMinWidth !important;
@@ -55,7 +55,7 @@
   }
 
   .q-field__native {
-    color: var(--text-color) !important;
+    color: rgb(var(--text-color)) !important;
     height: $thisHeight !important;
   }
 
@@ -76,12 +76,12 @@
   .q-field__prepend {
     font-size: .9rem;
     height: $thisHeight !important;
-    color: var(--container-text-color);
+    color: rgb(var(--container-text-color));
   }
 
   .q-field__append {
     height: $thisHeight !important;
-    color: var(--text-color);
+    color: rgb(var(--text-color));
 
     .q-icon {
       font-size: 1rem;
@@ -89,28 +89,28 @@
   }
 
   .q-field__messages {
-    color: var(--negative);
+    color: rgb(var(--negative));
   }
 
   .q-chip {
-    color: var(--full-container-text-color);
-    background-color: var(--full-container-background-color);
+    color: rgb(var(--full-container-text-color));
+    background-color: rgb(var(--full-container-background-color));
     opacity: .9;
 
     .q-icon {
-      color: var(--full-container-text-color);
+      color: rgb(var(--full-container-text-color));
       opacity: .9;
     }
   }
 
   &.q-field--highlighted {
     .q-field__prepend {
-      color: var(--container-text-color);
+      color: rgb(var(--container-text-color));
     }
 
     .q-field__append {
       .q-icon {
-        color: var(--container-text-color);
+        color: rgb(var(--container-text-color));
       }
     }
   }
@@ -128,33 +128,33 @@
 }
 
 .component-separator-base {
-  background-color: var(--text-color) !important;
+  background-color: rgb(var(--text-color)) !important;
   opacity: .3;
 }
 
 .component-separator-in-container {
-  background-color: var(--full-container-text-color) !important;
+  background-color: rgb(var(--full-container-text-color)) !important;
   opacity: .4;
 }
 
 .component-ratio-base {
 
   .q-checkbox__inner:not(.q-checkbox__inner--truthy) {
-    color: var(--text-color);
+    color: rgb(var(--text-color));
     opacity: .7;
   }
 
   .q-checkbox__inner--truthy {
-    color: var(--text-color);
+    color: rgb(var(--text-color));
   }
 
   .q-radio__inner:not(.q-radio__inner--truthy) {
-    color: var(--text-color);
+    color: rgb(var(--text-color));
     opacity: .7;
   }
 
   .q-radio__inner--truthy {
-    color: var(--text-color);
+    color: rgb(var(--text-color));
   }
 }
 
@@ -184,7 +184,7 @@
 .component-outline-btn-clear-grow {
   @include component-outline-btn-base(
           $thisWidth: auto,
-          $thisBorder: 2px solid var(--full-container-background-color-light),
+          $thisBorder: 2px solid rgb(var(--full-container-background-color-light)),
   )
 }
 
@@ -237,7 +237,7 @@
   @include component-outline-input-base(
           $thisWidth: auto,
           $thisMinWidth: 12rem,
-          $thisBorder: 2px solid var(--semi-bg-container-background-color),
+          $thisBorder: 2px solid rgb(var(--semi-bg-container-background-color)),
   );
 }
 
@@ -253,7 +253,7 @@
   @include component-outline-input-base(
           $thisWidth: auto,
           $thisMinWidth: 12rem,
-          $thisBorder: 2px dashed var(--full-container-background-color),
+          $thisBorder: 2px dashed rgb(var(--full-container-background-color)),
   );
 }
 
@@ -262,7 +262,7 @@
           $thisWidth: 28rem,
           $thisMinWidth: 28rem,
           $thisHeight: 18rem,
-          $thisBorder: 2px dashed var(--full-container-background-color),
+          $thisBorder: 2px dashed rgb(var(--full-container-background-color)),
   );
 }
 

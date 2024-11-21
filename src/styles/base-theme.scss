@@ -3,14 +3,14 @@
 :root {
   --text-color: #{$cask-light-black};
   --text-color-select: #{$cask-light-black-light};
-  --text-color-select-op: #{$cask-light-black-light-op};
+  --text-color-select-op: #{$cask-light-black-light} , 0.5;
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-light-black-deep};
   --full-container-background-color: #{$cask-light-black};
   --full-container-background-color-light: #{$cask-dark-white};
   --container-text-color: #{$cask-light-black};
-  --container-background-color: #{$cask-light-white-op};
+  --container-background-color: #{$cask-light-white}, 0.75;
 
   --dialog-background-color: #{$cask-light-hsla};
   --dialog-background-color-frame: #{$cask-light-hsla-frame};
@@ -30,14 +30,14 @@
 [data-theme="dark"] {
   --text-color: #{$cask-dark-white};
   --text-color-select: #{$cask-dark-white-dark};
-  --text-color-select-op: #{$cask-dark-white-dark-op};
+  --text-color-select-op: #{$cask-dark-white-dark}, 0.5;
   --background-color: #{$cask-dark-black};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-light-black-deep};
   --full-container-background-color: #{$cask-light-black};
-  --full-container-background-color-light: #{$cask-light-black-op};
+  --full-container-background-color-light: #{$cask-light-black}, 0.75;
   --container-text-color: #{$cask-dark-white};
-  --container-background-color: #{$cask-light-black-op};
+  --container-background-color: #{$cask-light-black}, 0.75;
 
   --dialog-background-color: #{$cask-dark-hsla};
   --dialog-background-color-frame: #{$cask-dark-hsla-frame};
@@ -55,14 +55,14 @@
 [data-theme="green"] {
   --text-color: #{$cask-green};
   --text-color-select: #{$cask-green-light};
-  --text-color-select-op: #{$cask-green-light-op};
+  --text-color-select-op: #{$cask-green-light}, 0.5;
   --background-color: #{$cask-light-white};
   --full-container-text-color: #{$cask-dark-white};
   --full-container-background-color-dark: #{$cask-green-deep};
   --full-container-background-color: #{$cask-green};
   --full-container-background-color-light: #{$cask-green-light-light};
   --container-text-color: #{$cask-green};
-  --container-background-color: #{$cask-light-white-op};
+  --container-background-color: #{$cask-light-white}, 0.75;
 
   --dialog-background-color: #{$cask-light-hsla};
   --dialog-background-color-frame: #{$cask-light-hsla-frame};
@@ -88,11 +88,11 @@ html, body, aside {
 
 body, aside {
   margin: 0;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  color: rgb(var(--text-color));
+  background-color: rgb(var(--background-color));
 
   ::selection {
-    background-color: var(--text-color-select-op);
+    background-color: rgb(var(--text-color-select-op));
   }
 }
 
@@ -158,7 +158,7 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--full-container-background-color);
+  background-color: rgb(var(--full-container-background-color));
   cursor: pointer;
   width: 8px;
   border-radius: 8px;
@@ -175,20 +175,20 @@ p {
 
 .cask-litter-title-asterisk::before {
   content: '*';
-  color: var(--negative);
+  color: rgb(var(--negative));
   margin-right: 4px;
 }
 
 .cask-simple-quoted-title {
   padding: .2rem .5rem;
   border-radius: 0 8px 8px 0;
-  background-color: var(--full-container-background-color-light);
-  color: var(--text-color);
-  border-left: 5px solid var(--text-color);
+  background-color: rgb(var(--full-container-background-color-light));
+  color: rgb(var(--text-color));
+  border-left: 5px solid rgb(var(--text-color));
 }
 
 .cask-jump-link-in-text {
-  color: var(--pointer);
+  color: rgb(var(--pointer));
   cursor: pointer;
 
   &:hover, &:active {
