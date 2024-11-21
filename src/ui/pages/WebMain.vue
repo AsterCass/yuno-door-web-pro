@@ -25,12 +25,61 @@
 
     <div>
 
+      <div class="row justify-center">
+        <cask-main-article-container class="col-lg-11 col-12"/>
+      </div>
 
-      <h6 v-for="index in 30" :key="index">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
-        Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-      </h6>
 
+      <div>
+        个人随笔
+      </div>
+
+      <div>
+        该模块副标题
+      </div>
+
+      <div>
+        内容
+      </div>
+
+
+      <div>
+        工具
+      </div>
+
+      <div>
+        该模块副标题
+      </div>
+
+      <div>
+        内容
+      </div>
+
+
+      <div>
+        游戏
+      </div>
+
+      <div>
+        该模块副标题
+      </div>
+
+      <div>
+        内容
+      </div>
+
+
+      <div>
+        视频
+      </div>
+
+      <div>
+        该模块副标题
+      </div>
+
+      <div>
+        内容
+      </div>
 
     </div>
 
@@ -45,6 +94,7 @@
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
+import CaskMainArticleContainer from "@/ui/views/CaskMainArticleContainer.vue";
 
 const globalState = useGlobalStateStore();
 
