@@ -28,9 +28,14 @@ $cask-green-op: rgb(71, 112, 102, 0.75);
 $cask-green-light-light: rgb(193, 216, 215);
 $cask-green-light: rgb(138, 181, 176);
 $cask-green-light-op: rgba(138, 181, 176, 0.5);
-$cask-warning: rgb(207, 160, 48);
-$cask-negative: rgb(223, 87, 87);
+
+$cask-warning: rgb(255, 183, 0);
+$cask-negative: rgb(231, 69, 40);
 $cask-pointer: rgb(25, 118, 210);
+$cask-positive: rgb(56, 142, 60);
+
+$cask-warn-bg-op: rgb(45, 38, 38, 0.7);
+$cask-positive-bg-op: rgba(255, 255, 255, 0.7);
 
 //cask color 2
 $cask-light-hsla: hsla(0, 0%, 94%, 0.8);

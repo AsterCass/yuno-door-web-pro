@@ -20,6 +20,9 @@
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
+  --positive: #{$cask-positive};
+  --tips-bg-dark: #{$cask-warn-bg-op};
+  --tips-bg-light: #{$cask-positive-bg-op};
 
   --scrollbar-width: 0;
 }
@@ -44,6 +47,9 @@
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
+  --positive: #{$cask-positive};
+  --tips-bg-dark: #{$cask-warn-bg-op};
+  --tips-bg-light: #{$cask-positive-bg-op};
 }
 
 [data-theme="green"] {
@@ -66,6 +72,9 @@
   --pointer: #{$cask-pointer};
   --negative: #{$cask-negative};
   --warning: #{$cask-warning};
+  --positive: #{$cask-positive};
+  --tips-bg-dark: #{$cask-warn-bg-op};
+  --tips-bg-light: #{$cask-positive-bg-op};
 }
 
 [hide-scrollbar="false"] {

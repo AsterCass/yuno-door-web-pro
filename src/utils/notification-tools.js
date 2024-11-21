@@ -19,6 +19,7 @@ function loadLottieAnimation(elementId, path) {
                 autoplay: true,
                 path: path,
             });
+            newAnimation.setSpeed(0.8)
             notificationAnimationMap.set(elementId, newAnimation);
         }
     })
@@ -37,10 +38,10 @@ export function notifyTopNegative(msg, time = 3000) {
     Notify.create({
         message: `<div class="row justify-center items-center">
                     <div id="${notificationId}" class="col" style="width: 30px; height: 30px;"></div> 
-                    <div class="q-ml-sm"> ${msg} </div>
+                    <div class="q-ml-sm q-mr-xs"> ${msg} </div>
                   </div>`,
-        position: 'top-left',
-        type: 'warning',
+        position: 'top',
+        type: 'negative',
         icon: "",
         timeout: time,
         html: true,
@@ -51,15 +52,34 @@ export function notifyTopNegative(msg, time = 3000) {
     loadLottieAnimation(notificationId, "/animation/error.json")
 }
 
+export function notifyTopInfo(msg, time = 3000) {
+    const notificationId = "notification-pre-animation" + Math.floor(Math.random() * 10000)
+    Notify.create({
+        message: `<div class="row justify-center items-center">
+                    <div id="${notificationId}" class="col" style="width: 30px; height: 30px;"></div> 
+                    <div class="q-ml-sm q-mr-xs"> ${msg} </div>
+                  </div>`,
+        position: 'top',
+        type: 'info',
+        icon: "",
+        timeout: time,
+        html: true,
+        onDismiss: () => {
+            removeAnimation(notificationId)
+        },
+    })
+    loadLottieAnimation(notificationId, "/animation/info.json")
+}
+
 export function notifyTopPositive(msg, time = 3000) {
     const notificationId = "notification-pre-animation" + Math.floor(Math.random() * 10000)
     Notify.create({
         message: `<div class="row justify-center items-center">
                     <div id="${notificationId}" class="col" style="width: 30px; height: 30px;"></div> 
-                    <div class="q-ml-sm"> ${msg} </div>
+                    <div class="q-ml-sm q-mr-xs"> ${msg} </div>
                   </div>`,
-        position: 'top-left',
-        type: 'warning',
+        position: 'top',
+        type: 'positive',
         icon: "",
         timeout: time,
         html: true,
@@ -75,9 +95,9 @@ export function notifyTopWarning(msg, time = 3000) {
     Notify.create({
         message: `<div class="row justify-center items-center">
                     <div id="${notificationId}" class="col" style="width: 30px; height: 30px;"></div> 
-                    <div class="q-ml-sm"> ${msg} </div>
+                    <div class="q-ml-sm q-mr-xs"> ${msg} </div>
                   </div>`,
-        position: 'top-left',
+        position: 'top',
         type: 'warning',
         icon: "",
         timeout: time,
@@ -86,5 +106,5 @@ export function notifyTopWarning(msg, time = 3000) {
             removeAnimation(notificationId)
         },
     })
-    loadLottieAnimation(notificationId, "/animation/error.json")
+    loadLottieAnimation(notificationId, "/animation/warning.json")
 }
