@@ -12,6 +12,10 @@ import {initGlobalState} from "@/utils/global-tools";
 //todo 如果觉得开门动画不好看，可以做类似卷帘门的动画，点击后，幕布上拉，，幕布上可以放一些简单的元素，这样相比更简约一些
 //todo 类似舞台幕布的动画效果也可以考虑
 
+
+
+//todo 大致兼容手机屏幕，不用完全兼容，完全兼容有点累，没必要
+
 onMounted(() => {
   initGlobalState()
 })
