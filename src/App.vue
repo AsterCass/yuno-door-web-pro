@@ -4,7 +4,7 @@
 
 <script setup>
 import {RouterView} from "vue-router";
-import {onMounted, onUnmounted} from "vue";
+import {onMounted, onBeforeUnmount} from "vue";
 import {initGlobalState, updateScreenSizeMini} from "@/utils/global-tools";
 import {isMiniScreenMethod} from "@/utils/base-tools";
 
@@ -27,7 +27,7 @@ onMounted(() => {
   window.addEventListener("resize", screenEventHandler);
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   window.removeEventListener("resize", screenEventHandler);
 
 })
