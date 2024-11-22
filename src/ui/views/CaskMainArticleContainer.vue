@@ -3,7 +3,7 @@
 
     <div class="col-12 row justify-center">
       <h2>
-        Technical Articles
+        {{ $t('main-nav-article') }}
       </h2>
     </div>
 
@@ -36,11 +36,21 @@
             Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
           </div>
 
+          <div class="row q-mx-md q-mb-md  justify-between items-center">
 
-          <div class="row q-mx-lg q-mb-md  justify-end">
-            View More
+            <div style="opacity: .5; margin-top: 3px">
+              1970-01-01 12:00
+            </div>
+
+            <q-btn no-caps unelevated class="component-none-btn-std">
+              <div class="row items-center">
+                <div class="q-mr-sm">
+                  {{ $t('route-more') }}
+                </div>
+                <q-icon name="fa-solid fa-align-right" size="15px"/>
+              </div>
+            </q-btn>
           </div>
-
 
         </div>
       </div>
@@ -53,7 +63,7 @@
       <q-btn no-caps unelevated class="shadow-2 component-full-btn-std">
         <div class="row items-center">
           <div class="q-mx-xs">
-            Explore
+            {{ $t('route-more-list') }}
           </div>
         </div>
       </q-btn>

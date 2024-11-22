@@ -29,11 +29,13 @@
         <cask-main-article-container class="col-lg-11 col-12"/>
       </div>
 
-      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2" />
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
       <div class="row justify-center">
         <cask-main-eassay-container class="col-lg-11 col-12"/>
       </div>
+
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
 
       <div>

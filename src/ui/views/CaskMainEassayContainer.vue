@@ -3,7 +3,7 @@
 
     <div class="col-12 row justify-center">
       <h2>
-        Personal Essays
+        {{ $t('main-nav-essay') }}
       </h2>
     </div>
 
@@ -19,7 +19,7 @@
 
           <div style="width: 100%;">
             <q-img :no-native-menu="false" :ratio="16/9" fit="cover"
-                   :src="`/img/main-article-${val%4}.jpg`" style="height: 15rem;border-radius: 8px;">
+                   :src="`/img/main-essay-${val%4}.jpg`" style="height: 15rem;border-radius: 8px;">
             </q-img>
           </div>
 
@@ -37,8 +37,20 @@
           </div>
 
 
-          <div class="row q-mx-lg q-mb-md  justify-end">
-            View More
+          <div class="row q-mx-md q-mb-md  justify-between items-center">
+
+            <div style="opacity: .5; margin-top: 3px">
+              1970-01-01 12:00
+            </div>
+
+            <q-btn no-caps unelevated class="component-none-btn-std">
+              <div class="row items-center">
+                <div class="q-mr-sm">
+                  {{ $t('route-more') }}
+                </div>
+                <q-icon name="fa-solid fa-align-right" size="15px"/>
+              </div>
+            </q-btn>
           </div>
 
 
@@ -53,7 +65,7 @@
       <q-btn no-caps unelevated class="shadow-2 component-full-btn-std">
         <div class="row items-center">
           <div class="q-mx-xs">
-            Explore
+            {{ $t('route-more-list') }}
           </div>
         </div>
       </q-btn>

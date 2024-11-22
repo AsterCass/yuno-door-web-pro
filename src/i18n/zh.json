@@ -76,6 +76,11 @@
   "main-nav-game": "游戏",
   "main-nav-tool": "高频工具",
   "main-nav-quick-link": "常用链接",
+  "main-nav-article": "技术文章",
+  "main-nav-essay": "个人随笔",
+
+  "route-more": "内容详情",
+  "route-more-list": "更多",
 
 
   "subtitle-1": "正义并不是强者为所欲为，也不是弱者盲目顺从，而是每个人都能够按照自己内在的天赋和职责发挥作用，与他人协调而生。",
