@@ -3,12 +3,12 @@
 
     <div class="col-12 row justify-center">
       <h2>
-        Technical Articles
+        Personal Essays
       </h2>
     </div>
 
-    <div class="col-12 text-center" style="margin-bottom: 2rem; opacity: .5;max-width: 50rem">
-      {{ $t('subtitle-1') }}
+    <div class="col-12 text-center" style="margin-bottom: 2rem; opacity: .5;max-width: 45rem">
+      {{ $t('subtitle-2') }}
     </div>
 
     <div class="col-12 row">
@@ -25,7 +25,7 @@
 
           <div class=" row q-mx-md">
             <h3>
-              Article Title
+              Essay Title
             </h3>
           </div>
 

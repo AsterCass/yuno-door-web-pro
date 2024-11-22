@@ -29,17 +29,10 @@
         <cask-main-article-container class="col-lg-11 col-12"/>
       </div>
 
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2" />
 
-      <div>
-        个人随笔
-      </div>
-
-      <div>
-        该模块副标题
-      </div>
-
-      <div>
-        内容
+      <div class="row justify-center">
+        <cask-main-eassay-container class="col-lg-11 col-12"/>
       </div>
 
 
@@ -95,6 +88,7 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import CaskMainArticleContainer from "@/ui/views/CaskMainArticleContainer.vue";
+import CaskMainEassayContainer from "@/ui/views/CaskMainEassayContainer.vue";
 
 const globalState = useGlobalStateStore();
 
