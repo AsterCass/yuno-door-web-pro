@@ -8,7 +8,7 @@
     </div>
 
     <div class="col-12 text-center q-px-md" style="margin-bottom: 2rem; opacity: .5;max-width: 52rem">
-      {{ $t('subtitle-1') }}
+      {{ $t('subtitle-2') }}
     </div>
 
     <div class="col-12 row">

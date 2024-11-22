@@ -158,6 +158,28 @@
   }
 }
 
+.component-vertical-tabs-with-container {
+  .q-tab {
+    white-space: break-spaces;
+  }
+
+  .tabs-expandable-content {
+    height: 80px;
+  }
+
+  .tabs-expand-enter-active,
+  .tabs-expand-leave-active {
+    transition: all .5s ease-out;
+    overflow: hidden;
+  }
+
+  .tabs-expand-enter-from,
+  .tabs-expand-leave-to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
 
 //==================== mix ====================
 

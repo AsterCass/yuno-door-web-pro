@@ -39,17 +39,11 @@
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
 
-      <div>
-        工具
+      <div class="row justify-center">
+        <cask-main-toolkit-container class="col-lg-11 col-12"/>
       </div>
 
-      <div>
-        该模块副标题
-      </div>
-
-      <div>
-        内容
-      </div>
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
 
       <div>
@@ -95,6 +89,8 @@ import CaskMainEssayContainer from "@/ui/views/CaskMainEssayContainer.vue";
 import {onBeforeMount, onMounted, ref, watch} from "vue";
 import {createTypingEffect} from "@/utils/auto-typing";
 import {useI18n} from 'vue-i18n';
+import CaskMainToolkitContainer from "@/ui/views/CaskMainToolkitContainer.vue";
+
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
