@@ -15,7 +15,7 @@
           {{ $t('main_title') }}
         </div>
         <div style="font-size: 1.5rem" class="q-my-md">
-          {{ $t('main_subtitle') }}
+          <span id="typing-text"></span>
         </div>
         <div style="font-size: 1.1rem; opacity: .8" v-if="!globalState.screenMini">
           {{ $t('main_top_content') }}
@@ -33,7 +33,7 @@
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
       <div class="row justify-center">
-        <cask-main-eassay-container class="col-lg-11 col-12"/>
+        <cask-main-essay-container class="col-lg-11 col-12"/>
       </div>
 
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
@@ -91,10 +91,42 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import CaskMainArticleContainer from "@/ui/views/CaskMainArticleContainer.vue";
-import CaskMainEassayContainer from "@/ui/views/CaskMainEassayContainer.vue";
+import CaskMainEssayContainer from "@/ui/views/CaskMainEssayContainer.vue";
+import {onBeforeMount, onMounted, ref, watch} from "vue";
+import {createTypingEffect} from "@/utils/auto-typing";
+import {useI18n} from 'vue-i18n';
 
 const globalState = useGlobalStateStore();
+const {t} = useI18n()
 
+let currentTyping = ref(null)
+
+watch(
+    () => globalState.language,
+    () => {
+      currentTyping.value.reset(t('main_subtitle'))
+    }
+);
+
+function initTyping() {
+  currentTyping.value = createTypingEffect(
+      document.querySelector('#typing-text'),
+      t('main_subtitle'),
+      {
+        typeSpeed: 50,
+      }
+  );
+}
+
+onMounted(() => {
+  initTyping()
+})
+
+onBeforeMount(() => {
+  if (currentTyping.value) {
+    currentTyping.value.destroy()
+  }
+})
 
 </script>
 
