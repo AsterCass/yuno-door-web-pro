@@ -1,5 +1,5 @@
 <template>
-  <q-header class="top-semi-trans-header-base">
+  <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
          :class="headerInTop ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">

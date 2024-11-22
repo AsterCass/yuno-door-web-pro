@@ -9,14 +9,15 @@
              '/img/bg-1-fixed.jpg' : '/img/bg-2-fixed.jpg'" class="cask-main-bg-image">
       </q-img>
 
-      <div class="cask-main-top-content">
-        <div style="font-size: 5rem">
+      <div class="cask-main-top-content"
+           :style="globalState.screenMini ? 'padding-top: 8rem; width: 90%' : 'padding-top: 2rem; width: 60%'">
+        <div :style="globalState.screenMini ? 'font-size: 3rem' : 'font-size: 5rem'">
           {{ $t('main_title') }}
         </div>
         <div style="font-size: 1.5rem" class="q-my-md">
           {{ $t('main_subtitle') }}
         </div>
-        <div style="font-size: 1.1rem; opacity: .8">
+        <div style="font-size: 1.1rem; opacity: .8" v-if="!globalState.screenMini">
           {{ $t('main_top_content') }}
         </div>
       </div>
@@ -105,10 +106,7 @@ const globalState = useGlobalStateStore();
   padding: 5rem 1rem 0 1rem;
 
   .cask-main-top-content {
-    padding-top: 2rem;
-
     color: rgb(var(--full-container-text-color));
-    width: 60%
   }
 }
 
