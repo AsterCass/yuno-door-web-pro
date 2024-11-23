@@ -20,7 +20,16 @@
         <div style="font-size: 1.1rem; opacity: .8" v-if="!globalState.screenMini">
           {{ $t('main_top_content') }}
         </div>
+
+
+        <div v-show="scrollState.scrollTop === 0" id="main-down-animation" ref="downingAnimationRef"
+             class="absolute cursor-pointer"
+             @click="togoElement('main-down-animation')"
+             style="height: 6rem; top: 56rem; left: 50%;transform: translateX(-50%);"/>
+
+
       </div>
+
 
     </div>
 
@@ -90,12 +99,18 @@ import {onBeforeMount, onMounted, ref, watch} from "vue";
 import {createTypingEffect} from "@/utils/auto-typing";
 import {useI18n} from 'vue-i18n';
 import CaskMainToolkitContainer from "@/ui/views/CaskMainToolkitContainer.vue";
+import lottie from "lottie-web";
+import {togoElement} from "@/utils/base-tools";
+import {scrollState} from "@/utils/global-state-no-save";
 
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
 let currentTyping = ref(null)
+let downingAnimationRef = ref(null)
+let downingAnimationName = ref("mainDowningAnimation")
+
 
 watch(
     () => globalState.language,
@@ -114,14 +129,30 @@ function initTyping() {
   );
 }
 
+function initDowningAnimation() {
+  lottie.loadAnimation({
+    name: downingAnimationName.value,
+    container: downingAnimationRef.value,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: "/animation/down.json",
+  });
+
+}
+
 onMounted(() => {
   initTyping()
+  initDowningAnimation()
 })
 
 onBeforeMount(() => {
+  //destroy typing
   if (currentTyping.value) {
     currentTyping.value.destroy()
   }
+  //destroy animation
+  lottie.destroy(downingAnimationName.value)
 })
 
 </script>

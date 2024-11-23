@@ -2,7 +2,7 @@
   <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
-         :class="headerInTop ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
+         :class="scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
@@ -295,10 +295,10 @@ import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, upda
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopWarning} from "@/utils/notification-tools";
+import {scrollState} from "@/utils/global-state-no-save";
 
 const globalState = useGlobalStateStore();
 
-const headerInTop = ref(true);
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
 const morphWithLogin = ref('btn')
@@ -307,10 +307,6 @@ const morphWithLoginContentShow = ref(false)
 const inputAccount = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
-
-const onScroll = () => {
-  headerInTop.value = window.scrollY === 0;
-};
 
 const showHeaderSetting = (isShow) => {
   if (isShow) {
@@ -337,16 +333,6 @@ const showHeaderLogin = (isShow) => {
     morphWithLoginContentShow.value = false
   }
 }
-
-
-onMounted(() => {
-  window.addEventListener('scroll', onScroll);
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll);
-})
-
 
 </script>
 

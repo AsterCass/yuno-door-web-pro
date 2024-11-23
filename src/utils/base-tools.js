@@ -15,4 +15,16 @@ export function isMiniScreenMethod() {
     return document.documentElement.clientWidth < 1440
 }
 
+export function togoElement(id) {
+    const target = document.getElementById(id);
+    if (target) {
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest",
+        });
+    }
+}
+
+
 

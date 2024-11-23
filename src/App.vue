@@ -7,6 +7,7 @@ import {RouterView} from "vue-router";
 import {onMounted, onBeforeUnmount} from "vue";
 import {initGlobalState, updateScreenSizeMini} from "@/utils/global-tools";
 import {isMiniScreenMethod} from "@/utils/base-tools";
+import {scrollState} from "@/utils/global-state-no-save";
 
 //todo 最开始展示主页可以做一个开门的动画，点击后，类似柯南开门的效果，可以做成移门不做推门
 //todo 当然，也可以在页面间跳转的做类似的动画
@@ -22,13 +23,24 @@ function screenEventHandler() {
   updateScreenSizeMini(isThisMiniScreen)
 }
 
+function scrollEventHandle() {
+  scrollState.scrollTop = window.scrollY;
+  scrollState.scrollLeft = window.scrollX;
+}
+
 onMounted(() => {
   initGlobalState()
+  //resize
   window.addEventListener("resize", screenEventHandler);
+  //scroll
+  window.addEventListener('scroll', scrollEventHandle);
 })
 
 onBeforeUnmount(() => {
+  //resize
   window.removeEventListener("resize", screenEventHandler);
+  //scroll
+  window.removeEventListener("resize", scrollEventHandle);
 
 })
 </script>
