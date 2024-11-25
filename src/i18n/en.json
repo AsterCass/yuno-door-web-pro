@@ -63,11 +63,16 @@
   "main-fa-wechat": "WeChat",
   "main-fa-qq": "QQ",
 
-  "main_tools_qrcode_gen": "QRCode Generator",
-  "main_tools_rgb_con": "Rgb Hex Converter",
-  "main_tools_base64_con": "Base64 Converter",
-  "main_tools_md5_gen": "Md5 Encryption",
+  "main_tools_qrcode_gen": "QRCode Generator and Parse",
+  "main_tools_qrcode_gen_desc": "You can convert text into a QR code, customize its style, generate a QR code with your own colors, and support QR code decoding.",
+  "main_tools_rgb_con": "RGB and Hexadecimal Conversion",
+  "main_tools_rgb_con_desc": "Used to convert RGB or RGBA color representations into hexadecimal color notation, and also to convert hexadecimal color notation into the corresponding RGB format.",
+  "main_tools_base64_con": "Base64 Image Conversion",
+  "main_tools_base64_con_desc": "Allows uploaded images to be converted into Base64 format, and also enables converting Base64 files back to images with a download option.",
+  "main_tools_md5_gen": "Text Hashing",
+  "main_tools_md5_gen_desc": "Used to hash the obtained string using message digest algorithms or hash algorithms, including MD5, SHA-1, and Keccak-256.",
   "main_tools_time_con": "Timestamp Converter",
+  "main_tools_time_con_desc": "",
 
   "main-nav-ipc-pre": "Internet ICP Filing: ",
   "main-nav-ipc-center": "Zhejiang ICP No. 2022023127",
@@ -82,6 +87,7 @@
 
   "route-more": "View More",
   "route-more-list": "Explore",
+  "route-tool": "To Try",
 
 
   "subtitle-1": "Justice means that everyone does what they are naturally suited for and refrains from meddling in the work of others. It’s not about force, but harmony within the soul and the city.",

@@ -19,18 +19,32 @@
           <q-tabs class="component-vertical-tabs-with-container" style="height: 20rem" indicator-color="transparent"
                   v-model="toolkitView" no-caps switch-indicator vertical>
             <q-tab v-for="(view, index) in toolkitViewList" :key="index" :name="view.name"
-                   style="justify-content: left"
+                   style="justify-content: left" :ripple="false"
                    :style="view.name ===toolkitView ?
                    'border-left: 3px solid rgb(var(--text-color)' : 'border-left: 3px solid transparent'">
 
-              <div style="max-width: 30rem" class="text-left q-ml-sm">
+              <div class="text-left q-ml-sm">
                 <h5>
-                  {{ view.title }}
+                  {{ $t(view.name) }}
                 </h5>
                 <transition name="tabs-expand">
-                  <div class="tabs-expandable-content" v-show="view.name === toolkitView" style="opacity: .5;">
-                    {{ view.subTitle }}
+                  <div class="tabs-expandable-content" v-show="view.name === toolkitView">
+                    <div
+                        style="opacity: .5;" class="component-max-line-text-2">
+                      {{ $t(view.name + "_desc") }}
+                    </div>
+                    <div class="row justify-end q-mt-sm q-mr-sm">
+                      <q-btn no-caps unelevated class="component-none-btn-std" @click="">
+                        <div class="row items-center">
+                          <div class="q-mr-sm">
+                            {{ $t('route-tool') }}
+                          </div>
+                          <q-icon name="fa-solid fa-align-right" size="15px"/>
+                        </div>
+                      </q-btn>
+                    </div>
                   </div>
+
                 </transition>
               </div>
             </q-tab>
@@ -73,13 +87,13 @@ import {useI18n} from "vue-i18n";
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
-const toolkitView = ref("id-card-gen4")
+const toolkitView = ref("main_tools_qrcode_gen")
 const toolkitViewList = ref(
     [
-      {name: "id-card-gen4", title: "This is Tool 1", subTitle: t('subtitle-4'),},
-      {name: "id-card-gen5", title: "This is Tool 2", subTitle: t('subtitle-5'),},
-      {name: "id-card-gen6", title: "This is Tool 3", subTitle: t('subtitle-6'),},
-      {name: "id-card-gen7", title: "This is Tool 4", subTitle: t('subtitle-7'),},
+      {name: "main_tools_qrcode_gen"},
+      {name: "main_tools_md5_gen"},
+      {name: "main_tools_rgb_con"},
+      {name: "main_tools_base64_con"},
     ]
 )
 

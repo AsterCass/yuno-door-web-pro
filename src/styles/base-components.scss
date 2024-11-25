@@ -166,7 +166,7 @@
   }
 
   .tabs-expandable-content {
-    height: 80px;
+    height: 95px;
   }
 
   .tabs-expand-enter-active,
@@ -182,6 +182,15 @@
   }
 }
 
+@mixin component-max-line-text(
+  $max-line: 1
+) {
+  text-overflow: ellipsis;
+  -webkit-line-clamp: $max-line;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 
 //==================== mix ====================
 
@@ -290,3 +299,6 @@
   );
 }
 
+.component-max-line-text-2 {
+  @include component-max-line-text(2)
+}

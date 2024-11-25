@@ -63,11 +63,16 @@
   "main-fa-wechat": "微信",
   "main-fa-qq": "QQ",
 
-  "main_tools_qrcode_gen": "二维码生成",
-  "main_tools_rgb_con": "RGB十六进制转换",
-  "main_tools_base64_con": "Base64图片转换",
-  "main_tools_md5_gen": "Md5加密",
+  "main_tools_qrcode_gen": "二维码生成和解析",
+  "main_tools_qrcode_gen_desc": "可以将文字转换二维码，并自定义样式，生成带自己色彩的二维码，并且支持解析二维码内容",
+  "main_tools_rgb_con": "RGB十六进制互转",
+  "main_tools_rgb_con_desc": "用于将RGB颜色表示法或者RGBA颜色表示法的颜色转换为十六进制颜色表示法，也可以将十六进制颜色表示法转为相应的RGB格式",
+  "main_tools_base64_con": "Base64图片互转",
+  "main_tools_base64_con_desc": "可以将上传图片转换为相应的base64格式，也可以用于将base64格式的文件还原成图片并提供下载",
+  "main_tools_md5_gen": "文字内容哈希加密",
+  "main_tools_md5_gen_desc": "用于将获取的字符串使用消息摘要算法、散列算法进行哈希求值，包括MD5、SHA-1以及Keccak-256算法",
   "main_tools_time_con": "时间戳格式转换",
+  "main_tools_time_con_desc": "",
 
   "main-nav-ipc-pre": "版权所有 互联网ICP备案：",
   "main-nav-ipc-center": "浙ICP备2022023127号",
@@ -82,6 +87,7 @@
 
   "route-more": "内容详情",
   "route-more-list": "更多",
+  "route-tool": "使用",
 
 
   "subtitle-1": "正义并不是强者为所欲为，也不是弱者盲目顺从，而是每个人都能够按照自己内在的天赋和职责发挥作用，与他人协调而生。",
