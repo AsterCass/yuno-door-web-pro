@@ -74,6 +74,11 @@
   "main_tools_time_con": "Timestamp Converter",
   "main_tools_time_con_desc": "",
 
+  "main_tools_game_hex": "Hextris",
+  "main_tools_game_hex_desc": "A color-matching mini-game similar to Tetris. Once you enter, you can check the gameplay instructions and source code in the top-left corner. Currently, it doesn't support server-side score saving, and everyone's scores are stored locally. A global leaderboard system will be added later. It is recommended to play on a computer since the mobile version lacks a speed-up key (which might be added in the future), making it harder to achieve higher scores.",
+  "main_tools_game_miku": "Mikutap",
+  "main_tools_game_miku_desc": "Stress Relief Game, A music simulation game developed by a Japanese creator. Players can trigger different musical scales and generate various visuals by tapping and swiping. The fullscreen mode can be accessed from the top-right corner, and the experience is best enjoyed on a mobile device or in fullscreen mode.",
+
   "main-nav-ipc-pre": "Internet ICP Filing: ",
   "main-nav-ipc-center": "Zhejiang ICP No. 2022023127",
   "main-nav-personal-res": "Personal Repositories",
@@ -88,6 +93,7 @@
   "route-more": "View More",
   "route-more-list": "Explore",
   "route-tool": "To Try",
+  "route-game": "To Play",
 
 
   "subtitle-1": "Justice means that everyone does what they are naturally suited for and refrains from meddling in the work of others. It’s not about force, but harmony within the soul and the city.",

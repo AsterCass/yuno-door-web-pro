@@ -74,6 +74,11 @@
   "main_tools_time_con": "时间戳格式转换",
   "main_tools_time_con_desc": "",
 
+  "main_tools_game_hex": "Hextris",
+  "main_tools_game_hex_desc": "一个类似俄罗斯方块的同色相消的小游戏，进入后左上角可以查看玩法和源码地址，暂时不支持服务器保留分数，每个人的分数只会保留在本地，之后会加入网络最高分系统。建议使用电脑游玩，手机没有加速键（有机会会增加），可能没有办法拿到比较高的分数",
+  "main_tools_game_miku": "Mikutap",
+  "main_tools_game_miku_desc": "解压游戏，一个日本人开发的的音乐模拟向的游戏，通过点击和滑动触发不同的音阶以及生成不同的画面，右上角可以进入全屏，配合手机或全屏一起食用效果更佳",
+
   "main-nav-ipc-pre": "版权所有 互联网ICP备案：",
   "main-nav-ipc-center": "浙ICP备2022023127号",
   "main-nav-personal-res": "个人项目仓库",
@@ -88,6 +93,7 @@
   "route-more": "内容详情",
   "route-more-list": "更多",
   "route-tool": "使用",
+  "route-game": "游玩",
 
 
   "subtitle-1": "正义并不是强者为所欲为，也不是弱者盲目顺从，而是每个人都能够按照自己内在的天赋和职责发挥作用，与他人协调而生。",
