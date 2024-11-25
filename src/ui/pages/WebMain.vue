@@ -25,7 +25,7 @@
         <div v-show="scrollState.scrollTop === 0" id="main-down-animation" ref="downingAnimationRef"
              class="absolute cursor-pointer"
              @click="togoElement('main-down-animation')"
-             style="height: 6rem; top: 56rem; left: 50%;transform: translateX(-50%);"/>
+             style="height: 6rem; top: 52rem; left: 50%;transform: translateX(-50%);"/>
 
 
       </div>

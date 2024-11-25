@@ -159,8 +159,10 @@
 }
 
 .component-vertical-tabs-with-container {
+
   .q-tab {
     white-space: break-spaces;
+    transition: border-left-color .5s ease;
   }
 
   .tabs-expandable-content {

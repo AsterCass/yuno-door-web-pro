@@ -20,7 +20,8 @@
                   v-model="toolkitView" no-caps switch-indicator vertical>
             <q-tab v-for="(view, index) in toolkitViewList" :key="index" :name="view.name"
                    style="justify-content: left"
-                   :style="view.name ===toolkitView ? 'border-left: 3px solid rgb(var(--text-color)' : ''">
+                   :style="view.name ===toolkitView ?
+                   'border-left: 3px solid rgb(var(--text-color)' : 'border-left: 3px solid transparent'">
 
               <div style="max-width: 30rem" class="text-left q-ml-sm">
                 <h5>
