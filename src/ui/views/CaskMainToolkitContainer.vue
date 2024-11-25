@@ -34,7 +34,7 @@
                       {{ $t(view.name + "_desc") }}
                     </div>
                     <div class="row justify-end q-mt-sm q-mr-sm">
-                      <q-btn no-caps unelevated class="component-none-btn-std" @click="">
+                      <q-btn no-caps unelevated class="component-none-btn-std">
                         <div class="row items-center">
                           <div class="q-mr-sm">
                             {{ $t('route-tool') }}

@@ -55,17 +55,6 @@
     </div>
 
 
-    <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std">
-        <div class="row items-center">
-          <div class="q-mx-xs">
-            {{ $t('route-more-list') }}
-          </div>
-        </div>
-      </q-btn>
-    </div>
-
-
   </div>
 </template>
 

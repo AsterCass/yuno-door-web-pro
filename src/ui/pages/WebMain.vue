@@ -61,16 +61,8 @@
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
 
-      <div>
-        视频
-      </div>
-
-      <div>
-        该模块副标题
-      </div>
-
-      <div>
-        内容
+      <div class="row justify-center">
+        <cask-main-video-container class="col-lg-11 col-12"/>
       </div>
 
     </div>
@@ -96,6 +88,7 @@ import lottie from "lottie-web";
 import {togoElement} from "@/utils/base-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import CaskMainGameContainer from "@/ui/views/CaskMainGameContainer.vue";
+import CaskMainVideoContainer from "@/ui/views/CaskMainVideoContainer.vue";
 
 
 const globalState = useGlobalStateStore();

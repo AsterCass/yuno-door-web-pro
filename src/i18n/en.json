@@ -15,6 +15,7 @@
   "test_component_multiple_operation": "Multiple selected operation",
 
   "in_develop": "This feature is under development. Stay tuned",
+  "error_request": "The system is busy. Please try again later.",
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",
@@ -89,6 +90,7 @@
   "main-nav-article": "Technical Articles",
   "main-nav-essay": "Personal Essays",
   "main-nav-toolkit": "Utility Toolkit",
+  "main-nav-video": "Videos",
 
   "route-more": "View More",
   "route-more-list": "Explore",

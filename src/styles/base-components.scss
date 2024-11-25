@@ -192,6 +192,12 @@
   -webkit-box-orient: vertical;
 }
 
+.component-no-scroller {
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+}
+
 //==================== mix ====================
 
 .component-full-btn-std {
