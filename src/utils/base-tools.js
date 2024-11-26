@@ -26,5 +26,16 @@ export function togoElement(id) {
     }
 }
 
+export function togoElementCenter(id) {
+    const target = document.getElementById(id);
+    if (target) {
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+        });
+    }
+}
+
 
 

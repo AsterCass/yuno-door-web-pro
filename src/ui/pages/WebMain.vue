@@ -22,10 +22,10 @@
         </div>
 
 
-        <div v-show="scrollState.scrollTop === 0" id="main-down-animation" ref="downingAnimationRef"
+        <div v-show="scrollState.scrollTop === 0" ref="downingAnimationRef"
              class="absolute cursor-pointer"
-             @click="togoElement('main-down-animation')"
-             style="height: 6rem; top: 52rem; left: 50%;transform: translateX(-50%);"/>
+             @click="togoElementCenter('main-first-element')"
+             style="height: 6rem; position: fixed; bottom: 50px; left: 50%;transform: translateX(-50%);"/>
 
 
       </div>
@@ -34,6 +34,8 @@
     </div>
 
     <div>
+
+      <div id="main-first-element"/>
 
       <div class="row justify-center">
         <cask-main-article-container class="col-lg-11 col-12"/>
@@ -85,7 +87,7 @@ import {createTypingEffect} from "@/utils/auto-typing";
 import {useI18n} from 'vue-i18n';
 import CaskMainToolkitContainer from "@/ui/views/CaskMainToolkitContainer.vue";
 import lottie from "lottie-web";
-import {togoElement} from "@/utils/base-tools";
+import {togoElementCenter} from "@/utils/base-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import CaskMainGameContainer from "@/ui/views/CaskMainGameContainer.vue";
 import CaskMainVideoContainer from "@/ui/views/CaskMainVideoContainer.vue";
