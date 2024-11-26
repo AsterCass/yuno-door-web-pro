@@ -4,6 +4,8 @@ import NotFound from "@/ui/pages/NotFound.vue";
 import NoLogin from "@/ui/pages/NoLogin.vue";
 import WebMain from "@/ui/pages/WebMain.vue";
 import TestComponents from "@/ui/pages/TestComponents.vue";
+import WebRedirect from "@/ui/pages/WebRedirect.vue";
+import {openLink} from "@/utils/base-tools";
 
 
 const router = createRouter({
@@ -19,6 +21,108 @@ const router = createRouter({
             },
         },
         {
+            path: "/article",
+            children: [
+                {
+                    path: 'detail',
+                    name: "mainArticleDetail",
+                    meta: {
+                        title: 'AsterCasc | Technical Articles'
+                    },
+                    props: ($route) => ({
+                        articleId: $route.query.articleId,
+                    }),
+                },
+                {
+                    path: "list",
+                    name: "mainArticleList",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/article/list', false)
+                    },
+                }
+            ]
+        },
+        {
+            path: "/essay",
+            children: [
+                {
+                    path: "list",
+                    name: "mainEssayList",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/essay/list', false)
+                    },
+                }
+            ]
+        },
+        {
+            path: "/tools",
+            children: [
+                {
+                    path: "list",
+                    name: "mainToolsList",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/steam/search', false)
+                    },
+                },
+                {
+                    path: "timestamp",
+                    name: "mainToolsTimestamp",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/timestamp', false)
+                    },
+                },
+                {
+                    path: "md5",
+                    name: "mainToolsMd5",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/md5', false)
+                    },
+                },
+                {
+                    path: "imgBase64",
+                    name: "mainToolsImgBase64",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/imgBase64', false)
+                    },
+                },
+                {
+                    path: "rgbHex",
+                    name: "mainToolsRgbHex",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/rgbHex', false)
+                    },
+                },
+                {
+                    path: "qrcode",
+                    name: "mainToolsQrcode",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/tools/qrcode', false)
+                    },
+                },
+            ]
+        },
+        {
+            path: "/video",
+            children: [
+                {
+                    path: "collection",
+                    name: "mainVideoCollection",
+                    component: WebRedirect,
+                    beforeEnter() {
+                        openLink('https://www.astercasc.com/video/collection', false)
+                    },
+                }
+            ]
+        },
+        {
             path: '/test',
             name: 'test',
             children: [
@@ -31,6 +135,30 @@ const router = createRouter({
                     },
                 },
             ]
+        },
+        {
+            path: "/board",
+            name: "board",
+            component: WebRedirect,
+            beforeEnter() {
+                openLink('https://www.astercasc.com/board', false)
+            },
+        },
+        {
+            path: "/privacy",
+            name: "privacy",
+            component: WebRedirect,
+            beforeEnter() {
+                openLink('https://www.astercasc.com/privacy', false)
+            },
+        },
+        {
+            path: "/previous",
+            name: "previous",
+            component: WebRedirect,
+            beforeEnter() {
+                openLink('https://www.astercasc.com', false)
+            },
         },
         {
             path: "/404",

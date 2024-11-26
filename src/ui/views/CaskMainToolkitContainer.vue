@@ -34,7 +34,7 @@
                       {{ $t(view.name + "_desc") }}
                     </div>
                     <div class="row justify-end q-mt-sm q-mr-sm">
-                      <q-btn no-caps unelevated class="component-none-btn-std">
+                      <q-btn no-caps unelevated class="component-none-btn-std" :to="view.address">
                         <div class="row items-center">
                           <div class="q-mr-sm">
                             {{ $t('route-tool') }}
@@ -67,7 +67,7 @@
 
 
     <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std">
+      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" to="/tools/list">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('route-more-list') }}
@@ -90,10 +90,10 @@ const {t} = useI18n()
 const toolkitView = ref("main_tools_qrcode_gen")
 const toolkitViewList = ref(
     [
-      {name: "main_tools_qrcode_gen"},
-      {name: "main_tools_md5_gen"},
-      {name: "main_tools_rgb_con"},
-      {name: "main_tools_base64_con"},
+      {name: "main_tools_qrcode_gen", address: "/tools/qrcode"},
+      {name: "main_tools_md5_gen", address: "/tools/md5"},
+      {name: "main_tools_rgb_con", address: "/tools/rgbHex"},
+      {name: "main_tools_base64_con", address: "/tools/imgBase64"},
     ]
 )
 

@@ -22,16 +22,20 @@
       <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-quick-link') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/article/list'})">
         {{ $t('main_articles') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/video/collection'})">
         {{ $t('main_videos') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/board'})">
         {{ $t('main_board') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="notifyTopWarning($t('in_develop'))">
         {{ $t('main_chat_room') }}
       </div>
     </div>
@@ -40,19 +44,24 @@
       <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-tool') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/tools/timestamp'})">
         {{ $t('main_tools_time_con') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/tools/md5'})">
         {{ $t('main_tools_md5_gen') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/tools/imgBase64'})">
         {{ $t('main_tools_base64_con') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/tools/rgbHex'})">
         {{ $t('main_tools_rgb_con') }}
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5" @click="openLink('')">
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="thisRouter.push({path: '/tools/qrcode'})">
         {{ $t('main_tools_qrcode_gen') }}
       </div>
     </div>
@@ -117,10 +126,13 @@
 </template>
 
 <script setup>
-
 import {onMounted, ref} from "vue";
 import {date} from "quasar";
 import {openLink} from "@/utils/base-tools";
+import {useRouter} from "vue-router";
+import {notifyTopWarning} from "@/utils/notification-tools";
+
+const thisRouter = useRouter()
 
 const curYear = ref("2020")
 

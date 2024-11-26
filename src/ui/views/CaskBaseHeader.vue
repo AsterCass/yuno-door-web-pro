@@ -5,7 +5,7 @@
          :class="scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/previous">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_pre_version') }}
@@ -15,35 +15,35 @@
       </div>
 
       <div class="row items-center justify-center col-4">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/article/list">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_articles') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/tools/list">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_tools') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/video/collection">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_videos') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/board">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_board') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="notifyTopWarning($t('in_develop'))">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_chat_room') }}
@@ -200,7 +200,8 @@
         </div>
         <div class="row justify-center q-mx-md text-center q-mb-md">
           <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
-          <span class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
+          <span @click="thisRouter.push({path: '/previous'})"
+                class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
           <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
         </div>
 
@@ -234,7 +235,8 @@
             <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
                         checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
             <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
-            <span class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
+            <span @click="thisRouter.push({path: '/privacy'})"
+                  class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
           </div>
         </div>
 
@@ -296,8 +298,10 @@ import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import {scrollState} from "@/utils/global-state-no-save";
+import {useRouter} from "vue-router";
 
 const globalState = useGlobalStateStore();
+const thisRouter = useRouter()
 
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)

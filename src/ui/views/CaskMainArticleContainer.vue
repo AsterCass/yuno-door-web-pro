@@ -60,7 +60,7 @@
 
 
     <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std">
+      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" to="/article/list">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('route-more-list') }}
