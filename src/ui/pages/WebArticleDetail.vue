@@ -3,53 +3,50 @@
     <cask-base-header :always-show="false"/>
 
     <div class="row justify-center cask-base-simple-main">
+
       <div class="col-lg-3 q-pl-xl">
-        <h2>
-          {{ blogMeta.articleTitle }}
-        </h2>
+        <div class="article-right-sidebar">
+          <h2>
+            {{ blogMeta.articleTitle }}
+          </h2>
 
-        <div class="row justify-between items-center">
-
-
-          <q-btn no-caps unelevated class=" component-none-btn-grow" style="border-radius: 8px !important;">
-            <div class="row items-center q-ma-xs">
-              <div class="bg-black q-btn--round">
-                <q-avatar size="40px" style="margin: 2px">
-                  <q-img :src="blogMeta.authorAvatar"/>
-                </q-avatar>
+          <div class="row justify-between items-center">
+            <q-btn no-caps unelevated class=" component-none-btn-grow" style="border-radius: 8px !important;">
+              <div class="row items-center q-ma-xs">
+                <div class="bg-black q-btn--round">
+                  <q-avatar size="40px" style="margin: 2px">
+                    <q-img :src="blogMeta.authorAvatar"/>
+                  </q-avatar>
+                </div>
+                <div style="font-size: 1rem; margin-left: 12px">
+                  {{ blogMeta.authorName }}
+                </div>
               </div>
-              <div style="font-size: 1rem; margin-left: 12px">
-                {{ blogMeta.authorName }}
+            </q-btn>
+            <div style="opacity: .5">
+              <div>
+                {{ $t('dynamic-create-time') }}:&nbsp;{{ blogMeta.createTime }}
               </div>
-            </div>
-          </q-btn>
-
-
-          <div style="opacity: .5">
-            <div>
-              {{ $t('dynamic-create-time') }}:&nbsp;{{ blogMeta.createTime }}
-            </div>
-            <div>
-              {{ $t('dynamic-update-time') }}:&nbsp;{{ blogMeta.updateTime }}
+              <div>
+                {{ $t('dynamic-update-time') }}:&nbsp;{{ blogMeta.updateTime }}
+              </div>
             </div>
           </div>
+
+          <div class="row relative-position" style="margin-top: 5rem;">
+            <q-img :no-native-menu="false" :ratio="1" fit="cover"
+                   src="/img/article-bg.jpg"
+                   style="border-radius: 32px; position: absolute; translate: -15%; scale: 1.1">
+            </q-img>
+
+            <q-img :no-native-menu="false" :ratio="1" fit="cover"
+                   src="/img/article-bg-light.svg" style="position: absolute; translate: -15%; scale: 1.11">
+            </q-img>
+          </div>
         </div>
-
-        <div class="row relative-position" style="margin-top: 8rem">
-
-          <q-img :no-native-menu="false" :ratio="1" fit="cover"
-                 src="/img/article-bg.jpg" style="border-radius: 32px; position: absolute; translate: -15%; scale: 1.2">
-          </q-img>
-
-          <q-img :no-native-menu="false" :ratio="1" fit="cover"
-                 src="/img/article-bg-light.svg" style="position: absolute; translate: -15%; scale: 1.21">
-          </q-img>
-
-        </div>
-
       </div>
 
-      <div class="col-lg-6" style="min-height: 60rem">
+      <div class="col-lg-6" style="min-height: 160rem">
 
       </div>
 
@@ -57,6 +54,7 @@
       <div class="col-lg-3">
 
       </div>
+
     </div>
 
 
@@ -134,5 +132,14 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
+.article-right-sidebar {
+  width: 100%;
+  height: 800px;
+  position: sticky;
+  top: 8rem;
+  align-self: flex-start;
+  //margin-bottom: 5rem;
+}
 
 </style>
