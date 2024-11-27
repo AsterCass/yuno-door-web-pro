@@ -2,7 +2,7 @@
   <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
-         :class="scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
+         :class="alwaysShow && scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/previous">
@@ -292,13 +292,20 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {defineProps, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
+
+const props = defineProps({
+  alwaysShow: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()

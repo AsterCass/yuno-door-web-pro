@@ -6,6 +6,7 @@ import WebMain from "@/ui/pages/WebMain.vue";
 import TestComponents from "@/ui/pages/TestComponents.vue";
 import WebRedirect from "@/ui/pages/WebRedirect.vue";
 import {openLink} from "@/utils/base-tools";
+import WebArticleDetail from "@/ui/pages/WebArticleDetail.vue";
 
 
 const router = createRouter({
@@ -25,7 +26,8 @@ const router = createRouter({
             children: [
                 {
                     path: 'detail',
-                    name: "mainArticleDetail",
+                    name: "webArticleDetail",
+                    component: WebArticleDetail,
                     meta: {
                         title: 'AsterCasc | Technical Articles'
                     },

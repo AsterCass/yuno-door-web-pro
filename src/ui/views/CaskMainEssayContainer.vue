@@ -45,7 +45,7 @@
               {{ essay.createTime }}
             </div>
 
-            <q-btn no-caps unelevated class="component-none-btn-std">
+            <q-btn no-caps unelevated class="component-none-btn-std" :to="`/article/detail?articleId=${essay.id}`">
               <div class="row items-center">
                 <div class="q-mr-sm">
                   {{ $t('route-more') }}
