@@ -308,3 +308,7 @@
 .component-max-line-text-2 {
   @include component-max-line-text(2)
 }
+
+.component-max-line-text-4 {
+  @include component-max-line-text(4)
+}

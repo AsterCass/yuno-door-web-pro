@@ -11,7 +11,12 @@
       {{ $t('subtitle-6') }}
     </div>
 
-    <div class="col-12 row justify-between q-mt-sm q-mb-lg items-center">
+
+    <div v-if="0 === videoList.length" class="col-12 row justify-center q-mt-sm q-mb-xl items-center">
+      <q-spinner-bars size="40px"/>
+    </div>
+
+    <div v-if="0 !== videoList.length" class="col-12 row justify-between q-mt-sm q-mb-lg items-center">
 
       <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs q-ml-md" @click="scrollVideoStep(false)"
              style="background-color: rgb(var(--full-container-background-color-light))">

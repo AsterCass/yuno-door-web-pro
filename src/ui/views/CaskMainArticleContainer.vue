@@ -13,33 +13,35 @@
 
     <div class="col-12 row">
 
-      <div v-for="val in [0, 1, 2,]" :key="val" class="col-12 col-lg-4 q-mb-lg">
+      <div v-if="0 === articleList.length" class="col-12 row justify-center q-mb-xl">
+        <q-spinner-bars size="40px"/>
+      </div>
+
+      <div v-for="(article, index) in articleList" :key="index" class="col-12 col-lg-4 q-mb-lg">
         <div class="q-mx-lg q-pa-sm justify-between"
              style="border-radius: 8px; background-color: rgb(var(--full-container-background-color-light))">
 
           <div style="width: 100%;">
             <q-img :no-native-menu="false" :ratio="16/9" fit="cover"
-                   :src="`/img/main-article-${val%4}.jpg`" style="height: 15rem;border-radius: 8px;">
+                   :src="`/img/main-article-${index%4}.jpg`" style="height: 15rem;border-radius: 8px;">
             </q-img>
           </div>
 
           <div class=" row q-mx-md">
             <h3>
-              Article Title
+              {{ article.articleTitle }}
             </h3>
           </div>
 
 
-          <div class=" q-mb-lg q-mx-md">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet
-            porro.
-            Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+          <div class=" q-mb-lg q-mx-md component-max-line-text-4">
+            {{ article.articleBrief }}
           </div>
 
           <div class="row q-mx-md q-mb-md  justify-between items-center">
 
             <div style="opacity: .5; margin-top: 3px">
-              1970-01-01 12:00
+              {{ article.createTime }}
             </div>
 
             <q-btn no-caps unelevated class="component-none-btn-std">
@@ -74,6 +76,25 @@
 </template>
 
 <script setup>
+
+
+import {onMounted, ref} from "vue";
+import {getBlogList} from "@/api/article";
+import {customPage} from "@/utils/page";
+
+
+const articleList = ref([])
+
+onMounted(() => {
+  let currentParam = {articleType: 1}
+  getBlogList(customPage(currentParam, 0, 3)).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    articleList.value.push(...res.data.data)
+  })
+
+})
 
 </script>
 
