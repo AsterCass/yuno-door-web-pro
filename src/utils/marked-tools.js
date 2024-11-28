@@ -23,21 +23,34 @@ marked.use({
 
 // 代码样式选择 https://highlightjs.org/static/demo/
 const styleEnums = [
-    'androidstudio', 'codepen-embed', 'felipec', 'hybrid', 'kimbie-dark', 'lioshi', 'nord',
-    'panda-syntax-dark', 'paraiso-dark', 'srcery', 'stackoverflow-dark', 'tomorrow-night-bright', 'vs2015'
+    'androidstudio',
+    // 'codepen-embed',
+    'felipec',
+    'hybrid',
+    // 'kimbie-dark',
+    'lioshi',
+    // 'nord',
+    'panda-syntax-dark',
+    // 'paraiso-dark',
+    // 'srcery',
+    // 'stackoverflow-dark',
+    'tomorrow-night-bright',
+    'vs2015',
 ]
 
 const styleEnumsLight = [
     'panda-syntax-light',
-    'stackoverflow-light',
+    // 'stackoverflow-light',
     'tokyo-night-light',
-    'codepen-embed',
-    'hybrid',
+    // 'codepen-embed',
+    // 'hybrid',
 ]
 
 function importStyle() {
     const random = Math.floor(Math.random() * 10000)
     const randomStyle = styleEnums[random % styleEnums.length]
+
+    console.log(randomStyle)
     import('../../node_modules/highlight.js/styles/' + randomStyle + '.css')
 }
 

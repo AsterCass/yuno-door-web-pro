@@ -1,0 +1,43 @@
+@import "@/styles/base-theme";
+
+
+.component-marked-view {
+
+  line-height: 1.6rem;
+  font-size: 15.5px;
+  font-family: Roboto Slab, sans-serif;
+
+  p {
+    color: rgb(var(--text-color), 0.88);
+  }
+
+  ul {
+    color: rgb(var(--text-color), 0.88);
+  }
+
+  a {
+    color: rgb(var(--pointer));
+  }
+
+  strong {
+    color: rgba(var(--negative), 0.9);
+    font-weight: normal;
+  }
+
+  code {
+    font-size: 15px;
+    font-family: Roboto Slab, sans-serif;
+    letter-spacing: 0.25px;
+    border-radius: 8px;
+  }
+
+  code:not(pre code) {
+    color: rgb(var(--negative));
+    background-color: rgba(var(--negative), 0.05);
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0 4px;
+  }
+
+
+}

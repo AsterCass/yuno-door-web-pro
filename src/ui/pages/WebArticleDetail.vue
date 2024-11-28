@@ -38,13 +38,14 @@
             </q-img>
 
             <q-img :no-native-menu="false" :ratio="1" fit="cover"
-                   src="/img/article-bg-light.svg" style="position: absolute; translate: -15%; scale: 1.11">
+                   :src="globalState.curThemeName === 'dark' ? '/img/article-bg-dark.svg' : '/img/article-bg-light.svg'"
+                   style="position: absolute; translate: -15%; scale: 1.11">
             </q-img>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-6 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+      <div class="col-lg-6 col-12 component-marked-view" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 100rem">
         <div>
           <div v-html="markdownToHtml" class="blogMarkDown"></div>
@@ -71,7 +72,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {getBlogContent, getBlogMeta} from "@/api/article";
 import {useRouter} from "vue-router";
 import {decrypt} from "@/utils/crypto";
-import {importStyle, marked} from "@/utils/marked-tools";
+import {importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 
 const props = defineProps({
   articleId: {
@@ -141,7 +142,12 @@ onMounted(() => {
   document.querySelector('head').append(base)
   baseElement.value = base
   //随机导入code样式
-  importStyle()
+  if (globalState.curThemeName === 'dark') {
+    importStyle()
+  } else {
+    importStyleLight()
+  }
+
   //获取文章元数据
   getBlogMetaMethod()
 })
@@ -164,5 +170,10 @@ onBeforeUnmount(() => {
   align-self: flex-start;
   //margin-bottom: 5rem;
 }
+
+</style>
+
+<style lang="scss">
+@import "@/styles/base-marked";
 
 </style>
