@@ -2,6 +2,7 @@ import {marked} from "marked";
 import {markedHighlight} from "marked-highlight";
 import hljs from "highlight.js";
 import {gfmHeadingId} from "marked-gfm-heading-id";
+import {sleep} from "@/utils/base-tools";
 
 marked.use(markedHighlight({
     emptyLangClass: 'hljs',
@@ -89,5 +90,23 @@ export function headToHtmlTag(meta) {
         }
     }
     return headTags
+}
+
+export async function buildImgFormat(thisElement, callback) {
+    if (!thisElement) {
+        return
+    }
+    await sleep(50)
+    let imgList = thisElement.getElementsByTagName("img");
+    console.log(imgList)
+    for (let i = 0; i < imgList.length; i++) {
+        if (imgList[i].classList.length > 0) {
+            continue
+        }
+        imgList[i].onclick = () => {
+            callback(imgList[i])
+        }
+        imgList[i].style.cursor = 'zoom-in'
+    }
 }
 

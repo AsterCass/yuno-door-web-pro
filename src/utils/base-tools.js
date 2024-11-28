@@ -2,6 +2,10 @@ export function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function openLink(url, newBlank = true) {
     if (newBlank) {
         window.open(url, "_blank");

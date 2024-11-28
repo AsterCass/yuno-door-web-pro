@@ -49,7 +49,7 @@
 
       <div class="col-lg-6 col-12 component-marked-view" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem">
-        <div>
+        <div ref="articleMainContent">
           <div v-html="markdownToHtml" class="blogMarkDown"></div>
         </div>
       </div>
@@ -123,8 +123,6 @@
       <!--      command-->
     </div>
 
-    <!--todo img-->
-
     <cask-base-footer/>
   </q-layout>
 </template>
@@ -137,7 +135,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {getBlogContent, getBlogList, getBlogMeta} from "@/api/article";
 import {useRouter} from "vue-router";
 import {decrypt} from "@/utils/crypto";
-import {headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
+import {buildImgFormat, headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
 import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
@@ -160,6 +158,7 @@ const showRecommend = ref(false)
 const showAnchor = ref(false)
 const inLoading = ref(true)
 const showPic = ref(false)
+const articleMainContent = ref(null)
 //基础数据
 const blogContent = ref("")
 const blogMeta = ref({
@@ -197,7 +196,9 @@ function loadMoreRecommend(num) {
 //markdown转html
 const markdownToHtml = computed(() => {
   const html = marked.parse(blogContent.value)
-  // buildImgFormat()
+  buildImgFormat(articleMainContent.value, (element) => {
+    console.log(element)
+  })
   return html
 })
 
