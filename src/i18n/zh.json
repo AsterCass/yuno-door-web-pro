@@ -91,6 +91,7 @@
   "main-nav-article": "技术文章",
   "main-nav-essay": "个人随笔",
   "main-nav-toolkit": "常用工具",
+  "main-nav-video": "视频",
 
   "route-more": "内容详情",
   "route-more-list": "更多",
@@ -111,6 +112,9 @@
 
   "dynamic-create-time": "创建时间",
   "dynamic-update-time": "更新时间",
+
+  "main_article_nav": "导航",
+  "main_article_recommend": "推荐",
 
 
 

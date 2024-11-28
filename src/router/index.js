@@ -218,6 +218,12 @@ export function toSpecifyPageWithQuery(thisRouter, pageName, queryMap) {
     })
 }
 
+export function toSpecifyPageWithQueryNewTab(thisRouter, pageName, queryMap) {
+    const {href} = thisRouter.resolve({name: pageName, query: queryMap});
+    const absoluteUrl = `${window.location.origin}${href}`;
+    window.open(absoluteUrl, '_blank');
+}
+
 export function toReplacePage(thisRouter, queryMap) {
     thisRouter.replace({
         name: thisRouter.name,

@@ -5,7 +5,7 @@
     <div class="row justify-center cask-base-simple-main">
 
       <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-xl'">
-        <div :class="globalState.screenMini ? '' : 'article-right-sidebar'">
+        <div :class="globalState.screenMini ? '' : 'article-left-sidebar'">
           <h2>
             {{ blogMeta.articleTitle }}
           </h2>
@@ -53,8 +53,60 @@
       </div>
 
 
-      <div class="col-lg-3">
+      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-xl">
+        <div class="article-right-sidebar">
 
+          <q-scroll-area delay="100" style="height: 600px;"
+                         :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
+            <h3 v-if="showAnchor" style="font-size: 1.5rem !important;">
+              {{ $t('main_article_nav') }}
+            </h3>
+            <q-list>
+              <q-item clickable v-ripple dense style="border-radius: 8px"
+                      v-for="item in titleAnchorData"
+                      :key="item.title"
+                      @click="togoElementCenter(item.value)">
+                <q-item-section class="q-my-xs">
+                  <h6>
+                    {{ item.title }}
+                  </h6>
+                </q-item-section>
+              </q-item>
+            </q-list>
+
+            <h3 v-if="showRecommend" style="font-size: 1.5rem !important;">
+              {{ $t('main_article_recommend') }}
+            </h3>
+
+            <q-list>
+              <q-item clickable v-ripple dense style="border-radius: 8px"
+                      v-for="item in titleRefData" :key="item"
+                      @click="()=>{toSpecifyPageWithQueryNewTab(
+                          thisRouter, 'webArticleDetail', {articleId: item.articleId})}">
+                <q-item-section class="q-my-xs">
+                  <h6 style="color: rgb(var(--pointer));text-decoration: underline;">
+                    {{ item.title }}
+                  </h6>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple dense style="border-radius: 8px"
+                      v-for="item in extraArticleData" :key="item"
+                      @click="()=>{toSpecifyPageWithQueryNewTab(
+                          thisRouter, 'webArticleDetail', {articleId: item.id})}">
+                <q-item-section class="q-my-xs">
+                  <h6 style="color: rgb(var(--pointer));text-decoration: underline;">
+                    {{ item.articleTitle }}
+                  </h6>
+                </q-item-section>
+              </q-item>
+            </q-list>
+
+          </q-scroll-area>
+
+
+        </div>
       </div>
 
     </div>
@@ -69,10 +121,13 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {computed, defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {getBlogContent, getBlogMeta} from "@/api/article";
+import {getBlogContent, getBlogList, getBlogMeta} from "@/api/article";
 import {useRouter} from "vue-router";
 import {decrypt} from "@/utils/crypto";
-import {importStyle, importStyleLight, marked} from "@/utils/marked-tools";
+import {headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
+import {togoElementCenter} from "@/utils/base-tools";
+import {customPageNP} from "@/utils/page";
+import {toSpecifyPageWithQueryNewTab} from "@/router";
 
 const props = defineProps({
   articleId: {
@@ -85,6 +140,11 @@ const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
 //页面元素
 const baseElement = ref(null)
+const titleAnchorData = ref([])
+const titleRefData = ref([])
+const extraArticleData = ref([])
+const showRecommend = ref(false)
+const showAnchor = ref(false)
 //基础数据
 const blogContent = ref("")
 const blogMeta = ref({
@@ -109,13 +169,22 @@ function getBlogContentMethod() {
   })
 }
 
+//左侧导航不够填充，获取更多推荐
+function loadMoreRecommend(num) {
+  getBlogList(customPageNP(0, num)).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    extraArticleData.value.push(...res.data.data)
+  })
+}
+
 //markdown转html
 const markdownToHtml = computed(() => {
   const html = marked.parse(blogContent.value)
   // buildImgFormat()
   return html
 })
-
 
 //请求后端获取文章meta
 function getBlogMetaMethod() {
@@ -132,6 +201,19 @@ function getBlogMetaMethod() {
     blogMeta.value = res.data.data
     //更新document，堆砌 meta keywords description 这种对现代搜索引擎的内容收录产生任何直接影响，所以这里就改个标题就完事了
     document.title = blogMeta.value.articleTitle
+    //渲染导航信息
+    titleAnchorData.value = headToHtmlTag(blogMeta.value)
+    const titleNum = titleAnchorData.value ? titleAnchorData.value.length : 0
+    //渲染推荐信息
+    titleRefData.value = blogMeta.value.refArticleList
+    const refNum = titleRefData.value ? titleRefData.value.length : 0
+    //剩余容量 容量最小值10
+    let remain = 10 - titleNum - refNum
+    if (remain > 0) {
+      loadMoreRecommend(remain)
+    }
+    showRecommend.value = remain > 0 || refNum > 0
+    showAnchor.value = titleNum > 0
   })
 }
 
@@ -147,7 +229,6 @@ onMounted(() => {
   } else {
     importStyleLight()
   }
-
   //获取文章元数据
   getBlogMetaMethod()
 })
@@ -162,9 +243,18 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 
-.article-right-sidebar {
+.article-left-sidebar {
   width: 100%;
   height: 800px;
+  position: sticky;
+  top: 9rem;
+  align-self: flex-start;
+  //margin-bottom: 5rem;
+}
+
+.article-right-sidebar {
+  width: 100%;
+  height: 600px;
   position: sticky;
   top: 9rem;
   align-self: flex-start;
