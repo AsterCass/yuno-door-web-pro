@@ -23,15 +23,15 @@
         {{ $t('main-nav-quick-link') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/article/list'})">
+           @click="toSpecifyPage(thisRouter, 'mainArticleList')">
         {{ $t('main_articles') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/video/collection'})">
+           @click="toSpecifyPage(thisRouter, 'mainVideoCollection')">
         {{ $t('main_videos') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/board'})">
+           @click="toSpecifyPage(thisRouter, 'board')">
         {{ $t('main_board') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
@@ -45,23 +45,23 @@
         {{ $t('main-nav-tool') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/tools/timestamp'})">
+           @click="toSpecifyPage(thisRouter, 'mainToolsTimestamp')">
         {{ $t('main_tools_time_con') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/tools/md5'})">
+           @click="toSpecifyPage(thisRouter, 'mainToolsMd5')">
         {{ $t('main_tools_md5_gen') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/tools/imgBase64'})">
+           @click="toSpecifyPage(thisRouter, 'mainToolsImgBase64')">
         {{ $t('main_tools_base64_con') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/tools/rgbHex'})">
+           @click="toSpecifyPage(thisRouter, 'mainToolsRgbHex')">
         {{ $t('main_tools_rgb_con') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="thisRouter.push({path: '/tools/qrcode'})">
+           @click="toSpecifyPage(thisRouter, 'mainToolsQrcode')">
         {{ $t('main_tools_qrcode_gen') }}
       </div>
     </div>
@@ -131,6 +131,7 @@ import {date} from "quasar";
 import {openLink} from "@/utils/base-tools";
 import {useRouter} from "vue-router";
 import {notifyTopWarning} from "@/utils/notification-tools";
+import {toSpecifyPage} from "@/router";
 
 const thisRouter = useRouter()
 

@@ -127,7 +127,7 @@ import {decrypt} from "@/utils/crypto";
 import {headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 import {togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
-import {toSpecifyPageWithQueryNewTab} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 
 const props = defineProps({
   articleId: {
@@ -190,9 +190,7 @@ const markdownToHtml = computed(() => {
 function getBlogMetaMethod() {
   getBlogMeta({id: props.articleId}).then(res => {
     if (!res || !res.data || !res.data.data) {
-      thisRouter.push({
-        path: '/404'
-      })
+      toSpecifyPage(thisRouter, '404')
       return
     }
     //获取文章信息

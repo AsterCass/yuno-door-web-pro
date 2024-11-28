@@ -220,7 +220,7 @@
         </div>
         <div class="row justify-center q-mx-md text-center q-mb-md">
           <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
-          <span @click="thisRouter.push({path: '/previous'})"
+          <span @click="toSpecifyPage(thisRouter, 'previous')"
                 class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
           <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
         </div>
@@ -255,7 +255,7 @@
             <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
                         checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
             <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
-            <span @click="thisRouter.push({path: '/privacy'})"
+            <span @click="toSpecifyPage(thisRouter, 'privacy')"
                   class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
           </div>
         </div>
@@ -319,6 +319,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
+import {toSpecifyPage} from "@/router";
 
 const props = defineProps({
   isMain: {
