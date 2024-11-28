@@ -4,9 +4,9 @@
 
     <div v-if="!inLoading" class="row justify-center cask-base-simple-main">
 
-      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-xl'">
+      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-lg'">
         <div :class="globalState.screenMini ? '' : 'article-left-sidebar'">
-          <h2>
+          <h2 style="font-size: 1.75rem; line-height: 2.9rem; word-wrap: break-word;">
             {{ blogMeta.articleTitle }}
           </h2>
 
@@ -48,13 +48,13 @@
       </div>
 
       <div class="col-lg-6 col-12 component-marked-view" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
-           style="min-height: 100rem">
+           style="min-height: 60rem">
         <div>
           <div v-html="markdownToHtml" class="blogMarkDown"></div>
         </div>
       </div>
 
-      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-xl">
+      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-lg">
         <div class="article-right-sidebar">
 
           <q-scroll-area delay="100" style="height: 600px;"
@@ -112,7 +112,7 @@
 
     </div>
 
-    <div v-else class="row justify-center cask-base-simple-main" style="min-height: 100rem">
+    <div v-else class="row justify-center cask-base-simple-main" style="min-height: 60rem">
       <div style="position: fixed; top: 50%; left: 50%;transform: translateX(-50%);">
         <q-spinner-pie size="75px"/>
       </div>
@@ -271,7 +271,7 @@ onBeforeUnmount(() => {
 
 .article-right-sidebar {
   width: 100%;
-  height: 600px;
+  height: 800px;
   position: sticky;
   top: 9rem;
   align-self: flex-start;
