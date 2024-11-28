@@ -2,7 +2,7 @@
   <q-layout view="hhh lpr fff">
     <cask-base-header :is-main="false"/>
 
-    <div class="row justify-center cask-base-simple-main">
+    <div v-if="!inLoading" class="row justify-center cask-base-simple-main">
 
       <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-xl'">
         <div :class="globalState.screenMini ? '' : 'article-left-sidebar'">
@@ -32,14 +32,16 @@
           </div>
 
           <div v-if="!globalState.screenMini" class="row relative-position" style="margin-top: 5rem;">
-            <q-img :no-native-menu="false" :ratio="1" fit="cover"
+            <q-img v-show="showPic" :no-native-menu="false" :ratio="1" fit="cover"
                    src="/img/article-bg.jpg"
                    style="border-radius: 32px; position: absolute; translate: -15%; scale: 1.1">
+              <template v-slot:loading/>
             </q-img>
 
             <q-img :no-native-menu="false" :ratio="1" fit="cover"
                    :src="globalState.curThemeName === 'dark' ? '/img/article-bg-dark.svg' : '/img/article-bg-light.svg'"
                    style="position: absolute; translate: -15%; scale: 1.11">
+              <template v-slot:loading/>
             </q-img>
           </div>
         </div>
@@ -51,7 +53,6 @@
           <div v-html="markdownToHtml" class="blogMarkDown"></div>
         </div>
       </div>
-
 
       <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-xl">
         <div class="article-right-sidebar">
@@ -111,6 +112,18 @@
 
     </div>
 
+    <div v-else class="row justify-center cask-base-simple-main" style="min-height: 100rem">
+      <div style="position: fixed; top: 50%; left: 50%;transform: translateX(-50%);">
+        <q-spinner-pie size="75px"/>
+      </div>
+    </div>
+
+
+    <div class="row justify-center cask-base-simple-main">
+      <!--      command-->
+    </div>
+
+    <!--todo img-->
 
     <cask-base-footer/>
   </q-layout>
@@ -125,7 +138,7 @@ import {getBlogContent, getBlogList, getBlogMeta} from "@/api/article";
 import {useRouter} from "vue-router";
 import {decrypt} from "@/utils/crypto";
 import {headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
-import {togoElementCenter} from "@/utils/base-tools";
+import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
 import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 
@@ -145,6 +158,8 @@ const titleRefData = ref([])
 const extraArticleData = ref([])
 const showRecommend = ref(false)
 const showAnchor = ref(false)
+const inLoading = ref(true)
+const showPic = ref(false)
 //基础数据
 const blogContent = ref("")
 const blogMeta = ref({
@@ -212,6 +227,10 @@ function getBlogMetaMethod() {
     }
     showRecommend.value = remain > 0 || refNum > 0
     showAnchor.value = titleNum > 0
+    inLoading.value = false
+    delay(300).then(() => {
+      showPic.value = true
+    })
   })
 }
 
