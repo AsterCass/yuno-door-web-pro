@@ -2,7 +2,7 @@
   <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
-         :class="alwaysShow && scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
+         :class="isMain && scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/previous">
@@ -14,7 +14,7 @@
         </q-btn>
       </div>
 
-      <div class="row items-center justify-center col-4">
+      <div v-if="isMain" class="row items-center justify-center col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/article/list">
           <div class="row items-center">
             <div class="q-ma-xs">
@@ -40,6 +40,26 @@
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_board') }}
+            </div>
+          </div>
+        </q-btn>
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="notifyTopWarning($t('in_develop'))">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_chat_room') }}
+            </div>
+          </div>
+          <q-badge floating rounded v-show="globalState.newMessage"
+                   style="background-color: rgb(var(--negative));
+                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0"/>
+        </q-btn>
+      </div>
+
+      <div v-else class="row items-center justify-center col-4">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_home') }}
             </div>
           </div>
         </q-btn>
@@ -301,7 +321,7 @@ import {scrollState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
 
 const props = defineProps({
-  alwaysShow: {
+  isMain: {
     type: Boolean,
     default: true,
   },

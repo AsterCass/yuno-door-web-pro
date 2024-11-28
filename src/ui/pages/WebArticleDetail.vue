@@ -1,28 +1,26 @@
 <template>
   <q-layout view="hhh lpr fff">
-    <cask-base-header :always-show="false"/>
+    <cask-base-header :is-main="false"/>
 
     <div class="row justify-center cask-base-simple-main">
 
-      <div class="col-lg-3 q-pl-xl">
-        <div class="article-right-sidebar">
+      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-xl'">
+        <div :class="globalState.screenMini ? '' : 'article-right-sidebar'">
           <h2>
             {{ blogMeta.articleTitle }}
           </h2>
 
           <div class="row justify-between items-center">
-            <q-btn no-caps unelevated class=" component-none-btn-grow" style="border-radius: 8px !important;">
-              <div class="row items-center q-ma-xs">
-                <div class="bg-black q-btn--round">
-                  <q-avatar size="40px" style="margin: 2px">
-                    <q-img :src="blogMeta.authorAvatar"/>
-                  </q-avatar>
-                </div>
-                <div style="font-size: 1rem; margin-left: 12px">
-                  {{ blogMeta.authorName }}
-                </div>
+            <div class="row items-center">
+              <q-btn round push color="black">
+                <q-avatar size="38px" style="margin: 2px">
+                  <q-img :src="blogMeta.authorAvatar"/>
+                </q-avatar>
+              </q-btn>
+              <div style="font-size: 1rem; margin-left: 12px" class="cask-jump-link-in-text-origin">
+                {{ blogMeta.authorName }}
               </div>
-            </q-btn>
+            </div>
             <div style="opacity: .5">
               <div>
                 {{ $t('dynamic-create-time') }}:&nbsp;{{ blogMeta.createTime }}
@@ -33,7 +31,7 @@
             </div>
           </div>
 
-          <div class="row relative-position" style="margin-top: 5rem;">
+          <div v-if="!globalState.screenMini" class="row relative-position" style="margin-top: 5rem;">
             <q-img :no-native-menu="false" :ratio="1" fit="cover"
                    src="/img/article-bg.jpg"
                    style="border-radius: 32px; position: absolute; translate: -15%; scale: 1.1">
@@ -46,8 +44,11 @@
         </div>
       </div>
 
-      <div class="col-lg-6" style="min-height: 160rem">
-
+      <div class="col-lg-6 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+           style="min-height: 100rem">
+        <div>
+          <div v-html="markdownToHtml" class="blogMarkDown"></div>
+        </div>
       </div>
 
 
@@ -64,12 +65,13 @@
 
 <script setup>
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
-import {defineProps, onMounted, ref} from "vue";
+import {computed, defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {getBlogContent, getBlogMeta} from "@/api/article";
 import {useRouter} from "vue-router";
 import {decrypt} from "@/utils/crypto";
+import {importStyle, marked} from "@/utils/marked-tools";
 
 const props = defineProps({
   articleId: {
@@ -80,6 +82,8 @@ const props = defineProps({
 const globalState = useGlobalStateStore();
 //导航
 const thisRouter = useRouter()
+//页面元素
+const baseElement = ref(null)
 //基础数据
 const blogContent = ref("")
 const blogMeta = ref({
@@ -104,6 +108,13 @@ function getBlogContentMethod() {
   })
 }
 
+//markdown转html
+const markdownToHtml = computed(() => {
+  const html = marked.parse(blogContent.value)
+  // buildImgFormat()
+  return html
+})
+
 
 //请求后端获取文章meta
 function getBlogMetaMethod() {
@@ -124,8 +135,20 @@ function getBlogMetaMethod() {
 }
 
 onMounted(() => {
+  //该页面所有链接均打开新标签，不在本页面打开，目的兼容markdown语法
+  const base = document.createElement("base")
+  base.setAttribute("target", "_blank")
+  document.querySelector('head').append(base)
+  baseElement.value = base
+  //随机导入code样式
+  importStyle()
   //获取文章元数据
   getBlogMetaMethod()
+})
+
+onBeforeUnmount(() => {
+  //删除页面标签基础标签
+  document.querySelector('head').removeChild(baseElement.value)
 })
 
 
@@ -137,7 +160,7 @@ onMounted(() => {
   width: 100%;
   height: 800px;
   position: sticky;
-  top: 8rem;
+  top: 9rem;
   align-self: flex-start;
   //margin-bottom: 5rem;
 }
