@@ -30,7 +30,7 @@
               {{ comment.ipAddressName }}
             </div>
           </div>
-          <div class="row" style="margin: 0 75px; font-size: 0.95rem">
+          <div class="row" style="margin-left: 75px; font-size: 0.95rem">
             <div class="col-12 q-mb-sm">
               {{ comment.commentContent }}
             </div>
@@ -76,7 +76,7 @@
                   </div>
                 </div>
 
-                <div class="row" style="margin: 0 55px; font-size: 0.95rem">
+                <div class="row" style="margin-left: 55px; font-size: 0.95rem">
                   <div class="col-12 q-mb-sm">
                     <span v-if=" comment.id !== childComment.mainSubId" style="color: rgb(var(--pointer));">
                       @{{ childComment.mainSubUserName }}:&nbsp;
