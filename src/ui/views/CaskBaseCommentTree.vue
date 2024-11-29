@@ -1,9 +1,9 @@
 <template>
   <div class="row justify-center">
-    <div class="col-lg-8 col-12">
-
-
+    <div class="col-lg-6 col-12">
       <cask-long-text-input :elements="new Map([
+          [CaskLongTextInputElement.FILE, {callback: ()=> {}}],
+          [CaskLongTextInputElement.IMG, {callback: ()=> {}}],
           [CaskLongTextInputElement.EMOJI, {callback: ()=> {}}],
           [CaskLongTextInputElement.CALL, {callback: ()=> {}}],
           ])"/>

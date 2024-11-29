@@ -217,14 +217,14 @@
     background-color: rgba(var(--full-container-background-color-light));
     margin: .8rem 0 0 0;
     padding: 1rem;
-    height: 6rem;
+    height: 5.5rem;
     border-radius: 8px 8px 0 0;
     overflow-wrap: anywhere;
   }
 
   .component-long-text-input-bottom {
     translate: 0 -2px;
-    height: 2rem;
+    height: 2.5rem;
     color: rgb(var(--text-color));
     background-color: rgba(var(--full-container-background-color-light));
     border-bottom: 2px solid rgb(var(--text-color));
@@ -259,6 +259,13 @@
 
 .component-full-btn-grow {
   @include component-full-btn-base(
+          $thisWidth: auto,
+  )
+}
+
+.component-full-btn-mini-grow {
+  @include component-full-btn-base(
+          $thisHeight: 2rem,
           $thisWidth: auto,
   )
 }
