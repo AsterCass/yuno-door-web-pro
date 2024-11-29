@@ -2,7 +2,7 @@
   <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
-         :class="isMain && scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
+         :class="scrollState.scrollTop === 0 ? 'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/previous">

@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hhh lpr fff">
-    <cask-base-header/>
+    <cask-base-header :is-main="false"/>
 
     <div class="row justify-center">
       <q-img :no-native-menu="false" :ratio="1/6" fit="cover"
@@ -126,8 +126,8 @@
       </div>
     </div>
 
-    <div class="row justify-center cask-base-simple-main">
-      <!--  todo    command-->
+    <div v-if="!inLoading" class="cask-base-simple-bottom">
+      <cask-base-comment-tree :main-id="articleId"/>
     </div>
 
     <cask-dialog-image v-model="showImg" :src="showImgSrc"/>
@@ -149,6 +149,7 @@ import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
 import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
+import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
 
 const props = defineProps({
   articleId: {

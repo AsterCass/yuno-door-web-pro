@@ -15,3 +15,10 @@ export const ComplexTableSortedStatus = Object.freeze({
     ASC: 1,
     DESC: 2,
 });
+
+export const CaskLongTextInputElement = Object.freeze({
+    FILE: 0,
+    IMG: 1,
+    EMOJI: 2,
+    CALL: 3,
+});
