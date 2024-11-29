@@ -98,7 +98,6 @@ export async function buildImgFormat(thisElement, callback) {
     }
     await sleep(50)
     let imgList = thisElement.getElementsByTagName("img");
-    console.log(imgList)
     for (let i = 0; i < imgList.length; i++) {
         if (imgList[i].classList.length > 0) {
             continue

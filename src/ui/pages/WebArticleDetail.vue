@@ -1,6 +1,14 @@
 <template>
   <q-layout view="hhh lpr fff">
-    <cask-base-header :is-main="false"/>
+    <cask-base-header/>
+
+    <div class="row justify-center">
+      <q-img :no-native-menu="false" :ratio="1/6" fit="cover"
+             :src="globalState.curThemeName !== 'dark' ? '/img/article-detail.jpg' : '/img/bg-2-fixed.jpg'"
+             class="cask-article-detail-bg-image">
+      </q-img>
+    </div>
+
 
     <div v-if="!inLoading" class="row justify-center cask-base-simple-main">
 
@@ -10,7 +18,7 @@
             {{ blogMeta.articleTitle }}
           </h2>
 
-          <div class="row justify-between items-center">
+          <div class="row justify-between items-center q-mt-lg">
             <div class="row items-center">
               <q-btn round push color="black">
                 <q-avatar size="38px" style="margin: 2px">
@@ -31,16 +39,16 @@
             </div>
           </div>
 
-          <div v-if="!globalState.screenMini" class="row relative-position" style="margin-top: 5rem;">
+          <div v-if="!globalState.screenMini" class="row relative-position q-mt-lg">
             <q-img v-show="showPic" :no-native-menu="false" :ratio="1" fit="cover"
                    src="/img/article-bg.jpg"
-                   style="border-radius: 32px; position: absolute; translate: -15%; scale: 1.1">
+                   style="border-radius: 32px; position: absolute; translate: -3%; scale: .95">
               <template v-slot:loading/>
             </q-img>
 
             <q-img :no-native-menu="false" :ratio="1" fit="cover"
                    :src="globalState.curThemeName === 'dark' ? '/img/article-bg-dark.svg' : '/img/article-bg-light.svg'"
-                   style="position: absolute; translate: -15%; scale: 1.11">
+                   style="position: absolute; translate: -3%; scale: 0.96">
               <template v-slot:loading/>
             </q-img>
           </div>
@@ -118,13 +126,11 @@
       </div>
     </div>
 
-
-<!-- todo   顶部加个图片把，不然太素了-->
-
-
     <div class="row justify-center cask-base-simple-main">
       <!--  todo    command-->
     </div>
+
+    <cask-dialog-image v-model="showImg" :src="showImgSrc"/>
 
     <cask-base-footer/>
   </q-layout>
@@ -142,6 +148,7 @@ import {buildImgFormat, headToHtmlTag, importStyle, importStyleLight, marked} fr
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
 import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
+import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 
 const props = defineProps({
   articleId: {
@@ -162,6 +169,9 @@ const showAnchor = ref(false)
 const inLoading = ref(true)
 const showPic = ref(false)
 const articleMainContent = ref(null)
+//图片放大
+const showImg = ref(false)
+const showImgSrc = ref("")
 //基础数据
 const blogContent = ref("")
 const blogMeta = ref({
@@ -200,7 +210,8 @@ function loadMoreRecommend(num) {
 const markdownToHtml = computed(() => {
   const html = marked.parse(blogContent.value)
   buildImgFormat(articleMainContent.value, (element) => {
-    console.log(element)
+    showImgSrc.value = element.src
+    showImg.value = true
   })
   return html
 })
@@ -280,6 +291,18 @@ onBeforeUnmount(() => {
   top: 9rem;
   align-self: flex-start;
   //margin-bottom: 5rem;
+}
+
+.cask-article-detail-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10rem;
+  z-index: -1 !important;
+  opacity: 0.9;
+
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0));
 }
 
 </style>
