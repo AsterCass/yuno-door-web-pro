@@ -207,13 +207,13 @@
 
   textarea {
     resize: none !important;
-    font-size: .95rem;
+    font-size: .9rem;
     color: rgb(var(--text-color));
     letter-spacing: 0.023rem;
     line-height: 1.3rem;
-    border-top: 2px solid rgb(var(--text-color));
-    border-right: 2px solid rgb(var(--text-color));
-    border-left: 2px solid rgb(var(--text-color));
+    border-top: 2px solid rgb(var(--text-color), .8);
+    border-right: 2px solid rgb(var(--text-color), .8);
+    border-left: 2px solid rgb(var(--text-color), .8);
     background-color: rgba(var(--full-container-background-color-light));
     margin: .8rem 0 0 0;
     padding: 1rem;
@@ -227,9 +227,9 @@
     height: 2.5rem;
     color: rgb(var(--text-color));
     background-color: rgba(var(--full-container-background-color-light));
-    border-bottom: 2px solid rgb(var(--text-color));
-    border-right: 2px solid rgb(var(--text-color));
-    border-left: 2px solid rgb(var(--text-color));
+    border-bottom: 2px solid rgb(var(--text-color), .8);
+    border-right: 2px solid rgb(var(--text-color), .8);
+    border-left: 2px solid rgb(var(--text-color), .8);
     border-radius: 0 0 8px 8px;
   }
 

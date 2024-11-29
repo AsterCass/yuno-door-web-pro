@@ -39,7 +39,7 @@
       </div>
 
       <div>
-        <q-btn no-caps unelevated class=" shadow-2 component-full-btn-mini-grow items-center"
+        <q-btn no-caps unelevated class="component-full-btn-mini-grow items-center"
                style="padding: 0!important;">
           <div class="row items-center">
             <div class="q-mx-sm" style="font-size: .9rem">
