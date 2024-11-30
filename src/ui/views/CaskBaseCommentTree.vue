@@ -2,7 +2,7 @@
   <div class="row justify-center">
     <div class="col-lg-6 col-12">
 
-      <div class="text-center q-mb-lg">
+      <div id="comment-reply-title" class="text-center q-mb-lg">
         <h2>
           {{ commentSum }}&nbsp;&nbsp;评论
         </h2>
@@ -30,8 +30,8 @@
               {{ comment.ipAddressName }}
             </div>
           </div>
-          <div class="row" style="margin-left: 75px; font-size: 0.95rem">
-            <div class="col-12 q-mb-sm">
+          <div class="row" style="margin-left: 75px;">
+            <div class="col-12 q-mb-sm" style="font-size: 0.95rem">
               {{ comment.commentContent }}
             </div>
             <div class="row items-center justify-end">
@@ -46,13 +46,17 @@
               <div class="q-mx-xs" style="width: 10px">
                 {{ comment.likeNum }}
               </div>
-              <q-btn class="component-none-btn-grow q-ml-md" no-caps style="padding: 0!important;" unelevated>
-                <div class="row items-center q-ma-xs">
+              <div class="q-ml-md">
+                <div class="row items-center q-ma-xs ">
                   <q-icon name="fa-regular fa-comment-dots" size="1.2rem"/>
                 </div>
-              </q-btn>
+              </div>
               <div class="q-mx-xs">
                 {{ comment.childData.length }}
+              </div>
+              <div class="q-ml-md cask-jump-link-in-text" style="font-size: .85rem; margin-bottom: 1px;"
+                   @click="updateReplyComment(comment, null)">
+                回复
               </div>
             </div>
 
@@ -79,8 +83,8 @@
                   </div>
                 </div>
 
-                <div class="row" style="margin-left: 55px; font-size: 0.95rem">
-                  <div class="col-12 q-mb-sm">
+                <div class="row" style="margin-left: 55px">
+                  <div class="col-12 q-mb-sm" style="font-size: 0.95rem">
                     <span v-if=" comment.id !== childComment.mainSubId" style="color: rgb(var(--pointer));">
                       @{{ childComment.mainSubUserName }}:&nbsp;
                     </span>
@@ -99,13 +103,17 @@
                     <div class="q-mx-xs" style="width: 10px">
                       {{ childComment.likeNum }}
                     </div>
-                    <q-btn class="component-none-btn-grow q-ml-md" no-caps style="padding: 0!important;" unelevated>
+                    <div class="q-ml-md">
                       <div class="row items-center q-ma-xs">
                         <q-icon name="fa-regular fa-comment-dots" size="1.2rem"/>
                       </div>
-                    </q-btn>
+                    </div>
                     <div class="q-mx-xs">
                       {{ childComment.replyNum }}
+                    </div>
+                    <div class="q-ml-md cask-jump-link-in-text" style="font-size: .85rem; margin-bottom: 1px;"
+                         @click="updateReplyComment(comment, childComment)">
+                      回复
                     </div>
                   </div>
                 </div>
@@ -117,24 +125,41 @@
 
       </div>
 
-      <cask-long-text-input :elements="new Map([
+      <div style="height: 15px;color: rgb(var(--pointer))" class="row items-center justify-between q-px-sm">
+        <div v-if="replySubUserName" style="font-size: 0.95rem" class="cask-cursor-pointer">
+          @{{ replySubUserName }}&nbsp;:
+        </div>
+        <div v-if="replySubUserName" style="font-size: 0.85rem" class="q-mr-sm cask-jump-link-in-text-origin"
+             @click="cancelReplySub">
+          取消回复
+        </div>
+      </div>
+      <cask-long-text-input id="comment-reply-input" :elements="new Map([
           [CaskLongTextInputElement.FILE, {callback: ()=> {}}],
           [CaskLongTextInputElement.IMG, {callback: ()=> {}}],
           [CaskLongTextInputElement.EMOJI, {callback: ()=> {}}],
           [CaskLongTextInputElement.CALL, {callback: ()=> {}}],
-          ])" class="q-mt-lg"/>
+          ])" :placeholder="replySubContent" :sendCallback="submitCommentInput" v-model="commentContent"
+                            @update:model-value="data => commentContent = data"
+      />
     </div>
   </div>
+
+
+  <!--  todo 双语支持-->
+  <!--  todo 楼层数量-->
 </template>
 
 <script setup>
 import {defineProps, onMounted, ref} from "vue";
-import {getCommentTree, likeComment} from "@/api/comment";
+import {getCommentTree, likeComment, replyComment} from "@/api/comment";
 import {commentTree2TwoLevelTree} from "@/utils/comment-tree";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {delay, togoElementCenter} from "@/utils/base-tools";
+import {checkReply} from "@/utils/format-check";
 
 const props = defineProps({
   mainId: {
@@ -144,6 +169,7 @@ const props = defineProps({
 })
 const globalState = useGlobalStateStore();
 //回复相关
+const replySubMainId = ref(props.mainId)
 const replySecondaryId = ref(props.mainId)
 const replySubUserName = ref("")
 const replySubContent = ref("")
@@ -203,6 +229,47 @@ function updateUserLike(comment) {
     comment.likeNum = comment.likeNum - 1
   }
   likeComment(comment.id, comment.isLike)
+}
+
+function updateReplyComment(comment, childComment) {
+  if (childComment) {
+    replySubMainId.value = childComment.id
+    replySubUserName.value = childComment.commentUserName
+    replySubContent.value = "回复: " + childComment.commentContent
+  } else {
+    replySubMainId.value = comment.id
+    replySubUserName.value = comment.commentUserName
+    replySubContent.value = "回复: " + comment.commentContent
+  }
+  replySecondaryId.value = comment.id
+  togoElementCenter("comment-reply-input")
+}
+
+function cancelReplySub() {
+  replySubMainId.value = props.mainId
+  replySecondaryId.value = props.mainId
+  replySubUserName.value = ""
+  replySubContent.value = ""
+}
+
+function submitCommentInput() {
+  let replyNewData = {mainId: props.mainId, mainSubId: replySubMainId.value, secondaryId: replySecondaryId.value};
+  if (!checkReply(commentContent.value)) {
+    notifyTopWarning("输入内容不允许为空，且不能超过500字符")
+    return
+  }
+  replyNewData.commentContent = commentContent.value.trim()
+  replyComment(replyNewData).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    notifyTopPositive("回复成功")
+    commentContent.value = ""
+    buildCommentTree()
+    delay(100).then(() => {
+      togoElementCenter("comment-reply-title")
+    })
+  })
 }
 
 onMounted(() => {

@@ -4,8 +4,8 @@
   <div class="component-long-text-input">
 
     <q-input
-        v-model="mainInput" type="textarea"
-        placeholder="吾有一言，请诸位静听" borderless/>
+        v-model="mainInput" type="textarea" @update:model-value="emit('update:modelValue', mainInput);"
+        :placeholder="placeholder" borderless/>
     <div class="component-long-text-input-bottom row justify-between q-px-sm">
       <div class="row items-center">
         <div v-if="elements.has(CaskLongTextInputElement.FILE)" class="q-mr-sm">
@@ -40,10 +40,10 @@
 
       <div>
         <q-btn no-caps unelevated class="component-full-btn-mini-grow items-center"
-               style="padding: 0!important;">
+               style="padding: 0!important;" @click="sendCallback">
           <div class="row items-center">
             <div class="q-mx-sm" style="font-size: .9rem">
-              提交
+              发送
             </div>
             <q-icon class="q-mr-sm" name="fa-regular fa-paper-plane" size=".9rem"/>
           </div>
@@ -59,9 +59,10 @@
 
 <script setup>
 
-import {defineProps, ref} from "vue";
+import {defineEmits, defineProps, ref, watch} from "vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   elements: {
     type: Map,
@@ -70,9 +71,28 @@ const props = defineProps({
       return new Map()
     },
   },
+  placeholder: {
+    type: String,
+    required: false,
+    default: ""
+  },
+  sendCallback: {
+    type: Function,
+    required: false,
+    default: () => {
+    }
+  },
+  modelValue: {
+    type: String,
+    required: true,
+  },
 })
 
-const mainInput = ref("")
+watch(() => props.modelValue, () => {
+  mainInput.value = props.modelValue
+})
+
+const mainInput = ref(props.modelValue)
 
 
 </script>
