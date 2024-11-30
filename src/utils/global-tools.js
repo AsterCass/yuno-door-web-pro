@@ -4,6 +4,7 @@ import zh from 'quasar/lang/zh-CN'
 import en from 'quasar/lang/en-US'
 import {useGlobalStateStore} from '@/utils/global-state';
 import {isMiniScreenMethod} from "@/utils/base-tools";
+import {userIsLogin} from "@/api/user";
 
 export function initGlobalState() {
     const globalState = useGlobalStateStore();
@@ -21,8 +22,14 @@ export function initGlobalState() {
     }
     //screen size
     globalState.updateScreenMini(isMiniScreenMethod());
-    //login data
-
+    //login data check token expire
+    if (globalState.isLogin) {
+        userIsLogin().then(res => {
+            if (!res || !res.data || !res.data.data) {
+                globalState.updateToken(null)
+            }
+        })
+    }
     //more
 }
 

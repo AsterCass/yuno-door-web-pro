@@ -60,6 +60,10 @@
   "main_login_privacy_pre": "I agree to",
   "main_login_privacy_center": "privacy policy and terms",
   "main_login_more": "Or",
+  "main_login_message_check": "Please check the relevant policies and agreements",
+  "main_login_message_empty": "Account and password cannot be empty",
+  "main_login_success": "Login successful",
+  "main_login_success_logout": "Logout successful",
 
   "main-fa-mail": "Mail",
   "main-fa-wechat": "WeChat",

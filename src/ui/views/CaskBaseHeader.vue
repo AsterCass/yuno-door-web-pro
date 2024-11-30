@@ -77,7 +77,7 @@
 
       <div class="row items-center justify-end col-4">
         <div class="row col justify-end items-center">
-          <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+          <q-btn v-show="!globalState.isLogin" no-caps unelevated class="component-none-btn-grow q-mx-xs"
                  v-morph:btn:withLogin:800.resize="morphWithLogin"
                  @click="delay(50).then(() => {
                    showHeaderLogin(true)
@@ -85,6 +85,14 @@
             <div class="row items-center">
               <div class="q-ma-xs">
                 {{ $t('main_login') }}
+              </div>
+            </div>
+          </q-btn>
+          <q-btn v-show="globalState.isLogin" no-caps unelevated class="component-none-btn-grow q-mx-xs"
+                 @click="headerLogout">
+            <div class="row items-center">
+              <div class="q-ma-xs">
+                {{ $t('main_logout') }}
               </div>
             </div>
           </q-btn>
@@ -263,7 +271,8 @@
 
         <div class="row justify-center">
           <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
-                 style="background-color: rgb(var(--semi-bg-container-background-color)) !important">
+                 style="background-color: rgb(var(--semi-bg-container-background-color)) !important"
+                 @click="headerLogin">
             <div class="row items-center">
               <div class="q-mr-sm" style="font-size: 14px">
                 {{ $t('main_login') }}
@@ -316,10 +325,12 @@ import {defineProps, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
 import {toSpecifyPage} from "@/router";
+import {userLogin, userLogout} from "@/api/user";
+import {useI18n} from "vue-i18n";
 
 const props = defineProps({
   isMain: {
@@ -330,6 +341,7 @@ const props = defineProps({
 
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
+const {t} = useI18n()
 
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
@@ -364,6 +376,35 @@ const showHeaderLogin = (isShow) => {
     morphWithLogin.value = 'btn'
     morphWithLoginContentShow.value = false
   }
+}
+
+const headerLogin = () => {
+  if (!agreePrivacy.value) {
+    notifyTopWarning(t('main_login_message_check'))
+    return
+  }
+  if (!inputAccount.value || !inputPassword.value) {
+    notifyTopWarning(t('main_login_message_empty'))
+    return
+  }
+  let currentBody = {accountMail: inputAccount.value, passwd: inputPassword.value}
+  userLogin(currentBody).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    notifyTopPositive(t('main_login_success'))
+    morphWithLogin.value = 'btn'
+  })
+}
+
+const headerLogout = () => {
+  userLogout().then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    notifyTopPositive(t('main_login_success_logout'))
+    globalState.updateToken(null)
+  })
 }
 
 </script>
