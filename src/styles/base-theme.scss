@@ -211,3 +211,11 @@ p {
     text-decoration: underline;
   }
 }
+
+.cask-cursor-pointer {
+  cursor: pointer;
+
+  &:hover, &:active {
+    opacity: .8;
+  }
+}
