@@ -25,6 +25,8 @@ export const useGlobalStateStore = defineStore('globalState', {
         saveLoginData: true,
         newMessage: false,
         screenMini: false,
+        isLogin: false,
+        loginToken: "",
     }),
     actions: {
         updateTheme(code) {
@@ -44,6 +46,15 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateScreenMini(isMini) {
             this.screenMini = isMini;
+        },
+        updateToken(token) {
+            if (token) {
+                this.isLogin = true;
+                this.loginToken = token;
+            } else {
+                this.isLogin = false;
+                this.loginToken = "";
+            }
         },
     },
 });
