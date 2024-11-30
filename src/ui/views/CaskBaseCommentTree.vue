@@ -35,12 +35,15 @@
               {{ comment.commentContent }}
             </div>
             <div class="row items-center justify-end">
-              <q-btn class="component-none-btn-grow" no-caps style="padding: 0!important;" unelevated>
+              <q-btn class="component-none-btn-grow" no-caps style="padding: 0!important;" unelevated
+                     @click="updateUserLike(comment)">
                 <div class="row items-center q-ma-xs">
-                  <q-icon name="fa-regular fa-thumbs-up" size="1.2rem"/>
+                  <q-icon v-show="1 === comment.isLike" style="color: rgb(var(--positive))" name="fa-solid fa-thumbs-up"
+                          size="1.2rem"/>
+                  <q-icon v-show="1 !== comment.isLike" name="fa-regular fa-thumbs-up" size="1.2rem"/>
                 </div>
               </q-btn>
-              <div class="q-mx-xs">
+              <div class="q-mx-xs" style="width: 10px">
                 {{ comment.likeNum }}
               </div>
               <q-btn class="component-none-btn-grow q-ml-md" no-caps style="padding: 0!important;" unelevated>
@@ -84,12 +87,16 @@
                     {{ childComment.commentContent }}
                   </div>
                   <div class="row items-center">
-                    <q-btn class="component-none-btn-grow" no-caps style="padding: 0!important;" unelevated>
+                    <q-btn class="component-none-btn-grow" no-caps style="padding: 0!important;" unelevated
+                           @click="updateUserLike(childComment)">
                       <div class="row items-center q-ma-xs">
-                        <q-icon name="fa-regular fa-thumbs-up" size="1.2rem"/>
+                        <q-icon v-show="1 === childComment.isLike" style="color: rgb(var(--positive))"
+                                name="fa-solid fa-thumbs-up"
+                                size="1.2rem"/>
+                        <q-icon v-show="1 !== childComment.isLike" name="fa-regular fa-thumbs-up" size="1.2rem"/>
                       </div>
                     </q-btn>
-                    <div class="q-mx-xs">
+                    <div class="q-mx-xs" style="width: 10px">
                       {{ childComment.likeNum }}
                     </div>
                     <q-btn class="component-none-btn-grow q-ml-md" no-caps style="padding: 0!important;" unelevated>
@@ -122,10 +129,12 @@
 
 <script setup>
 import {defineProps, onMounted, ref} from "vue";
-import {getCommentTree} from "@/api/comment";
+import {getCommentTree, likeComment} from "@/api/comment";
 import {commentTree2TwoLevelTree} from "@/utils/comment-tree";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
+import {useGlobalStateStore} from "@/utils/global-state";
+import {notifyTopWarning} from "@/utils/notification-tools";
 
 const props = defineProps({
   mainId: {
@@ -133,6 +142,7 @@ const props = defineProps({
     default: "UN_KNOW"
   },
 })
+const globalState = useGlobalStateStore();
 //回复相关
 const replySecondaryId = ref(props.mainId)
 const replySubUserName = ref("")
@@ -163,9 +173,6 @@ const commentTree = ref([
   }
 ])
 const commentSum = ref(0)
-//用户信息
-const userData = ref({})
-
 
 function initCommentData() {
   commentSum.value = 0;
@@ -181,6 +188,21 @@ function buildCommentTree() {
     commentSum.value = commentOriginObj.value.sum
     commentTree.value = commentTree2TwoLevelTree(commentOriginObj.value.tree)
   })
+}
+
+function updateUserLike(comment) {
+  if (!globalState.isLogin) {
+    notifyTopWarning("未登录用户无法点赞，请登录后操作")
+    return
+  }
+  if (0 === comment.isLike) {
+    comment.isLike = 1
+    comment.likeNum = comment.likeNum + 1
+  } else {
+    comment.isLike = 0
+    comment.likeNum = comment.likeNum - 1
+  }
+  likeComment(comment.id, comment.isLike)
 }
 
 onMounted(() => {
