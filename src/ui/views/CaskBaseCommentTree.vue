@@ -27,7 +27,10 @@
               {{ comment.commentTime }}&nbsp;·&nbsp;
             </div>
             <div style="font-size: .85rem; opacity: 0.8;">
-              {{ comment.ipAddressName }}
+              {{ comment.ipAddressName }}&nbsp;·&nbsp;
+            </div>
+            <div style="font-size: .85rem;opacity: 0.8">
+              #{{ comment.floorNumber }}
             </div>
           </div>
           <div class="row" style="margin-left: 75px;">
@@ -145,7 +148,7 @@
     </div>
   </div>
 
-
+  <!--  todo 文章详情做一个形同textarea的btn到右边去，如果用户拉到评论区域，隐藏这个btn，如果点击btn，则展开侧边评论树-->
   <!--  todo 双语支持-->
   <!--  todo 楼层数量-->
 </template>
@@ -189,6 +192,7 @@ const commentTree = ref([
     commentUserAvatar: "",
     likeNum: 0,
     isLike: 0,
+    floorNumber: 0,
     childData: [{
       mainSubId: "",
       mainSubUserName: "",
