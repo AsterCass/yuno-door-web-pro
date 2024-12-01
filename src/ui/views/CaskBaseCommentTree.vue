@@ -11,7 +11,7 @@
       <div>
         <div v-for="(comment, index) in commentTree" :key="index" class="q-ma-md">
           <div class="row items-center">
-            <div class="relative-position q-mr-md" style="width: 50px; height: 50px">
+            <div class="relative-position q-mr-md cursor-pointer" style="width: 50px; height: 50px">
               <q-avatar size="56px" style="filter: blur(3px); position: absolute;">
                 <q-img :src="comment.commentUserAvatar"/>
               </q-avatar>
@@ -19,7 +19,7 @@
                 <q-img :src="comment.commentUserAvatar"/>
               </q-avatar>
             </div>
-            <div class="q-ma-sm" style="font-size: 1.1rem; color: rgb(var(--positive))">
+            <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))">
               {{ comment.commentUserName }}
             </div>
 
@@ -67,7 +67,7 @@
                  class="q-mt-md col-12" style="font-size: 0.95rem">
               <div v-for="(childComment, index) in comment.childData" :key="index" class="q-ma-sm">
                 <div class="row items-center">
-                  <div class="relative-position q-mr-md" style="width: 30px; height: 30px">
+                  <div class="relative-position q-mr-md cursor-pointer" style="width: 30px; height: 30px">
                     <q-avatar size="36px" style="filter: blur(3px); position: absolute;">
                       <q-img :src="childComment.commentUserAvatar"/>
                     </q-avatar>
@@ -75,7 +75,7 @@
                       <q-img :src="childComment.commentUserAvatar"/>
                     </q-avatar>
                   </div>
-                  <div class="q-ma-sm" style="font-size: .95rem; color: rgb(var(--positive))">
+                  <div class="q-ma-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))">
                     {{ childComment.commentUserName }}
                   </div>
                   <div style="font-size: .75rem;opacity: 0.8;">
@@ -138,10 +138,10 @@
         </div>
       </div>
       <cask-long-text-input id="comment-reply-input" :elements="new Map([
-          [CaskLongTextInputElement.FILE, {callback: ()=> {}}],
-          [CaskLongTextInputElement.IMG, {callback: ()=> {}}],
-          [CaskLongTextInputElement.EMOJI, {callback: ()=> {}}],
-          [CaskLongTextInputElement.CALL, {callback: ()=> {}}],
+          [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+          [CaskLongTextInputElement.IMG, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+          [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+          [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           ])" :placeholder="replySubContent" :sendCallback="submitCommentInput" v-model="commentContent"
                             @update:model-value="data => commentContent = data"
       />
@@ -150,7 +150,6 @@
 
   <!--  todo 文章详情做一个形同textarea的btn到右边去，如果用户拉到评论区域，隐藏这个btn，如果点击btn，则展开侧边评论树-->
   <!--  todo 双语支持-->
-  <!--  todo 楼层数量-->
 </template>
 
 <script setup>
