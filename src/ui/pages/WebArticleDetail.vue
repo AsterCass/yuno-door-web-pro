@@ -12,7 +12,7 @@
 
     <div v-if="!inLoading" class="row justify-center cask-base-simple-main">
 
-      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm q-mt-xl' : 'q-pl-lg'">
+      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 7.5rem">
         <div :class="globalState.screenMini ? '' : 'article-left-sidebar'">
           <h2 style="font-size: 1.75rem; line-height: 2.9rem; word-wrap: break-word;">
             {{ blogMeta.articleTitle }}
@@ -55,14 +55,14 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-12 component-marked-view" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+      <div class="col-lg-6 col-12 component-marked-view q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem">
         <div ref="articleMainContent">
           <div v-html="markdownToHtml" class="blogMarkDown"></div>
         </div>
       </div>
 
-      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-lg">
+      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-lg" style="margin-top: 7rem">
         <div class="article-right-sidebar">
 
           <q-scroll-area delay="100" style="height: 600px;"

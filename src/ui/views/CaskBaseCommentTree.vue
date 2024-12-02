@@ -19,18 +19,19 @@
                 <q-img :src="comment.commentUserAvatar"/>
               </q-avatar>
             </div>
-            <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))">
-              {{ comment.commentUserName }}
-            </div>
-
-            <div style="font-size: .85rem;opacity: 0.8;">
-              {{ comment.commentTime }}&nbsp;·&nbsp;
-            </div>
-            <div style="font-size: .85rem; opacity: 0.8;">
-              {{ comment.ipAddressName }}&nbsp;·&nbsp;
-            </div>
-            <div style="font-size: .85rem;opacity: 0.8">
-              #{{ comment.floorNumber }}
+            <div class="col row items-center  q-ml-sm">
+              <div class="q-mr-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))">
+                {{ comment.commentUserName }}
+              </div>
+              <div class="" style="font-size: .85rem;opacity: 0.8;">
+                {{ comment.commentTime }}&nbsp;·&nbsp;
+              </div>
+              <div class="" style="font-size: .85rem; opacity: 0.8;">
+                {{ comment.ipAddressName }}&nbsp;·&nbsp;
+              </div>
+              <div class="" style="font-size: .85rem;opacity: 0.8">
+                #{{ comment.floorNumber }}
+              </div>
             </div>
           </div>
           <div class="row" style="margin-left: 75px;">
@@ -75,14 +76,16 @@
                       <q-img :src="childComment.commentUserAvatar"/>
                     </q-avatar>
                   </div>
-                  <div class="q-ma-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))">
-                    {{ childComment.commentUserName }}
-                  </div>
-                  <div style="font-size: .75rem;opacity: 0.8;">
-                    {{ childComment.commentTime }}&nbsp;·&nbsp;
-                  </div>
-                  <div style="font-size: .75rem; opacity: 0.8;">
-                    {{ childComment.ipAddressName }}
+                  <div class="col row items-center  q-ml-sm">
+                    <div class="q-mr-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))">
+                      {{ childComment.commentUserName }}
+                    </div>
+                    <div class="" style="font-size: .75rem;opacity: 0.8;">
+                      {{ childComment.commentTime }}&nbsp;·&nbsp;
+                    </div>
+                    <div class="" style="font-size: .75rem; opacity: 0.8;">
+                      {{ childComment.ipAddressName }}
+                    </div>
                   </div>
                 </div>
 
