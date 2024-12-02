@@ -4,7 +4,7 @@
 
       <div id="comment-reply-title" class="text-center q-mb-lg">
         <h2>
-          {{ commentSum }}&nbsp;&nbsp;评论
+          {{ commentSum }}&nbsp;&nbsp;{{ $t('main_article_comment') }}
         </h2>
       </div>
 
@@ -59,7 +59,7 @@
               </div>
               <div class="q-ml-md cask-jump-link-in-text" style="font-size: .85rem; margin-bottom: 1px;"
                    @click="updateReplyComment(comment, null)">
-                回复
+                {{ $t('main_article_reply') }}
               </div>
             </div>
 
@@ -116,7 +116,7 @@
                     </div>
                     <div class="q-ml-md cask-jump-link-in-text" style="font-size: .85rem; margin-bottom: 1px;"
                          @click="updateReplyComment(comment, childComment)">
-                      回复
+                      {{ $t('main_article_reply') }}
                     </div>
                   </div>
                 </div>
@@ -134,7 +134,7 @@
         </div>
         <div v-if="replySubUserName" style="font-size: 0.85rem" class="q-mr-sm cask-jump-link-in-text-origin"
              @click="cancelReplySub">
-          取消回复
+          {{ $t('main_article_cancel_reply') }}
         </div>
       </div>
       <cask-long-text-input id="comment-reply-input" :elements="new Map([
@@ -149,11 +149,10 @@
   </div>
 
   <!--  todo 文章详情做一个形同textarea的btn到右边去，如果用户拉到评论区域，隐藏这个btn，如果点击btn，则展开侧边评论树-->
-  <!--  todo 双语支持-->
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref} from "vue";
+import {defineProps, onMounted, ref, watch} from "vue";
 import {getCommentTree, likeComment, replyComment} from "@/api/comment";
 import {commentTree2TwoLevelTree} from "@/utils/comment-tree";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
@@ -162,6 +161,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {checkReply} from "@/utils/format-check";
+import {useI18n} from "vue-i18n";
 
 const props = defineProps({
   mainId: {
@@ -170,6 +170,7 @@ const props = defineProps({
   },
 })
 const globalState = useGlobalStateStore();
+const {t} = useI18n()
 //回复相关
 const replySubMainId = ref(props.mainId)
 const replySecondaryId = ref(props.mainId)
@@ -203,6 +204,16 @@ const commentTree = ref([
 ])
 const commentSum = ref(0)
 
+let currentReplyContent = ""
+watch(
+    () => globalState.language,
+    () => {
+      if (currentReplyContent) {
+        replySubContent.value = t('main_article_reply') + ": " + currentReplyContent
+      }
+    }
+);
+
 function initCommentData() {
   commentSum.value = 0;
   commentTree.value = [];
@@ -221,7 +232,7 @@ function buildCommentTree() {
 
 function updateUserLike(comment) {
   if (!globalState.isLogin) {
-    notifyTopWarning("未登录用户无法点赞，请登录后操作")
+    notifyTopWarning(t('no_login'))
     return
   }
   if (0 === comment.isLike) {
@@ -238,11 +249,13 @@ function updateReplyComment(comment, childComment) {
   if (childComment) {
     replySubMainId.value = childComment.id
     replySubUserName.value = childComment.commentUserName
-    replySubContent.value = "回复: " + childComment.commentContent
+    currentReplyContent = childComment.commentContent
+    replySubContent.value = t('main_article_reply') + ": " + currentReplyContent
   } else {
     replySubMainId.value = comment.id
     replySubUserName.value = comment.commentUserName
-    replySubContent.value = "回复: " + comment.commentContent
+    currentReplyContent = comment.commentContent
+    replySubContent.value = t('main_article_reply') + ": " + currentReplyContent
   }
   replySecondaryId.value = comment.id
   togoElementCenter("comment-reply-input")
@@ -251,6 +264,7 @@ function updateReplyComment(comment, childComment) {
 function cancelReplySub() {
   replySubMainId.value = props.mainId
   replySecondaryId.value = props.mainId
+  currentReplyContent = ""
   replySubUserName.value = ""
   replySubContent.value = ""
 }
@@ -258,7 +272,7 @@ function cancelReplySub() {
 function submitCommentInput() {
   let replyNewData = {mainId: props.mainId, mainSubId: replySubMainId.value, secondaryId: replySecondaryId.value};
   if (!checkReply(commentContent.value)) {
-    notifyTopWarning("输入内容不允许为空，且不能超过500字符")
+    notifyTopWarning(t('main_article_cancel_reply_error'))
     return
   }
   replyNewData.commentContent = commentContent.value.trim()
@@ -266,7 +280,7 @@ function submitCommentInput() {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
-    notifyTopPositive("回复成功")
+    notifyTopPositive(t('main_article_cancel_reply_successful'))
     commentContent.value = ""
     buildCommentTree()
     delay(100).then(() => {

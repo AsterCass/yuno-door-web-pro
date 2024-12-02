@@ -15,7 +15,8 @@
   "test_component_multiple_operation": "Multiple selected operation",
 
   "in_develop": "This feature is under development. Stay tuned",
-  "error_request": "The system is busy. Please try again later.",
+  "error_request": "The system is busy. Please try again later",
+  "no_login": "Unauthenticated users cannot perform this action. Please log in first",
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",
@@ -119,6 +120,13 @@
 
   "main_article_nav": "Navigation",
   "main_article_recommend": "Recommend",
+  "main_article_comment": "Comments",
+  "main_article_reply": "Reply",
+  "main_article_cancel_reply": "Cancel Reply",
+  "main_article_cancel_reply_error": "Input content cannot be empty and must not exceed 500 characters",
+  "main_article_cancel_reply_successful": "Reply successful",
+
+  "main_long_text_input_send": "Send",
 
 
 
