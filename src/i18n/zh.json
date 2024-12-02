@@ -16,6 +16,7 @@
 
   "in_develop": "功能开发中，敬请期待",
   "error_request": "系统繁忙，请稍后再试",
+  "no_login": "未登录用户无法进行该操作，请先登录",
 
   "file_upload_error_message": "文件不满足条件，请重新上传",
   "file_upload_title": "将文件拖拽到此处或点击该矩形框完成上传",
@@ -119,6 +120,13 @@
 
   "main_article_nav": "导航",
   "main_article_recommend": "推荐",
+  "main_article_comment": "评论",
+  "main_article_reply": "回复",
+  "main_article_cancel_reply": "取消回复",
+  "main_article_cancel_reply_error": "输入内容不允许为空，且不能超过500字符",
+  "main_article_cancel_reply_successful": "回复成功",
+
+  "main_long_text_input_send": "发送",
 
 
 

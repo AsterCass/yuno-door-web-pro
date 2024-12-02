@@ -47,7 +47,7 @@
                style="padding: 0!important;" @click="sendCallback">
           <div class="row items-center">
             <div class="q-mx-sm" style="font-size: .9rem">
-              发送
+              {{$t('main_long_text_input_send')}}
             </div>
             <q-icon class="q-mr-sm" name="fa-regular fa-paper-plane" size=".9rem"/>
           </div>
