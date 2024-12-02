@@ -45,7 +45,9 @@
               {{ essay.createTime }}
             </div>
 
-            <q-btn no-caps unelevated class="component-none-btn-std" :to="`/article/detail?articleId=${essay.id}`">
+            <q-btn no-caps unelevated class="component-none-btn-std"
+                   @click="toSpecifyPageWithQuery(
+                       thisRouter, 'webArticleDetail', {articleId: essay.id})">
               <div class="row items-center">
                 <div class="q-mr-sm">
                   {{ $t('route-more') }}
@@ -64,7 +66,8 @@
 
 
     <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" to="/essay/list">
+      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
+             @click="toSpecifyPageWithQuery(thisRouter, 'webArticleList', {type: 2})">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('route-more-list') }}
@@ -82,6 +85,10 @@
 import {onMounted, ref} from "vue";
 import {getBlogList} from "@/api/article";
 import {customPage} from "@/utils/page";
+import {toSpecifyPageWithQuery} from "@/router";
+import {useRouter} from "vue-router";
+
+const thisRouter = useRouter()
 
 const essayList = ref([])
 

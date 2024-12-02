@@ -7,6 +7,7 @@ import TestComponents from "@/ui/pages/TestComponents.vue";
 import WebRedirect from "@/ui/pages/WebRedirect.vue";
 import {openLink} from "@/utils/base-tools";
 import WebArticleDetail from "@/ui/pages/WebArticleDetail.vue";
+import WebArticleList from "@/ui/pages/WebArticleList.vue";
 
 
 const router = createRouter({
@@ -36,12 +37,16 @@ const router = createRouter({
                     }),
                 },
                 {
-                    path: "list",
-                    name: "mainArticleList",
-                    component: WebRedirect,
-                    beforeEnter() {
-                        openLink('https://www.astercasc.com/article/list', false)
+                    path: 'list',
+                    name: "webArticleList",
+                    component: WebArticleList,
+                    meta: {
+                        title: 'AsterCasc | Technical Articles'
                     },
+                    props: ($route) => ({
+                        authorId: $route.query.author,
+                        type: $route.query.type,
+                    }),
                 }
             ]
         },
