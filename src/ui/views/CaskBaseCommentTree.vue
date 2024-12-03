@@ -141,8 +141,6 @@
         </div>
       </div>
       <cask-long-text-input id="comment-reply-input" :elements="new Map([
-          [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
-          [CaskLongTextInputElement.IMG, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           ])" :placeholder="replySubContent" :sendCallback="submitCommentInput" v-model="commentContent"
