@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia';
+import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
 
 export function createPersistedStatePlugin() {
     return (context) => {
@@ -26,6 +27,8 @@ export const useGlobalStateStore = defineStore('globalState', {
         screenMini: false,
         isLogin: false,
         loginToken: "",
+        userData: null,
+        allowBrowserNotification: true,
         readMessageMap: {},
     }),
     actions: {
@@ -51,7 +54,16 @@ export const useGlobalStateStore = defineStore('globalState', {
             } else {
                 this.isLogin = false;
                 this.loginToken = "";
+                this.userData = null
             }
+            chattingDataInit()
+            initChatSocket()
+        },
+        updateUserData(data) {
+            this.userData = data
+        },
+        updateAllowBrowserNotification(isAllowBrowser) {
+            this.allowBrowserNotification = isAllowBrowser
         },
         updateReadMessageMap(chatId, messageId) {
             this.readMessageMap[chatId] = messageId;
