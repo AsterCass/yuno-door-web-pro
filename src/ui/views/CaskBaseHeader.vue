@@ -43,15 +43,26 @@
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="notifyTopWarning($t('in_develop'))">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter, 'chatroom')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_chat_room') }}
             </div>
           </div>
-          <q-badge floating rounded v-show="globalState.newMessage"
-                   style="background-color: rgb(var(--negative));
-                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0"/>
+          <q-badge floating v-show="socketChatState.unReadAllMessages.size > 0"
+                   style="background-color: rgb(var(--negative));margin: 5px 2px 0 0; padding: 2px 5px;">
+            {{ socketChatState.unReadAllMessages.size }}
+          </q-badge>
+          <!--          <q-badge floating v-show="!socketChatState.readAllMessages"-->
+          <!--                   style="background-color: rgb(var(&#45;&#45;negative)); font-size: .6rem;-->
+          <!--                    padding: 1px 3px; min-height: 8px; margin: 7px -4px 0 0">-->
+          <!--            {{ $t('main_chat_new_message') }}-->
+          <!--          </q-badge>-->
+          <!--          <q-badge floating rounded v-show="!socketChatState.readAllMessages"-->
+          <!--                   style="background-color: rgb(var(&#45;&#45;negative));-->
+          <!--                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0">-->
+          <!--          </q-badge>-->
         </q-btn>
       </div>
 
@@ -63,15 +74,17 @@
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="notifyTopWarning($t('in_develop'))">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter, 'chatroom')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_chat_room') }}
             </div>
           </div>
-          <q-badge floating rounded v-show="globalState.newMessage"
-                   style="background-color: rgb(var(--negative));
-                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0"/>
+          <q-badge floating v-show="socketChatState.unReadAllMessages.size > 0"
+                   style="background-color: rgb(var(--negative));margin: 5px 2px 0 0; padding: 2px 5px;">
+            {{ socketChatState.unReadAllMessages.size }}
+          </q-badge>
         </q-btn>
       </div>
 
@@ -321,16 +334,17 @@
 </template>
 
 <script setup>
-import {defineProps, ref} from "vue";
+import {defineProps, onMounted, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
-import {scrollState} from "@/utils/global-state-no-save";
+import {scrollState, socketChatState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
 import {toSpecifyPage} from "@/router";
 import {userLogin, userLogout} from "@/api/user";
 import {useI18n} from "vue-i18n";
+import {chattingDataInit} from "@/utils/chat-socket";
 
 const props = defineProps({
   isMain: {
@@ -406,6 +420,11 @@ const headerLogout = () => {
     globalState.updateToken(null)
   })
 }
+
+onMounted(() => {
+  chattingDataInit(false)
+})
+
 
 </script>
 

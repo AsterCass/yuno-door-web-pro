@@ -8,6 +8,7 @@ import WebRedirect from "@/ui/pages/WebRedirect.vue";
 import {openLink} from "@/utils/base-tools";
 import WebArticleDetail from "@/ui/pages/WebArticleDetail.vue";
 import WebArticleList from "@/ui/pages/WebArticleList.vue";
+import WebChatroom from "@/ui/pages/WebChatroom.vue";
 
 
 const router = createRouter({
@@ -149,6 +150,14 @@ const router = createRouter({
             component: WebRedirect,
             beforeEnter() {
                 openLink('https://www.astercasc.com/board', false)
+            },
+        },
+        {
+            path: "/chatroom",
+            name: "chatroom",
+            component: WebChatroom,
+            meta: {
+                title: 'AsterCasc | Chatroom | 聊天室'
             },
         },
         {

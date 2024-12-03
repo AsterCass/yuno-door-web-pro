@@ -23,10 +23,10 @@ export const useGlobalStateStore = defineStore('globalState', {
         hideScroller: true,
         language: 'en',
         saveLoginData: true,
-        newMessage: false,
         screenMini: false,
         isLogin: false,
         loginToken: "",
+        readMessageMap: {},
     }),
     actions: {
         updateTheme(code) {
@@ -41,9 +41,6 @@ export const useGlobalStateStore = defineStore('globalState', {
         updateSaveLoginData(isSave) {
             this.saveLoginData = isSave;
         },
-        updateNewMessage(haveNewMessage) {
-            this.newMessage = haveNewMessage;
-        },
         updateScreenMini(isMini) {
             this.screenMini = isMini;
         },
@@ -56,5 +53,8 @@ export const useGlobalStateStore = defineStore('globalState', {
                 this.loginToken = "";
             }
         },
+        updateReadMessageMap(chatId, messageId) {
+            this.readMessageMap[chatId] = messageId;
+        }
     },
 });
