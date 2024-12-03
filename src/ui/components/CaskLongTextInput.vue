@@ -3,7 +3,7 @@
 
   <div class="component-long-text-input">
 
-    <q-input
+    <q-input ref="caskLongTextInputRef"
         v-model="mainInput" type="textarea" @update:model-value="emit('update:modelValue', mainInput);"
         :placeholder="placeholder" borderless/>
     <div class="component-long-text-input-bottom row justify-between q-px-sm">
@@ -63,7 +63,7 @@
 
 <script setup>
 
-import {defineEmits, defineProps, ref, watch} from "vue";
+import {defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
 
 const emit = defineEmits(['update:modelValue']);
@@ -92,11 +92,47 @@ const props = defineProps({
   },
 })
 
+const mainInput = ref(props.modelValue)
+const caskLongTextInputRef = ref(null)
+
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
 })
 
-const mainInput = ref(props.modelValue)
+function pasteEventHandle(event) {
+  const clipboardItems = event.clipboardData.items;
+  for (const item of clipboardItems) {
+    if (item.type.startsWith('image/')) {
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = (data) => {
+        if (props.elements.has(CaskLongTextInputElement.IMG)) {
+          props.elements.get(CaskLongTextInputElement.IMG).callback(data.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else if (!item.type.startsWith('text/')) {
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = (data) => {
+        if (props.elements.has(CaskLongTextInputElement.FILE)) {
+          props.elements.get(CaskLongTextInputElement.FILE).callback(file.name, data.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+}
+
+onMounted(() => {
+  if (props.elements.has(CaskLongTextInputElement.FILE) || props.elements.has(CaskLongTextInputElement.IMG)) {
+    caskLongTextInputRef.value.$el.addEventListener('paste', pasteEventHandle)
+  }
+})
+
+onBeforeUnmount(() => {
+  caskLongTextInputRef.value.$el.removeEventListener('paste', pasteEventHandle)
+})
 
 
 </script>
