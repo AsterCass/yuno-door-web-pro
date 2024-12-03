@@ -5,3 +5,21 @@ export const scrollState = reactive({
     scrollLeft: 0,
 });
 
+export const socketChatState = reactive({
+    stompClient: null,
+    socket: null,
+    socketConnected: false,
+    chattingData: [],
+    webChattingFocusChat: {
+        chatId: "",
+        userChattingData: [],
+        webUserChattingDataBak: [],
+        webScrollDisable: false,
+        latestRead: false,
+    },
+    unReadAllMessages: new Set(),
+})
+
+
+
+

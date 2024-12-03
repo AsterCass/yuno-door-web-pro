@@ -126,6 +126,8 @@
   "main_article_cancel_reply_error": "输入内容不允许为空，且不能超过500字符",
   "main_article_cancel_reply_successful": "回复成功",
 
+  "main_chat_new_message": "消息",
+
   "main_long_text_input_send": "发送",
 
 

@@ -126,6 +126,8 @@
   "main_article_cancel_reply_error": "Input content cannot be empty and must not exceed 500 characters",
   "main_article_cancel_reply_successful": "Reply successful",
 
+  "main_chat_new_message": "New",
+
   "main_long_text_input_send": "Send",
 
 
