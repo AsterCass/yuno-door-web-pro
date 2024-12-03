@@ -4,7 +4,7 @@ import zh from 'quasar/lang/zh-CN'
 import en from 'quasar/lang/en-US'
 import {useGlobalStateStore} from '@/utils/global-state';
 import {isMiniScreenMethod} from "@/utils/base-tools";
-import {userIsLogin} from "@/api/user";
+import {userDetail, userIsLogin} from "@/api/user";
 
 export function initGlobalState() {
     const globalState = useGlobalStateStore();
@@ -27,6 +27,13 @@ export function initGlobalState() {
         userIsLogin().then(res => {
             if (!res || !res.data || !res.data.data) {
                 globalState.updateToken(null)
+            } else {
+                userDetail().then(res => {
+                    if (!res || !res.data || !res.data.data) {
+                        return
+                    }
+                    globalState.updateUserData(res.data.data)
+                })
             }
         })
     }

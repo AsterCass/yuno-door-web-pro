@@ -18,6 +18,7 @@ export const socketChatState = reactive({
         latestRead: false,
     },
     unReadAllMessages: new Set(),
+    needBrowserNotification: true,
 })
 
 

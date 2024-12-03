@@ -344,7 +344,7 @@ import {useRouter} from "vue-router";
 import {toSpecifyPage} from "@/router";
 import {userLogin, userLogout} from "@/api/user";
 import {useI18n} from "vue-i18n";
-import {chattingDataInit} from "@/utils/chat-socket";
+import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
 
 const props = defineProps({
   isMain: {
@@ -422,7 +422,8 @@ const headerLogout = () => {
 }
 
 onMounted(() => {
-  chattingDataInit(false)
+  chattingDataInit()
+  initChatSocket()
 })
 
 
