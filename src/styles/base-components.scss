@@ -274,6 +274,12 @@
   )
 }
 
+.component-full-btn-full {
+  @include component-full-btn-base(
+          $thisWidth: 100%,
+  )
+}
+
 .component-full-btn-mini-grow {
   @include component-full-btn-base(
           $thisHeight: 2rem,

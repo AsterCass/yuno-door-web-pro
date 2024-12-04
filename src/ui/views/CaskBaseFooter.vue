@@ -192,7 +192,6 @@ onMounted(() => {
 }
 
 .bottom-footer-base-simple {
-  margin-top: 1rem;
   padding: 0.5rem 2rem 0.6rem 2rem;
   background-color: rgb(var(--full-container-background-color-dark));
   color: rgb(var(--full-container-text-color));
