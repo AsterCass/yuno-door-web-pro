@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, defineProps} from 'vue'
 
 const props = defineProps({
   dataImage: {
