@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="row" style="margin-left: 75px;">
-            <div class="col-12 q-mb-sm" style="font-size: 0.95rem">
+            <div class="col-12 q-mb-sm" style="font-size: 0.95rem; white-space: pre-wrap;">
               {{ comment.commentContent }}
             </div>
             <div class="row items-center justify-end">
@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="row" style="margin-left: 55px">
-                  <div class="col-12 q-mb-sm" style="font-size: 0.95rem">
+                  <div class="col-12 q-mb-sm" style="font-size: 0.95rem; white-space: pre-wrap;">
                     <span v-if=" comment.id !== childComment.mainSubId" style="color: rgb(var(--pointer));">
                       @{{ childComment.mainSubUserName }}:&nbsp;
                     </span>
@@ -144,7 +144,7 @@
           [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           ])" :placeholder="replySubContent" :sendCallback="submitCommentInput" v-model="commentContent"
-                            @update:model-value="data => commentContent = data"
+                            @update:model-value="data => commentContent = data" :send-enable="sendBtnEnable"
       />
     </div>
   </div>
@@ -178,6 +178,7 @@ const replySecondaryId = ref(props.mainId)
 const replySubUserName = ref("")
 const replySubContent = ref("")
 const commentContent = ref("")
+const sendBtnEnable = ref(true)
 //评论树
 const commentOriginObj = ref({
   tree: [],
@@ -271,21 +272,26 @@ function cancelReplySub() {
 }
 
 function submitCommentInput() {
+  sendBtnEnable.value = false
   let replyNewData = {mainId: props.mainId, mainSubId: replySubMainId.value, secondaryId: replySecondaryId.value};
   if (!checkReply(commentContent.value)) {
     notifyTopWarning(t('main_article_cancel_reply_error'))
+    sendBtnEnable.value = true
     return
   }
   replyNewData.commentContent = commentContent.value.trim()
   replyComment(replyNewData).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
+      sendBtnEnable.value = true
       return
     }
     notifyTopPositive(t('main_article_cancel_reply_successful'))
     commentContent.value = ""
     buildCommentTree()
-    delay(100).then(() => {
+    cancelReplySub()
+    delay(1000).then(() => {
       togoElementCenter("comment-reply-title")
+      sendBtnEnable.value = true
     })
   })
 }

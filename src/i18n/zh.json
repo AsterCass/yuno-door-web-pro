@@ -130,6 +130,7 @@
   "main_chat_new_message": "消息",
 
   "main_long_text_input_send": "发送",
+  "main_long_text_input_placeholder": "使用 Enter 发送，Ctrl+Enter 换行",
 
 
 
