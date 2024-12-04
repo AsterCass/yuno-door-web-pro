@@ -1,6 +1,10 @@
 <template>
   <q-layout view="hhh lpr fff">
-    <cask-base-header :is-main="false"/>
+    <cask-base-header :center-elements="[
+        CaskModuleElement.ARTICLE,
+        CaskModuleElement.HOME,
+        CaskModuleElement.CHATROOM,
+    ]"/>
 
     <div class="row justify-center">
       <q-img :no-native-menu="false" :ratio="1/6" fit="cover"
@@ -150,6 +154,7 @@ import {customPageNP} from "@/utils/page";
 import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
+import {CaskModuleElement} from "@/constant/enums/component-enums";
 
 const props = defineProps({
   articleId: {

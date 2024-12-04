@@ -1,6 +1,32 @@
 <template>
 
-  <div class="bottom-footer-base row justify-evenly">
+  <div v-if="simple" class="bottom-footer-base-simple row items-center justify-evenly">
+
+    <div style="opacity: .85">
+      <div>
+        &copy; 2020-{{ curYear }} astercasc.com {{ $t('main-nav-ipc-pre') }}
+        <a target="_blank" href="https://beian.miit.gov.cn/">{{ $t('main-nav-ipc-center') }}</a>
+      </div>
+    </div>
+
+    <div class="row" style="opacity: .85">
+      <div class="q-mr-md">
+        {{ $t('main-nav-contact-me-long') }}
+      </div>
+      <div class="q-mx-sm">
+        {{ $t('main-fa-mail') }}: astercass@qq.com
+      </div>
+      <div class="q-mx-sm">
+        {{ $t('main-fa-qq') }}: 4040191617
+      </div>
+      <div class="q-mx-sm">
+        {{ $t('main-fa-wechat') }}: AsterCasc
+      </div>
+    </div>
+
+
+  </div>
+  <div v-else class="bottom-footer-base row justify-evenly">
 
     <div class="bottom-footer-base-header column justify-between q-my-sm" style="max-width: 35rem">
       <div style="font-size: 1.5rem">
@@ -14,7 +40,6 @@
           &copy; 2020-{{ curYear }} astercasc.com {{ $t('main-nav-ipc-pre') }}
           <a target="_blank" href="https://beian.miit.gov.cn/">{{ $t('main-nav-ipc-center') }}</a>
         </div>
-
       </div>
     </div>
 
@@ -110,13 +135,13 @@
       <div class="q-mb-md" style="font-size: 1.1rem;opacity: .85">
         {{ $t('main-nav-contact-me') }}
       </div>
-      <div class="q-my-xs https://github.com/AsterCass?tab=repositories" style="opacity: .5">
+      <div class="q-my-xs" style="opacity: .5">
         {{ $t('main-fa-mail') }}: astercass@qq.com
       </div>
-      <div class="q-my-xs https://github.com/AsterCass/Tomoyo" style="opacity: .5">
+      <div class="q-my-xs" style="opacity: .5">
         {{ $t('main-fa-qq') }}: 4040191617
       </div>
-      <div class="q-my-xs https://github.com/AsterCass/sql-garble-spring-boot" style="opacity: .5">
+      <div class="q-my-xs" style="opacity: .5">
         {{ $t('main-fa-wechat') }}: AsterCasc
       </div>
     </div>
@@ -126,7 +151,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {defineProps, onMounted, ref} from "vue";
 import {date} from "quasar";
 import {openLink} from "@/utils/base-tools";
 import {useRouter} from "vue-router";
@@ -136,6 +161,14 @@ import {toSpecifyPage} from "@/router";
 const thisRouter = useRouter()
 
 const curYear = ref("2020")
+
+const props = defineProps({
+  simple: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+});
 
 onMounted(() => {
   const timeStamp = new Date()
@@ -156,7 +189,18 @@ onMounted(() => {
   a {
     color: rgb(var(--full-container-text-color));
   }
+}
 
+.bottom-footer-base-simple {
+  margin-top: 1rem;
+  padding: 0.5rem 2rem 0.6rem 2rem;
+  background-color: rgb(var(--full-container-background-color-dark));
+  color: rgb(var(--full-container-text-color));
+  min-height: 3rem;
+
+  a {
+    color: rgb(var(--full-container-text-color));
+  }
 }
 
 </style>

@@ -1,7 +1,13 @@
 <template>
   <q-layout view="hhh lpr fff">
 
-    <cask-base-header/>
+    <cask-base-header :center-elements="[
+        CaskModuleElement.ARTICLE,
+        CaskModuleElement.TOOL,
+        CaskModuleElement.VIDEO,
+        CaskModuleElement.GUEST_BOOK,
+        CaskModuleElement.CHATROOM,
+    ]"/>
 
     <div class="cask-main-top-container row justify-center">
       <q-img :no-native-menu="false" :ratio="16/9" fit="cover"
@@ -91,6 +97,7 @@ import {togoElementCenter} from "@/utils/base-tools";
 import {scrollState} from "@/utils/global-state-no-save";
 import CaskMainGameContainer from "@/ui/views/CaskMainGameContainer.vue";
 import CaskMainVideoContainer from "@/ui/views/CaskMainVideoContainer.vue";
+import {CaskModuleElement} from "@/constant/enums/component-enums";
 
 
 const globalState = useGlobalStateStore();

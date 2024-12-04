@@ -14,36 +14,49 @@
         </q-btn>
       </div>
 
-      <div v-if="isMain" class="row items-center justify-center col-4">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/article/list">
+      <div class="row items-center justify-center col-4">
+        <q-btn v-if="centerElements.includes(CaskModuleElement.ARTICLE)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" to="/article/list">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_articles') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/tools/list">
+        <q-btn v-if="centerElements.includes(CaskModuleElement.TOOL)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" to="/tools/list">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_tools') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/video/collection">
+        <q-btn v-if="centerElements.includes(CaskModuleElement.HOME)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" to="/">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_home') }}
+            </div>
+          </div>
+        </q-btn>
+        <q-btn v-if="centerElements.includes(CaskModuleElement.VIDEO)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" to="/video/collection">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_videos') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/board">
+        <q-btn v-if="centerElements.includes(CaskModuleElement.GUEST_BOOK)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" to="/board">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_board') }}
             </div>
           </div>
         </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+        <q-btn v-if="centerElements.includes(CaskModuleElement.CHATROOM)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs"
                @click="toSpecifyPage(thisRouter, 'chatroom')">
           <div class="row items-center">
             <div class="q-ma-xs">
@@ -63,28 +76,6 @@
           <!--                   style="background-color: rgb(var(&#45;&#45;negative));-->
           <!--                    padding: 4px; min-height: 8px; margin: 8px 7px 0 0">-->
           <!--          </q-badge>-->
-        </q-btn>
-      </div>
-
-      <div v-else class="row items-center justify-center col-4">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/">
-          <div class="row items-center">
-            <div class="q-ma-xs">
-              {{ $t('main_home') }}
-            </div>
-          </div>
-        </q-btn>
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
-               @click="toSpecifyPage(thisRouter, 'chatroom')">
-          <div class="row items-center">
-            <div class="q-ma-xs">
-              {{ $t('main_chat_room') }}
-            </div>
-          </div>
-          <q-badge floating v-show="socketChatState.unReadAllMessages.size > 0"
-                   style="background-color: rgb(var(--negative));margin: 5px 2px 0 0; padding: 2px 5px;">
-            {{ socketChatState.unReadAllMessages.size }}
-          </q-badge>
         </q-btn>
       </div>
 
@@ -345,11 +336,15 @@ import {toSpecifyPage} from "@/router";
 import {userLogin, userLogout} from "@/api/user";
 import {useI18n} from "vue-i18n";
 import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
+import {CaskModuleElement} from "@/constant/enums/component-enums";
 
 const props = defineProps({
-  isMain: {
-    type: Boolean,
-    default: true,
+  centerElements: {
+    type: Array,
+    required: false,
+    default: () => {
+      return []
+    },
   },
 })
 

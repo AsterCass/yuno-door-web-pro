@@ -71,6 +71,7 @@ function messageTimeLabelBuilder(list) {
         //         list[count].message = list[count].message.replaceAll(emoji, imgElToString)
         //     }
         // }
+        // todo 表情输出支持：颜文字、普通emoji，颜文字最好支持使用代码，如果输入某个代码，在输入框自动转换成颜文字
     }
 }
 
@@ -193,7 +194,13 @@ export function chattingDataInit() {
     })
 }
 
+let initChatSocketStatus = false
+
 export function initChatSocket() {
+    if (initChatSocketStatus) {
+        return
+    }
+    initChatSocketStatus = true
     const globalState = useGlobalStateStore()
 
     if (!globalState.isLogin) {
@@ -203,10 +210,12 @@ export function initChatSocket() {
             socketChatState.socket = null
         }
         socketChatState.socketConnected = false;
+        initChatSocketStatus = false
         return
     }
 
     if (socketChatState.stompClient && socketChatState.stompClient.connected && socketChatState.socketConnected) {
+        initChatSocketStatus = false
         return
     }
 
@@ -226,9 +235,11 @@ export function initChatSocket() {
             socketChatState.stompClient.subscribe("/user/" + globalState.loginToken + "/error/receive", callback => {
                 notifyTopWarning(callback.body)
             });
+            initChatSocketStatus = false
         },
         () => {
             socketChatState.socketConnected = false;
+            initChatSocketStatus = false
         }
     )
 
