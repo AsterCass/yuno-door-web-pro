@@ -130,6 +130,7 @@
   "main_chat_new_message": "New",
 
   "main_long_text_input_send": "Send",
+  "main_long_text_input_placeholder": "Press Enter to send, Ctrl+Enter to insert a line break.",
 
 
 

@@ -3,9 +3,9 @@
 
   <div class="component-long-text-input">
 
-    <q-input ref="caskLongTextInputRef"
+    <q-input ref="caskLongTextInputRef" @keydown.enter.prevent="forLineBreakSend"
         v-model="mainInput" type="textarea" @update:model-value="emit('update:modelValue', mainInput);"
-        :placeholder="placeholder" borderless/>
+             :placeholder="placeholder ? placeholder :  $t('main_long_text_input_placeholder')" borderless/>
     <div class="component-long-text-input-bottom row justify-between q-px-sm">
       <div class="row items-center">
         <div v-if="elements.has(CaskLongTextInputElement.FILE)" class="q-mr-sm">
@@ -43,7 +43,7 @@
       </div>
 
       <div>
-        <q-btn no-caps unelevated class="component-full-btn-mini-grow items-center"
+        <q-btn :disable="!sendEnable" no-caps unelevated class="component-full-btn-mini-grow items-center"
                style="padding: 0!important;" @click="sendCallback">
           <div class="row items-center">
             <div class="q-mx-sm" style="font-size: .9rem">
@@ -86,6 +86,11 @@ const props = defineProps({
     default: () => {
     }
   },
+  sendEnable: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
   modelValue: {
     type: String,
     required: true,
@@ -98,6 +103,14 @@ const caskLongTextInputRef = ref(null)
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
 })
+
+function forLineBreakSend(event) {
+  if (event.ctrlKey) {
+    mainInput.value += '\n'
+  } else {
+    props.sendCallback()
+  }
+}
 
 function pasteEventHandle(event) {
   const clipboardItems = event.clipboardData.items;
