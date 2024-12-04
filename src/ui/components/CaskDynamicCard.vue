@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref, defineProps} from 'vue'
+import {computed, defineProps, onMounted, ref} from 'vue'
 
 const props = defineProps({
   dataImage: {
@@ -87,31 +87,6 @@ onMounted(() => {
 $hoverEasing: cubic-bezier(0.23, 1, 0.32, 1);
 $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
-body {
-  margin: 40px 0;
-  font-family: "Raleway";
-  font-size: 14px;
-  font-weight: 500;
-  background-color: #BCAAA4;
-  -webkit-font-smoothing: antialiased;
-}
-
-.title {
-  font-family: "Raleway";
-  font-size: 24px;
-  font-weight: 700;
-  color: #5D4037;
-  text-align: center;
-}
-
-p {
-  line-height: 1.5em;
-}
-
-h1 + p, p + p {
-  margin-top: 10px;
-}
-
 .container {
   padding: 40px 80px;
   display: flex;
@@ -124,7 +99,6 @@ h1 + p, p + p {
   transform: perspective(800px);
   transform-style: preserve-3d;
   cursor: pointer;
-  // background-color: #fff;
 
   &:hover {
     .card-info {
@@ -182,9 +156,8 @@ h1 + p, p + p {
   position: absolute;
   top: -20px;
   left: -20px;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
+  width: 120%;
+  height: 120%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -229,7 +202,6 @@ h1 + p, p + p {
 }
 
 .card-info h1 {
-  font-family: "Playfair Display";
   font-size: 36px;
   font-weight: 700;
   text-shadow: rgba(black, 0.5) 0 10px 10px;

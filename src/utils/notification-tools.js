@@ -126,9 +126,6 @@ export function browserNotificationCheck() {
             }
         });
     }
-    let tips = "如果您确认已经打开了浏览器通知权限，但是没有收到消息通知，" +
-        "请确认操作系统是否允许浏览器通知，以及操作系统中通知的全局设置：比如windows中专注助手的相关设置"
-    //todo 这里写一个类似《无法收到通知？》的提示按钮，当用户点击时候弹出上方内容
 }
 
 export function browserNotification(title, body) {
