@@ -274,13 +274,14 @@
   }
 
   .q-tree__node-header {
-    transition: background-color .5s ease, transform .5s ease, box-shadow .5s ease !important;
+    transition: transform 1s ease, border-left-width .2s linear, margin-right 1s linear;
   }
 
   .q-tree__node--selected {
-    transform: translateY(-2px) translateX(-2px);
+    transform: translateX(-8px);
     background-color: rgba(var(--text-color), 0.05);
-    box-shadow: 3px 3px 5px 1px rgba(var(--text-color), .75);
+    border-left: 8px solid rgba(var(--text-color), .9);
+    margin-right: -8px;
   }
 
   .q-tree__children {
