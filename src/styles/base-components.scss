@@ -16,7 +16,12 @@
   background: rgb(var(--full-container-background-color)) !important;
   border-radius: 4px !important;
   border: 2px solid rgb(var(--full-container-background-color)) !important;
+
+  &:before {
+    border-bottom: none !important;
+  }
 }
+
 
 @mixin component-outline-btn-base(
   $thisHeight: 2.4rem,
@@ -31,6 +36,10 @@
   padding: 0 .6rem !important;
   border: $thisBorder !important;
   border-radius: 4px !important;
+
+  &:before {
+    border-bottom: none !important;
+  }
 }
 
 @mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
@@ -236,22 +245,36 @@
 }
 
 .component-base-tree {
+
+  .q-tree__node--parent {
+    margin-right: 8px;
+  }
+
   .q-icon {
     margin: 0 5px;
     color: rgb(var(--text-color));
   }
 
+  //非一级父节点
   .q-tree__node--parent > .q-tree__node-header > .q-tree__node-header-content {
-    font-size: 1rem;
+    color: rgb(var(--text-color));
+    font-size: .9rem;
   }
 
+  //一级父节点
   > .q-tree__node--parent > .q-tree__node-header > .q-tree__node-header-content {
-    font-size: 1.05rem;
-    font-weight: 600;
+    color: rgb(var(--text-color));
+    font-size: .95rem;
   }
 
+  //子节点
   .q-tree__node--child > .q-tree__node-header > .q-tree__node-header-content {
-    font-size: .95rem;
+    color: rgb(var(--text-color));
+    font-size: .9rem;
+  }
+
+  .q-tree__node--selected {
+    background-color: rgba(var(--text-color), 0.1);
   }
 
   .q-tree__children {
@@ -409,6 +432,10 @@
 
 .component-max-line-text-2 {
   @include component-max-line-text(2)
+}
+
+.component-max-line-text {
+  @include component-max-line-text()
 }
 
 .component-max-line-text-4 {

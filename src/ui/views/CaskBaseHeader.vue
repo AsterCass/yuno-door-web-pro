@@ -407,6 +407,7 @@ const headerLogin = () => {
     if (!res || !res.data || !res.data.data) {
       return
     }
+    globalState.updateUserData(res.data.data)
     notifyTopPositive(t('main_login_success'))
     morphWithLogin.value = 'btn'
   })
