@@ -7,7 +7,7 @@
 
     <div class="col-grow row">
 
-      <div style="width: 400px" class="column">
+      <div style="width: 420px" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -38,11 +38,10 @@
                   <div v-else-if="!prop.node.avatar">
                     {{ prop.node.label }}
                   </div>
-                  <div v-else class="row items-center ">
+                  <div v-else class="row items-center full-width">
                     <div class="q-mr-sm q-ml-xs cask-chatroom-chat-list-avatar"
                          :style="{backgroundImage: `url(${prop.node.avatar})`}">
                     </div>
-
                     <div class="col">
                       <div class="component-max-line-text q-mb-sm">
                         {{ prop.node.label }}
@@ -51,7 +50,14 @@
                         {{ prop.node.lastMessageText }}
                       </div>
                     </div>
-                    <div>
+                    <div class="q-ml-sm q-mr-xs">
+                      <div class="q-mb-sm row justify-end">
+                        <div v-if="!prop.node.latestRead" style="width: 8px;height: 8px;border-radius: 50%;
+                        background-color: rgba(var(--negative), .8)"/>
+                      </div>
+                      <div style="font-size: .8rem; opacity: .5">
+                        {{ prop.node.lastMessageTimeWeb }}
+                      </div>
                     </div>
                   </div>
                 </template>
