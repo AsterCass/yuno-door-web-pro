@@ -79,6 +79,10 @@ export function messageTimeLabelInput(list, obj) {
 
 function rebuildChattingDataWeb() {
 
+    //未初始化的列表，展示所有非0组
+    let chattingDataWebInitialized =
+        socketChatState.chattingDataWeb && socketChatState.chattingDataWeb.length > 0
+
     socketChatState.chattingDataWeb = [
         {
             id: 'main_chat_type_con',
@@ -131,6 +135,7 @@ function rebuildChattingDataWeb() {
     ]
 
     if (socketChatState.chattingData && socketChatState.chattingData.length > 0) {
+        let insertFirstChat = false
         for (let singleChatting of socketChatState.chattingData) {
             let singleChattingWeb = {}
             //base
@@ -147,11 +152,19 @@ function rebuildChattingDataWeb() {
             singleChattingWeb.chatUserGender = singleChatting.chatUserGender
             //push
             socketChatState.chattingDataWeb[singleChatting.chatType].children.push(singleChattingWeb)
+            if (!insertFirstChat) {
+                socketChatState.chattingDataWebSelected = singleChattingWeb.id
+                insertFirstChat = true
+            }
         }
     }
 
     for (let singleChattingWeb of socketChatState.chattingDataWeb) {
-        singleChattingWeb.label = singleChattingWeb.label + " (" + (singleChattingWeb.children.length - 1) + ")"
+        const realSum = singleChattingWeb.children.length - 1
+        singleChattingWeb.label = singleChattingWeb.label + " (" + realSum + ")"
+        if (!chattingDataWebInitialized && realSum > 0) {
+            socketChatState.chattingDataWebExpand.push(singleChattingWeb.id)
+        }
         if (singleChattingWeb.children.length > 1) {
             singleChattingWeb.children.shift()
         }

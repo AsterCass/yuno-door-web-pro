@@ -161,7 +161,7 @@
 
         <div class="col-11 column">
 
-          <div class="col-grow q-mx-lg">
+          <div class="col-grow q-mx-lg" v-show="socketChatState.chattingDataWebSelected">
             <h2>
               当前群头像
             </h2>
