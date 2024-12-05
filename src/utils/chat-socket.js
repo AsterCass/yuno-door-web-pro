@@ -5,7 +5,9 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import SockJS from "sockjs-client/dist/sockjs";
 import Stomp from "webstomp-client";
 import {browserNotification, notifyTopWarning} from "@/utils/notification-tools";
+import i18n from "@/i18n";
 
+const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
 const emojiRegex = /\[#b[0-9][0-9]]/g;
 const emojiCodeFormat = "[#b%s]"
@@ -111,6 +113,87 @@ export function messageTimeLabelInput(list, obj) {
     }
 }
 
+function rebuildChattingDataWeb() {
+
+    socketChatState.chattingDataWeb = [
+        {
+            id: 'main_chat_type_con',
+            label: t('main_chat_type_con'),
+            selectable: false,
+            children: [
+                {
+                    noContent: true,
+                    label: t('main_chat_no_content'),
+                    selectable: false,
+                },
+            ],
+        },
+        {
+            id: 'main_chat_type_group',
+            label: t('main_chat_type_group'),
+            selectable: false,
+            children: [
+                {
+                    noContent: true,
+                    label: t('main_chat_no_content'),
+                    selectable: false,
+                },
+            ],
+        },
+        {
+            id: 'main_chat_type_ann',
+            label: t('main_chat_type_ann'),
+            selectable: false,
+            children: [
+                {
+                    noContent: true,
+                    label: t('main_chat_no_content'),
+                    selectable: false,
+                },
+            ],
+        },
+        {
+            id: 'main_chat_type_group_public',
+            label: t('main_chat_type_group_public'),
+            selectable: false,
+            children: [
+                {
+                    noContent: true,
+                    label: t('main_chat_no_content'),
+                    selectable: false,
+                },
+            ],
+        },
+    ]
+
+    if (socketChatState.chattingData && socketChatState.chattingData.length > 0) {
+        for (let singleChatting of socketChatState.chattingData) {
+            let singleChattingWeb = {}
+            //base
+            singleChattingWeb.label = singleChatting.chatName
+            singleChattingWeb.avatar = singleChatting.chatAvatar
+            //more
+            singleChattingWeb.latestRead = singleChatting.latestRead
+            singleChattingWeb.lastMessageTime = singleChatting.lastMessageTime
+            singleChattingWeb.lastMessageText = singleChatting.lastMessageText
+            singleChattingWeb.lastMessageId = singleChatting.lastMessageId
+            singleChattingWeb.chatUserRoleType = singleChatting.chatUserRoleType
+            singleChattingWeb.chatUserGender = singleChatting.chatUserGender
+            //push
+            socketChatState.chattingDataWeb[singleChatting.chatType].children.push(singleChattingWeb)
+        }
+    }
+
+    for (let singleChattingWeb of socketChatState.chattingDataWeb) {
+        singleChattingWeb.label = singleChattingWeb.label + " (" + (singleChattingWeb.children.length - 1) + ")"
+        if (singleChattingWeb.children.length > 1) {
+            singleChattingWeb.children.shift()
+        }
+    }
+
+}
+
+
 function socketMsgReceiveDataParse(callback) {
     const globalState = useGlobalStateStore()
 
@@ -145,8 +228,12 @@ function socketMsgReceiveDataParse(callback) {
             socketChatState.unReadAllMessages.add(singleChatting.chatId)
         }
     }
+    //不在列表中，则重新加载，在列表中直接重新构建侧边栏
+    console.log(alreadyInChatList)
     if (!alreadyInChatList) {
         chattingDataInit()
+    } else {
+        rebuildChattingDataWeb()
     }
     if (socketChatState.needBrowserNotification && globalState.userData) {
         if (globalState.userData.id !== data.sendUserId) {
@@ -155,13 +242,20 @@ function socketMsgReceiveDataParse(callback) {
     }
 }
 
+let chattingDataInitStatus = false
+
 export function chattingDataInit() {
+    if (chattingDataInitStatus) {
+        return
+    }
+    chattingDataInitStatus = true
     const globalState = useGlobalStateStore()
 
     chattingUsers().then(res => {
         if (!res || !res.data || !res.data.data || 0 === res.data.data.length) {
             socketChatState.chattingData = []
             socketChatState.webChattingFocusChat = undefined
+            chattingDataInitStatus = false
             return
         }
         socketChatState.chattingData = res.data.data
@@ -191,6 +285,8 @@ export function chattingDataInit() {
             messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
             //todo 如果打开某个聊天框，并且这个聊天框内容有未读，则存入浏览器缓存，并将已读消息发送到后端
         }
+        rebuildChattingDataWeb()
+        chattingDataInitStatus = false
     })
 }
 

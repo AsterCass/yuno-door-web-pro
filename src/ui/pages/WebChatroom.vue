@@ -7,7 +7,7 @@
 
     <div class="col-grow row">
 
-      <div v-show="!globalState.screenMini" class="col-lg-2 column">
+      <div class="col-lg-2 column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -15,21 +15,34 @@
             <h2>
               AsterCasc
             </h2>
-            <h5 style="font-weight: 600 !important;">
-              这里放个检索框
-            </h5>
 
-            <h5 style="font-weight: 600 !important;">
-              联系人（0）
-            </h5>
+            <q-input v-model="chatNameSearch" tabindex="0" dense outlined placeholder="查询"
+                     class="q-mb-md component-outline-input-grow">
+              <template v-slot:prepend>
+                <q-icon name="fa-solid fa-magnifying-glass" size="1rem"/>
+              </template>
+            </q-input>
 
-            <h5 style="font-weight: 600 !important;">
-              群聊（1）
-            </h5>
+            <q-scroll-area class="col" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
+              <q-tree
+                  class="component-base-tree"
+                  :nodes="socketChatState.chattingDataWeb"
+                  node-key="id"
+                  no-connectors
+                  icon="fa-solid fa-caret-right"
+                  v-model:expanded="socketChatState.chattingDataWebExpand"
+                  v-model:selected="currentChat">
+                <template v-slot:default-header="prop">
+                  <div :style="prop.node.noContent ? 'opacity: 0.5' : ''">
+                    {{ prop.node.label }}
+                  </div>
+                </template>
+              </q-tree>
+            </q-scroll-area>
 
-            <h5 style="font-weight: 600 !important;">
-              公告（2）
-            </h5>
+
 
           </div>
           <q-separator class="component-separator-base q-my-md" inset/>
@@ -163,6 +176,8 @@ import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 
 const globalState = useGlobalStateStore();
 
+const chatNameSearch = ref("")
+const currentChat = ref("")
 const chatroomPlace = ref("")
 const chatroomInput = ref("")
 const src = ref("")

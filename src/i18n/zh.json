@@ -128,6 +128,11 @@
   "main_article_cancel_reply_successful": "回复成功",
 
   "main_chat_new_message": "消息",
+  "main_chat_type_con": "联系人",
+  "main_chat_type_group": "群聊",
+  "main_chat_type_group_public": "公开群",
+  "main_chat_type_ann": "公告",
+  "main_chat_no_content": "无内容",
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_placeholder": "使用 Enter 发送，Ctrl+Enter 换行",
