@@ -12,6 +12,7 @@ export const socketChatState = reactive({
     chattingData: [],
     chattingDataWeb: [],
     chattingDataWebExpand: [],
+    chattingDataWebSelected: {},
     webChattingFocusChat: {
         chatId: "",
         userChattingData: [],

@@ -470,7 +470,7 @@ onMounted(() => {
   color: rgb(var(--text-color));
   border-radius: 8px;
   background-color: rgb(var(--container-background-color));
-  box-shadow: inset 0 0 2px 2px rgb(var(--text-color-select-op));
+  border: solid 2px rgba(var(--text-color), .8);
   backdrop-filter: blur(30px);
   padding: 2px;
 
@@ -485,7 +485,7 @@ onMounted(() => {
   color: rgb(var(--text-color));
   border-radius: 8px;
   background-color: rgb(var(--container-background-color));
-  box-shadow: inset 0 0 2px 2px rgb(var(--text-color-select-op));
+  border: solid 2px rgba(var(--text-color), .8);
   backdrop-filter: blur(30px);
   padding: 2px;
 
