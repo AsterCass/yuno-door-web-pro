@@ -273,8 +273,14 @@
     font-size: .9rem;
   }
 
+  .q-tree__node-header {
+    transition: background-color .5s ease, transform .5s ease, box-shadow .5s ease !important;
+  }
+
   .q-tree__node--selected {
-    background-color: rgba(var(--text-color), 0.1);
+    transform: translateY(-2px) translateX(-2px);
+    background-color: rgba(var(--text-color), 0.05);
+    box-shadow: 3px 3px 5px 1px rgba(var(--text-color), .75);
   }
 
   .q-tree__children {

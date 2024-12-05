@@ -27,10 +27,10 @@
                   class="component-base-tree"
                   :nodes="socketChatState.chattingDataWeb"
                   node-key="id"
-                  no-connectors
+                  no-connectors no-selection-unset
                   icon="fa-solid fa-caret-right"
                   v-model:expanded="socketChatState.chattingDataWebExpand"
-                  v-model:selected="currentChat">
+                  v-model:selected="socketChatState.chattingDataWebSelected">
                 <template v-slot:default-header="prop">
                   <div v-if="prop.node.noContent" style="opacity: .5;color: rgb(var(--text-color))">
                     {{ prop.node.label }}
@@ -39,7 +39,7 @@
                     {{ prop.node.label }}
                   </div>
                   <div v-else class="row items-center ">
-                    <div class="q-mr-sm cask-chatroom-chat-list-avatar"
+                    <div class="q-mr-sm q-ml-xs cask-chatroom-chat-list-avatar"
                          :style="{backgroundImage: `url(${prop.node.avatar})`}">
                     </div>
 
@@ -217,7 +217,6 @@ import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 const globalState = useGlobalStateStore();
 
 const chatNameSearch = ref("")
-const currentChat = ref("")
 const chatroomPlace = ref("")
 const chatroomInput = ref("")
 const src = ref("")
