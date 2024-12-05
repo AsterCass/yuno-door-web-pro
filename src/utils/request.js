@@ -3,6 +3,7 @@ import Qs from 'qs'
 import {notifyTopWarning} from "@/utils/notification-tools";
 import i18n from '@/i18n';
 import {useGlobalStateStore} from "@/utils/global-state";
+import {delay} from "@/utils/base-tools";
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
@@ -37,7 +38,10 @@ const responseConfig = response => {
             }
         }
         if (bizStatus === 200 && response.headers.get("User-Token")) {
-            globalState.updateToken(response.headers.get("User-Token"))
+            //因为后续才会设置用户其他数据，所以需要延迟token的注入时间
+            delay(1000).then(() => {
+                globalState.updateToken(response.headers.get("User-Token"))
+            })
         }
     } else {
         notifyTopWarning(t('error_request'))

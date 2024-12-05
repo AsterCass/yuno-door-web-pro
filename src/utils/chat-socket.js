@@ -170,6 +170,7 @@ function rebuildChattingDataWeb() {
         for (let singleChatting of socketChatState.chattingData) {
             let singleChattingWeb = {}
             //base
+            singleChattingWeb.id = singleChatting.chatId
             singleChattingWeb.label = singleChatting.chatName
             singleChattingWeb.avatar = singleChatting.chatAvatar
             //more

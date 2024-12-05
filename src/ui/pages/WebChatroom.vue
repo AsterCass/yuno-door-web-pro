@@ -7,14 +7,11 @@
 
     <div class="col-grow row">
 
-      <div class="col-lg-2 column">
+      <div style="width: 400px" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
-          <div class="col-grow column q-mx-lg">
-            <h2>
-              AsterCasc
-            </h2>
+          <div class="col-grow column q-mx-md">
 
             <q-input v-model="chatNameSearch" tabindex="0" dense outlined placeholder="查询"
                      class="q-mb-md component-outline-input-grow">
@@ -35,11 +32,40 @@
                   v-model:expanded="socketChatState.chattingDataWebExpand"
                   v-model:selected="currentChat">
                 <template v-slot:default-header="prop">
-                  <div :style="prop.node.noContent ? 'opacity: 0.5' : ''">
+                  <div v-if="prop.node.noContent" style="opacity: .5;color: rgb(var(--text-color))">
                     {{ prop.node.label }}
+                  </div>
+                  <div v-else-if="!prop.node.avatar">
+                    {{ prop.node.label }}
+                  </div>
+                  <div v-else class="row items-center ">
+                    <div class="q-mr-sm cask-chatroom-chat-list-avatar"
+                         :style="{backgroundImage: `url(${prop.node.avatar})`}">
+                    </div>
+
+                    <div class="col">
+                      <div class="component-max-line-text q-mb-sm">
+                        {{ prop.node.label }}
+                      </div>
+                      <div class="component-max-line-text" style="font-size: .8rem; opacity: .5">
+                        {{ prop.node.lastMessageText }}
+                      </div>
+                    </div>
+                    <div>
+                    </div>
                   </div>
                 </template>
               </q-tree>
+            </q-scroll-area>
+
+            <q-scroll-area
+                class="relative-position cask-chatroom-pinned-chat q-mt-md"
+                :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
+              <h5 class="absolute-center" style="opacity: .5; ">
+                Pinned Chat
+              </h5>
             </q-scroll-area>
 
 
@@ -50,7 +76,7 @@
         <div class="col-2 column q-mx-md">
 
           <div class="row q-mb-xs">
-            <q-btn no-caps unelevated style="width: 100%" dense>
+            <q-btn v-if="globalState.isLogin" no-caps unelevated style="width: 100%" dense>
               <div class="row items-center full-width">
                 <div class="col-2">
                   <q-avatar size="2.2rem" style="border-radius: 2.2rem;">
@@ -61,6 +87,20 @@
                 </div>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem">
                   {{ globalState.userData.nickName }}
+                </div>
+              </div>
+            </q-btn>
+            <q-btn v-else no-caps unelevated style="width: 100%" dense>
+              <div class="row items-center full-width">
+                <div class="col-2">
+                  <q-avatar size="2.2rem" style="border-radius: 2.2rem;">
+                    <q-img width="2.2rem" height="2.2rem" spinner-size="1rem"
+                           style="border-radius: 2.2rem;border: 2px solid black;"
+                           src="https://picsum.photos/50/50"/>
+                  </q-avatar>
+                </div>
+                <div class="col-9 row items-center q-px-sm" style="height: 2rem;">
+                  未登录用户
                 </div>
               </div>
             </q-btn>
@@ -78,7 +118,7 @@
           </div>
 
           <div class="row">
-            <q-btn no-caps unelevated class="component-full-btn-full">
+            <q-btn no-caps unelevated class="component-full-btn-full" push>
               <div class="row items-center">
                 <div class="q-mx-md">
                   发起群聊
@@ -93,7 +133,7 @@
 
       </div>
 
-      <div class="col-12 col-lg-8 row relative-position">
+      <div class="col-12 col-lg row relative-position">
         <q-separator class="component-separator-base" vertical style="margin: 5rem 2rem 0 0"/>
 
         <div class="col-grow">
@@ -206,5 +246,27 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+
+.cask-chatroom-pinned-chat {
+  height: 8rem;
+  border: dashed 2px rgba(var(--text-color), 0.8);
+  border-radius: 8px;
+  background: repeating-linear-gradient(
+          45deg,
+          rgba(var(--text-color), 0.1),
+          rgba(var(--text-color), 0.1) 30px,
+          transparent 20px,
+          transparent 50px
+  );
+}
+
+.cask-chatroom-chat-list-avatar {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 </style>
