@@ -235,6 +235,31 @@
 
 }
 
+.component-base-tree {
+  .q-icon {
+    margin: 0 5px;
+    color: rgb(var(--text-color));
+  }
+
+  .q-tree__node--parent > .q-tree__node-header > .q-tree__node-header-content {
+    font-size: 1rem;
+  }
+
+  > .q-tree__node--parent > .q-tree__node-header > .q-tree__node-header-content {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .q-tree__node--child > .q-tree__node-header > .q-tree__node-header-content {
+    font-size: .95rem;
+  }
+
+  .q-tree__children {
+    padding-left: 10px;
+  }
+
+}
+
 @mixin component-max-line-text(
   $max-line: 1
 ) {

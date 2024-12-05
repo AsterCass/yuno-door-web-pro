@@ -10,6 +10,8 @@ export const socketChatState = reactive({
     socket: null,
     socketConnected: false,
     chattingData: [],
+    chattingDataWeb: [],
+    chattingDataWebExpand: [],
     webChattingFocusChat: {
         chatId: "",
         userChattingData: [],
