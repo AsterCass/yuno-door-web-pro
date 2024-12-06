@@ -7,7 +7,7 @@
 
     <div class="col-grow row">
 
-      <div style="width: 420px" class="column">
+      <div v-show="!globalState.screenMini" style="width: 420px" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -159,26 +159,87 @@
 
       <div v-show="!globalState.screenMini" class="col-lg-2 column justify-end">
 
-        <div class="col-11 column">
+        <div class="q-px-md col-11 column">
+          <q-scroll-area class="col q-mx-lg" v-if="socketChatState.webChattingFocusChat"
+                         :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
 
-          <div class="col-grow q-mx-lg" v-show="socketChatState.chattingDataWebSelected">
-            <h2>
-              当前群头像
-            </h2>
+            <div class="row justify-center q-mt-md">
+              <div class="relative-position" style="width: 220px; height: 220px">
+                <q-avatar size="220px" style="filter: blur(3px); position: absolute;">
+                  <q-img :src="socketChatState.webChattingFocusChat.chatAvatar"/>
+                </q-avatar>
+                <q-avatar size="200px" style=" position: absolute; left: 10px; top: 10px">
+                  <q-img :src="socketChatState.webChattingFocusChat.chatAvatar"/>
+                </q-avatar>
+              </div>
+            </div>
 
-            <h3>
-              当前群标题
-            </h3>
+            <div class="text-center q-mt-md" style="font-size: 1.4rem; font-weight: 600">
+              {{ socketChatState.webChattingFocusChat.chatName }}
+            </div>
 
-            <h5 style="font-weight: 600 !important;">
-              群聊基本信息
-            </h5>
+            <div v-if="!socketChatState.webChattingFocusChat.chatType">
+              <div class="q-mt-md row justify-center">
+                <q-badge class="q-mx-xs" style="font-size: .8rem"
+                         :color="getGenderObj(socketChatState.webChattingFocusChat.chatUserGender).color"
+                         :label="getGenderObj(socketChatState.webChattingFocusChat.chatUserGender).label">
+                </q-badge>
+                <q-badge class="q-mx-xs" style="font-size: 0.8rem"
+                         :color="getRoleTypeObj(socketChatState.webChattingFocusChat.chatUserRoleType).color"
+                         :label="getRoleTypeObj(socketChatState.webChattingFocusChat.chatUserRoleType).label">
+                  <q-icon :name="getRoleTypeObj(socketChatState.webChattingFocusChat.chatUserRoleType).logo"
+                          class="q-ma-xs"/>
+                </q-badge>
+              </div>
 
-          </div>
+              <div>
+                关注、粉丝、好友数量
+              </div>
 
-          <q-separator class="component-separator-base q-my-md" inset/>
+              <div>
+                用户签名
+              </div>
 
-          <div class="q-mx-md q-pb-md">
+              <div>
+                邮箱和github
+              </div>
+
+            </div>
+
+
+            <div v-else>
+              <div>
+                群描述：
+              </div>
+
+              <div>
+                群成员：
+              </div>
+
+              <div>
+                群文件：
+              </div>
+            </div>
+
+
+          </q-scroll-area>
+
+          <q-btn v-if="socketChatState.webChattingFocusChat && socketChatState.webChattingFocusChat.chatType"
+                 no-caps unelevated class=" component-full-btn-error-full">
+            <div class="row items-center">
+              <div class="q-mx-md">
+                退出群聊
+              </div>
+              <q-icon name="fa-solid fa-door-open" size="1rem"/>
+            </div>
+          </q-btn>
+
+
+          <q-separator class="component-separator-base q-my-md"/>
+
+          <div class="q-pb-md">
             <h5 style="font-weight: 600 !important;">
               小贴士
             </h5>
@@ -219,6 +280,8 @@ import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
+import {getRoleTypeObj} from "@/constant/enums/role-type";
+import {getGenderObj} from "@/constant/enums/gender-opt";
 
 const globalState = useGlobalStateStore();
 

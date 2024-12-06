@@ -195,11 +195,11 @@ function socketMsgReceiveDataParse(callback) {
                 sendDate: data.sendDate,
             })
             //todo 该聊天框打开状态，则存入浏览器缓存，并将已读消息发送到后端
-            if (socketChatState.webChattingFocusChat === data.fromChatId) {
-                //
-            } else {
-                singleChatting.latestRead = false
-            }
+            // if (socketChatState.webChattingFocusChat === data.fromChatId) {
+            //     //
+            // } else {
+            //     singleChatting.latestRead = false
+            // }
             //todo 页面滑动到新消息位置
         }
         //更新当前新消息数量
@@ -231,12 +231,13 @@ export function chattingDataInit() {
     const globalState = useGlobalStateStore()
 
     chattingUsers().then(res => {
+        //check
         if (!res || !res.data || !res.data.data || 0 === res.data.data.length) {
             socketChatState.chattingData = []
-            socketChatState.webChattingFocusChat = undefined
             chattingDataInitStatus = false
             return
         }
+        //build
         socketChatState.chattingData = res.data.data
         socketChatState.unReadAllMessages.clear()
         socketChatState.chattingData.forEach(data => {
@@ -258,12 +259,12 @@ export function chattingDataInit() {
                 }
             }
         })
-        let firstChattingLen = socketChatState.chattingData[0].userChattingData.length
-        if (0 !== firstChattingLen) {
-            socketChatState.webChattingFocusChat = socketChatState.chattingData[0]
-            //messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
-            //todo 如果打开某个聊天框，并且这个聊天框内容有未读，则存入浏览器缓存，并将已读消息发送到后端
-        }
+        // let firstChattingLen = socketChatState.chattingData[0].userChattingData.length
+        // if (0 !== firstChattingLen) {
+        //     socketChatState.webChattingFocusChat = socketChatState.chattingData[0]
+        //     //messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+        //     //todo 如果打开某个聊天框，并且这个聊天框内容有未读，则存入浏览器缓存，并将已读消息发送到后端
+        // }
         rebuildChattingDataWeb()
         chattingDataInitStatus = false
     })

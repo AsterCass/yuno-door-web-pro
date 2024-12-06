@@ -1,4 +1,4 @@
-import {reactive} from 'vue';
+import {reactive, watch} from 'vue';
 
 export const scrollState = reactive({
     scrollTop: 0,
@@ -13,16 +13,33 @@ export const socketChatState = reactive({
     chattingDataWeb: [],
     chattingDataWebExpand: [],
     chattingDataWebSelected: null,
-    webChattingFocusChat: {
-        chatId: "",
-        userChattingData: [],
-        webUserChattingDataBak: [],
-        webScrollDisable: false,
-        latestRead: false,
-    },
+    webChattingFocusChat: null,
     unReadAllMessages: new Set(),
     needBrowserNotification: true,
 })
+
+
+watch(
+    () => socketChatState.chattingDataWebSelected,
+    (newValue) => {
+        if (!newValue || !socketChatState.chattingData || socketChatState.chattingData.length === 0) {
+            socketChatState.webChattingFocusChat = undefined
+            return
+        }
+
+        let inChattingData = false
+        for (const singleChatting of socketChatState.chattingData) {
+            if (singleChatting.chatId === newValue) {
+                inChattingData = true
+                socketChatState.webChattingFocusChat = singleChatting
+            }
+        }
+
+        if (!inChattingData) {
+            socketChatState.webChattingFocusChat = undefined
+        }
+    }
+);
 
 
 

@@ -53,7 +53,7 @@ export function getGenderObj(category) {
         }
     }
     return {
-        label: "",
+        label: "不能被定义",
         color: "black",
         category: 0
     }

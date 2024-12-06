@@ -6,6 +6,7 @@
   $thisHeight: 2.4rem,
   $thisWidth: 6rem,
   $thisMinWidth: 6rem,
+  $bgColor: rgb(var(--full-container-background-color)),
 ) {
   height: $thisHeight !important;
   min-height: $thisHeight !important;
@@ -13,9 +14,9 @@
   min-width: $thisMinWidth !important;
   padding: 0 .6rem !important;
   color: rgb(var(--full-container-text-color)) !important;
-  background: rgb(var(--full-container-background-color)) !important;
+  background: $bgColor !important;
   border-radius: 4px !important;
-  border: 2px solid rgb(var(--full-container-background-color)) !important;
+  border: 2px solid $bgColor !important;
 
   &:before {
     border-bottom: none !important;
@@ -333,6 +334,13 @@
 .component-full-btn-full {
   @include component-full-btn-base(
           $thisWidth: 100%,
+  )
+}
+
+.component-full-btn-error-full {
+  @include component-full-btn-base(
+          $thisWidth: 100%,
+          $bgColor: rgb(var(--negative)),
   )
 }
 
