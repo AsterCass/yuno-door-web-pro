@@ -160,23 +160,23 @@
       <div v-show="!globalState.screenMini" class="col-lg-2 column justify-end">
 
         <div class="q-px-md col-11 column">
-          <q-scroll-area class="col q-mx-lg" v-if="socketChatState.webChattingFocusChat"
+          <q-scroll-area class="col" v-if="socketChatState.webChattingFocusChat"
                          :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
 
-            <div class="row justify-center q-mt-md">
-              <div class="relative-position" style="width: 220px; height: 220px">
-                <q-avatar size="220px" style="filter: blur(3px); position: absolute;">
+            <div class="row justify-center q-mt-sm">
+              <div class="relative-position" style="width: 200px; height: 200px">
+                <q-avatar size="200px" style="filter: blur(3px); position: absolute;">
                   <q-img :src="socketChatState.webChattingFocusChat.chatAvatar"/>
                 </q-avatar>
-                <q-avatar size="200px" style=" position: absolute; left: 10px; top: 10px">
+                <q-avatar size="180px" style=" position: absolute; left: 10px; top: 10px">
                   <q-img :src="socketChatState.webChattingFocusChat.chatAvatar"/>
                 </q-avatar>
               </div>
             </div>
 
-            <div class="text-center q-mt-md" style="font-size: 1.4rem; font-weight: 600">
+            <div class="text-center q-mt-sm" style="font-size: 1.4rem; font-weight: 600">
               {{ socketChatState.webChattingFocusChat.chatName }}
             </div>
 
@@ -208,25 +208,37 @@
 
             </div>
 
-
             <div v-else>
-              <div>
-                群描述：
+              <div class="q-mt-sm text-center" style="font-size: .85rem; opacity: .8;">
+                {{ socketChatState.webChattingFocusChat.chatGroupDesc }}
               </div>
 
-              <div>
-                群成员：
+              <div class="row q-mt-sm justify-center ">
+
+                <div class="col-12 row">
+                  <q-avatar
+                      v-for="(thisUser, index) in socketChatState.webChattingFocusChat.chatGroupUsers" :key="index"
+                      size="40px" class="q-ma-xs">
+                    <q-img spinner-size="1rem" :src="thisUser.userAvatar"/>
+                  </q-avatar>
+                  <q-btn round style="height: 40px; width: 40px" no-wrap flat class="q-mt-xs q-ml-xs">
+                    <div style="padding-bottom: 13px; font-size: 25px">
+                      ...
+                    </div>
+                  </q-btn>
+                </div>
+
+
               </div>
 
-              <div>
-                群文件：
-              </div>
             </div>
 
 
           </q-scroll-area>
 
-          <q-btn v-if="socketChatState.webChattingFocusChat && socketChatState.webChattingFocusChat.chatType"
+          <q-btn v-if="socketChatState.webChattingFocusChat &&
+          0 !== socketChatState.webChattingFocusChat.chatType &&
+          2 !== socketChatState.webChattingFocusChat.chatType"
                  no-caps unelevated class=" component-full-btn-error-full">
             <div class="row items-center">
               <div class="q-mx-md">

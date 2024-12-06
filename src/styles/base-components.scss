@@ -361,6 +361,13 @@
   )
 }
 
+.component-outline-btn-mini-grow {
+  @include component-outline-btn-base(
+          $thisHeight: 2rem,
+          $thisWidth: auto,
+  )
+}
+
 .component-outline-btn-clear-grow {
   @include component-outline-btn-base(
           $thisWidth: auto,

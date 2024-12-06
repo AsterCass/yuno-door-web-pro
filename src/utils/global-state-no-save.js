@@ -33,6 +33,13 @@ watch(
                 inChattingData = true
                 socketChatState.webChattingFocusChat = singleChatting
             }
+            //web render
+            if (socketChatState.webChattingFocusChat.chatGroupUsers
+                && socketChatState.webChattingFocusChat.chatGroupUsers.length > 11) {
+                socketChatState.webChattingFocusChat.chatGroupUsers =
+                    socketChatState.webChattingFocusChat.chatGroupUsers.slice(0, 11)
+                socketChatState.webChattingFocusChat.chatGroupUserMany = true
+            }
         }
 
         if (!inChattingData) {
