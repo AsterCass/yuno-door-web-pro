@@ -5,7 +5,7 @@
     ]" :always-show="true"/>
 
 
-    <div class="col-grow row">
+    <div class="col row">
 
       <div v-show="!globalState.screenMini" style="width: 420px" class="column">
 
@@ -139,13 +139,46 @@
 
       </div>
 
-      <div class="col-12 col-lg row relative-position">
-        <q-separator class="component-separator-base" vertical style="margin: 5rem 2rem 0 0"/>
+      <div class="col-12 col-lg row relative-position" style="height: 100%">
+        <q-separator class="component-separator-base" vertical style="margin: 5rem 3% 0 0"/>
 
-        <div class="col-grow">
+        <div v-if="socketChatState.webChattingFocusChat" class="col column"
+             style="height: 100%; padding: 5rem 0 10rem 0">
+
+          <div class="row q-mb-md">
+            <div style="font-size: 1.4rem; font-weight: 600">
+              {{ socketChatState.webChattingFocusChat.chatName }}
+            </div>
+          </div>
+
+          <div class="col" style="max-height: 100%; overflow: auto;">
+            <q-infinite-scroll @load="loadMoreChatRecord" :offset="250" reverse debounce="10">
+
+              <div class="q-my-md" v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
+                   :key="index">
+                <div class="row q-mb-sm">
+                  <q-avatar size="40px" class="q-mr-sm">
+                    <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
+                  </q-avatar>
+                  <div class="col">
+                    <div class="q-mb-sm q-ml-xs" style="font-size: .95rem">
+                      {{ chatRow.sendUserNickname }}
+                    </div>
+                    <div class="col cask-chatroom-chat-body" style="white-space: break-spaces">
+                      {{ chatRow.message }}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </q-infinite-scroll>
+          </div>
 
         </div>
-        <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 2rem"/>
+
+        <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 3%"/>
 
         <cask-long-text-input id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
@@ -154,7 +187,7 @@
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :placeholder="chatroomPlace" :sendCallback="callback" v-model="chatroomInput"
                               @update:model-value="data => chatroomInput = data"
-                              style="right: 10%; left: 10%; bottom: .5rem" class="absolute"/>
+                              style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
       </div>
 
       <div v-show="!globalState.screenMini" class="col-lg-2 column justify-end">
@@ -359,6 +392,11 @@ function handleVisibilityChange() {
   socketChatState.needBrowserNotification = document.hidden
 }
 
+function loadMoreChatRecord(index, done) {
+  console.log("load more data")
+  // done()
+}
+
 onMounted(() => {
   browserNotificationCheck()
   chattingDataInit()
@@ -398,4 +436,10 @@ onBeforeUnmount(() => {
   background-position: center;
 }
 
+.cask-chatroom-chat-body {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: rgba(var(--text-color), 0.1);
+  margin-right: 15%;
+}
 </style>
