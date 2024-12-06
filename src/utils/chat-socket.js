@@ -6,11 +6,22 @@ import Stomp from "webstomp-client";
 import {browserNotification, notifyTopWarning} from "@/utils/notification-tools";
 import i18n from "@/i18n";
 import {date} from "quasar";
+import {ZodiacSign} from "@/utils/date-to-zodiac";
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
 const emojiRegex = /\[#b[0-9][0-9]]/g;
 const emojiCodeFormat = "[#b%s]"
+
+function buildStarZodiac(birth, outputData) {
+    if (!birth || typeof birth !== "string") {
+        return
+    }
+    const birthday = new Date(date.formatDate(birth))
+    const ret = new ZodiacSign(birthday, 'zh')
+    outputData.chatUserStar = ret.sign
+    outputData.chatUserZodiac = ret.chinese.sign
+}
 
 function timeToText(time) {
     if (!time || typeof time !== 'string') return ""
@@ -35,7 +46,6 @@ function timeToText(time) {
     } else {
         label = date.formatDate(thisTime, "HH:mm")
     }
-
     return label
 }
 
@@ -143,6 +153,7 @@ function rebuildChattingDataWeb() {
             singleChattingWeb.label = singleChatting.chatName
             singleChattingWeb.avatar = singleChatting.chatAvatar
             //more
+            singleChattingWeb.chatType = singleChatting.chatType
             singleChattingWeb.latestRead = singleChatting.latestRead
             singleChattingWeb.lastMessageTime = singleChatting.lastMessageTime
             singleChattingWeb.lastMessageTimeWeb = timeToText(singleChatting.lastMessageTime)
@@ -150,6 +161,13 @@ function rebuildChattingDataWeb() {
             singleChattingWeb.lastMessageId = singleChatting.lastMessageId
             singleChattingWeb.chatUserRoleType = singleChatting.chatUserRoleType
             singleChattingWeb.chatUserGender = singleChatting.chatUserGender
+            singleChattingWeb.chatUserBirth = singleChatting.chatUserBirth
+            singleChattingWeb.chatUserMotto = singleChatting.chatUserMotto
+            singleChattingWeb.socialLink = singleChatting.socialLink
+            //私聊对象渲染
+            if (0 === singleChattingWeb.chatType) {
+                buildStarZodiac(singleChattingWeb.chatUserBirth, singleChatting)
+            }
             //push
             socketChatState.chattingDataWeb[singleChatting.chatType].children.push(singleChattingWeb)
             if (!insertFirstChat) {
@@ -247,6 +265,11 @@ export function chattingDataInit() {
                 data.userChattingData = data.userChattingData.reverse()
             }
             data.webInputText = ""
+            //群成员渲染
+            if (data.chatGroupUsers && data.chatGroupUsers.length > 11) {
+                data.chatGroupUsers = data.chatGroupUsers.slice(0, 11)
+                data.chatGroupUserMany = true
+            }
             //如果用户未登录，用浏览器缓存数据判断是否已读
             if (!globalState.isLogin) {
                 data.latestRead = globalState.readMessageMap[data.chatId] === data.lastMessageId
@@ -258,6 +281,7 @@ export function chattingDataInit() {
                     socketChatState.unReadAllMessages.add(data.chatId)
                 }
             }
+
         })
         // let firstChattingLen = socketChatState.chattingData[0].userChattingData.length
         // if (0 !== firstChattingLen) {

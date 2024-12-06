@@ -181,7 +181,7 @@
             </div>
 
             <div v-if="!socketChatState.webChattingFocusChat.chatType">
-              <div class="q-mt-md row justify-center">
+              <div class="q-mt-sm row justify-center">
                 <q-badge class="q-mx-xs" style="font-size: .8rem"
                          :color="getGenderObj(socketChatState.webChattingFocusChat.chatUserGender).color"
                          :label="getGenderObj(socketChatState.webChattingFocusChat.chatUserGender).label">
@@ -194,22 +194,58 @@
                 </q-badge>
               </div>
 
-              <div>
-                关注、粉丝、好友数量
+              <div class="q-mt-md row justify-center">
+                <div>
+                  {{ socketChatState.webChattingFocusChat.chatUserBirth.substr(0, 10) }}
+                </div>
+
+                <q-separator class="component-separator-base" vertical style="margin: 5px 8px"/>
+
+                <div>
+                  {{ socketChatState.webChattingFocusChat.chatUserStar }}
+                </div>
+
+                <q-separator class="component-separator-base" vertical style="margin: 5px 8px"/>
+
+                <div>
+                  {{ socketChatState.webChattingFocusChat.chatUserZodiac }}
+                </div>
+              </div>
+
+              <div v-if="socketChatState.webChattingFocusChat.chatUserMotto"
+                   class="q-mt-sm text-center" style="opacity: .75;">
+                {{ socketChatState.webChattingFocusChat.chatUserMotto }}
+              </div>
+              <div v-else class="q-mt-sm text-center" style="opacity: .75;">
+                这个人很懒，什么都没有留下
               </div>
 
               <div>
-                用户签名
-              </div>
 
-              <div>
-                邮箱和github
+                <div class="q-mt-md row justify-center">
+                  <q-icon :color="socketChatState.webChattingFocusChat.socialLink.wechat? 'green-6' : 'grey-6' "
+                          name="fa-brands fa-weixin" class="q-mr-sm" size="1.25rem"/>
+                  &nbsp;{{
+                    socketChatState.webChattingFocusChat.socialLink.wechat ?
+                        socketChatState.webChattingFocusChat.socialLink.wechat : 'None or Hide'
+                  }}
+                </div>
+
+                <div class="q-mt-sm row justify-center">
+                  <q-icon :color="socketChatState.webChattingFocusChat.socialLink.github ? 'black' : 'grey-6' "
+                          name="eva-github" class="q-mr-sm" size="1.25rem"/>
+                  &nbsp;{{
+                    socketChatState.webChattingFocusChat.socialLink.github ?
+                        socketChatState.webChattingFocusChat.socialLink.github : 'None or Hide'
+                  }}
+                </div>
+
               </div>
 
             </div>
 
             <div v-else>
-              <div class="q-mt-sm text-center" style="font-size: .85rem; opacity: .8;">
+              <div class="q-mt-sm text-center" style="font-size: .85rem; opacity: .75;">
                 {{ socketChatState.webChattingFocusChat.chatGroupDesc }}
               </div>
 
@@ -248,6 +284,16 @@
             </div>
           </q-btn>
 
+          <q-btn v-if="socketChatState.webChattingFocusChat && 0 === socketChatState.webChattingFocusChat.chatType"
+                 no-caps unelevated class=" component-full-btn-error-full">
+            <div class="row items-center">
+              <div class="q-mx-md">
+                不再接收他的消息
+              </div>
+              <q-icon name="fa-solid fa-door-open" size="1rem"/>
+            </div>
+          </q-btn>
+
 
           <q-separator class="component-separator-base q-my-md"/>
 
@@ -256,15 +302,18 @@
               小贴士
             </h5>
             <div style="opacity: .75">
-              1. 删除聊天框不会导致聊天记录删除，再次发起聊天或者有新消息时会重新载入之前记录
+              <div>
+                1. 删除聊天框不会导致聊天记录删除，再次发起聊天或者有新消息时会重新载入之前记录
+              </div>
+              <div>
+                2. 无法收到通知？如果您确认已经打开了浏览器通知权限，但是没有收到消息通知，
+                请确认操作系统是否允许浏览器通知，以及操作系统中通知的全局设置：比如Windows中专注助手的相关设置
+              </div>
+              <div>
+                3. 由于服务器资源有限，每人最多添加20张表情包，但是将他人已上传的表情包添加到自己的列表中不消耗该计数
+              </div>
             </div>
-            <div style="opacity: .75">
-              2. 无法收到通知？如果您确认已经打开了浏览器通知权限，但是没有收到消息通知，
-              请确认操作系统是否允许浏览器通知，以及操作系统中通知的全局设置：比如Windows中专注助手的相关设置
-            </div>
-            <div style="opacity: .75">
-              3. 由于服务器资源有限，每人最多添加20张表情包，但是将他人已上传的表情包添加到自己的列表中不消耗该计数
-            </div>
+
           </div>
 
 
