@@ -275,19 +275,18 @@ onMounted(() => {
     transition: transform .5s ease, opacity .5s ease;
     transform: translateY(35px);
     opacity: 1;
-
-    &:hover {
-      transform: translateX(-3%) translateY(-3%);
-      box-shadow: 3px 3px 6px 2px rgb(var(--container-text-color));
-    }
-
-
-    &:hover .article-list-card-body-tag {
-      transform: rotate(-90deg);
-      opacity: 1;
-    }
-
   }
+
+  &:hover {
+    transform: translateX(-3%) translateY(-3%);
+    box-shadow: 3px 3px 6px 2px rgb(var(--container-text-color));
+  }
+
+  &:hover .article-list-card-body-tag {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+
 }
 
 </style>
