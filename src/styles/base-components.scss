@@ -458,6 +458,10 @@
   @include component-max-line-text(2)
 }
 
+.component-max-line-text-3 {
+  @include component-max-line-text(3)
+}
+
 .component-max-line-text {
   @include component-max-line-text()
 }

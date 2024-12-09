@@ -60,17 +60,71 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
-           style="min-height: 60rem">
+      <div class="col-lg-9 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+           style="min-height: 60rem;">
+
+        <q-infinite-scroll @load="onLoadArticleListData" :offset="250" :disable="scrollDisable">
+          <q-intersection once v-for="(article, index) in articleList" :key="index"
+                          transition="slide-up" transition-duration="600" class="q-my-lg">
+
+            <div class="full-width row justify-center">
+              <div class="col-11 col-lg article-list-card-body">
+                <h3>
+                  {{ article.articleTitle }}
+                </h3>
+                <div class=" q-mb-md component-max-line-text-3">
+                  {{ article.articleBrief }}
+                </div>
+                <div class="row justify-between items-center">
+                  <div class="row items-center">
+                    <q-avatar
+                        size="30px" class="q-mr-sm">
+                      <q-img spinner-size="1rem" :src="article.authorAvatar"/>
+                    </q-avatar>
+                    <div>
+                      {{ article.authorName }}
+                    </div>
+                  </div>
+
+                  <div class="row q-mr-xs items-center">
+                    <q-icon v-for="(tag, index) in getArticleTagDescList(article.articleTagList)" :key="index"
+                            class="article-list-card-body-tag q-mx-xs"
+                            name="fa-solid fa-bookmark" size="28px"
+                            :color="tag.color"/>
+                  </div>
+
+
+                </div>
+
+              </div>
+              <div v-if="!globalState.screenMini" class="column items-center" style="width: 50px">
+                <div style="width: 10px;height: 10px;border-radius: 50%; margin-top: 12px;
+                        background-color: rgba(var(--text-color), .75)"/>
+                <div class="col" style="width: 2px; background-color: rgba(var(--text-color), .5);
+                 margin: 12px 0 18px 0; border-radius: 1px;">
+                </div>
+              </div>
+              <div v-if="!globalState.screenMini" class="col-lg-3 q-mt-xs">
+                <div>
+                  {{ $t('dynamic-create-time') }}:&nbsp;{{ article.createTime }}
+                </div>
+                <div class="q-mt-xs">
+                  {{ $t('dynamic-update-time') }}:&nbsp;{{ article.updateTime }}
+                </div>
+              </div>
+            </div>
+
+          </q-intersection>
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <q-spinner-pie size="50px"/>
+            </div>
+          </template>
+        </q-infinite-scroll>
+
 
       </div>
 
-      <div v-if="!globalState.screenMini" class="col-lg-3 col-12 q-pr-lg" style="margin-top: 7rem">
-        <div class="article-list-right-sidebar">
-
-
-        </div>
-      </div>
 
     </div>
 
@@ -90,7 +144,7 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
-import {articleTagEnums} from "@/constant/enums/article-tag";
+import {articleTagEnums, getArticleTagDescList} from "@/constant/enums/article-tag";
 import {delay} from "@/utils/base-tools";
 
 const props = defineProps({
@@ -109,6 +163,8 @@ const thisRouter = useRouter()
 //页面元素
 const searchArticle = ref("")
 const showPic = ref(false)
+const articleList = ref([])
+const scrollDisable = ref(true)
 //筛选
 const selectedTagList = ref(new Set())
 //分页
@@ -128,9 +184,33 @@ function searchArticleList(keywordParam) {
   }
 
   getBlogList(simplePage(currentParam, currentPage)).then(res => {
-    console.log(res.data.data)
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    articleList.value.push(...res.data.data)
+    //首次请求完成后开启无限滚动
+    scrollDisable.value = false
   })
 }
+
+function onLoadArticleListData(index, done) {
+  ++currentPage
+  currentParam.articleType = props.type
+  getBlogList(simplePage(currentParam, currentPage)).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    //获取了全部数据关闭无限滚动
+    if (0 === res.data.data.length) {
+      scrollDisable.value = true
+      return
+    }
+    //继续请求
+    articleList.value.push(...res.data.data)
+    done()
+  })
+}
+
 
 function deleteAndAddTagSet(code) {
   if (selectedTagList.value.has(code)) {
@@ -182,6 +262,32 @@ onMounted(() => {
   position: sticky;
   top: 9rem;
   align-self: flex-start;
+}
+
+.article-list-card-body {
+  border-radius: 12px;
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: solid 2px rgba(var(--text-color), 0.75);
+  transition: transform .5s ease, box-shadow .5s ease;
+  cursor: pointer;
+
+  .article-list-card-body-tag {
+    transition: transform .5s ease, opacity .5s ease;
+    transform: translateY(35px);
+    opacity: 1;
+
+    &:hover {
+      transform: translateX(-3%) translateY(-3%);
+      box-shadow: 3px 3px 6px 2px rgb(var(--container-text-color));
+    }
+
+
+    &:hover .article-list-card-body-tag {
+      transform: rotate(-90deg);
+      opacity: 1;
+    }
+
+  }
 }
 
 </style>
