@@ -365,6 +365,7 @@
   @include component-outline-btn-base(
           $thisHeight: 2rem,
           $thisWidth: auto,
+          $thisMinWidth: 4rem,
   )
 }
 

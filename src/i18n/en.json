@@ -14,6 +14,8 @@
   "test_component_multiple_close": "Close multiple select",
   "test_component_multiple_operation": "Multiple selected operation",
 
+  "component_search": "Search",
+
   "in_develop": "This feature is under development. Stay tuned",
   "error_request": "The system is busy. Please try again later",
   "no_login": "Unauthenticated users cannot perform this action. Please log in first",

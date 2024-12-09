@@ -226,7 +226,6 @@ function socketMsgReceiveDataParse(callback) {
         }
     }
     //不在列表中，则重新加载，在列表中直接重新构建侧边栏
-    console.log(alreadyInChatList)
     if (!alreadyInChatList) {
         chattingDataInit()
     } else {
