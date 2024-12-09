@@ -152,10 +152,15 @@
           </div>
 
           <div class="col" style="max-height: 100%; overflow: auto;">
-            <q-infinite-scroll @load="loadMoreChatRecord" :offset="250" reverse debounce="10">
-
-              <div class="q-my-md" v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-                   :key="index">
+            <q-infinite-scroll @load="loadMoreChatRecord" :offset="250" reverse debounce="10"
+                               :disable="socketChatState.webChattingFocusChat.chatScrollDisable">
+              <template v-slot:loading>
+                <div class="row justify-center q-my-md">
+                  <q-spinner-pie size="50px"/>
+                </div>
+              </template>
+              <q-intersection once v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
+                              transition="slide-up" transition-duration="600" class="q-my-md">
                 <div class="row q-mb-sm">
                   <q-avatar size="40px" class="q-mr-sm">
                     <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
@@ -169,8 +174,7 @@
                     </div>
                   </div>
                 </div>
-
-              </div>
+              </q-intersection>
 
 
             </q-infinite-scroll>
@@ -376,9 +380,11 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
+import {moreMessage} from "@/api/chat";
 
 const globalState = useGlobalStateStore();
 
+const chatScrollDisable = ref(true)
 const chatNameSearch = ref("")
 const chatroomPlace = ref("")
 const chatroomInput = ref("")
@@ -392,9 +398,31 @@ function handleVisibilityChange() {
   socketChatState.needBrowserNotification = document.hidden
 }
 
-function loadMoreChatRecord(index, done) {
-  console.log("load more data")
-  // done()
+function loadMoreChatRecord() {
+  //get last msg
+  let lastMsgId = ""
+  if (socketChatState.webChattingFocusChat && 0 !== socketChatState.webChattingFocusChat.userChattingData.length) {
+    if (socketChatState.webChattingFocusChat.userChattingData.length < 10) {
+      socketChatState.webChattingFocusChat.chatScrollDisable = true
+      return
+    }
+    lastMsgId = socketChatState.webChattingFocusChat.userChattingData[0].messageId
+  }
+  console.log(lastMsgId)
+  moreMessage({lastMessage: lastMsgId, chatId: socketChatState.webChattingFocusChat.chatId}).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    console.log(res.data.data)
+    if (0 === res.data.data.length) {
+      socketChatState.webChattingFocusChat.chatScrollDisable = true
+    }
+    let inputData = res.data.data.reverse()
+    socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
+    //todo time build
+    //send message read for new focus chat
+    //save message read for new focus chat
+  })
 }
 
 onMounted(() => {
