@@ -86,11 +86,18 @@
                     </div>
                   </div>
 
-                  <div class="row q-mr-xs items-center">
+                  <div class="row q-mr-xs relative-position">
                     <q-icon v-for="(tag, index) in getArticleTagDescList(article.articleTagList)" :key="index"
-                            class="article-list-card-body-tag q-mx-xs"
+                            class="article-list-card-body-tag absolute" :style="`top: 0; right: ${(index-1)*40 + 50}px`"
                             name="fa-solid fa-bookmark" size="28px"
                             :color="tag.color"/>
+                    <div class="row justify-end article-list-card-body-tag-focus">
+                      <div v-for="(tag, index) in getArticleTagDescList(article.articleTagList).reverse()" :key="index"
+                           class="q-mx-sm" :style="`background-color: ${tag.rbg}`"
+                           style="padding: 2px 5px; color: #eee; border-radius: 4px">
+                        {{ tag.name }}
+                      </div>
+                    </div>
                   </div>
 
 
@@ -272,9 +279,15 @@ onMounted(() => {
   cursor: pointer;
 
   .article-list-card-body-tag {
-    transition: transform .5s ease, opacity .5s ease;
+    transition: transform .5s ease .2s, opacity .5s ease .2s;
     transform: translateY(35px);
     opacity: 1;
+  }
+
+  .article-list-card-body-tag-focus {
+    transition: transform .5s ease .2s, opacity .5s ease .2s;
+    transform: translateX(30px);
+    opacity: 0;
   }
 
   &:hover {
@@ -285,6 +298,11 @@ onMounted(() => {
   &:hover .article-list-card-body-tag {
     transform: rotate(-90deg);
     opacity: 0;
+  }
+
+  &:hover .article-list-card-body-tag-focus {
+    transform: translateX(0px);
+    opacity: 1;
   }
 
 }
