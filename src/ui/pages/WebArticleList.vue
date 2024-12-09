@@ -27,14 +27,14 @@
 
           <div class="q-mt-lg q-pl-xs q-pr-lg">
             <q-input v-model="searchArticle" tabindex="0" dense outlined :placeholder="$t('component_search')"
-                     class="q-mb-md component-outline-input-grow">
+                     class="q-mb-md component-outline-input-grow" @keyup.enter="searchArticleList">
               <template v-slot:prepend>
                 <q-icon name="fa-solid fa-magnifying-glass" size="1rem"/>
               </template>
             </q-input>
           </div>
 
-          <div class="row q-mt-lg">
+          <div class="row q-mt-lg" v-if="type === '1'">
             <q-btn v-for="(tag, index) in articleTagEnums" :key="index" push
                    no-caps unelevated class="q-ma-xs component-outline-btn-mini-grow"
                    :label="tag.name" :style="`border-color: ${tag.rbg} !important`"
@@ -60,7 +60,11 @@
         </div>
       </div>
 
-      <div class="col-lg-9 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+      <div v-if="firstLoading" class="col-lg-9 col-12 q-mt-xl row items-center justify-center">
+        <q-spinner-pie size="75px"/>
+      </div>
+
+      <div v-else class="col-lg-9 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem;">
 
         <q-infinite-scroll @load="onLoadArticleListData" :offset="250" :disable="scrollDisable">
@@ -68,7 +72,8 @@
                           transition="slide-up" transition-duration="600" class="q-my-lg">
 
             <div class="full-width row justify-center">
-              <div class="col-11 col-lg article-list-card-body">
+              <div class="col-11 col-lg article-list-card-body" @click="toSpecifyPageWithQuery(
+                  thisRouter, 'webArticleDetail', {articleId: article.id})">
                 <h3>
                   {{ article.articleTitle }}
                 </h3>
@@ -153,6 +158,7 @@ import {useRouter} from "vue-router";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {articleTagEnums, getArticleTagDescList} from "@/constant/enums/article-tag";
 import {delay} from "@/utils/base-tools";
+import {toSpecifyPageWithQuery} from "@/router";
 
 const props = defineProps({
   authorId: {
@@ -161,7 +167,7 @@ const props = defineProps({
   },
   type: {
     type: String,
-    default: ""
+    default: "1"
   }
 })
 const globalState = useGlobalStateStore();
@@ -172,13 +178,17 @@ const searchArticle = ref("")
 const showPic = ref(false)
 const articleList = ref([])
 const scrollDisable = ref(true)
+const firstLoading = ref(true)
 //筛选
 const selectedTagList = ref(new Set())
 //分页
 let currentParam = {}
 let currentPage = 1
 
-function searchArticleList(keywordParam) {
+function searchArticleList() {
+  //数据重置
+  currentPage = 1
+  articleList.value.splice(0)
   //参数插入
   if (props.authorId) {
     currentParam.authorId = props.authorId
@@ -186,15 +196,25 @@ function searchArticleList(keywordParam) {
   if (props.type) {
     currentParam.articleType = props.type
   }
-  if (keywordParam) {
-    currentParam.keyword = keywordParam
+  //keyword
+  if (searchArticle.value) {
+    currentParam.keyword = searchArticle.value
+  } else {
+    currentParam.keyword = ""
   }
-
+  //标签参数
+  if (0 !== selectedTagList.value.size) {
+    currentParam.tags = [...selectedTagList.value].join()
+  } else {
+    currentParam.tags = null
+  }
+  //request
   getBlogList(simplePage(currentParam, currentPage)).then(res => {
     if (!res || !res.data || !res.data.data) {
       return
     }
     articleList.value.push(...res.data.data)
+    firstLoading.value = false
     //首次请求完成后开启无限滚动
     scrollDisable.value = false
   })
@@ -225,8 +245,7 @@ function deleteAndAddTagSet(code) {
   } else {
     selectedTagList.value.add(code)
   }
-
-  console.log(selectedTagList.value)
+  searchArticleList()
 }
 
 
