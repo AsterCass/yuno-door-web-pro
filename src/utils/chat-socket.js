@@ -263,6 +263,7 @@ export function chattingDataInit() {
             } else {
                 data.userChattingData = data.userChattingData.reverse()
             }
+            //用户在不同聊天框的输入
             data.webInputText = ""
             //群成员渲染
             if (data.chatGroupUsers && data.chatGroupUsers.length > 11) {
@@ -280,7 +281,6 @@ export function chattingDataInit() {
                     socketChatState.unReadAllMessages.add(data.chatId)
                 }
             }
-
         })
         // let firstChattingLen = socketChatState.chattingData[0].userChattingData.length
         // if (0 !== firstChattingLen) {

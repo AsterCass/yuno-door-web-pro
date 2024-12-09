@@ -151,16 +151,17 @@
             </div>
           </div>
 
-          <div class="col" style="max-height: 100%; overflow: auto;">
+          <div id="chat-body-infinite-id" class="col" style="max-height: 100%; overflow: auto;">
             <q-infinite-scroll @load="loadMoreChatRecord" :offset="250" reverse debounce="10"
+                               scroll-target="#chat-body-infinite-id"
                                :disable="socketChatState.webChattingFocusChat.chatScrollDisable">
               <template v-slot:loading>
                 <div class="row justify-center q-my-md">
                   <q-spinner-pie size="50px"/>
                 </div>
               </template>
-              <q-intersection once v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-                              transition="slide-up" transition-duration="600" class="q-my-md">
+              <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
+                   class="q-my-md">
                 <div class="row q-mb-sm">
                   <q-avatar size="40px" class="q-mr-sm">
                     <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
@@ -174,9 +175,7 @@
                     </div>
                   </div>
                 </div>
-              </q-intersection>
-
-
+              </div>
             </q-infinite-scroll>
           </div>
 
@@ -384,7 +383,6 @@ import {moreMessage} from "@/api/chat";
 
 const globalState = useGlobalStateStore();
 
-const chatScrollDisable = ref(true)
 const chatNameSearch = ref("")
 const chatroomPlace = ref("")
 const chatroomInput = ref("")
@@ -398,7 +396,7 @@ function handleVisibilityChange() {
   socketChatState.needBrowserNotification = document.hidden
 }
 
-function loadMoreChatRecord() {
+function loadMoreChatRecord(index, done) {
   //get last msg
   let lastMsgId = ""
   if (socketChatState.webChattingFocusChat && 0 !== socketChatState.webChattingFocusChat.userChattingData.length) {
@@ -411,17 +409,20 @@ function loadMoreChatRecord() {
   console.log(lastMsgId)
   moreMessage({lastMessage: lastMsgId, chatId: socketChatState.webChattingFocusChat.chatId}).then(res => {
     if (!res || !res.data || !res.data.data) {
+      done()
       return
     }
-    console.log(res.data.data)
     if (0 === res.data.data.length) {
       socketChatState.webChattingFocusChat.chatScrollDisable = true
+      return
     }
     let inputData = res.data.data.reverse()
     socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
+
     //todo time build
     //send message read for new focus chat
     //save message read for new focus chat
+    done()
   })
 }
 
