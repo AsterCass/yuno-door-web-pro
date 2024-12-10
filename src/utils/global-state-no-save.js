@@ -1,5 +1,6 @@
 import {reactive, watch} from 'vue';
 import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
+import {useGlobalStateStore} from "@/utils/global-state";
 import {readMessage} from "@/api/chat";
 
 export const scrollState = reactive({
@@ -33,9 +34,11 @@ watch(
     (newValue) => {
 
         if (!newValue || !socketChatState.chattingData || socketChatState.chattingData.length === 0) {
-            socketChatState.webChattingFocusChat = undefined
+            socketChatState.webChattingFocusChat = null
             return
         }
+
+        const globalState = useGlobalStateStore()
 
         //赋值
         let inChattingData = false
@@ -46,7 +49,7 @@ watch(
                 //重新渲染时间label
                 messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
                 //已读所有内容
-                if (!singleChatting.latestRead) {
+                if (!singleChatting.latestRead && globalState.isLogin) {
                     singleChatting.latestRead = true
                     readMessage({
                         chatId: singleChatting.chatId,
@@ -60,7 +63,7 @@ watch(
         }
 
         if (!inChattingData) {
-            socketChatState.webChattingFocusChat = undefined
+            socketChatState.webChattingFocusChat = null
         }
     }
 );

@@ -131,6 +131,7 @@
 
   "main_user_detail_no_motto": "This person is very lazy and has left nothing behind.",
   "main_user_detail_no_community": "None or Hide",
+  "main_user_detail_not_login": "Guest user",
 
   "main_chat_new_message": "New",
   "main_chat_type_con": "Contacts",
@@ -143,7 +144,7 @@
   "main_chat_no_tip_2": "2. Not receiving notifications? If you confirm that browser notification permissions are enabled but still not receiving message notifications, please check if the operating system allows browser notifications.",
   "main_chat_no_tip_3": "3. Due to limited server resources, each person can add up to 20 emoji packs. However, adding emoji packs uploaded by others to your own list does not count toward this limit.",
   "main_chat_not_login_message": "Sending messages is not supported for users who are not logged in. You can leave your suggestions or feedback on the website's Guestbook.\uD83D\uDE00",
-  "main_chat_setting": "Chat Setting",
+  "main_chat_setting": "Chat setting",
   "main_chat_launch_group": "Launch Group Chat",
   "main_chat_chat_pinned": "Pinned Chat",
   "main_chat_chat_pin": "Pin chat",

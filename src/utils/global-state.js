@@ -56,7 +56,7 @@ export const useGlobalStateStore = defineStore('globalState', {
                 this.loginToken = "";
                 this.userData = null
             }
-            chattingDataInit()
+            chattingDataInit(true)
             initChatSocket()
         },
         updateUserData(data) {

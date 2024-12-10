@@ -42,21 +42,29 @@
                     <div class="q-mr-sm q-ml-xs cask-chatroom-chat-list-avatar"
                          :style="{backgroundImage: `url(${prop.node.avatar})`}">
                     </div>
-                    <div class="col">
-                      <div class="component-max-line-text q-mb-sm">
-                        {{ prop.node.label }}
-                      </div>
-                      <div class="component-max-line-text" style="font-size: .8rem; opacity: .5">
-                        {{ prop.node.lastMessageText }}
-                      </div>
-                    </div>
-                    <div class="q-ml-sm q-mr-xs">
-                      <div class="q-mb-sm row justify-end">
-                        <div v-if="!prop.node.latestRead" style="width: 8px;height: 8px;border-radius: 50%;
+
+                    <div class="col row justify-between">
+                      <div class="col-12 row">
+
+                        <div class="col component-max-line-text">
+                          {{ prop.node.label }}
+                        </div>
+
+                        <div class="q-mx-md q-pt-sm">
+                          <div v-if="!prop.node.latestRead" style="width: 8px;height: 8px;border-radius: 50%;
                         background-color: rgba(var(--negative), .8)"/>
+                        </div>
+
                       </div>
-                      <div style="font-size: .8rem; opacity: .5">
-                        {{ prop.node.lastMessageTimeWeb }}
+
+                      <div class="col-12 row">
+                        <div class="col component-max-line-text" style="opacity: .5">
+                          {{ prop.node.lastMessageText }}
+                        </div>
+
+                        <div class="q-mx-md" style="opacity: .5">
+                          {{ prop.node.lastMessageTimeWeb }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -106,7 +114,7 @@
                   </q-avatar>
                 </div>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem;">
-                  未登录用户
+                  {{ $t('main_user_detail_not_login') }}
                 </div>
               </div>
             </q-btn>

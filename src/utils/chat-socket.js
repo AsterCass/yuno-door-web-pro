@@ -313,6 +313,7 @@ export function chattingDataInit(selectFirst = false) {
             return
         }
         //build
+        socketChatState.webChattingFocusChat = null
         socketChatState.chattingDataWebSelected = null
         socketChatState.chattingData = res.data.data
         socketChatState.unReadAllMessages.clear()
