@@ -23,13 +23,7 @@ function buildStarZodiac(birth, outputData) {
     outputData.chatUserZodiac = ret.chinese.sign
 }
 
-function timeToText(time) {
-    if (!time || typeof time !== 'string') return ""
-    const thisTime = new Date(date.formatDate(time))
-    const currentTime = new Date()
-    const unit = 'minutes'
-    const diff = date.getDateDiff(currentTime, thisTime, unit)
-
+function timeTextSwitch(diff, thisTime, currentTime, withTime) {
     let label = ""
     if (diff <= 1) {
         label = "刚刚"
@@ -38,18 +32,59 @@ function timeToText(time) {
     } else if (diff < 60 * 4) {
         label = Math.floor(diff / 60) + " 小时前"
     } else if (thisTime.getFullYear() !== currentTime.getFullYear()) {
-        label = date.formatDate(thisTime, "YYYY/MM/DD")
+        if (withTime) {
+            label = date.formatDate(thisTime, "YYYY-MM-DD HH:mm")
+        } else {
+            label = date.formatDate(thisTime, "YYYY/MM/DD")
+        }
     } else if (thisTime.getMonth() !== currentTime.getMonth()) {
-        label = date.formatDate(thisTime, "MM/DD")
+        if (withTime) {
+            label = date.formatDate(thisTime, "MM-DD HH:mm")
+        } else {
+            label = date.formatDate(thisTime, "MM/DD")
+        }
     } else if (thisTime.getDay() !== currentTime.getDay()) {
-        label = date.formatDate(thisTime, "MM/DD")
+        if (withTime) {
+            label = date.formatDate(thisTime, "MM-DD HH:mm")
+        } else {
+            label = date.formatDate(thisTime, "MM/DD")
+        }
     } else {
         label = date.formatDate(thisTime, "HH:mm")
     }
     return label
 }
 
+function timeToText(time) {
+    if (!time || typeof time !== 'string') return ""
+    const thisTime = new Date(date.formatDate(time))
+    const currentTime = new Date()
+    const unit = 'minutes'
+    const diff = date.getDateDiff(currentTime, thisTime, unit)
+    return timeTextSwitch(diff, thisTime, currentTime)
+}
+
 // todo 表情输出支持：颜文字、普通emoji，颜文字最好支持使用代码，如果输入某个代码，在输入框自动转换成颜文字
+
+export function messageTimeLabelBuilder(list) {
+    if (!list || 0 === list.length) {
+        return
+    }
+    const currentTime = new Date()
+    let lastTime = new Date()
+    const unit = 'minutes'
+    for (let count = 0; count < list.length; ++count) {
+        const thisTime = new Date(date.formatDate(list[count].sendDate))
+        const diff = date.getDateDiff(currentTime, thisTime, unit)
+        const diffWithLast = Math.abs(date.getDateDiff(thisTime, lastTime, unit))
+        lastTime = thisTime
+        if (diffWithLast <= 5) {
+            continue
+        }
+        list[count].webTimeLabel = timeTextSwitch(diff, thisTime, currentTime, true)
+    }
+}
+
 
 export function messageTimeLabelInput(list, obj) {
     if (list) {
@@ -265,6 +300,8 @@ export function chattingDataInit() {
             }
             //用户在不同聊天框的输入
             data.webInputText = ""
+            //侧片栏生效
+            data.chatScrollDisable = false
             //群成员渲染
             if (data.chatGroupUsers && data.chatGroupUsers.length > 11) {
                 data.chatGroupUsers = data.chatGroupUsers.slice(0, 11)

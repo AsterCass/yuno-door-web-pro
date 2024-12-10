@@ -1,4 +1,5 @@
 import {reactive, watch} from 'vue';
+import {messageTimeLabelBuilder} from "@/utils/chat-socket";
 
 export const scrollState = reactive({
     scrollTop: 0,
@@ -17,7 +18,7 @@ export const socketChatState = reactive({
     chattingDataWebExpand: [],
     //当前选中叶子节点chatId
     chattingDataWebSelected: null,
-    //当前选中叶子节点数据，由原生数据赋值
+    //当前选中叶子节点数据，由原生数据赋值，此时数据为引用，对于数据的改变会影响chattingData的数据
     webChattingFocusChat: null,
     //未读消息chatId，一个聊天只算一个
     unReadAllMessages: new Set(),
@@ -41,6 +42,8 @@ watch(
             if (singleChatting.chatId === newValue) {
                 inChattingData = true
                 socketChatState.webChattingFocusChat = singleChatting
+                //重新渲染时间label
+                messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
             }
         }
 

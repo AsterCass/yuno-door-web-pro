@@ -7,7 +7,7 @@
 
     <div class="col row">
 
-      <div v-show="!globalState.screenMini" style="width: 420px" class="column">
+      <div v-show="!globalState.screenMini" style="width: 400px" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -151,32 +151,42 @@
             </div>
           </div>
 
-          <div id="chat-body-infinite-id" class="col" style="max-height: 100%; overflow: auto;">
-            <q-infinite-scroll @load="loadMoreChatRecord" :offset="250" reverse debounce="10"
-                               scroll-target="#chat-body-infinite-id"
-                               :disable="socketChatState.webChattingFocusChat.chatScrollDisable">
-              <template v-slot:loading>
-                <div class="row justify-center q-my-md">
-                  <q-spinner-pie size="50px"/>
-                </div>
-              </template>
-              <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-                   class="q-my-md">
-                <div class="row q-mb-sm">
-                  <q-avatar size="40px" class="q-mr-sm">
-                    <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
-                  </q-avatar>
-                  <div class="col">
-                    <div class="q-mb-sm q-ml-xs" style="font-size: .95rem">
-                      {{ chatRow.sendUserNickname }}
+          <div class="col">
+
+            <div v-for="(chat, index) in socketChatState.chattingData" :key="index"
+                 :id="`chat-body-infinite-id-${chat.chatId}`" style="max-height: 100%; overflow: auto;">
+              <q-infinite-scroll v-if="chat.chatId === socketChatState.webChattingFocusChat.chatId"
+                                 @load="loadMoreChatRecord" :offset="250" reverse debounce="10"
+                                 :scroll-target="`#chat-body-infinite-id-${chat.chatId}`"
+                                 :disable="socketChatState.webChattingFocusChat.chatScrollDisable">
+                <template v-slot:loading>
+                  <div class="row justify-center q-my-md">
+                    <q-spinner-pie size="50px"/>
+                  </div>
+                </template>
+                <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
+                     :key="index" class="q-my-md">
+                  <div v-if="chatRow.webTimeLabel" class="q-my-md row justify-center">
+                    <div style="opacity:.5">
+                      {{ chatRow.webTimeLabel }}
                     </div>
-                    <div class="col cask-chatroom-chat-body" style="white-space: break-spaces">
-                      {{ chatRow.message }}
+                  </div>
+                  <div class="row q-mb-sm">
+                    <q-avatar size="40px" class="q-mr-sm">
+                      <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
+                    </q-avatar>
+                    <div class="row col">
+                      <div class="col-12 q-mb-sm q-pl-xs" style="font-size: .95rem">
+                        {{ chatRow.sendUserNickname }}
+                      </div>
+                      <div class="cask-chatroom-chat-body" style="white-space: break-spaces">
+                        {{ chatRow.message }}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </q-infinite-scroll>
+              </q-infinite-scroll>
+            </div>
           </div>
 
         </div>
@@ -193,7 +203,7 @@
                               style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
       </div>
 
-      <div v-show="!globalState.screenMini" class="col-lg-2 column justify-end">
+      <div v-show="!globalState.screenMini" style="width: 400px" class="column justify-end">
 
         <div class="q-px-md col-11 column">
           <q-scroll-area class="col" v-if="socketChatState.webChattingFocusChat"
@@ -335,18 +345,17 @@
 
           <div class="q-pb-md">
             <h5 style="font-weight: 600 !important;">
-              小贴士
+              {{ $t('main_chat_no_tips') }}
             </h5>
             <div style="opacity: .75">
               <div>
-                1. 删除聊天框不会导致聊天记录删除，再次发起聊天或者有新消息时会重新载入之前记录
+                {{ $t('main_chat_no_tip_1') }}
               </div>
               <div>
-                2. 无法收到通知？如果您确认已经打开了浏览器通知权限，但是没有收到消息通知，
-                请确认操作系统是否允许浏览器通知，以及操作系统中通知的全局设置：比如Windows中专注助手的相关设置
+                {{ $t('main_chat_no_tip_2') }}
               </div>
               <div>
-                3. 由于服务器资源有限，每人最多添加20张表情包，但是将他人已上传的表情包添加到自己的列表中不消耗该计数
+                {{ $t('main_chat_no_tip_3') }}
               </div>
             </div>
 
@@ -370,7 +379,7 @@
 
 import {onBeforeUnmount, onMounted, ref} from "vue";
 import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
-import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
+import {chattingDataInit, initChatSocket, messageTimeLabelBuilder} from "@/utils/chat-socket";
 import {socketChatState} from "@/utils/global-state-no-save";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
@@ -406,7 +415,6 @@ function loadMoreChatRecord(index, done) {
     }
     lastMsgId = socketChatState.webChattingFocusChat.userChattingData[0].messageId
   }
-  console.log(lastMsgId)
   moreMessage({lastMessage: lastMsgId, chatId: socketChatState.webChattingFocusChat.chatId}).then(res => {
     if (!res || !res.data || !res.data.data) {
       done()
@@ -418,6 +426,7 @@ function loadMoreChatRecord(index, done) {
     }
     let inputData = res.data.data.reverse()
     socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
+    messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
 
     //todo time build
     //send message read for new focus chat

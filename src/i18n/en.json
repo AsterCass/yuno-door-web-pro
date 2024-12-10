@@ -135,6 +135,10 @@
   "main_chat_type_group_public": "Public Group Chats",
   "main_chat_type_ann": "Announcements",
   "main_chat_no_content": "No content",
+  "main_chat_no_tips": "Tips",
+  "main_chat_no_tip_1": "1. Deleting the chat box will not delete the chat history. When you start a chat again or receive new messages, the previous history will be reloaded.",
+  "main_chat_no_tip_2": "2. Not receiving notifications? If you confirm that browser notification permissions are enabled but still not receiving message notifications, please check if the operating system allows browser notifications.",
+  "main_chat_no_tip_3": "3. Due to limited server resources, each person can add up to 20 emoji packs. However, adding emoji packs uploaded by others to your own list does not count toward this limit.",
 
   "main_long_text_input_send": "Send",
   "main_long_text_input_placeholder": "Press Enter to send, Ctrl+Enter to insert a line break.",
