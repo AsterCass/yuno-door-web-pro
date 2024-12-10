@@ -33,6 +33,8 @@ watch(
     () => socketChatState.chattingDataWebSelected,
     (newValue) => {
 
+        //todo 切换聊天框的时候页面有抖动
+
         if (!newValue || !socketChatState.chattingData || socketChatState.chattingData.length === 0) {
             socketChatState.webChattingFocusChat = null
             return
