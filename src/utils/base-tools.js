@@ -19,6 +19,13 @@ export function isMiniScreenMethod() {
     return document.documentElement.clientWidth < 1440
 }
 
+export function gotoSpecifySite(obj, top) {
+    if(!obj) {
+        return
+    }
+    obj.scrollTo({top: top, behavior: 'smooth'})
+}
+
 export function togoElement(id) {
     const target = document.getElementById(id);
     if (target) {

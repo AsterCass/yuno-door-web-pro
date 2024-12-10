@@ -1,4 +1,4 @@
-import {chattingUsers} from "@/api/chat";
+import {chattingUsers, readMessage} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
 import SockJS from "sockjs-client/dist/sockjs";
@@ -7,6 +7,7 @@ import {browserNotification, notifyTopWarning} from "@/utils/notification-tools"
 import i18n from "@/i18n";
 import {date} from "quasar";
 import {ZodiacSign} from "@/utils/date-to-zodiac";
+import {delay, gotoSpecifySite} from "@/utils/base-tools";
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
@@ -85,44 +86,36 @@ export function messageTimeLabelBuilder(list) {
     }
 }
 
+export function updateChattingDataWebAboutLast(chat) {
+    if (!socketChatState.chattingDataWeb || socketChatState.chattingDataWeb.length === 0) {
+        return
+    }
+    const chatTree = socketChatState.chattingDataWeb[chat.chatType]
+    if (!chatTree || !chatTree.children || chatTree.children.length === 0) {
+        return
+    }
 
-export function messageTimeLabelInput(list, obj) {
-    if (list) {
-        //emoji
-        let message = obj.message
-        const emojiSet = new Set();
-        let matches;
-        while ((matches = emojiRegex.exec(message)) !== null) {
-            emojiSet.add(matches[0])
+    //更改最后一条时间、内容等
+    let currentIndex = 0
+    for (let index = 0; index < chatTree.children.length; ++index) {
+        if (chatTree.children[index].id === chat.chatId) {
+            chatTree.children[index].lastMessageTime = chat.lastMessageTime
+            chatTree.children[index].lastMessageTimeWeb = timeToText(chat.lastMessageTime)
+            chatTree.children[index].lastMessageText = chat.lastMessageText
+            chatTree.children[index].lastMessageId = chat.lastMessageId
+            chatTree.children[index].latestRead = chat.latestRead
+            currentIndex = index
         }
-        if (emojiSet.size > 0) {
-            // for (let emoji of emojiSet) {
-            //     const createImg = document.createElement("img");
-            //     createImg.src = require("@/assets/emoji/bili/bili-" + emoji.substring(3, 5) + ".png")
-            //     createImg.style = "height: 1.5rem;margin: 0 .15rem -.35rem .15rem"
-            //     const imgElToString = createImg.outerHTML
-            //     obj.message = obj.message.replaceAll(emoji, imgElToString)
-            // }
-        }
-        //date
-        let nowDateTime = new Date()
-        if (0 === list.length) {
-            //singleDateTimeBuilder(obj, nowDateTime);
-            list.push(obj)
-        } else {
-            let lastSendDateTime = new Date(list[list.length - 1].sendDate).getTime()
-            let waitLastSec = (nowDateTime - lastSendDateTime) / 1000
-            if (waitLastSec < 600) {
-                obj.webChatLabel = ""
-            } else {
-                //singleDateTimeBuilder(obj, nowDateTime);
-            }
-            list.push(obj)
-        }
+    }
+    //将当前对话置顶
+    if (currentIndex > 0) {
+        const mvElement = chatTree.children[currentIndex]
+        chatTree.children.splice(currentIndex, 1);
+        chatTree.children.unshift(mvElement);
     }
 }
 
-function rebuildChattingDataWeb() {
+function rebuildChattingDataWeb(selectFirst) {
 
     //未初始化的列表，展示所有非0组
     let chattingDataWebInitialized =
@@ -205,7 +198,7 @@ function rebuildChattingDataWeb() {
             }
             //push
             socketChatState.chattingDataWeb[singleChatting.chatType].children.push(singleChattingWeb)
-            if (!insertFirstChat) {
+            if (!insertFirstChat && selectFirst) {
                 socketChatState.chattingDataWebSelected = singleChattingWeb.id
                 insertFirstChat = true
             }
@@ -236,36 +229,68 @@ function socketMsgReceiveDataParse(callback) {
     for (let singleChatting of socketChatState.chattingData) {
         if (singleChatting.chatId === data.fromChatId) {
             alreadyInChatList = true
-            messageTimeLabelInput(singleChatting.userChattingData, {
-                chatTimeStamp: 0,
-                messageId: data.sendMessageId,
-                sendUserId: data.sendUserId,
-                sendUserAvatar: data.sendUserAvatar,
-                sendUserNickname: data.sendUserNickname,
-                sendUserGender: data.sendUserGender,
-                sendUserRoleType: data.sendUserRoleType,
-                message: data.sendMessage,
-                sendDate: data.sendDate,
-            })
-            //todo 该聊天框打开状态，则存入浏览器缓存，并将已读消息发送到后端
-            // if (socketChatState.webChattingFocusChat === data.fromChatId) {
-            //     //
-            // } else {
-            //     singleChatting.latestRead = false
-            // }
-            //todo 页面滑动到新消息位置
+
+            // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
+            let chatScrollerDiv =
+                document.getElementById("chat-body-infinite-id-" + singleChatting.chatId)
+            let needToBottom = false
+            if (chatScrollerDiv) {
+                const isAtBottom = chatScrollerDiv.scrollHeight -
+                    chatScrollerDiv.scrollTop - chatScrollerDiv.clientHeight < 5;
+                if (isAtBottom || (globalState.userData && globalState.userData.id === data.sendUserId)) {
+                    needToBottom = true
+                }
+            }
+
+            //数据插入
+            singleChatting.userChattingData.push(
+                {
+                    messageId: data.sendMessageId,
+                    sendUserId: data.sendUserId,
+                    sendUserAvatar: data.sendUserAvatar,
+                    sendUserNickname: data.sendUserNickname,
+                    sendUserGender: data.sendUserGender,
+                    sendUserRoleType: data.sendUserRoleType,
+                    message: data.sendMessage,
+                    sendDate: data.sendDate,
+                }
+            )
+            singleChatting.lastMessageTime = data.sendDate
+            singleChatting.lastMessageId = data.sendMessageId
+            singleChatting.lastMessageText = data.sendMessage
+            //发送已读消息
+            if (socketChatState.chattingDataWebSelected === singleChatting.chatId && needToBottom) {
+                singleChatting.latestRead = true
+                if (globalState.userData.id !== data.sendUserId) {
+                    readMessage({
+                        chatId: data.fromChatId,
+                        messageId: data.sendMessageId
+                    }).then(r => {
+                    })
+                }
+            } else {
+                singleChatting.latestRead = false
+            }
+            //数据同步到聊天树
+            updateChattingDataWebAboutLast(singleChatting)
+            // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
+            if (needToBottom) {
+                delay(100).then(() => {
+                    gotoSpecifySite(chatScrollerDiv, chatScrollerDiv.scrollHeight)
+                })
+            }
         }
         //更新当前新消息数量
         if (!singleChatting.latestRead) {
             socketChatState.unReadAllMessages.add(singleChatting.chatId)
         }
     }
-    //不在列表中，则重新加载，在列表中直接重新构建侧边栏
-    if (!alreadyInChatList) {
-        chattingDataInit()
-    } else {
-        rebuildChattingDataWeb()
-    }
+    // //不在列表中，则重新加载，在列表中直接重新构建侧边栏
+    // if (!alreadyInChatList) {
+    //     chattingDataInit()
+    // } else {
+    //     rebuildChattingDataWeb()
+    // }
     if (socketChatState.needBrowserNotification && globalState.userData) {
         if (globalState.userData.id !== data.sendUserId) {
             browserNotification(`来自 ${data.sendUserNickname} 的新消息`, data.sendMessage)
@@ -275,7 +300,7 @@ function socketMsgReceiveDataParse(callback) {
 
 let chattingDataInitStatus = false
 
-export function chattingDataInit() {
+export function chattingDataInit(selectFirst = false) {
     if (chattingDataInitStatus) {
         return
     }
@@ -290,6 +315,7 @@ export function chattingDataInit() {
             return
         }
         //build
+        socketChatState.chattingDataWebSelected = null
         socketChatState.chattingData = res.data.data
         socketChatState.unReadAllMessages.clear()
         socketChatState.chattingData.forEach(data => {
@@ -325,10 +351,25 @@ export function chattingDataInit() {
         //     //messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
         //     //todo 如果打开某个聊天框，并且这个聊天框内容有未读，则存入浏览器缓存，并将已读消息发送到后端
         // }
-        rebuildChattingDataWeb()
+        rebuildChattingDataWeb(selectFirst)
         chattingDataInitStatus = false
     })
 }
+
+let socketSendStatus = false
+
+export function socketSend(chatId, message) {
+    if (socketSendStatus) {
+        return
+    }
+    socketSendStatus = true
+    if (socketChatState.stompClient && socketChatState.socketConnected) {
+        const msg = {chatId: chatId, message: message};
+        socketChatState.stompClient.send("/socket/message/send", JSON.stringify(msg));
+    }
+    socketSendStatus = false
+}
+
 
 let initChatSocketStatus = false
 

@@ -139,6 +139,7 @@
   "main_chat_no_tip_1": "1. 删除聊天框不会导致聊天记录删除，再次发起聊天或者有新消息时会重新载入之前记录",
   "main_chat_no_tip_2": "2. 无法收到通知？如果您确认已经打开了浏览器通知权限，但是没有收到消息通知， 请确认操作系统是否允许浏览器通知，以及操作系统中通知的全局设置：比如Windows中专注助手的相关设置",
   "main_chat_no_tip_3": "3. 由于服务器资源有限，每人最多添加20张表情包，但是将他人已上传的表情包添加到自己的列表中不消耗该计数",
+  "main_chat_not_login_message": "未登录用户暂时不支持发送消息喔，您的相关建议或者意见可以在网站留言板中留言\uD83D\uDE00",
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_placeholder": "使用 Enter 发送，Ctrl+Enter 换行",

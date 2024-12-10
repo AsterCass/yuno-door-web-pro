@@ -351,6 +351,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+  chatroomSelectFirst: {
+    type: Boolean,
+    required: false,
+    default: false,
   }
 })
 
@@ -424,7 +429,7 @@ const headerLogout = () => {
 }
 
 onMounted(() => {
-  chattingDataInit()
+  chattingDataInit(props.chatroomSelectFirst)
   initChatSocket()
 })
 

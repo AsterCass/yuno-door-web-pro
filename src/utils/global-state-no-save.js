@@ -1,5 +1,6 @@
 import {reactive, watch} from 'vue';
-import {messageTimeLabelBuilder} from "@/utils/chat-socket";
+import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
+import {readMessage} from "@/api/chat";
 
 export const scrollState = reactive({
     scrollTop: 0,
@@ -44,6 +45,17 @@ watch(
                 socketChatState.webChattingFocusChat = singleChatting
                 //重新渲染时间label
                 messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+                //已读所有内容
+                if (!singleChatting.latestRead) {
+                    singleChatting.latestRead = true
+                    readMessage({
+                        chatId: singleChatting.chatId,
+                        messageId: singleChatting.lastMessageId
+                    }).then(r => {
+                    })
+                    //数据同步到聊天树
+                    updateChattingDataWebAboutLast(singleChatting)
+                }
             }
         }
 

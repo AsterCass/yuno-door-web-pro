@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hhh lpr fff" class="component-full-screen column">
-    <cask-base-header :center-elements="[
+    <cask-base-header :chatroom-select-first="true" :center-elements="[
         CaskModuleElement.HOME,
     ]" :always-show="true"/>
 
@@ -142,16 +142,15 @@
       <div class="col-12 col-lg row relative-position" style="height: 100%">
         <q-separator class="component-separator-base" vertical style="margin: 5rem 3% 0 0"/>
 
-        <div v-if="socketChatState.webChattingFocusChat" class="col column"
-             style="height: 100%; padding: 5rem 0 10rem 0">
+        <div class="col column" style="height: 100%; padding: 5rem 0 10rem 0">
 
           <div class="row q-mb-md">
-            <div style="font-size: 1.4rem; font-weight: 600">
+            <div v-if="socketChatState.webChattingFocusChat" style="font-size: 1.4rem; font-weight: 600">
               {{ socketChatState.webChattingFocusChat.chatName }}
             </div>
           </div>
 
-          <div class="col">
+          <div v-if="socketChatState.webChattingFocusChat" class="col">
 
             <div v-for="(chat, index) in socketChatState.chattingData" :key="index"
                  :id="`chat-body-infinite-id-${chat.chatId}`" style="max-height: 100%; overflow: auto;">
@@ -193,13 +192,14 @@
 
         <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 3%"/>
 
-        <cask-long-text-input id="comment-reply-input" :elements="new Map([
+        <cask-long-text-input v-if="socketChatState.webChattingFocusChat"
+                              id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
-                  [CaskLongTextInputElement.IMG, {callback: (data)=> {src=data}}],
+                  [CaskLongTextInputElement.IMG, {callback: (data)=> {chatInputImgSrc=data}}],
                   [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
-                  ])" :placeholder="chatroomPlace" :sendCallback="callback" v-model="chatroomInput"
-                              @update:model-value="data => chatroomInput = data"
+                  ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
+                              @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
                               style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
       </div>
 
@@ -379,7 +379,7 @@
 
 import {onBeforeUnmount, onMounted, ref} from "vue";
 import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
-import {chattingDataInit, initChatSocket, messageTimeLabelBuilder} from "@/utils/chat-socket";
+import {chattingDataInit, initChatSocket, messageTimeLabelBuilder, socketSend} from "@/utils/chat-socket";
 import {socketChatState} from "@/utils/global-state-no-save";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
@@ -389,16 +389,25 @@ import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {moreMessage} from "@/api/chat";
+import {useI18n} from "vue-i18n";
 
 const globalState = useGlobalStateStore();
+const {t} = useI18n()
 
 const chatNameSearch = ref("")
-const chatroomPlace = ref("")
-const chatroomInput = ref("")
-const src = ref("")
+const chatInputImgSrc = ref("")
 
-const callback = () => {
-
+const sendChatMsg = () => {
+  if (socketChatState.webChattingFocusChat.webInputText) {
+    if (globalState.isLogin) {
+      socketSend(socketChatState.webChattingFocusChat.chatId, socketChatState.webChattingFocusChat.webInputText)
+      socketChatState.webChattingFocusChat.webInputText = ""
+    } else {
+      notifyTopWarning(t('main_chat_not_login_message'))
+    }
+  } else {
+    notifyTopWarning(t('main_article_cancel_reply_error'))
+  }
 }
 
 function handleVisibilityChange() {
@@ -437,7 +446,7 @@ function loadMoreChatRecord(index, done) {
 
 onMounted(() => {
   browserNotificationCheck()
-  chattingDataInit()
+  chattingDataInit(true)
   initChatSocket()
   document.addEventListener("visibilitychange", handleVisibilityChange);
 })
