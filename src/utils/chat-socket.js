@@ -27,11 +27,9 @@ function buildStarZodiac(birth, outputData) {
 function timeTextSwitch(diff, thisTime, currentTime, withTime) {
     let label = ""
     if (diff <= 1) {
-        label = "刚刚"
+        label = t('main_chat_chat_time_now')
     } else if (diff < 60) {
-        label = diff + " 分钟前"
-    } else if (diff < 60 * 4) {
-        label = Math.floor(diff / 60) + " 小时前"
+        label = diff + " " + t('main_chat_chat_time_min')
     } else if (thisTime.getFullYear() !== currentTime.getFullYear()) {
         if (withTime) {
             label = date.formatDate(thisTime, "YYYY-MM-DD HH:mm")
@@ -115,7 +113,7 @@ export function updateChattingDataWebAboutLast(chat) {
     }
 }
 
-function rebuildChattingDataWeb(selectFirst) {
+export function rebuildChattingDataWeb(selectFirst) {
 
     //未初始化的列表，展示所有非0组
     let chattingDataWebInitialized =

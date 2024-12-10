@@ -70,7 +70,7 @@
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
               <h5 class="absolute-center" style="opacity: .5; ">
-                Pinned Chat
+                {{ $t('main_chat_chat_pinned') }}
               </h5>
             </q-scroll-area>
 
@@ -117,7 +117,7 @@
               <div class="row items-center full-width">
                 <q-icon class="col-2" name="fa-solid fa-sliders" size="1.2rem"/>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem">
-                  聊天设置
+                  {{ $t('main_chat_setting') }}
                 </div>
               </div>
             </q-btn>
@@ -127,7 +127,7 @@
             <q-btn no-caps unelevated class="component-full-btn-full" push>
               <div class="row items-center">
                 <div class="q-mx-md">
-                  发起群聊
+                  {{ $t('main_chat_launch_group') }}
                 </div>
                 <q-icon name="fa-solid fa-rocket" size="1.2rem"/>
               </div>
@@ -263,27 +263,32 @@
                 {{ socketChatState.webChattingFocusChat.chatUserMotto }}
               </div>
               <div v-else class="q-mt-sm text-center" style="opacity: .75;">
-                这个人很懒，什么都没有留下
+                {{ $t('main_user_detail_no_motto') }}
               </div>
 
               <div>
 
-                <div class="q-mt-md row justify-center">
+                <div class="q-mt-md row justify-center items-center">
                   <q-icon :color="socketChatState.webChattingFocusChat.socialLink.wechat? 'green-6' : 'grey-6' "
                           name="fa-brands fa-weixin" class="q-mr-sm" size="1.25rem"/>
-                  &nbsp;{{
-                    socketChatState.webChattingFocusChat.socialLink.wechat ?
-                        socketChatState.webChattingFocusChat.socialLink.wechat : 'None or Hide'
-                  }}
+                  <div :style="socketChatState.webChattingFocusChat.socialLink.wechat ? '' : 'opacity: .75'">
+                    &nbsp;{{
+                      socketChatState.webChattingFocusChat.socialLink.wechat ?
+                          socketChatState.webChattingFocusChat.socialLink.wechat : $t('main_user_detail_no_community')
+                    }}
+                  </div>
                 </div>
 
-                <div class="q-mt-sm row justify-center">
+                <div class="q-mt-sm row justify-center items-center">
                   <q-icon :color="socketChatState.webChattingFocusChat.socialLink.github ? 'black' : 'grey-6' "
                           name="eva-github" class="q-mr-sm" size="1.25rem"/>
-                  &nbsp;{{
-                    socketChatState.webChattingFocusChat.socialLink.github ?
-                        socketChatState.webChattingFocusChat.socialLink.github : 'None or Hide'
-                  }}
+
+                  <div :style="socketChatState.webChattingFocusChat.socialLink.github ? '' : 'opacity: .75'">
+                    &nbsp;{{
+                      socketChatState.webChattingFocusChat.socialLink.github ?
+                          socketChatState.webChattingFocusChat.socialLink.github : $t('main_user_detail_no_community')
+                    }}
+                  </div>
                 </div>
 
               </div>
@@ -324,7 +329,7 @@
                  no-caps unelevated class=" component-full-btn-error-full">
             <div class="row items-center">
               <div class="q-mx-md">
-                退出群聊
+                {{ $t('main_chat_chat_exit') }}
               </div>
               <q-icon name="fa-solid fa-door-open" size="1rem"/>
             </div>
@@ -334,7 +339,7 @@
                  no-caps unelevated class=" component-full-btn-error-full">
             <div class="row items-center">
               <div class="q-mx-md">
-                不再接收他的消息
+                {{ $t('main_chat_chat_block') }}
               </div>
               <q-icon name="fa-solid fa-door-open" size="1rem"/>
             </div>
@@ -377,9 +382,15 @@
 
 <script setup>
 
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
-import {chattingDataInit, initChatSocket, messageTimeLabelBuilder, socketSend} from "@/utils/chat-socket";
+import {
+  chattingDataInit,
+  initChatSocket,
+  messageTimeLabelBuilder,
+  rebuildChattingDataWeb,
+  socketSend
+} from "@/utils/chat-socket";
 import {socketChatState} from "@/utils/global-state-no-save";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
@@ -396,6 +407,15 @@ const {t} = useI18n()
 
 const chatNameSearch = ref("")
 const chatInputImgSrc = ref("")
+
+watch(
+    () => globalState.language,
+    () => {
+      messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+      rebuildChattingDataWeb()
+    }
+);
+
 
 const sendChatMsg = () => {
   if (socketChatState.webChattingFocusChat.webInputText) {
