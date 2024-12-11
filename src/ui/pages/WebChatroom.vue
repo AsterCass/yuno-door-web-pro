@@ -57,13 +57,26 @@
 
                       </div>
 
-                      <div class="col-12 row">
-                        <div class="col component-max-line-text" style="opacity: .5">
+                      <div class="col-12 row" style="font-size: .78rem">
+                        <div class="col component-max-line-text cask-chatroom-chat-list-subtitle">
                           {{ prop.node.lastMessageText }}
                         </div>
 
-                        <div class="q-mx-md" style="opacity: .5">
+                        <div class="q-mx-md cask-chatroom-chat-list-subtitle">
                           {{ prop.node.lastMessageTimeWeb }}
+                        </div>
+
+                        <div class="absolute cask-chatroom-chat-list-delete row items-center">
+                          <div v-if="prop.node.id === socketChatState.chattingDataWebSelected"
+                               class="cask-cursor-pointer" @click="pinChat(prop.node.id)"
+                               style="color: rgb(var(--pointer)); margin-right: 15px">
+                            {{ $t('main_chat_chat_pin') }}
+                          </div>
+                          <div v-if="prop.node.id === socketChatState.chattingDataWebSelected"
+                               class="cask-cursor-pointer" @click="deleteChat(prop.node.id)"
+                               style="color: rgb(var(--negative));">
+                            {{ $t('main_chat_chat_delete') }}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -412,6 +425,7 @@ import {onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
 import {
   chattingDataInit,
+  deleteChattingData,
   initChatSocket,
   messageTimeLabelBuilder,
   rebuildChattingDataWeb,
@@ -425,8 +439,9 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
-import {moreMessage} from "@/api/chat";
+import {hideChat, moreMessage} from "@/api/chat";
 import {useI18n} from "vue-i18n";
+import {delay} from "@/utils/base-tools";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -441,6 +456,27 @@ watch(
       rebuildChattingDataWeb()
     }
 );
+
+function pinChat(chatId) {
+  console.log(chatId)
+}
+
+function deleteChat(chatId) {
+  if (!chatId) {
+    return
+  }
+  if (globalState.isLogin) {
+    deleteChattingData(chatId)
+    rebuildChattingDataWeb(false)
+    delay(0).then(() => {
+      socketChatState.chattingDataWebSelected = null
+    })
+    hideChat({hideChatId: chatId})
+  } else {
+    notifyTopWarning(t('no_login'))
+  }
+}
+
 
 
 const sendChatMsg = () => {
@@ -482,10 +518,7 @@ function loadMoreChatRecord(index, done) {
     let inputData = res.data.data.reverse()
     socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
     messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
-
-    //todo time build
-    //send message read for new focus chat
-    //save message read for new focus chat
+    //todo 当用户向上拉聊天框的时候，收到消息，此时未读（提示新消息），当用户拉到底部的时候，发送已读请求
     done()
   })
 }

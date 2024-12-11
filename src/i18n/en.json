@@ -148,6 +148,7 @@
   "main_chat_launch_group": "Launch Group Chat",
   "main_chat_chat_pinned": "Pinned Chat",
   "main_chat_chat_pin": "Pin chat",
+  "main_chat_chat_delete": "Delete chat box",
   "main_chat_chat_block": "No longer receive their messages",
   "main_chat_chat_exit": "Exit Group",
 

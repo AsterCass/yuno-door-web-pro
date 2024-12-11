@@ -148,6 +148,7 @@
   "main_chat_launch_group": "发起群聊",
   "main_chat_chat_pinned": "标记的聊天",
   "main_chat_chat_pin": "标记聊天",
+  "main_chat_chat_delete": "删除聊天框",
   "main_chat_chat_block": "不再接收他的消息",
   "main_chat_chat_exit": "退出群聊",
 

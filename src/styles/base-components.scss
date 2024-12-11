@@ -278,12 +278,36 @@
     transition: transform 1s ease .2s, border-left-width .15s linear, margin-right .15s linear;
   }
 
+  .cask-chatroom-chat-list-subtitle {
+    transition: transform 1s ease .2s, opacity 1s ease .2s;
+    transform: translateX(0px);
+    opacity: .5;
+  }
+
+  .cask-chatroom-chat-list-delete {
+    right: 0;
+    padding-right: 15px;
+    transition: transform 1s ease .2s, opacity 1s ease .2s;
+    opacity: 0;
+    transform: translateX(25px);
+  }
+
   .q-tree__node--selected {
     transform: translateX(-15px);
     background-color: rgba(var(--text-color), 0.05);
     border-left: 8px solid rgba(var(--text-color), .9);
     margin-right: -15px;
     margin-left: 7px;
+
+    .cask-chatroom-chat-list-delete {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+
+    .cask-chatroom-chat-list-subtitle {
+      transform: translateX(-25px);
+      opacity: 0;
+    }
   }
 
   .q-tree__children {

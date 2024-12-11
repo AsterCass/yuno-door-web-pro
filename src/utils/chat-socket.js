@@ -107,7 +107,7 @@ export function messageTimeLabelBuilder(list) {
     }
 }
 
-export function updateChattingDataWebAboutLast(chat) {
+export function updateChattingDataWebAboutLast(chat, toTop) {
     if (!socketChatState.chattingDataWeb || socketChatState.chattingDataWeb.length === 0) {
         return
     }
@@ -129,10 +129,25 @@ export function updateChattingDataWebAboutLast(chat) {
         }
     }
     //将当前对话置顶
-    if (currentIndex > 0) {
+    if (currentIndex > 0 && toTop) {
         const mvElement = chatTree.children[currentIndex]
         chatTree.children.splice(currentIndex, 1);
         chatTree.children.unshift(mvElement);
+    }
+}
+
+export function deleteChattingData(chatId) {
+    if (socketChatState.chattingData && socketChatState.chattingData.length > 0) {
+
+        let deleteIndex = -1
+        for (let index = 0; index < socketChatState.chattingData.length; ++index) {
+            if (socketChatState.chattingData[index].chatId === chatId) {
+                deleteIndex = index
+            }
+        }
+        if (deleteIndex >= 0) {
+            socketChatState.chattingData.splice(deleteIndex, 1);
+        }
     }
 }
 
@@ -298,7 +313,7 @@ function socketMsgReceiveDataParse(callback) {
                 singleChatting.latestRead = false
             }
             //数据同步到聊天树
-            updateChattingDataWebAboutLast(singleChatting)
+            updateChattingDataWebAboutLast(singleChatting, true)
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
             if (needToBottom) {
                 delay(100).then(() => {

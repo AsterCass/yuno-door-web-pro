@@ -56,13 +56,11 @@ watch(
                         messageId: singleChatting.lastMessageId
                     }).then(r => {
                     })
-                    //数据同步到聊天树
-                    updateChattingDataWebAboutLast(singleChatting)
                 } else if (!singleChatting.latestRead) {
                     singleChatting.latestRead = true
                     globalState.updateReadMessageMap(singleChatting.chatId, singleChatting.lastMessageId)
-                    updateChattingDataWebAboutLast(singleChatting)
                 }
+                updateChattingDataWebAboutLast(singleChatting, false)
             }
         }
 
