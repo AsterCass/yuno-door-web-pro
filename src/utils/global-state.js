@@ -30,6 +30,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         userData: null,
         allowBrowserNotification: true,
         readMessageMap: {},
+        pinChatIdMap: {},
     }),
     actions: {
         updateTheme(code) {
@@ -67,6 +68,12 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateReadMessageMap(chatId, messageId) {
             this.readMessageMap[chatId] = messageId;
+        },
+        addPinChat(chatId, data) {
+            this.pinChatIdMap[chatId] = data
+        },
+        deletePinChat(chatId) {
+            this.pinChatIdMap[chatId] = undefined
         }
     },
 });

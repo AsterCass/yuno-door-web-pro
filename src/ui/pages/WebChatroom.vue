@@ -73,8 +73,9 @@
                         </div>
 
                         <div class="absolute cask-chatroom-chat-list-delete row items-center">
-                          <div v-if="prop.node.id === socketChatState.chattingDataWebSelected"
-                               class="cask-cursor-pointer" @click="pinChat(prop.node.id)"
+                          <div v-if="prop.node.id === socketChatState.chattingDataWebSelected
+                          && !globalState.pinChatIdMap[prop.node.id]"
+                               class="cask-cursor-pointer" @click="globalState.addPinChat(prop.node.id, {})"
                                style="color: rgb(var(--pointer)); margin-right: 15px">
                             {{ $t('main_chat_chat_pin') }}
                           </div>
@@ -171,9 +172,43 @@
 
         <div class="col column" style="height: 100%; padding: 5rem 0 10rem 0">
 
-          <div class="row q-mb-md">
+          <div class="row q-mb-md justify-between">
             <div v-if="socketChatState.webChattingFocusChat" style="font-size: 1.4rem; font-weight: 600">
               {{ socketChatState.webChattingFocusChat.chatName }}
+            </div>
+
+            <div v-if="socketChatState.webChattingFocusChat" class="row justify-end items-center">
+<!--              todo 鼠标缓慢进入这个区域会无法选中该button-->
+              <q-btn v-if="globalState.pinChatIdMap[socketChatState.webChattingFocusChat.chatId]" no-caps
+                     unelevated class="component-none-btn-grow q-mx-xs"
+                     @click="globalState.deletePinChat(socketChatState.webChattingFocusChat.chatId)">
+                <div class="row items-center">
+                  <div class="q-mr-sm q-ml-xs q-my-xs">
+                    {{ $t('main_chat_chat_pin_cancel') }}
+                  </div>
+                  <q-icon name="fa-regular fa-trash-can" size=".9rem"/>
+                </div>
+              </q-btn>
+              <q-btn v-else
+                     no-caps unelevated class="component-none-btn-grow q-mx-xs"
+                     @click="globalState.addPinChat(socketChatState.webChattingFocusChat.chatId, {})">
+                <div class="row items-center">
+                  <div class="q-mr-sm q-ml-xs q-my-xs">
+                    {{ $t('main_chat_chat_pin') }}
+                  </div>
+                  <q-icon name="fa-regular fa-life-ring" size=".9rem"/>
+                </div>
+              </q-btn>
+
+              <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+                     @click="notifyTopWarning($t('in_develop'))">
+                <div class="row items-center">
+                  <div class="q-mr-sm q-ml-xs q-my-xs">
+                    {{ $t('main_chat_chat_no_message_notify') }}
+                  </div>
+                  <q-icon name="fa-regular fa-bell-slash" size=".9rem"/>
+                </div>
+              </q-btn>
             </div>
           </div>
 
@@ -464,10 +499,6 @@ watch(
       rebuildChattingDataWeb()
     }
 );
-
-function pinChat(chatId) {
-  console.log(chatId)
-}
 
 function deleteChat(chatId) {
   if (!chatId) {
