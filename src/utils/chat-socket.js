@@ -265,6 +265,10 @@ function socketMsgReceiveDataParse(callback) {
                         messageId: data.sendMessageId
                     }).then(r => {
                     })
+                } else if (!globalState.isLogin) {
+                    globalState.updateReadMessageMap(
+                        data.fromChatId, data.sendMessageId
+                    )
                 }
             } else {
                 singleChatting.latestRead = false

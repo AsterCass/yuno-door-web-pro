@@ -546,6 +546,7 @@ onBeforeUnmount(() => {
   margin-bottom: 5px;
   overflow-wrap: break-word;
   word-break: break-word;
+  white-space: pre-line;
 }
 
 .cask-chatroom-chat-main {
