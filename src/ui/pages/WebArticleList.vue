@@ -157,7 +157,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {articleTagEnums, getArticleTagDescList} from "@/constant/enums/article-tag";
-import {delay} from "@/utils/base-tools";
+import {delay, gotoPageTop} from "@/utils/base-tools";
 import {toSpecifyPageWithQuery} from "@/router";
 
 const props = defineProps({
@@ -217,6 +217,7 @@ function searchArticleList() {
     firstLoading.value = false
     //首次请求完成后开启无限滚动
     scrollDisable.value = false
+    gotoPageTop()
   })
 }
 
