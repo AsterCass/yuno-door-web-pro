@@ -26,32 +26,39 @@ function buildStarZodiac(birth, outputData) {
 
 function timeTextSwitch(diff, thisTime, currentTime, withTime) {
     let label = ""
+    let type = 0
     if (diff <= 1) {
         label = t('main_chat_chat_time_now')
+        type = 1
     } else if (diff < 60) {
         label = diff + " " + t('main_chat_chat_time_min')
+        type = 1
     } else if (thisTime.getFullYear() !== currentTime.getFullYear()) {
         if (withTime) {
             label = date.formatDate(thisTime, "YYYY-MM-DD HH:mm")
         } else {
             label = date.formatDate(thisTime, "YYYY/MM/DD")
         }
+        type = 2
     } else if (thisTime.getMonth() !== currentTime.getMonth()) {
         if (withTime) {
             label = date.formatDate(thisTime, "MM-DD HH:mm")
         } else {
             label = date.formatDate(thisTime, "MM/DD")
         }
+        type = 2
     } else if (thisTime.getDay() !== currentTime.getDay()) {
         if (withTime) {
             label = date.formatDate(thisTime, "MM-DD HH:mm")
         } else {
             label = date.formatDate(thisTime, "MM/DD")
         }
+        type = 2
     } else {
         label = date.formatDate(thisTime, "HH:mm")
+        type = 2
     }
-    return label
+    return {label: label, type: type}
 }
 
 function timeToText(time) {
@@ -60,7 +67,7 @@ function timeToText(time) {
     const currentTime = new Date()
     const unit = 'minutes'
     const diff = date.getDateDiff(currentTime, thisTime, unit)
-    return timeTextSwitch(diff, thisTime, currentTime)
+    return timeTextSwitch(diff, thisTime, currentTime).label
 }
 
 // todo 表情输出支持：颜文字、普通emoji，颜文字最好支持使用代码，如果输入某个代码，在输入框自动转换成颜文字
@@ -69,10 +76,24 @@ export function messageTimeLabelBuilder(list) {
     if (!list || 0 === list.length) {
         return
     }
+    //从某个标签开始渲染
+    let onlyLastStartBuild = false
+    //build
     const currentTime = new Date()
     let lastTime = new Date()
     const unit = 'minutes'
     for (let count = 0; count < list.length; ++count) {
+        //如果没有被渲染过，从头渲染，否则从type为1的地方开始渲染
+        if (list[count].webTimeLabelType === 1) {
+            onlyLastStartBuild = true
+        }
+        if (0 === count && !list[count].webTimeLabel) {
+            onlyLastStartBuild = true
+        }
+        if (!onlyLastStartBuild) {
+            continue
+        }
+        //build one
         const thisTime = new Date(date.formatDate(list[count].sendDate))
         const diff = date.getDateDiff(currentTime, thisTime, unit)
         const diffWithLast = Math.abs(date.getDateDiff(thisTime, lastTime, unit))
@@ -80,7 +101,9 @@ export function messageTimeLabelBuilder(list) {
         if (diffWithLast <= 5) {
             continue
         }
-        list[count].webTimeLabel = timeTextSwitch(diff, thisTime, currentTime, true)
+        let webTimeLabelType = timeTextSwitch(diff, thisTime, currentTime, true)
+        list[count].webTimeLabel = webTimeLabelType.label
+        list[count].webTimeLabelType = webTimeLabelType.type
     }
 }
 
@@ -256,6 +279,7 @@ function socketMsgReceiveDataParse(callback) {
             singleChatting.lastMessageTime = data.sendDate
             singleChatting.lastMessageId = data.sendMessageId
             singleChatting.lastMessageText = data.sendMessage
+            messageTimeLabelBuilder(singleChatting.userChattingData)
             //发送已读消息
             if (socketChatState.chattingDataWebSelected === singleChatting.chatId && needToBottom) {
                 singleChatting.latestRead = true

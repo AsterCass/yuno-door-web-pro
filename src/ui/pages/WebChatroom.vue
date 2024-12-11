@@ -173,7 +173,9 @@
                   </div>
                 </template>
                 <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-                     :key="index" class="q-my-sm">
+                     :key="index" class="q-my-sm" :style="
+                     socketChatState.webChattingFocusChat.userChattingData.length -1 === index
+                      ? 'margin-bottom: 30px' : ''">
                   <div v-if="chatRow.webTimeLabel" class="q-my-md row justify-center">
                     <div style="opacity:.5">
                       {{ chatRow.webTimeLabel }}
@@ -532,7 +534,6 @@ onBeforeUnmount(() => {
   padding: 8px;
   background-color: rgba(var(--text-color), 0.1);
   margin-right: 15%;
-  margin-bottom: 5px;
   overflow-wrap: break-word;
   word-break: break-all;
 }
@@ -543,7 +544,6 @@ onBeforeUnmount(() => {
   background-color: rgb(var(--positive));
   color: #eee;
   margin-left: 15%;
-  margin-bottom: 5px;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: pre-line;
