@@ -1,5 +1,7 @@
 <template>
-  <q-header class="top-semi-trans-header-base" :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''">
+  <q-header :class="mini ? 'top-semi-trans-header-base-mini' : 'top-semi-trans-header-base'"
+            :style="globalState.screenMini ? 'margin: 1rem 1rem;' : ''"
+  >
 
     <div class="top-semi-trans-header-base-content row justify-between items-center"
          :class="!alwaysShow && scrollState.scrollTop === 0 ?
@@ -356,7 +358,12 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
-  }
+  },
+  mini: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 
 const globalState = useGlobalStateStore();
@@ -455,6 +462,22 @@ onMounted(() => {
   }
 }
 
+.top-semi-trans-header-base-mini {
+  background-color: transparent;
+  left: 0;
+  right: 0;
+  margin: 1rem 4rem;
+  min-height: 3rem;
+  position: fixed;
+
+  .top-semi-trans-header-base-content {
+    min-height: 3rem;
+    padding: 0 1rem;
+    border-radius: 8px;
+    transition: background-color 1s ease, box-shadow 1s ease;
+  }
+}
+
 .top-semi-trans-header-base-top {
   color: rgb(var(--full-container-text-color));
   background-color: transparent;
@@ -502,6 +525,12 @@ onMounted(() => {
 
 <style lang="scss">
 .top-semi-trans-header-base {
+  .q-btn {
+    font-size: 1rem;
+  }
+}
+
+.top-semi-trans-header-base-mini {
   .q-btn {
     font-size: 1rem;
   }

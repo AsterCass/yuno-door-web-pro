@@ -2,7 +2,7 @@
   <q-layout view="hhh lpr fff" class="component-full-screen column">
     <cask-base-header :chatroom-select-first="true" :center-elements="[
         CaskModuleElement.HOME,
-    ]" :always-show="true"/>
+    ]" :always-show="true" :mini="true"/>
 
 
     <div class="col row">
