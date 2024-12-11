@@ -160,10 +160,11 @@
 
           <div v-if="socketChatState.webChattingFocusChat" class="col">
 
-            <div v-for="(chat, index) in socketChatState.chattingData" :key="index"
-                 :id="`chat-body-infinite-id-${chat.chatId}`" style="max-height: 100%; overflow: auto;">
+            <div v-for="(chat, index) in socketChatState.chattingData" :key="index" class="cask-chatroom-chat-main"
+                 :id="`chat-body-infinite-id-${chat.chatId}`" style="max-height: 100%;overflow: auto;"
+            >
               <q-infinite-scroll v-if="chat.chatId === socketChatState.webChattingFocusChat.chatId"
-                                 @load="loadMoreChatRecord" :offset="250" reverse debounce="10"
+                                 @load="loadMoreChatRecord" :offset="600" reverse
                                  :scroll-target="`#chat-body-infinite-id-${chat.chatId}`"
                                  :disable="socketChatState.webChattingFocusChat.chatScrollDisable">
                 <template v-slot:loading>
@@ -178,7 +179,7 @@
                       {{ chatRow.webTimeLabel }}
                     </div>
                   </div>
-                  <div class="row q-mb-sm">
+                  <div class="row">
                     <q-avatar size="40px" class="q-mr-sm">
                       <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
                     </q-avatar>
@@ -516,5 +517,17 @@ onBeforeUnmount(() => {
   padding: 8px;
   background-color: rgba(var(--text-color), 0.1);
   margin-right: 15%;
+  margin-bottom: 5px;
+}
+
+.cask-chatroom-chat-main {
+
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--text-color), 0.75)
+  }
 }
 </style>
