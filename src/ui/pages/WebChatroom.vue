@@ -35,8 +35,14 @@
                   <div v-if="prop.node.noContent" style="opacity: .5;color: rgb(var(--text-color))">
                     {{ prop.node.label }}
                   </div>
-                  <div v-else-if="!prop.node.avatar">
-                    {{ prop.node.label }}
+                  <div v-else-if="!prop.node.avatar" class="full-width row justify-between items-center">
+                    <div>
+                      {{ prop.node.label }}
+                    </div>
+                    <div v-if="false === prop.node.latestRead" class="q-mr-sm"
+                         style="font-size: .78rem; color: rgb(var(--negative))">
+                      {{ $t('main_chat_new_message') }}
+                    </div>
                   </div>
                   <div v-else class="row items-center full-width">
                     <div class="q-mr-sm q-ml-xs cask-chatroom-chat-list-avatar"
@@ -385,7 +391,7 @@
           </q-btn>
 
 
-          <q-separator class="component-separator-base q-my-md"/>
+          <q-separator v-if="socketChatState.webChattingFocusChat" class="component-separator-base q-my-md"/>
 
           <div class="q-pb-md">
             <h5 style="font-weight: 600 !important;">
@@ -452,7 +458,9 @@ const chatInputImgSrc = ref("")
 watch(
     () => globalState.language,
     () => {
-      messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+      if (socketChatState.webChattingFocusChat) {
+        messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+      }
       rebuildChattingDataWeb()
     }
 );

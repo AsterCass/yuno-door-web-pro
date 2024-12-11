@@ -118,6 +118,7 @@ export function updateChattingDataWebAboutLast(chat, toTop) {
 
     //更改最后一条时间、内容等
     let currentIndex = 0
+    chatTree.latestRead = true
     for (let index = 0; index < chatTree.children.length; ++index) {
         if (chatTree.children[index].id === chat.chatId) {
             chatTree.children[index].lastMessageTime = chat.lastMessageTime
@@ -127,7 +128,11 @@ export function updateChattingDataWebAboutLast(chat, toTop) {
             chatTree.children[index].latestRead = chat.latestRead
             currentIndex = index
         }
+        if (false === chatTree.children[index].latestRead) {
+            chatTree.latestRead = false
+        }
     }
+
     //将当前对话置顶
     if (currentIndex > 0 && toTop) {
         const mvElement = chatTree.children[currentIndex]
@@ -238,7 +243,6 @@ export function rebuildChattingDataWeb(selectFirst) {
                 insertFirstChat = true
             }
             //子聊天一个未读，则全部父分组未读
-            //todo 暂时没用到，考虑当子聊天有未读的时候，父分组同时给提示
             if (false === singleChattingWeb.latestRead) {
                 socketChatState.chattingDataWeb[singleChatting.chatType].latestRead = false
             }
