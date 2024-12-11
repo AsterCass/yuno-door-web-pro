@@ -173,13 +173,13 @@
                   </div>
                 </template>
                 <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-                     :key="index" class="q-my-md">
+                     :key="index" class="q-my-sm">
                   <div v-if="chatRow.webTimeLabel" class="q-my-md row justify-center">
                     <div style="opacity:.5">
                       {{ chatRow.webTimeLabel }}
                     </div>
                   </div>
-                  <div class="row">
+                  <div v-if="!globalState.userData || globalState.userData.id !== chatRow.sendUserId" class="row">
                     <q-avatar size="40px" class="q-mr-sm">
                       <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
                     </q-avatar>
@@ -192,6 +192,21 @@
                       </div>
                     </div>
                   </div>
+                  <div v-else class="row justify-end">
+                    <div class="row col justify-end">
+                      <div class="col-12 q-mb-sm q-pr-xs text-right" style="font-size: .95rem">
+                        {{ chatRow.sendUserNickname }}
+                      </div>
+                      <div class="cask-chatroom-chat-body-mine">
+                        {{ chatRow.message }}
+                      </div>
+                    </div>
+                    <q-avatar size="40px" class="q-mx-sm">
+                      <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
+                    </q-avatar>
+                  </div>
+
+
                 </div>
               </q-infinite-scroll>
             </div>
@@ -518,6 +533,19 @@ onBeforeUnmount(() => {
   background-color: rgba(var(--text-color), 0.1);
   margin-right: 15%;
   margin-bottom: 5px;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.cask-chatroom-chat-body-mine {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: rgb(var(--positive));
+  color: #eee;
+  margin-left: 15%;
+  margin-bottom: 5px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .cask-chatroom-chat-main {
