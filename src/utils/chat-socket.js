@@ -138,7 +138,6 @@ export function updateChattingDataWebAboutLast(chat, toTop) {
 
 export function deleteChattingData(chatId) {
     if (socketChatState.chattingData && socketChatState.chattingData.length > 0) {
-
         let deleteIndex = -1
         for (let index = 0; index < socketChatState.chattingData.length; ++index) {
             if (socketChatState.chattingData[index].chatId === chatId) {
@@ -238,6 +237,11 @@ export function rebuildChattingDataWeb(selectFirst) {
                 socketChatState.chattingDataWebSelected = singleChattingWeb.id
                 insertFirstChat = true
             }
+            //子聊天一个未读，则全部父分组未读
+            //todo 暂时没用到，考虑当子聊天有未读的时候，父分组同时给提示
+            if (false === singleChattingWeb.latestRead) {
+                socketChatState.chattingDataWeb[singleChatting.chatType].latestRead = false
+            }
         }
     }
 
@@ -326,12 +330,10 @@ function socketMsgReceiveDataParse(callback) {
             socketChatState.unReadAllMessages.add(singleChatting.chatId)
         }
     }
-    // //不在列表中，则重新加载，在列表中直接重新构建侧边栏
-    // if (!alreadyInChatList) {
-    //     chattingDataInit()
-    // } else {
-    //     rebuildChattingDataWeb()
-    // }
+    // 不在列表中，则重构聊天
+    if (!alreadyInChatList) {
+        chattingDataInit(false, false)
+    }
     if (socketChatState.needBrowserNotification && globalState.userData) {
         if (globalState.userData.id !== data.sendUserId) {
             browserNotification(`来自 ${data.sendUserNickname} 的新消息`, data.sendMessage)
@@ -341,7 +343,7 @@ function socketMsgReceiveDataParse(callback) {
 
 let chattingDataInitStatus = false
 
-export function chattingDataInit(selectFirst = false) {
+export function chattingDataInit(selectFirst = false, resetSelected = true) {
     if (chattingDataInitStatus) {
         return
     }
@@ -356,8 +358,10 @@ export function chattingDataInit(selectFirst = false) {
             return
         }
         //build
-        socketChatState.webChattingFocusChat = null
-        socketChatState.chattingDataWebSelected = null
+        if (resetSelected) {
+            socketChatState.webChattingFocusChat = null
+            socketChatState.chattingDataWebSelected = null
+        }
         socketChatState.chattingData = res.data.data
         socketChatState.unReadAllMessages.clear()
         socketChatState.chattingData.forEach(data => {

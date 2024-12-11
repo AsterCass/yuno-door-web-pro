@@ -574,7 +574,7 @@ onBeforeUnmount(() => {
 .cask-chatroom-chat-body-mine {
   border-radius: 8px;
   padding: 8px;
-  background-color: rgb(var(--positive));
+  background-color: rgba(var(--positive), 0.92);
   color: #eee;
   margin-left: 15%;
   overflow-wrap: break-word;
