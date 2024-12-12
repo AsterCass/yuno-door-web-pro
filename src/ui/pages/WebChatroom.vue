@@ -13,7 +13,7 @@
         <div class="col-9 column">
           <div class="col-grow column q-mx-md">
 
-            <q-input v-model="chatNameSearch" tabindex="0" dense outlined placeholder="查询"
+            <q-input v-model="chatNameFilter" tabindex="0" dense outlined placeholder="查询"
                      class="q-mb-md component-outline-input-grow">
               <template v-slot:prepend>
                 <q-icon name="fa-solid fa-magnifying-glass" size="1rem"/>
@@ -24,6 +24,9 @@
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
               <q-tree
+                  :no-results-label="$t('main_chat_no_content_match')"
+                  :filter="chatNameFilter"
+                  :filter-method="searchChatName"
                   class="component-base-tree"
                   :nodes="socketChatState.chattingDataWeb"
                   node-key="id"
@@ -185,7 +188,8 @@
           </div>
 
           <div class="row">
-            <q-btn no-caps unelevated class="component-full-btn-full" push>
+            <q-btn no-caps unelevated class="component-full-btn-full" push
+                   @click="notifyTopWarning($t('no_auth'))">
               <div class="row items-center">
                 <div class="q-mx-md">
                   {{ $t('main_chat_launch_group') }}
@@ -442,7 +446,7 @@
 
           <q-btn v-if="socketChatState.webChattingFocusChat &&
           0 !== socketChatState.webChattingFocusChat.chatType &&
-          2 !== socketChatState.webChattingFocusChat.chatType"
+          2 !== socketChatState.webChattingFocusChat.chatType" @click="notifyTopWarning($t('in_develop'))"
                  no-caps unelevated class=" component-full-btn-error-full">
             <div class="row items-center">
               <div class="q-mx-md">
@@ -453,7 +457,8 @@
           </q-btn>
 
           <q-btn v-if="socketChatState.webChattingFocusChat && 0 === socketChatState.webChattingFocusChat.chatType"
-                 no-caps unelevated class=" component-full-btn-error-full">
+                 no-caps unelevated class=" component-full-btn-error-full"
+                 @click="notifyTopWarning($t('in_develop'))">
             <div class="row items-center">
               <div class="q-mx-md">
                 {{ $t('main_chat_chat_block') }}
@@ -524,7 +529,7 @@ import {delay} from "@/utils/base-tools";
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
-const chatNameSearch = ref("")
+const chatNameFilter = ref("")
 const chatInputImgSrc = ref("")
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
@@ -539,6 +544,11 @@ watch(
       rebuildChattingDataWeb()
     }
 );
+
+const searchChatName = (node, filter) => {
+  const filterLow = filter.toLowerCase()
+  return node.label && node.label.toLowerCase().indexOf(filterLow) > -1 && node.avatar
+}
 
 function deleteChat(chatId) {
   if (!chatId) {

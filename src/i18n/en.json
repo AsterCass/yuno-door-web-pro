@@ -19,6 +19,7 @@
   "in_develop": "This feature is under development. Stay tuned",
   "error_request": "The system is busy. Please try again later",
   "no_login": "Unauthenticated users cannot perform this action. Please log in first",
+  "no_auth": "Permission denied. Unable to perform this operation. Please contact the administrator for authorization",
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",
@@ -139,6 +140,7 @@
   "main_chat_type_group_public": "Public Group Chats",
   "main_chat_type_ann": "Announcements",
   "main_chat_no_content": "No content",
+  "main_chat_no_content_match": "No matching chats found",
   "main_chat_no_tips": "Tips",
   "main_chat_no_tip_1": "1. Deleting the chat box will not delete the chat history. When you start a chat again or receive new messages, the previous history will be reloaded.",
   "main_chat_no_tip_2": "2. Not receiving notifications? If you confirm that browser notification permissions are enabled but still not receiving message notifications, please check if the operating system allows browser notifications.",
