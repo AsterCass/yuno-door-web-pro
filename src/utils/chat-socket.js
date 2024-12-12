@@ -80,7 +80,7 @@ export function messageTimeLabelBuilder(list) {
     let onlyLastStartBuild = false
     //build
     const currentTime = new Date()
-    let lastTime = new Date()
+    let lastTime = '1970-01-01 00:00:00'
     const unit = 'minutes'
     for (let count = 0; count < list.length; ++count) {
         //从没有被渲染过的地方开始渲染，或者从type为1的地方开始渲染
@@ -90,22 +90,23 @@ export function messageTimeLabelBuilder(list) {
         if (null === list[count].webTimeLabel || undefined === list[count].webTimeLabelType) {
             onlyLastStartBuild = true
         }
-        const thisTime = new Date(date.formatDate(list[count].sendDate))
         if (!onlyLastStartBuild) {
-            lastTime = thisTime
+            lastTime = list[count].sendDate
             continue
         }
         //build one
-        const diff = date.getDateDiff(currentTime, thisTime, unit)
-        const diffWithLast = Math.abs(date.getDateDiff(thisTime, lastTime, unit))
-        console.log(diff, diffWithLast)
+        const thisTime = list[count].sendDate
+        const thisTimeFormat = new Date(date.formatDate(thisTime))
+        const lastTimeFormat = new Date(date.formatDate(lastTime))
+        const diff = date.getDateDiff(currentTime, thisTimeFormat, unit)
+        const diffWithLast = Math.abs(date.getDateDiff(thisTimeFormat, lastTimeFormat, unit))
         lastTime = thisTime
         if (diffWithLast <= 5) {
             list[count].webTimeLabel = ""
             list[count].webTimeLabelType = 0
             continue
         }
-        let webTimeLabelType = timeTextSwitch(diff, thisTime, currentTime, true)
+        let webTimeLabelType = timeTextSwitch(diff, thisTimeFormat, currentTime, true)
         list[count].webTimeLabel = webTimeLabelType.label
         list[count].webTimeLabelType = webTimeLabelType.type
     }
