@@ -75,7 +75,11 @@
                         <div class="absolute cask-chatroom-chat-list-delete row items-center">
                           <div v-if="prop.node.id === socketChatState.chattingDataWebSelected
                           && !globalState.pinChatIdMap[prop.node.id]"
-                               class="cask-cursor-pointer" @click="globalState.addPinChat(prop.node.id, {})"
+                               class="cask-cursor-pointer" @click="globalState.addPinChat(prop.node.id, {
+                                 id: prop.node.id,
+                                 name: prop.node.label,
+                                 read: prop.node.latestRead,
+                               })"
                                style="color: rgb(var(--pointer)); margin-right: 15px">
                             {{ $t('main_chat_chat_pin') }}
                           </div>
@@ -93,13 +97,42 @@
             </q-scroll-area>
 
             <q-scroll-area
-                class="relative-position cask-chatroom-pinned-chat q-mt-md"
+                class="relative-position q-mt-md"
+                :class="pinChatIdMapArr.length === 0 ?
+                 'cask-chatroom-pinned-chat' : 'cask-chatroom-pinned-chat-pinned' "
                 :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
-              <h5 class="absolute-center" style="opacity: .5; ">
+              <h5 v-if="pinChatIdMapArr.length === 0" class="absolute-center"
+                  style="opacity: .5; ">
                 {{ $t('main_chat_chat_pinned') }}
               </h5>
+              <div v-else class="row" style="margin: 10px">
+                <div class="q-mb-sm col-12 row items-center cask-chatroom-pinned-chat-pinned-cell"
+                     v-for="([key, value]) in pinChatIdMapArr" :key="key">
+                  <q-btn v-if="key && value" no-caps unelevated class="col component-none-btn-grow"
+                         @click="socketChatState.chattingDataWebSelected = key">
+                    <div class="col-12 row justify-between q-pa-xs">
+                      <div class="col row items-center">
+                        <q-icon name="fa-solid fa-thumbtack" size=".9rem"/>
+                        <div class="col text-left q-mx-sm component-max-line-text">
+                          {{ value.name }}
+                        </div>
+                      </div>
+                      <div v-if="!value.read" style="font-size: .78rem; color: rgb(var(--negative))">
+                        {{ $t('main_chat_new_message') }}
+                      </div>
+                    </div>
+                  </q-btn>
+
+                  <div style="color: rgb(var(--pointer));" class="cask-jump-link-in-text-origin q-ml-md"
+                       @click="globalState.deletePinChat(key)">
+                    {{ $t('main_chat_chat_pin_cancel') }}
+                  </div>
+
+                </div>
+
+              </div>
             </q-scroll-area>
 
 
@@ -191,7 +224,11 @@
               </q-btn>
               <q-btn v-else
                      no-caps unelevated class="component-none-btn-grow q-mx-xs"
-                     @click="globalState.addPinChat(socketChatState.webChattingFocusChat.chatId, {})">
+                     @click="globalState.addPinChat(socketChatState.webChattingFocusChat.chatId, {
+                                 id: socketChatState.webChattingFocusChat.chatId,
+                                 name: socketChatState.webChattingFocusChat.chatName,
+                                 read: socketChatState.webChattingFocusChat.latestRead,
+                               })">
                 <div class="row items-center">
                   <div class="q-mr-sm q-ml-xs q-my-xs">
                     {{ $t('main_chat_chat_pin') }}
@@ -462,7 +499,7 @@
 
 <script setup>
 
-import {onBeforeUnmount, onMounted, ref, watch} from "vue";
+import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
 import {
   chattingDataInit,
@@ -489,6 +526,9 @@ const {t} = useI18n()
 
 const chatNameSearch = ref("")
 const chatInputImgSrc = ref("")
+const pinChatIdMapArr = computed(() => {
+  return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
+});
 
 watch(
     () => globalState.language,
@@ -591,6 +631,17 @@ onBeforeUnmount(() => {
           transparent 50px
   );
 }
+
+.cask-chatroom-pinned-chat-pinned {
+  height: 8rem;
+
+  .cask-chatroom-pinned-chat-pinned-cell {
+    border: solid 2px rgba(var(--text-color), 0.8);
+    padding-right: 8px;
+    border-radius: 4px
+  }
+}
+
 
 .cask-chatroom-chat-list-avatar {
   height: 45px;

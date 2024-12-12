@@ -41,15 +41,15 @@
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-ma-md component-none-btn-std">
+      <q-btn no-caps unelevated class="q-ma-md component-none-btn-grow">
         <div class="row items-center">
           <q-icon name="fa-solid fa-bell" size="1.5rem"/>
         </div>
       </q-btn>
 
-      <q-btn no-caps unelevated class="q-ma-md component-none-btn-std" icon="fa-solid fa-wand-sparkles"/>
+      <q-btn no-caps unelevated class="q-ma-md component-none-btn-grow" icon="fa-solid fa-wand-sparkles"/>
 
-      <q-btn no-caps unelevated class="q-ma-md  component-none-btn-std">
+      <q-btn no-caps unelevated class="q-ma-md  component-none-btn-grow">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('test_component_show_more') }}

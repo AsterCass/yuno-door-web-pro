@@ -325,6 +325,10 @@ function socketMsgReceiveDataParse(callback) {
             } else {
                 singleChatting.latestRead = false
             }
+            //数据同步到标记
+            if (globalState.pinChatIdMap[singleChatting.chatId]) {
+                globalState.pinChatIdMap[singleChatting.chatId].read = singleChatting.latestRead
+            }
             //数据同步到聊天树
             updateChattingDataWebAboutLast(singleChatting, true)
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部

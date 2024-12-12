@@ -39,6 +39,8 @@ const responseConfig = response => {
         }
         if (bizStatus === 200 && response.headers.get("User-Token")) {
             //因为后续才会设置用户其他数据，所以需要延迟token的注入时间
+            //todo 这里需要斟酌一下， 最好还是在登录退出的时候进行该操作，当初这么写是因为方便后续出更新token的功能
+            // 但是现在，updateToken之后会有很多前端操作，最好还是别统一操作了
             delay(1000).then(() => {
                 globalState.updateToken(response.headers.get("User-Token"))
             })

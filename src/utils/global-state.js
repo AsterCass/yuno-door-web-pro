@@ -59,6 +59,8 @@ export const useGlobalStateStore = defineStore('globalState', {
             }
             chattingDataInit(true)
             initChatSocket()
+            this.pinChatIdMap = {}
+
         },
         updateUserData(data) {
             this.userData = data

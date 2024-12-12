@@ -60,6 +60,11 @@ watch(
                     singleChatting.latestRead = true
                     globalState.updateReadMessageMap(singleChatting.chatId, singleChatting.lastMessageId)
                 }
+                //数据同步到标记
+                if (globalState.pinChatIdMap[singleChatting.chatId]) {
+                    globalState.pinChatIdMap[singleChatting.chatId].read = singleChatting.latestRead
+                }
+                //数据同步到聊天树
                 updateChattingDataWebAboutLast(singleChatting, false)
             }
         }

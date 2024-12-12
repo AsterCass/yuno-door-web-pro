@@ -32,7 +32,7 @@
               <h3>
                 {{ $t(game.label) }}
               </h3>
-              <q-btn no-caps unelevated class="component-none-btn-std" @click="openLink(game.address)">
+              <q-btn no-caps unelevated class="component-none-btn-grow" @click="openLink(game.address)">
                 <div class="row items-center">
                   <div class="q-mr-sm">
                     {{ $t('route-game') }}

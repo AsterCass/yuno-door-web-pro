@@ -43,8 +43,10 @@
   }
 }
 
-@mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.4rem) {
+@mixin component-none-btn-base($thisWidth: 6rem, $thisHeight: 2.2rem) {
   height: $thisHeight;
+  width: $thisWidth !important;
+  min-width: $thisWidth !important;
   min-height: $thisHeight !important;
   padding: 0 .6rem !important;
   border-radius: 4px !important;
@@ -385,6 +387,12 @@
   )
 }
 
+.component-outline-btn-full {
+  @include component-outline-btn-base(
+          $thisWidth: 100%,
+  )
+}
+
 .component-outline-btn-mini-grow {
   @include component-outline-btn-base(
           $thisHeight: 2rem,
@@ -403,6 +411,12 @@
 .component-none-btn-grow {
   @include component-none-btn-base(
           $thisWidth: auto,
+  )
+}
+
+.component-none-btn-full {
+  @include component-none-btn-base(
+          $thisWidth: 100%,
           $thisHeight: auto,
   )
 }
