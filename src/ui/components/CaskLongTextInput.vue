@@ -208,6 +208,7 @@ onBeforeUnmount(() => {
   }
 
   &.emoji-hide {
+    pointer-events: none;
     transform: translateY(50%);
     opacity: 0;
   }
