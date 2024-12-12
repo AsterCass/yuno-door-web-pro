@@ -83,22 +83,26 @@ export function messageTimeLabelBuilder(list) {
     let lastTime = new Date()
     const unit = 'minutes'
     for (let count = 0; count < list.length; ++count) {
-        //如果没有被渲染过，从头渲染，否则从type为1的地方开始渲染
+        //从没有被渲染过的地方开始渲染，或者从type为1的地方开始渲染
         if (list[count].webTimeLabelType === 1) {
             onlyLastStartBuild = true
         }
-        if (0 === count && !list[count].webTimeLabel) {
+        if (null === list[count].webTimeLabel || undefined === list[count].webTimeLabelType) {
             onlyLastStartBuild = true
         }
+        const thisTime = new Date(date.formatDate(list[count].sendDate))
         if (!onlyLastStartBuild) {
+            lastTime = thisTime
             continue
         }
         //build one
-        const thisTime = new Date(date.formatDate(list[count].sendDate))
         const diff = date.getDateDiff(currentTime, thisTime, unit)
         const diffWithLast = Math.abs(date.getDateDiff(thisTime, lastTime, unit))
+        console.log(diff, diffWithLast)
         lastTime = thisTime
         if (diffWithLast <= 5) {
+            list[count].webTimeLabel = ""
+            list[count].webTimeLabelType = 0
             continue
         }
         let webTimeLabelType = timeTextSwitch(diff, thisTime, currentTime, true)
