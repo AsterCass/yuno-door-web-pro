@@ -316,7 +316,7 @@
                               id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   [CaskLongTextInputElement.IMG, {callback: (data)=> {chatInputImgSrc=data}}],
-                  [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.EMOJI, {callback: ()=> {}}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
                               @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"

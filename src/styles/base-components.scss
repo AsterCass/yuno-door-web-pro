@@ -414,6 +414,13 @@
   )
 }
 
+.component-none-btn-mini-grow {
+  @include component-none-btn-base(
+          $thisHeight: 1.8rem,
+          $thisWidth: auto,
+  )
+}
+
 .component-none-btn-full {
   @include component-none-btn-base(
           $thisWidth: 100%,
