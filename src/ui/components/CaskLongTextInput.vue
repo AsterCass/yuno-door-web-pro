@@ -167,9 +167,13 @@ const hideEmojiBoard = () => {
   }
 }
 const emojiHandler = () => {
-  delay(100).then(() => {
-    showEmojiBoard.value = !showEmojiBoard.value
-  })
+  if(showEmojiBoard.value) {
+    showEmojiBoard.value = false
+  } else {
+    delay(100).then(() => {
+      showEmojiBoard.value = true
+    })
+  }
 }
 
 function addEmoji(emoji) {
