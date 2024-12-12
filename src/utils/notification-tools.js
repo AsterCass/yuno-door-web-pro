@@ -2,7 +2,9 @@ import {Notify} from "quasar";
 import lottie from 'lottie-web';
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
+import i18n from "@/i18n";
 
+const t = i18n.global.t
 let notificationAnimationMap = new Map();
 
 function loadLottieAnimation(elementId, path) {
@@ -116,13 +118,13 @@ export function browserNotificationCheck() {
         return
     }
     if (!("Notification" in window)) {
-        notifyTopWarning("此浏览器不支持新消息通知， 请更换现代浏览器")
+        notifyTopWarning(t('main_chat_new_message_browser_error'))
         return
     }
     if (Notification.permission !== "granted") {
         Notification.requestPermission().then(permission => {
             if (permission !== "granted") {
-                notifyTopWarning("浏览器通知权限未开启，请开启获得最佳体验")
+                notifyTopWarning(t('main_chat_new_message_auto_error'))
             }
         });
     }
@@ -134,7 +136,7 @@ export function browserNotification(title, body) {
         return
     }
     if (Notification.permission !== "granted") {
-        notifyTopWarning("收到一条新消息，但浏览器通知权限未开启，请开启获得最佳体验。如不需要该功能，请在设置中关闭新消息通知")
+        notifyTopWarning(t('main_chat_new_message_auto_error_2'))
         return
     }
 

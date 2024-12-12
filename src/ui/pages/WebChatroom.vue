@@ -177,7 +177,7 @@
           </div>
 
           <div class="row q-mb-sm">
-            <q-btn no-caps unelevated style="width: 100%" dense>
+            <q-btn no-caps unelevated style="width: 100%" dense @click="notifyTopWarning($t('in_develop'))">
               <div class="row items-center full-width">
                 <q-icon class="col-2" name="fa-solid fa-sliders" size="1.2rem"/>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem">
@@ -215,7 +215,6 @@
             </div>
 
             <div v-if="socketChatState.webChattingFocusChat" class="row justify-end items-center">
-<!--              todo 鼠标缓慢进入这个区域会无法选中该button-->
               <q-btn v-if="globalState.pinChatIdMap[socketChatState.webChattingFocusChat.chatId]" no-caps
                      unelevated class="component-none-btn-grow q-mx-xs"
                      @click="globalState.deletePinChat(socketChatState.webChattingFocusChat.chatId)">

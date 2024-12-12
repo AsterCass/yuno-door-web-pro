@@ -135,6 +135,8 @@
   "main_user_detail_not_login": "Guest user",
 
   "main_chat_new_message": "New message !",
+  "main_chat_message_from": "From",
+  "main_chat_message_from_new": "'s new message",
   "main_chat_type_con": "Contacts",
   "main_chat_type_group": "Group Chats",
   "main_chat_type_group_public": "Public Group Chats",
@@ -155,6 +157,10 @@
   "main_chat_chat_delete": "Delete chat box",
   "main_chat_chat_block": "No longer receive their messages",
   "main_chat_chat_exit": "Exit Group",
+  "main_chat_new_message_browser_error": "This browser does not support new message notifications. Please switch to a modern browser",
+  "main_chat_new_message_auto_error": "Browser notification permissions are not enabled. Please enable them for the best experience",
+  "main_chat_new_message_auto_error_2": "A new message has been received, but browser notification permissions are not enabled. If this feature is not needed, please disable new message notifications in settings",
+
 
   "main_chat_chat_time_now": "Just now",
   "main_chat_chat_time_min": "minutes ago",

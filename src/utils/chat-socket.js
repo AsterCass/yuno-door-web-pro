@@ -349,7 +349,9 @@ function socketMsgReceiveDataParse(callback) {
     }
     if (socketChatState.needBrowserNotification && globalState.userData) {
         if (globalState.userData.id !== data.sendUserId) {
-            browserNotification(`来自 ${data.sendUserNickname} 的新消息`, data.sendMessage)
+            browserNotification(
+                `${t('main_chat_message_from')} ${data.sendUserNickname} ${t('main_chat_message_from_new')}`,
+                data.sendMessage)
         }
     }
 }

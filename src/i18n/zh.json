@@ -135,6 +135,8 @@
   "main_user_detail_not_login": "未登录用户",
 
   "main_chat_new_message": "新消息 ！",
+  "main_chat_message_from": "来自",
+  "main_chat_message_from_new": "的新消息",
   "main_chat_type_con": "联系人",
   "main_chat_type_group": "群聊",
   "main_chat_type_group_public": "公开群",
@@ -155,6 +157,10 @@
   "main_chat_chat_delete": "删除聊天框",
   "main_chat_chat_block": "不再接收他的消息",
   "main_chat_chat_exit": "退出群聊",
+  "main_chat_new_message_browser_error": "此浏览器不支持新消息通知， 请更换现代浏览器",
+  "main_chat_new_message_auto_error": "浏览器通知权限未开启，请开启获得最佳体验",
+  "main_chat_new_message_auto_error_2": "收到一条新消息，但浏览器通知权限未开启，请开启获得最佳体验。如不需要该功能，请在设置中关闭新消息通知",
+
 
   "main_chat_chat_time_now": "刚刚",
   "main_chat_chat_time_min": "分钟前",
