@@ -6,6 +6,7 @@
     <div v-if="elements.has(CaskLongTextInputElement.EMOJI)" v-click-outside="hideEmojiBoard"
          :class="showEmojiBoard ? 'emoji-show' : 'emoji-hide'" class="absolute cask-long-text-input-emoji row q-pa-sm">
 
+      <!--    todo  1. 用户上传的表情包 2. emoji 3. 颜文字-->
       <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
