@@ -23,8 +23,14 @@ function customPageNP(offset, limit) {
     return pageParam
 }
 
+function customLargePage(param) {
+    param.pageNo = 1
+    param.pageSize = 100
+    return param
+}
+
 
 export {
-    simplePage, customPage, customPageNP
+    simplePage, customPage, customPageNP, customLargePage
 }
 

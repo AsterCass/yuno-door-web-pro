@@ -47,6 +47,20 @@
           </q-scroll-area>
         </q-tab-panel>
 
+        <q-tab-panel name="emojipro" class="no-padding bg-transparent">
+          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                         class="full-width full-height">
+            <div class="row">
+              <div v-for="(emoji, index) in starEmojiList" :key="index">
+                <q-img :ratio="1" fit="contain" :src="emoji.readAddress" class="q-ma-xs cask-cursor-pointer"
+                       style="height: 5rem; width: 5rem; border-radius: 8px">
+                </q-img>
+              </div>
+            </div>
+          </q-scroll-area>
+        </q-tab-panel>
 
       </q-tab-panels>
 
@@ -120,6 +134,8 @@ import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {delay} from "@/utils/base-tools";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
+import {getStarEmojiList} from "@/api/file";
+import {customLargePage} from "@/utils/page";
 
 const globalState = useGlobalStateStore();
 
@@ -158,6 +174,7 @@ const mainInput = ref(props.modelValue)
 const caskLongTextInputRef = ref(null)
 const showEmojiBoard = ref(false)
 const currentEmojiTab = ref('emoji');
+const starEmojiList = ref([])
 
 const emojiTabs = ref([
   {value: 'emoji', label: 'main_chat_emoji_tabs_emoji',},
@@ -168,6 +185,18 @@ const emojiTabs = ref([
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
 })
+
+function getAllStarEmoji() {
+  if (!globalState.isLogin) {
+    return
+  }
+  getStarEmojiList(customLargePage({})).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      return
+    }
+    starEmojiList.value = res.data.data.fileEmojis
+  })
+}
 
 function forLineBreakSend(event) {
   if (event.ctrlKey) {
@@ -226,6 +255,7 @@ onMounted(() => {
   if (props.elements.has(CaskLongTextInputElement.FILE) || props.elements.has(CaskLongTextInputElement.IMG)) {
     caskLongTextInputRef.value.$el.addEventListener('paste', pasteEventHandle)
   }
+  getAllStarEmoji()
 })
 
 onBeforeUnmount(() => {
