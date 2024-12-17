@@ -160,6 +160,9 @@
   "main_chat_new_message_browser_error": "This browser does not support new message notifications. Please switch to a modern browser",
   "main_chat_new_message_auto_error": "Browser notification permissions are not enabled. Please enable them for the best experience",
   "main_chat_new_message_auto_error_2": "A new message has been received, but browser notification permissions are not enabled. If this feature is not needed, please disable new message notifications in settings",
+  "main_chat_emoji_tabs_emoji": "Emoji",
+  "main_chat_emoji_tabs_emoji_pro": "Emoji Pro",
+  "main_chat_emoji_tabs_kaomoji": "Kaomoji",
 
 
   "main_chat_chat_time_now": "Just now",

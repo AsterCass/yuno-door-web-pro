@@ -2,7 +2,6 @@
   <div class="component-cask-tabs">
     <q-tabs ref="tabsRef" v-model="tab"
             indicator-color="transparent"
-            inline-label
             @update:modelValue="it => updateCurrentTab(it)"
     >
       <!--animation-->
@@ -19,11 +18,12 @@
           :icon="tabItem.icon"
           no-caps
           class="component-cask-tabs-btn"
+          :style="dense ? 'min-height: 38px' : ''"
           :ripple="false"
           v-for="tabItem in tabs"
           :key="tabItem.value"
           :name="tabItem.value"
-          :label="tabItem.label"
+          :label="$t(tabItem.label)"
           :ref="el => setTabRef(el, tabItem.value)">
       </q-tab>
 
@@ -32,7 +32,9 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watch, defineProps, defineEmits} from 'vue'
+import {defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch} from 'vue'
+import {delay} from "@/utils/base-tools";
+import emitter from "@/utils/bus";
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -46,6 +48,11 @@ const props = defineProps({
     required: true,
     default: () => [],
   },
+  dense: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }
 });
 
 const tab = ref(props.modelValue)
@@ -55,16 +62,18 @@ const indicatorWidth = ref(0)
 const indicatorLeft = ref(0)
 
 const updateIndicator = () => {
-  const activeTab = tabRefs.value[tab.value]?.$el
-  const tabsContainer = tabsRef.value.$el
+  delay(0).then(() => {
+    const activeTab = tabRefs.value[tab.value]?.$el
+    const tabsContainer = tabsRef.value.$el
 
-  if (activeTab && tabsContainer) {
-    const containerRect = tabsContainer.getBoundingClientRect()
-    const activeRect = activeTab.getBoundingClientRect()
+    if (activeTab && tabsContainer) {
+      const containerRect = tabsContainer.getBoundingClientRect()
+      const activeRect = activeTab.getBoundingClientRect()
 
-    indicatorLeft.value = activeRect.left - containerRect.left
-    indicatorWidth.value = activeRect.width
-  }
+      indicatorLeft.value = activeRect.left - containerRect.left
+      indicatorWidth.value = activeRect.width
+    }
+  })
 }
 
 const setTabRef = (el, value) => {
@@ -82,15 +91,13 @@ watch(() => props.modelValue, () => {
   tab.value = props.modelValue
 })
 
-// onBeforeUpdate(() => {
-//   tabRefs.value = {}
-// })
-
-// resizeEvent(updateIndicator);
-
-
 onMounted(() => {
   updateIndicator()
+  emitter.on("screenResizeEvent", updateIndicator)
+})
+
+onBeforeUnmount(() => {
+  emitter.off("screenResizeEvent", updateIndicator)
 })
 
 

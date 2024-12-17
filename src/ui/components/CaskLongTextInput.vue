@@ -4,21 +4,53 @@
   <div class="component-long-text-input position-relative">
 
     <div v-if="elements.has(CaskLongTextInputElement.EMOJI)" v-click-outside="hideEmojiBoard"
-         :class="showEmojiBoard ? 'emoji-show' : 'emoji-hide'" class="absolute cask-long-text-input-emoji row q-pa-sm">
+         :class="showEmojiBoard ? 'emoji-show' : 'emoji-hide'"
+         class="absolute cask-long-text-input-emoji column q-pa-sm">
 
-      <!--    todo  1. 用户上传的表情包 2. emoji 3. 颜文字-->
-      <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+      <div class="full-width">
+        <cask-tabs :tabs="emojiTabs" v-model="currentEmojiTab" dense/>
+      </div>
+
+      <q-tab-panels v-model="currentEmojiTab" animated class="col bg-transparent">
+        <q-tab-panel name="emoji" class="no-padding bg-transparent">
+          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
-                     class="full-width full-height">
-        <div class="row">
-          <div v-for="(emoji, index) in EmojiExampleList" :key="index">
-            <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.5rem" @click="addEmoji(emoji)">
-              {{ emoji }}
+                         class="full-width full-height">
+            <div class="row">
+              <div v-for="(emoji, index) in EmojiExampleList" :key="index">
+                <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.5rem" @click="addEmoji(emoji)">
+                  {{ emoji }}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </q-scroll-area>
+          </q-scroll-area>
+        </q-tab-panel>
+
+        <q-tab-panel name="kaomoji" class="no-padding bg-transparent">
+          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                         class="full-width full-height">
+            <div class="row">
+              <div v-for="(emoji, index) in KaomojiExampleList" :key="index">
+                <q-btn no-caps unelevated class="component-none-btn-mini-grow q-ma-xs"
+                       style="font-size: 1.2rem" @click="addEmoji(emoji)">
+                  <div class="row items-center">
+                    <div class="q-mx-xs">
+                      {{ emoji }}
+                    </div>
+                  </div>
+                </q-btn>
+              </div>
+            </div>
+          </q-scroll-area>
+        </q-tab-panel>
+
+
+      </q-tab-panels>
+
+
     </div>
 
     <q-input ref="caskLongTextInputRef" @keydown.enter.prevent="forLineBreakSend"
@@ -83,10 +115,11 @@
 
 import {defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
-import {EmojiExampleList} from "@/constant/enums/emoji-ex";
+import {EmojiExampleList, KaomojiExampleList} from "@/constant/enums/emoji-ex";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {delay} from "@/utils/base-tools";
+import CaskTabs from "@/ui/components/CaskTabs.vue";
 
 const globalState = useGlobalStateStore();
 
@@ -124,6 +157,13 @@ const props = defineProps({
 const mainInput = ref(props.modelValue)
 const caskLongTextInputRef = ref(null)
 const showEmojiBoard = ref(false)
+const currentEmojiTab = ref('emoji');
+
+const emojiTabs = ref([
+  {value: 'emoji', label: 'main_chat_emoji_tabs_emoji',},
+  {value: 'kaomoji', label: 'main_chat_emoji_tabs_kaomoji',},
+  {value: 'emojipro', label: 'main_chat_emoji_tabs_emoji_pro'},
+])
 
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
@@ -198,10 +238,10 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 
 .cask-long-text-input-emoji {
-  top: -20rem;
+  top: -27rem;
   left: 50%;
   right: 0;
-  height: 20rem;
+  height: 27rem;
   border-radius: 8px;
   transition: opacity .5s ease, transform .5s ease;
   background-color: rgba(var(--text-color), .07);
