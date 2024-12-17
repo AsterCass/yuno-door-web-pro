@@ -271,14 +271,15 @@ onBeforeUnmount(() => {
   top: -27rem;
   left: 50%;
   right: 0;
-  height: 27rem;
+  height: 1rem;
   border-radius: 8px;
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity .5s ease, transform .5s ease, height .5s ease;
   background-color: rgba(var(--text-color), .07);
   backdrop-filter: saturate(200%) blur(30px);
 
   &.emoji-show {
     opacity: 1;
+    height: 27rem;
     transform: translateY(0);
   }
 
