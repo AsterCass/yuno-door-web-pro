@@ -302,6 +302,7 @@
                         </div>
                       </div>
                       <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                           @click="showImgSrc = chatRow.message; showImg = true"
                            class="cask-chatroom-chat-body-img" alt=""
                            v-on:mouseover="chatRow.webFocusThisMsg=true"
                            v-on:mouseleave="chatRow.webFocusThisMsg=false"
@@ -339,6 +340,7 @@
                         </div>
                       </div>
                       <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                           @click="showImgSrc = chatRow.message; showImg = true"
                            v-on:mouseover="chatRow.webFocusThisMsg=true"
                            v-on:mouseleave="chatRow.webFocusThisMsg=false"
                            class="cask-chatroom-chat-body-img" alt=""/>
@@ -548,6 +550,8 @@
 
     </div>
 
+    <cask-dialog-image v-model="showImg" :src="showImgSrc"/>
+
     <cask-base-footer :simple="true"/>
 
   </q-layout>
@@ -577,10 +581,13 @@ import {hideChat, moreMessage} from "@/api/chat";
 import {useI18n} from "vue-i18n";
 import {delay} from "@/utils/base-tools";
 import {uploadUserFile} from "@/api/file";
+import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
+const showImg = ref(false)
+const showImgSrc = ref("")
 const chatNameFilter = ref("")
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
