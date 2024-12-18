@@ -281,24 +281,60 @@
                       <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
                     </q-avatar>
                     <div class="row col">
-                      <div class="col-12 q-mb-sm q-pl-xs" style="font-size: .95rem">
-                        {{ chatRow.sendUserNickname }}
+                      <div class="col-12 q-mb-sm q-pl-xs row items-center" style="font-size: .95rem">
+                        <div>
+                          {{ chatRow.sendUserNickname }}
+                        </div>
+                        <div v-show="chatRow.webFocusThisMsg" class="q-mx-sm">
+                          <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
+                                   :color="getGenderObj(chatRow.sendUserGender).color"
+                                   :label="getGenderObj(chatRow.sendUserGender).label">
+                          </q-badge>
+                          <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
+                                   :color="getRoleTypeObj(chatRow.sendUserRoleType).color"
+                                   :label="getRoleTypeObj(chatRow.sendUserRoleType).label">
+                          </q-badge>
+                        </div>
                       </div>
                       <img v-if="chatRow.webMessageFile" :src="chatRow.message"
-                           class="cask-chatroom-chat-body-img" alt=""/>
-                      <div v-else class="cask-chatroom-chat-body" style="white-space: break-spaces">
+                           class="cask-chatroom-chat-body-img" alt=""
+                           v-on:mouseover="chatRow.webFocusThisMsg=true"
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
+                      />
+                      <div v-else class="cask-chatroom-chat-body"
+                           v-on:mouseover="chatRow.webFocusThisMsg=true"
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
+                           style="white-space: break-spaces">
                         {{ chatRow.message }}
                       </div>
                     </div>
                   </div>
                   <div v-else class="row justify-end">
                     <div class="row col justify-end">
-                      <div class="col-12 q-mb-sm q-pr-xs text-right" style="font-size: .95rem">
-                        {{ chatRow.sendUserNickname }}
+                      <div class="col-12 q-mb-sm q-pr-xs row items-center justify-end"
+                           style="font-size: .95rem">
+                        <div v-show="chatRow.webFocusThisMsg" class="q-mx-sm text-right">
+                          <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
+                                   :color="getGenderObj(chatRow.sendUserGender).color"
+                                   :label="getGenderObj(chatRow.sendUserGender).label">
+                          </q-badge>
+                          <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
+                                   :color="getRoleTypeObj(chatRow.sendUserRoleType).color"
+                                   :label="getRoleTypeObj(chatRow.sendUserRoleType).label">
+                          </q-badge>
+                        </div>
+                        <div class="text-right">
+                          {{ chatRow.sendUserNickname }}
+                        </div>
                       </div>
                       <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                           v-on:mouseover="chatRow.webFocusThisMsg=true"
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
                            class="cask-chatroom-chat-body-img" alt=""/>
-                      <div v-else class="cask-chatroom-chat-body-mine">
+                      <div v-else class="cask-chatroom-chat-body-mine"
+                           v-on:mouseover="chatRow.webFocusThisMsg=true"
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
+                           style="white-space: break-spaces">
                         {{ chatRow.message }}
                       </div>
                     </div>
@@ -693,6 +729,7 @@ onBeforeUnmount(() => {
   border-radius: 8px;
   padding: 8px;
   background-color: rgba(var(--text-color), 0.1);
+  cursor: zoom-in;
   margin-right: 15%;
   overflow-wrap: break-word;
   word-break: break-all;
@@ -702,6 +739,7 @@ onBeforeUnmount(() => {
   border-radius: 8px;
   padding: 8px;
   background-color: rgba(var(--positive), 0.92);
+  cursor: zoom-in;
   color: #eee;
   margin-left: 15%;
   overflow-wrap: break-word;
@@ -714,6 +752,7 @@ onBeforeUnmount(() => {
   max-height: 400px;
   max-width: 300px;
   width: auto;
+  cursor: zoom-in;
   height: auto;
   object-fit: contain
 }
