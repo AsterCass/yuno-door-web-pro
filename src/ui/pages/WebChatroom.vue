@@ -282,10 +282,12 @@
                     </q-avatar>
                     <div class="row col">
                       <div class="col-12 q-mb-sm q-pl-xs row items-center" style="font-size: .95rem">
-                        <div>
+                        <div style=" transition: color .5s ease;" :class=" chatRow.webFocusThisMsg ?
+                              'text-' + getRoleTypeObj(chatRow.sendUserRoleType).color : ''">
                           {{ chatRow.sendUserNickname }}
                         </div>
-                        <div v-show="chatRow.webFocusThisMsg" class="q-mx-sm">
+                        <div v-show="chatRow.webFocusThisMsg"
+                             class="row q-mx-sm items-center animate__animated animate__fadeIn">
                           <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
                                    :color="getGenderObj(chatRow.sendUserGender).color"
                                    :label="getGenderObj(chatRow.sendUserGender).label">
@@ -294,6 +296,9 @@
                                    :color="getRoleTypeObj(chatRow.sendUserRoleType).color"
                                    :label="getRoleTypeObj(chatRow.sendUserRoleType).label">
                           </q-badge>
+                          <div class="q-mx-sm" style="font-size: .7rem; opacity: 0.5">
+                            {{ chatRow.sendDate }}
+                          </div>
                         </div>
                       </div>
                       <img v-if="chatRow.webMessageFile" :src="chatRow.message"
@@ -313,7 +318,11 @@
                     <div class="row col justify-end">
                       <div class="col-12 q-mb-sm q-pr-xs row items-center justify-end"
                            style="font-size: .95rem">
-                        <div v-show="chatRow.webFocusThisMsg" class="q-mx-sm text-right">
+                        <div v-show="chatRow.webFocusThisMsg"
+                             class="q-mx-sm text-right row items-center animate__animated animate__fadeIn">
+                          <div class="q-mx-sm" style="font-size: .7rem; opacity: 0.5">
+                            {{ chatRow.sendDate }}
+                          </div>
                           <q-badge class="q-mx-xs" style="font-size: .7rem; padding: 3px 6px;"
                                    :color="getGenderObj(chatRow.sendUserGender).color"
                                    :label="getGenderObj(chatRow.sendUserGender).label">
@@ -323,7 +332,9 @@
                                    :label="getRoleTypeObj(chatRow.sendUserRoleType).label">
                           </q-badge>
                         </div>
-                        <div class="text-right">
+                        <div class="text-right" style=" transition: color .5s ease;"
+                             :class=" chatRow.webFocusThisMsg ?
+                             'text-' + getRoleTypeObj(chatRow.sendUserRoleType).color : ''">
                           {{ chatRow.sendUserNickname }}
                         </div>
                       </div>
