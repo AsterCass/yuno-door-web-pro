@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, ref, watch} from "vue";
+import {defineEmits, defineProps, ref, watch, defineExpose} from "vue";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 
 const emit = defineEmits(['update:modelValue']);
