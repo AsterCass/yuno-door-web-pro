@@ -14,8 +14,8 @@
             {{ title ? title : $t('file_upload_title') }}
           </div>
           <ul>
-            <li v-for="tip in tips" :key="tip" style="opacity: .5">
-              {{ tip }}
+            <li v-for="tip in tips" :key="tip" style="opacity: .5;white-space: normal;">
+              {{ $t(tip) }}
             </li>
           </ul>
         </div>
@@ -38,8 +38,8 @@
             {{ title ? title : $t('file_upload_title') }}
           </div>
           <ul>
-            <li v-for="tip in tips" :key="tip" style="opacity: .8">
-              {{ tip }}
+            <li v-for="tip in tips" :key="tip" style="opacity: .8;white-space: normal; ">
+              {{ $t(tip) }}
             </li>
           </ul>
         </div>

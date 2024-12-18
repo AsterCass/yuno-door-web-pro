@@ -68,6 +68,16 @@
 
     </div>
 
+    <cask-dialog-upload-file :dialog-judgment-data="{
+      title: 'main_long_text_input_image_title', content: 'main_long_text_input_image_content',
+      uploadAccept: '.webp,.png,.jpg,.jpeg,.gif',uploadMaxSize: 5242880,
+      falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_send', tips:
+      ['main_long_text_input_image_tip1','main_long_text_input_image_tip2','main_long_text_input_image_tip3',
+      'main_long_text_input_image_tip4',]}"
+                             :callback-method="uploadFileCallback"
+                             v-model="showImageUpload"
+    />
+
     <q-input ref="caskLongTextInputRef" @keydown.enter.prevent="forLineBreakSend"
         v-model="mainInput" type="textarea" @update:model-value="emit('update:modelValue', mainInput);"
              :placeholder="placeholder ? placeholder :  $t('main_long_text_input_placeholder')" borderless/>
@@ -83,7 +93,7 @@
         </div>
         <div v-if="elements.has(CaskLongTextInputElement.IMG)" class="q-mr-sm">
           <q-btn class="component-none-btn-mini-grow" no-caps style="padding: 0!important;" unelevated
-                 @click="elements.get(CaskLongTextInputElement.IMG).callback">
+                 @click="imageHandler">
             <div class="row items-center q-ma-xs">
               <q-icon name="fa-regular fa-image" size="1.2rem"/>
             </div>
@@ -137,8 +147,12 @@ import {delay} from "@/utils/base-tools";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import {getStarEmojiList} from "@/api/file";
 import {customLargePage} from "@/utils/page";
+import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
+import {notifyTopWarning} from "@/utils/notification-tools";
+import {useI18n} from "vue-i18n";
 
 const globalState = useGlobalStateStore();
+const {t} = useI18n()
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -174,9 +188,10 @@ const props = defineProps({
 const mainInput = ref(props.modelValue)
 const caskLongTextInputRef = ref(null)
 const showEmojiBoard = ref(false)
+const showImageUpload = ref(false)
+const showImageUploadBtnEnable = ref(true)
 const currentEmojiTab = ref('emoji');
 const starEmojiList = ref([])
-
 const emojiTabs = ref([
   {value: 'emoji', label: 'main_chat_emoji_tabs_emoji',},
   {value: 'kaomoji', label: 'main_chat_emoji_tabs_kaomoji',},
@@ -251,6 +266,41 @@ const emojiHandler = () => {
       showEmojiBoard.value = true
     })
   }
+}
+
+const hideImageBoard = () => {
+  if (showImageUpload.value) {
+    showImageUpload.value = false
+  }
+}
+
+const imageHandler = () => {
+  if (showImageUpload.value) {
+    showImageUpload.value = false
+  } else {
+    delay(100).then(() => {
+      showImageUpload.value = true
+    })
+  }
+}
+
+const uploadFileCallback = async (isSend, data) => {
+  if (!isSend) {
+    hideImageBoard()
+    return
+  }
+  if (!data) {
+    notifyTopWarning(t('main_long_text_input_image_empty'))
+    return
+  }
+  //todo 兼容文件发送
+  showImageUploadBtnEnable.value = false
+  const res = await props.elements.get(CaskLongTextInputElement.IMG).callback(data)
+  showImageUploadBtnEnable.value = true
+  if (res) {
+    hideImageBoard()
+  }
+  return res
 }
 
 function addEmoji(emoji) {

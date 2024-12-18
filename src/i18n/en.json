@@ -170,6 +170,14 @@
   "main_chat_chat_time_min": "minutes ago",
 
   "main_long_text_input_send": "Send",
+  "main_long_text_input_cancel": "Cancel",
+  "main_long_text_input_image_title": "Send Image",
+  "main_long_text_input_image_empty": "Image data cannot be empty",
+  "main_long_text_input_image_content": "The upload limit per day is 20 times. Sending files, images, and uploading Emoji Pro will count towards this limit. In the history, each user can save up to 10 photos. If this number is exceeded, the oldest photos will expire.",
+  "main_long_text_input_image_tip1": "Only supports webp, png, jpg, jpeg, and gif formats.",
+  "main_long_text_input_image_tip2": "The image size must not exceed 5MB.",
+  "main_long_text_input_image_tip3": "If the image is in the clipboard, can be directly pasted into the input box.",
+  "main_long_text_input_image_tip4": "Sending Emoji Pro does not count towards upload limit.",
   "main_long_text_input_placeholder": "Press Enter to send, Ctrl+Enter to insert a line break.",
 
 

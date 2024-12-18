@@ -1,0 +1,159 @@
+<template>
+  <div>
+    <q-dialog :model-value="showDialogJudgment" @hide="closeDialogJudgment"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std" style="max-width: 1000px !important">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          {{ $t(dialogJudgmentData.title) }}
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="full-width row justify-center">
+            <div class="text-center" style="max-width: 600px">
+              {{ $t(dialogJudgmentData.content) }}
+            </div>
+          </div>
+
+          <div class="row justify-center">
+
+            <img v-if="uploadDataBase64" :src="uploadDataBase64"
+                 class="q-mt-xl cask-dialog-upload-file-img" alt=""/>
+            <cask-upload-input v-else class="q-mt-md" v-model="uploadData"
+                               :tips="dialogJudgmentData.tips"
+                               :accept="dialogJudgmentData.uploadAccept"
+                               :max-file-size="dialogJudgmentData.uploadMaxSize"/>
+          </div>
+
+          <div class="row q-mt-xl q-mb-md justify-center">
+            <div class="q-mx-md">
+
+              <q-btn no-caps unelevated class=" shadow-1 component-outline-btn-grow"
+                     @click="btnClick(false)"
+                     :label="$t(dialogJudgmentData.falseLabel)"/>
+
+            </div>
+            <div class="q-mx-md">
+              <q-btn no-caps unelevated class=" shadow-1 component-full-btn-grow"
+                     @click="btnClick(true)" :label="$t(dialogJudgmentData.trueLabel)"/>
+            </div>
+          </div>
+
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+  </div>
+</template>
+
+<script setup>
+import {defineEmits, defineProps, ref, watch} from "vue";
+import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
+
+const emit = defineEmits(['update:modelValue']);
+const reader = new FileReader();
+reader.onload = (data) => {
+  if (data && data.target) {
+    uploadDataBase64.value = data.target.result
+  } else {
+    uploadDataBase64.value = null
+  }
+};
+
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  dialogJudgmentData: {
+    type: Object,
+    required: true,
+    default: () => {
+      return {
+        title: "",
+        content: "",
+        falseLabel: "",
+        trueLabel: "",
+        tips: [],
+        uploadMaxSize: 1,
+        uploadAccept: ""
+      }
+    },
+  },
+  callbackMethod: {
+    type: Function,
+    required: true,
+  },
+})
+
+const showDialogJudgment = ref(props.modelValue);
+const uploadData = ref(null)
+const uploadDataBase64 = ref(null)
+
+watch(() => props.modelValue, () => {
+  if (props.modelValue) {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.overflow = 'hidden';
+  }
+  showDialogJudgment.value = props.modelValue
+})
+
+watch(uploadData, () => {
+  if (uploadData.value) {
+    reader.readAsDataURL(uploadData.value);
+  } else {
+    uploadDataBase64.value = null
+  }
+})
+
+function btnClick(isTrue) {
+  if (isTrue) {
+    props.callbackMethod(true, uploadData.value).then(res => {
+      if (res) {
+        uploadData.value = null;
+      }
+    })
+  } else {
+    uploadData.value = null;
+    props.callbackMethod(false)
+  }
+}
+
+function closeDialogJudgment() {
+  document.body.style.overflow = 'auto';
+  document.body.style.paddingRight = '';
+  showDialogJudgment.value = false
+  emit('update:modelValue', false);
+}
+
+
+</script>
+
+
+<style lang="scss">
+@import "@fontsource/roboto-slab/index.css";
+@import "@/styles/base-components";
+@import "@/styles/independence-components";
+
+
+</style>
+
+<style scoped lang="scss">
+
+.cask-dialog-upload-file-img {
+  border-radius: 8px;
+  max-height: 400px;
+  max-width: 800px;
+  width: auto;
+  height: auto;
+  object-fit: contain
+}
+
+
+</style>

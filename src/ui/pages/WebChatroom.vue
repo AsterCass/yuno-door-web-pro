@@ -319,9 +319,9 @@
 
         <cask-long-text-input v-if="socketChatState.webChattingFocusChat"
                               id="comment-reply-input" :elements="new Map([
-                  [CaskLongTextInputElement.FILE, {callback: ()=> {}}],
-                  [CaskLongTextInputElement.IMG, {callback: (data)=> {chatInputImgSrc=data}}],
-                  [CaskLongTextInputElement.EMOJI, {callback: (url)=> {sendEmoji(url)}}],
+                  [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.IMG, {callback: sendImg}],
+                  [CaskLongTextInputElement.EMOJI, {callback: sendEmoji}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
                               @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
@@ -529,12 +529,12 @@ import {getGenderObj} from "@/constant/enums/gender-opt";
 import {hideChat, moreMessage} from "@/api/chat";
 import {useI18n} from "vue-i18n";
 import {delay} from "@/utils/base-tools";
+import {uploadUserFile} from "@/api/file";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
 const chatNameFilter = ref("")
-const chatInputImgSrc = ref("")
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
 });
@@ -568,6 +568,23 @@ function deleteChat(chatId) {
   } else {
     notifyTopWarning(t('no_login'))
   }
+}
+
+const sendImg = async (data) => {
+  if (!globalState.isLogin) {
+    notifyTopWarning(t('no_login'))
+    return false
+  }
+  //build
+  let formData = new FormData();
+  formData.append('file', data, data.name)
+  const res = await uploadUserFile({fileType: 2}, formData)
+  if (!res || !res.data || !res.data.data) {
+    return false
+  }
+  const readAddress = res.data.data.readAddress
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress)
+  return true
 }
 
 const sendEmoji = (url) => {

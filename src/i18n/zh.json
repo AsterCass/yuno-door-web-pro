@@ -171,6 +171,14 @@
 
 
   "main_long_text_input_send": "发送",
+  "main_long_text_input_cancel": "取消",
+  "main_long_text_input_image_title": "发送图片",
+  "main_long_text_input_image_empty": "发送图片不能为空",
+  "main_long_text_input_image_content": "单日上传上限次数为20。发送文件、图片以及上传表情包会消耗该限制。历史记录中的图片，单用户最多保存10张照片，超过该数量，会将最旧的照片过期",
+  "main_long_text_input_image_tip1": "仅支持webp、png、jpg、jpeg、gif格式",
+  "main_long_text_input_image_tip2": "图片大小不得超过5MB",
+  "main_long_text_input_image_tip3": "如果图片在剪贴板中可以直接在输入框粘贴",
+  "main_long_text_input_image_tip4": "发送表情包不会消耗每日上传限制",
   "main_long_text_input_placeholder": "使用 Enter 发送，Ctrl+Enter 换行",
 
 
