@@ -37,8 +37,17 @@
 
             </div>
             <div class="q-mx-md">
-              <q-btn no-caps unelevated class=" shadow-1 component-full-btn-grow"
-                     @click="btnClick(true)" :label="$t(dialogJudgmentData.trueLabel)"/>
+              <q-btn no-caps unelevated class=" shadow-1 component-full-btn-grow" :disable="!trueBtnEnable"
+                     @click="btnClick(true)">
+                <div class="row items-center justify-center">
+                  <div>
+                    {{ $t(dialogJudgmentData.trueLabel) }}
+                  </div>
+                  <div v-if="!trueBtnEnable" class="q-ml-sm">
+                    <q-spinner-ios size="15px"/>
+                  </div>
+                </div>
+              </q-btn>
             </div>
           </div>
 
@@ -94,6 +103,7 @@ const props = defineProps({
 const showDialogJudgment = ref(props.modelValue);
 const uploadData = ref(null)
 const uploadDataBase64 = ref(null)
+const trueBtnEnable = ref(true)
 
 watch(() => props.modelValue, () => {
   if (props.modelValue) {
@@ -119,10 +129,12 @@ const insertDialogUploadFileData = (data) => {
 
 function btnClick(isTrue) {
   if (isTrue) {
+    trueBtnEnable.value = false
     props.callbackMethod(true, uploadData.value).then(res => {
       if (res) {
         uploadData.value = null;
       }
+      trueBtnEnable.value = true
     })
   } else {
     uploadData.value = null;

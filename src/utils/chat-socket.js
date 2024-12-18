@@ -346,7 +346,7 @@ function socketMsgReceiveDataParse(callback) {
             updateChattingDataWebAboutLast(singleChatting, true)
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
             if (needToBottom) {
-                delay(100).then(() => {
+                delay(250).then(() => {
                     gotoSpecifySite(chatScrollerDiv, chatScrollerDiv.scrollHeight)
                 })
             }
