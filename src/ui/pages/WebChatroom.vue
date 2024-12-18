@@ -67,11 +67,12 @@
                       </div>
 
                       <div class="col-12 row" style="font-size: .78rem">
-                        <div class="col component-max-line-text cask-chatroom-chat-list-subtitle">
+                        <div class="col component-max-line-text cask-chatroom-chat-list-subtitle"
+                             style="white-space: break-spaces;overflow-wrap: break-word; word-break: break-all;">
                           {{ prop.node.lastMessageText }}
                         </div>
 
-                        <div class="q-mx-md cask-chatroom-chat-list-subtitle">
+                        <div class="q-mx-sm cask-chatroom-chat-list-subtitle">
                           {{ prop.node.lastMessageTimeWeb }}
                         </div>
 
@@ -283,7 +284,9 @@
                       <div class="col-12 q-mb-sm q-pl-xs" style="font-size: .95rem">
                         {{ chatRow.sendUserNickname }}
                       </div>
-                      <div class="cask-chatroom-chat-body" style="white-space: break-spaces">
+                      <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                           class="cask-chatroom-chat-body-img" alt=""/>
+                      <div v-else class="cask-chatroom-chat-body" style="white-space: break-spaces">
                         {{ chatRow.message }}
                       </div>
                     </div>
@@ -293,7 +296,9 @@
                       <div class="col-12 q-mb-sm q-pr-xs text-right" style="font-size: .95rem">
                         {{ chatRow.sendUserNickname }}
                       </div>
-                      <div class="cask-chatroom-chat-body-mine">
+                      <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                           class="cask-chatroom-chat-body-img" alt=""/>
+                      <div v-else class="cask-chatroom-chat-body-mine">
                         {{ chatRow.message }}
                       </div>
                     </div>
@@ -314,9 +319,9 @@
 
         <cask-long-text-input v-if="socketChatState.webChattingFocusChat"
                               id="comment-reply-input" :elements="new Map([
-                  [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.FILE, {callback: ()=> {}}],
                   [CaskLongTextInputElement.IMG, {callback: (data)=> {chatInputImgSrc=data}}],
-                  [CaskLongTextInputElement.EMOJI, {callback: ()=> {}}],
+                  [CaskLongTextInputElement.EMOJI, {callback: (url)=> {sendEmoji(url)}}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
                               @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
@@ -565,7 +570,13 @@ function deleteChat(chatId) {
   }
 }
 
-
+const sendEmoji = (url) => {
+  if (globalState.isLogin) {
+    socketSend(socketChatState.webChattingFocusChat.chatId, url)
+  } else {
+    notifyTopWarning(t('main_chat_not_login_message'))
+  }
+}
 
 const sendChatMsg = () => {
   if (socketChatState.webChattingFocusChat.webInputText) {
@@ -679,6 +690,15 @@ onBeforeUnmount(() => {
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: pre-line;
+}
+
+.cask-chatroom-chat-body-img {
+  border-radius: 8px;
+  max-height: 400px;
+  max-width: 300px;
+  width: auto;
+  height: auto;
+  object-fit: contain
 }
 
 .cask-chatroom-chat-main {

@@ -53,7 +53,8 @@
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
             <div class="row">
-              <div v-for="(emoji, index) in starEmojiList" :key="index">
+              <div v-for="(emoji, index) in starEmojiList" :key="index"
+                   @click="hideEmojiBoard(); elements.get(CaskLongTextInputElement.EMOJI).callback(emoji.readAddress)">
                 <q-img :ratio="1" fit="contain" :src="emoji.readAddress" class="q-ma-xs cask-cursor-pointer"
                        style="height: 5rem; width: 5rem; border-radius: 8px">
                 </q-img>
@@ -188,6 +189,7 @@ watch(() => props.modelValue, () => {
 
 function getAllStarEmoji() {
   if (!globalState.isLogin) {
+    starEmojiList.value = []
     return
   }
   getStarEmojiList(customLargePage({})).then(res => {
@@ -197,6 +199,11 @@ function getAllStarEmoji() {
     starEmojiList.value = res.data.data.fileEmojis
   })
 }
+
+watch(
+    () => globalState.isLogin,
+    () => getAllStarEmoji()
+);
 
 function forLineBreakSend(event) {
   if (event.ctrlKey) {

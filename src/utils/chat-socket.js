@@ -11,6 +11,7 @@ import {delay, gotoSpecifySite} from "@/utils/base-tools";
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
+const RES_ADD = process.env.VUE_APP_RES_ADD
 const emojiRegex = /\[#b[0-9][0-9]]/g;
 const emojiCodeFormat = "[#b%s]"
 
@@ -83,6 +84,10 @@ export function messageTimeLabelBuilder(list) {
     let lastTime = '1970-01-01 00:00:00'
     const unit = 'minutes'
     for (let count = 0; count < list.length; ++count) {
+        //渲染图片、文件等
+        if (list[count].message.startsWith(RES_ADD)) {
+            list[count].webMessageFile = true
+        }
         //从没有被渲染过的地方开始渲染，或者从type为1的地方开始渲染
         if (list[count].webTimeLabelType === 1) {
             onlyLastStartBuild = true
@@ -128,7 +133,11 @@ export function updateChattingDataWebAboutLast(chat, toTop) {
         if (chatTree.children[index].id === chat.chatId) {
             chatTree.children[index].lastMessageTime = chat.lastMessageTime
             chatTree.children[index].lastMessageTimeWeb = timeToText(chat.lastMessageTime)
-            chatTree.children[index].lastMessageText = chat.lastMessageText
+            if (chat.lastMessageText.startsWith(RES_ADD)) {
+                chatTree.children[index].lastMessageText = t('main_chat_body_file_in_tree')
+            } else {
+                chatTree.children[index].lastMessageText = chat.lastMessageText
+            }
             chatTree.children[index].lastMessageId = chat.lastMessageId
             chatTree.children[index].latestRead = chat.latestRead
             currentIndex = index
@@ -230,7 +239,11 @@ export function rebuildChattingDataWeb(selectFirst) {
             singleChattingWeb.latestRead = singleChatting.latestRead
             singleChattingWeb.lastMessageTime = singleChatting.lastMessageTime
             singleChattingWeb.lastMessageTimeWeb = timeToText(singleChatting.lastMessageTime)
-            singleChattingWeb.lastMessageText = singleChatting.lastMessageText
+            if (singleChatting.lastMessageText.startsWith(RES_ADD)) {
+                singleChattingWeb.lastMessageText = t('main_chat_body_file_in_tree')
+            } else {
+                singleChattingWeb.lastMessageText = singleChatting.lastMessageText
+            }
             singleChattingWeb.lastMessageId = singleChatting.lastMessageId
             singleChattingWeb.chatUserRoleType = singleChatting.chatUserRoleType
             singleChattingWeb.chatUserGender = singleChatting.chatUserGender
