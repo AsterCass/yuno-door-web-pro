@@ -68,7 +68,7 @@
 
     </div>
 
-    <cask-dialog-upload-file :dialog-judgment-data="{
+    <cask-dialog-upload-file ref="uploadFileDialog" :dialog-judgment-data="{
       title: 'main_long_text_input_image_title', content: 'main_long_text_input_image_content',
       uploadAccept: '.webp,.png,.jpg,.jpeg,.gif',uploadMaxSize: 5242880,
       falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_send', tips:
@@ -197,6 +197,7 @@ const emojiTabs = ref([
   {value: 'kaomoji', label: 'main_chat_emoji_tabs_kaomoji',},
   {value: 'emojipro', label: 'main_chat_emoji_tabs_emoji_pro'},
 ])
+const uploadFileDialog = ref(null)
 
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
@@ -232,14 +233,13 @@ function pasteEventHandle(event) {
   const clipboardItems = event.clipboardData.items;
   for (const item of clipboardItems) {
     if (item.type.startsWith('image/')) {
-      const file = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = (data) => {
-        if (props.elements.has(CaskLongTextInputElement.IMG)) {
-          props.elements.get(CaskLongTextInputElement.IMG).callback(data.target.result);
+      if (props.elements.has(CaskLongTextInputElement.IMG)) {
+        const file = item.getAsFile();
+        if (uploadFileDialog.value) {
+          imageHandler()
+          uploadFileDialog.value.insertDialogUploadFileData(file)
         }
-      };
-      reader.readAsDataURL(file);
+      }
     } else if (!item.type.startsWith('text/')) {
       const file = item.getAsFile();
       const reader = new FileReader();

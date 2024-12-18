@@ -112,6 +112,11 @@ watch(uploadData, () => {
   }
 })
 
+//用于外部调用
+const insertDialogUploadFileData = (data) => {
+  uploadData.value = data
+}
+
 function btnClick(isTrue) {
   if (isTrue) {
     props.callbackMethod(true, uploadData.value).then(res => {
@@ -132,6 +137,9 @@ function closeDialogJudgment() {
   emit('update:modelValue', false);
 }
 
+defineExpose({
+  insertDialogUploadFileData
+})
 
 </script>
 
