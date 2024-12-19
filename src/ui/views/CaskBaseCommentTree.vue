@@ -11,7 +11,8 @@
       <div>
         <div v-for="(comment, index) in commentTree" :key="index" class="q-ma-md">
           <div class="row items-center">
-            <div class="relative-position q-mr-md cursor-pointer" style="width: 50px; height: 50px">
+            <div class="relative-position q-mr-md cursor-pointer" style="width: 50px; height: 50px"
+                 @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: comment.commentUserId})">
               <q-avatar size="56px" style="filter: blur(3px); position: absolute;">
                 <q-img :src="comment.commentUserAvatar"/>
               </q-avatar>
@@ -20,7 +21,8 @@
               </q-avatar>
             </div>
             <div class="col row items-center  q-ml-sm">
-              <div class="q-mr-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))">
+              <div class="q-mr-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))"
+                   @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: comment.commentUserId})">
                 {{ comment.commentUserName }}
               </div>
               <div class="" style="font-size: .85rem;opacity: 0.8;">
@@ -68,7 +70,8 @@
                  class="q-mt-md col-12" style="font-size: 0.95rem">
               <div v-for="(childComment, index) in comment.childData" :key="index" class="q-ma-sm">
                 <div class="row items-center">
-                  <div class="relative-position q-mr-md cursor-pointer" style="width: 30px; height: 30px">
+                  <div class="relative-position q-mr-md cursor-pointer" style="width: 30px; height: 30px"
+                       @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: childComment.commentUserId})">
                     <q-avatar size="36px" style="filter: blur(3px); position: absolute;">
                       <q-img :src="childComment.commentUserAvatar"/>
                     </q-avatar>
@@ -77,7 +80,8 @@
                     </q-avatar>
                   </div>
                   <div class="col row items-center  q-ml-sm">
-                    <div class="q-mr-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))">
+                    <div class="q-mr-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))"
+                         @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: childComment.commentUserId})">
                       {{ childComment.commentUserName }}
                     </div>
                     <div class="" style="font-size: .75rem;opacity: 0.8;">
@@ -163,7 +167,10 @@ import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {checkReply} from "@/utils/format-check";
 import {useI18n} from "vue-i18n";
+import {toSpecifyPageWithQuery} from "@/router";
+import {useRouter} from "vue-router";
 
+const thisRouter = useRouter()
 const props = defineProps({
   mainId: {
     type: String,

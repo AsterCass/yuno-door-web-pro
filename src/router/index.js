@@ -160,6 +160,14 @@ const router = createRouter({
             },
         },
         {
+            path: "/space",
+            name: "space",
+            component: WebRedirect,
+            props: ($route) => {
+                return $route.query.id ? {path: "space?id=" + $route.query.id} : {path: "space"}
+            }
+        },
+        {
             path: "/privacy",
             name: "privacy",
             component: WebRedirect,

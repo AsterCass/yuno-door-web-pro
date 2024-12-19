@@ -24,12 +24,14 @@
 
           <div class="row justify-between items-center q-mt-lg">
             <div class="row items-center">
-              <q-btn round push color="black">
+              <q-btn round push color="black" @click="toSpecifyPageWithQuery(
+                  thisRouter, 'space', {id: blogMeta.authorId})">
                 <q-avatar size="38px" style="margin: 2px">
                   <q-img :src="blogMeta.authorAvatar"/>
                 </q-avatar>
               </q-btn>
-              <div style="font-size: 1rem; margin-left: 12px" class="cask-jump-link-in-text-origin">
+              <div style="font-size: 1rem; margin-left: 12px" class="cask-jump-link-in-text-origin"
+                   @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: blogMeta.authorId})">
                 {{ blogMeta.authorName }}
               </div>
             </div>
@@ -151,7 +153,7 @@ import {decrypt} from "@/utils/crypto";
 import {buildImgFormat, headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
-import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQuery, toSpecifyPageWithQueryNewTab} from "@/router";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
