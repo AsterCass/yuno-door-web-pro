@@ -18,12 +18,12 @@
 
     <div v-if="0 !== videoList.length" class="col-12 row justify-between q-mt-sm q-mb-lg items-center">
 
-      <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs q-ml-md" @click="scrollVideoStep(false)"
-             style="background-color: rgb(var(--full-container-background-color-light))">
-        <div class="row items-center q-my-xl">
+      <div class="q-mx-xs q-ml-md cask-cursor-pointer" @click="scrollVideoStep(false)"
+           style="background-color: rgb(var(--full-container-background-color-light)); border-radius: 4px">
+        <div class="row items-center q-my-xl q-mx-sm">
           <q-icon name="fa-solid fa-chevron-left" size="1.5rem" style="margin-top: 2px"/>
         </div>
-      </q-btn>
+      </div>
 
       <div ref="videoScrollerRef" :style="!globalState.screenMini ? 'width: 88%' : 'width: 60%'">
         <q-virtual-scroll
@@ -37,13 +37,12 @@
         </q-virtual-scroll>
       </div>
 
-
-      <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs q-mr-md" @click="scrollVideoStep(true)"
-             style="background-color: rgb(var(--full-container-background-color-light))">
-        <div class="row items-center q-my-xl">
+      <div class="q-mx-xs q-mr-md cask-cursor-pointer" @click="scrollVideoStep(true)"
+           style="background-color: rgb(var(--full-container-background-color-light)); border-radius: 4px">
+        <div class="row items-center q-my-xl q-mx-sm">
           <q-icon name="fa-solid fa-chevron-right" size="1.5rem" style="margin-top: 2px"/>
         </div>
-      </q-btn>
+      </div>
 
 
     </div>
