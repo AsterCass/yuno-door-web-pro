@@ -185,6 +185,14 @@
   "main_long_text_input_image_tip3": "如果图片在剪贴板中可以直接在输入框粘贴",
   "main_long_text_input_image_tip4": "发送表情包不会消耗每日上传限制",
   "main_long_text_input_placeholder": "使用 Enter 发送，Ctrl+Enter 换行",
+  "main_long_text_upload_emoji": "上传表情包",
+  "main_long_text_input_emoji_title": "上传我的表情包",
+  "main_long_text_input_emoji_upload": "上传",
+  "main_long_text_input_emoji_upload_success": "上传成功",
+  "main_long_text_input_emoji_upload_fail": "上传失败",
+  "main_long_text_input_emoji_tip1": "仅支持webp、png、jpg、jpeg、gif格式",
+  "main_long_text_input_emoji_tip2": "图片大小不得超过20K",
+  "main_long_text_input_emoji_tip3": "发送表情包不会消耗每日上传限制",
 
 
 

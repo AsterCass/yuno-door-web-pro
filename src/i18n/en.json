@@ -70,7 +70,7 @@
   "main_login_success": "Login successful",
   "main_login_success_logout": "Logout successful",
   "main_login_success_copy": "Copied",
-  "main_login_fail_copy": "Copy fail",
+  "main_login_fail_copy": "Copy failed",
 
   "main-fa-mail": "Mail",
   "main-fa-wechat": "WeChat",
@@ -184,6 +184,15 @@
   "main_long_text_input_image_tip3": "If the image is in the clipboard, can be directly pasted into the input box.",
   "main_long_text_input_image_tip4": "Sending Emoji Pro does not count towards upload limit.",
   "main_long_text_input_placeholder": "Press Enter to send, Ctrl+Enter to insert a line break.",
+  "main_long_text_upload_emoji": "Upload EP",
+  "main_long_text_input_emoji_title": "Upload my Emoji Pro",
+  "main_long_text_input_emoji_upload": "Upload",
+  "main_long_text_input_emoji_upload_success": "Upload successful",
+  "main_long_text_input_emoji_upload_fail": "Upload failed",
+  "main_long_text_input_emoji_tip1": "Only supports webp, png, jpg, jpeg, and gif formats.",
+  "main_long_text_input_emoji_tip2": "The image size must not exceed 20KB.",
+  "main_long_text_input_emoji_tip3": "Sending Emoji Pro does not count towards upload limit.",
+
 
 
 

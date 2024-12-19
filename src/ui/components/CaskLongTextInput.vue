@@ -59,12 +59,19 @@
                        style="height: 5rem; width: 5rem; border-radius: 8px">
                 </q-img>
               </div>
+              <div class="q-ma-xs cask-cursor-pointer column justify-center items-center"
+                   @click="showEmojiUpload = true"
+                   style="height: 5rem; width: 5rem; border-radius: 8px; border: 2px dashed rgb(var(--text-color));">
+                <q-icon class="q-my-xs" size="1rem" name="fa-solid fa-upload" style="opacity: .95;"/>
+                <div class="q-my-xs" style="opacity: .95; font-size: .72rem">
+                  {{ $t('main_long_text_upload_emoji') }}
+                </div>
+              </div>
             </div>
           </q-scroll-area>
         </q-tab-panel>
 
       </q-tab-panels>
-
 
     </div>
 
@@ -76,6 +83,15 @@
       'main_long_text_input_image_tip4',]}"
                              :callback-method="uploadFileCallback"
                              v-model="showImageUpload"
+    />
+
+    <cask-dialog-upload-file ref="uploadEmojiDialog" :dialog-judgment-data="{
+      title: 'main_long_text_input_emoji_title', content: 'main_long_text_input_image_content',
+      uploadAccept: '.webp,.png,.jpg,.jpeg,.gif',uploadMaxSize: 20480,
+      falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_emoji_upload', tips:
+      ['main_long_text_input_emoji_tip1','main_long_text_input_emoji_tip2','main_long_text_input_emoji_tip3',]}"
+                             :callback-method="uploadEmojiCallback"
+                             v-model="showEmojiUpload"
     />
 
     <q-input ref="caskLongTextInputRef" @keydown.enter.prevent="forLineBreakSend"
@@ -144,10 +160,10 @@ import {EmojiExampleList, KaomojiExampleList} from "@/constant/enums/emoji-ex";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {delay} from "@/utils/base-tools";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
-import {getStarEmojiList} from "@/api/file";
+import {getStarEmojiList, uploadUserFile} from "@/api/file";
 import {customLargePage} from "@/utils/page";
 import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
-import {notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {useI18n} from "vue-i18n";
 
 const globalState = useGlobalStateStore();
@@ -193,7 +209,7 @@ const mainInput = ref(props.modelValue)
 const caskLongTextInputRef = ref(null)
 const showEmojiBoard = ref(false)
 const showImageUpload = ref(false)
-const showImageUploadBtnEnable = ref(true)
+const showEmojiUpload = ref(false)
 const currentEmojiTab = ref('emoji');
 const starEmojiList = ref([])
 const emojiTabs = ref([
@@ -202,6 +218,7 @@ const emojiTabs = ref([
   {value: 'emojipro', label: 'main_chat_emoji_tabs_emoji_pro'},
 ])
 const uploadFileDialog = ref(null)
+const uploadEmojiDialog = ref(null)
 
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
@@ -288,6 +305,33 @@ const imageHandler = () => {
   }
 }
 
+const uploadEmojiCallback = async (isSend, data) => {
+  if (!isSend) {
+    showEmojiUpload.value = false
+    return
+  }
+  if (!data) {
+    notifyTopWarning(t('main_long_text_input_image_empty'))
+    return
+  }
+  if (!globalState.isLogin) {
+    notifyTopWarning(t('no_login'))
+  }
+  //build
+  let formData = new FormData();
+  formData.append('file', data, data.name)
+  const res = await uploadUserFile({fileType: 1}, formData)
+  if (!res || !res.data || !res.data.data) {
+    notifyTopWarning(t('file_no_limit'))
+    return false
+  } else {
+    getAllStarEmoji()
+    showEmojiUpload.value = false
+    notifyTopPositive(t('main_long_text_input_emoji_upload_success'))
+    return true
+  }
+}
+
 const uploadFileCallback = async (isSend, data) => {
   if (!isSend) {
     hideImageBoard()
@@ -298,9 +342,7 @@ const uploadFileCallback = async (isSend, data) => {
     return
   }
   //todo 兼容文件发送
-  showImageUploadBtnEnable.value = false
   const res = await props.elements.get(CaskLongTextInputElement.IMG).callback(data)
-  showImageUploadBtnEnable.value = true
   if (res) {
     hideImageBoard()
   }
@@ -330,7 +372,7 @@ onBeforeUnmount(() => {
 
 .cask-long-text-input-emoji {
   top: -27rem;
-  left: 50%;
+  left: 56.5%;
   right: 0;
   height: 1rem;
   border-radius: 8px;
