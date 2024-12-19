@@ -316,6 +316,7 @@ const uploadEmojiCallback = async (isSend, data) => {
   }
   if (!globalState.isLogin) {
     notifyTopWarning(t('no_login'))
+    return
   }
   //build
   let formData = new FormData();
