@@ -195,6 +195,10 @@
   "main_long_text_input_emoji_tip3": "发送表情包不会消耗每日上传限制",
 
 
+  "main_redirect_pre": "该页面的新版迁移还未完成",
+  "main_redirect_post": "秒后跳转到旧版页面访问该功能",
+  "main_redirect_now": "直接跳转",
+
 
   "home": "主页"
 }

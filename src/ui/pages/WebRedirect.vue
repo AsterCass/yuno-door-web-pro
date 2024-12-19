@@ -1,9 +1,24 @@
 <template>
-  <div>
-    当前页面的新版页面正在开发中... {{ count }} 秒后跳转到旧版页面
-    <q-btn @click="routePrevious">
-      直接跳转
+
+  <div class="row justify-center q-mt-xl">
+
+
+    <div class="full-width row justify-center q-my-xl">
+      <div style="width: 30%" class="text-center">
+        {{ $t('main_redirect_pre') }} &nbsp; {{ count }} &nbsp;{{ $t('main_redirect_post') }}
+      </div>
+    </div>
+
+    <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow" @click="routePrevious">
+      <div class="q-mx-xs">
+        {{ $t('main_redirect_now') }}
+      </div>
     </q-btn>
+
+  </div>
+  <div>
+
+
   </div>
 </template>
 
@@ -30,13 +45,12 @@ const props = defineProps({
 })
 
 function startCountdown() {
-  // 启动一个 10 秒的定时器
   timer = setInterval(() => {
     if (count.value > 0) {
       --count.value
     } else {
       clearInterval(timer); // 清除定时器
-      routePrevious()
+      // routePrevious()
     }
   }, 1000);
 }

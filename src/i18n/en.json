@@ -193,7 +193,9 @@
   "main_long_text_input_emoji_tip2": "The image size must not exceed 20KB.",
   "main_long_text_input_emoji_tip3": "Sending Emoji Pro does not count towards upload limit.",
 
-
+  "main_redirect_pre": "The migration to the new version of this page is not yet complete. You will be redirected to the old version in",
+  "main_redirect_post": "seconds to access this feature.",
+  "main_redirect_now": "Redirect now",
 
 
   "home": "Home"
