@@ -147,7 +147,8 @@
         <div class="col-2 column q-mx-md">
 
           <div class="row q-mb-xs">
-            <q-btn v-if="globalState.isLogin" no-caps unelevated style="width: 100%" dense>
+            <q-btn v-if="globalState.isLogin" no-caps unelevated style="width: 100%" dense
+                   @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: globalState.userData.id})">
               <div class="row items-center full-width">
                 <div class="col-2">
                   <q-avatar size="2.2rem" style="border-radius: 2.2rem;">
@@ -161,7 +162,8 @@
                 </div>
               </div>
             </q-btn>
-            <q-btn v-else no-caps unelevated style="width: 100%" dense>
+            <q-btn v-else no-caps unelevated style="width: 100%" dense
+                   @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: 'UV1'})">
               <div class="row items-center full-width">
                 <div class="col-2">
                   <q-avatar size="2.2rem" style="border-radius: 2.2rem;">
@@ -277,7 +279,8 @@
                     </div>
                   </div>
                   <div v-if="!globalState.userData || globalState.userData.id !== chatRow.sendUserId" class="row">
-                    <q-avatar size="40px" class="q-mr-sm">
+                    <q-avatar size="40px" class="q-mr-sm cask-cursor-pointer"
+                              @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: chatRow.sendUserId})">
                       <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
                     </q-avatar>
                     <div class="row col">
@@ -377,7 +380,8 @@
                         </div>
                       </div>
                     </div>
-                    <q-avatar size="40px" class="q-mx-sm">
+                    <q-avatar size="40px" class="q-mx-sm cask-cursor-pointer"
+                              @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: chatRow.sendUserId})">
                       <q-img spinner-size="1rem" :src="chatRow.sendUserAvatar"/>
                     </q-avatar>
                   </div>
@@ -422,7 +426,9 @@
               </div>
             </div>
 
-            <div class="text-center q-mt-sm" style="font-size: 1.4rem; font-weight: 600">
+            <div class="text-center q-mt-sm cask-cursor-pointer" style="font-size: 1.4rem; font-weight: 600"
+                 @click="toSpecifyPageWithQuery( thisRouter, 'space',{id:
+                 socketChatState.webChattingFocusChat.chatUserId})">
               {{ socketChatState.webChattingFocusChat.chatName }}
             </div>
 
@@ -608,7 +614,10 @@ import {useI18n} from "vue-i18n";
 import {copy, delay} from "@/utils/base-tools";
 import {uploadUserFile} from "@/api/file";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
+import {toSpecifyPageWithQuery} from "@/router";
+import {useRouter} from "vue-router";
 
+const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
