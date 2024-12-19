@@ -10,19 +10,19 @@ yarn serve
 
 [当前仓库网站地址](https://www.astercasc.com)
 
-[网站地址](https://previous.astercasc.com) 预计使用该代码重构该网站主要功能
+预计使用该代码重构该网站主要功能：[旧版本地址](https://previous.astercasc.com) 
 
 [旧版本仓库](https://github.com/AsterCass/yuno-door-web)
 
 ## 新版本预览
 
-<img src="preview/1.jpg"  width="400"/>
-<img src="preview/2.jpg"  width="400"/>
-<img src="preview/3.jpg"  width="400"/>
-<img src="preview/4.jpg"  width="400"/>
-<img src="preview/5.jpg"  width="400"/>
-<img src="preview/6.jpg"  width="400"/>
-<img src="preview/7.jpg"  width="400"/>
+<img src="preview/1.jpg"  width="100%"/>
+<img src="preview/2.jpg"  width="100%"/>
+<img src="preview/3.jpg"  width="100%"/>
+<img src="preview/4.jpg"  width="100%"/>
+<img src="preview/5.jpg"  width="100%"/>
+<img src="preview/6.jpg"  width="100%"/>
+<img src="preview/7.jpg"  width="100%"/>
 
 
 
