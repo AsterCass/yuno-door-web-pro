@@ -1,7 +1,7 @@
 <template>
 
 
-  <div class="component-long-text-input position-relative">
+  <div class="component-long-text-input" :style="isAbsolute ? '' : 'position: relative;'">
 
     <div v-if="elements.has(CaskLongTextInputElement.EMOJI)" v-click-outside="hideEmojiBoard"
          :class="showEmojiBoard ? 'emoji-show' : 'emoji-hide'"
@@ -13,7 +13,7 @@
 
       <q-tab-panels v-model="currentEmojiTab" animated class="col bg-transparent">
         <q-tab-panel name="emoji" class="no-padding bg-transparent">
-          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+          <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
@@ -28,7 +28,7 @@
         </q-tab-panel>
 
         <q-tab-panel name="kaomoji" class="no-padding bg-transparent">
-          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+          <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
@@ -48,7 +48,7 @@
         </q-tab-panel>
 
         <q-tab-panel name="emojipro" class="no-padding bg-transparent">
-          <q-scroll-area v-if="socketChatState.webChattingFocusChat" :thumb-style="globalState.curThemeName === 'dark' ?
+          <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
@@ -141,7 +141,6 @@
 import {defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import {CaskLongTextInputElement} from "@/constant/enums/component-enums";
 import {EmojiExampleList, KaomojiExampleList} from "@/constant/enums/emoji-ex";
-import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {delay} from "@/utils/base-tools";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
@@ -183,6 +182,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isAbsolute: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }
 })
 
 const mainInput = ref(props.modelValue)

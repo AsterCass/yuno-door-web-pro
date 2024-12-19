@@ -392,7 +392,7 @@
 
         <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 3%"/>
 
-        <cask-long-text-input v-if="socketChatState.webChattingFocusChat"
+        <cask-long-text-input v-if="socketChatState.webChattingFocusChat" is-absolute
                               id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   [CaskLongTextInputElement.IMG, {callback: sendImg}],
