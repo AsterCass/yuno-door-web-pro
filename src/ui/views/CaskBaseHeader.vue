@@ -8,7 +8,8 @@
          'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
       <div class="row items-center justify-start col-4">
-        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" to="/previous">
+        <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter,'previous')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_pre_version') }}
@@ -19,7 +20,8 @@
 
       <div class="row items-center justify-center col-4">
         <q-btn v-if="centerElements.includes(CaskModuleElement.ARTICLE)" no-caps unelevated
-               class="component-none-btn-grow q-mx-xs" to="/article/list">
+               class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter,'webArticleList')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_articles') }}
@@ -27,7 +29,8 @@
           </div>
         </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.TOOL)" no-caps unelevated
-               class="component-none-btn-grow q-mx-xs" to="/tools/list">
+               class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter,'mainToolsList')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_tools') }}
@@ -35,7 +38,8 @@
           </div>
         </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.HOME)" no-caps unelevated
-               class="component-none-btn-grow q-mx-xs" to="/">
+               class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter,'main')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_home') }}
@@ -43,7 +47,8 @@
           </div>
         </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.VIDEO)" no-caps unelevated
-               class="component-none-btn-grow q-mx-xs" to="/video/collection">
+               class="component-none-btn-grow q-mx-xs"
+               @click="toSpecifyPage(thisRouter,'mainVideoCollection')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_videos') }}
@@ -51,7 +56,7 @@
           </div>
         </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.GUEST_BOOK)" no-caps unelevated
-               class="component-none-btn-grow q-mx-xs" to="/board">
+               class="component-none-btn-grow q-mx-xs" @click="toSpecifyPage(thisRouter,'board')">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_board') }}

@@ -34,7 +34,8 @@
                       {{ $t(view.name + "_desc") }}
                     </div>
                     <div class="row justify-end q-mt-sm q-mr-sm">
-                      <q-btn no-caps unelevated class="component-none-btn-grow" :to="view.address">
+                      <q-btn no-caps unelevated class="component-none-btn-grow"
+                             @click="toSpecifyPage(thisRouter, view.address)">
                         <div class="row items-center">
                           <div class="q-mr-sm">
                             {{ $t('route-tool') }}
@@ -67,7 +68,8 @@
 
 
     <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" to="/tools/list">
+      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
+             @click="toSpecifyPage(thisRouter, 'mainToolsList')">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('route-more-list') }}
@@ -83,17 +85,20 @@
 import {useGlobalStateStore} from "@/utils/global-state";
 import {ref} from "vue";
 import {useI18n} from "vue-i18n";
+import {useRouter} from "vue-router";
+import {toSpecifyPage} from "@/router";
 
+const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
 const toolkitView = ref("main_tools_qrcode_gen")
 const toolkitViewList = ref(
     [
-      {name: "main_tools_qrcode_gen", address: "/tools/qrcode"},
-      {name: "main_tools_md5_gen", address: "/tools/md5"},
-      {name: "main_tools_rgb_con", address: "/tools/rgbHex"},
-      {name: "main_tools_base64_con", address: "/tools/imgBase64"},
+      {name: "main_tools_qrcode_gen", address: "mainToolsQrcode"},
+      {name: "main_tools_md5_gen", address: "mainToolsMd5"},
+      {name: "main_tools_rgb_con", address: "mainToolsRgbHex"},
+      {name: "main_tools_base64_con", address: "mainToolsImgBase64"},
     ]
 )
 

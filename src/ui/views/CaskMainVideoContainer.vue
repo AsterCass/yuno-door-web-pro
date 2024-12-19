@@ -50,7 +50,8 @@
 
 
     <div class="col-12 row justify-center">
-      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" to="/video/collection">
+      <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
+             @click="toSpecifyPage(thisRouter,'mainVideoCollection')">
         <div class="row items-center">
           <div class="q-mx-xs">
             {{ $t('route-more-list') }}
@@ -69,8 +70,10 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {getAllVideoCol} from "@/api/video";
 import {customPageNP} from "@/utils/page";
 import CaskVideoCard from "@/ui/views/CaskVideoCard.vue";
+import {toSpecifyPage} from "@/router";
+import {useRouter} from "vue-router";
 
-
+const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 
 const videoCurrent = ref(0)
