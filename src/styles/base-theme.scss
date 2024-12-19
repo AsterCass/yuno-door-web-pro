@@ -212,6 +212,14 @@ p {
   }
 }
 
+.cask-jump-link-in-text-more {
+  cursor: pointer;
+
+  &:hover, &:active {
+    color: rgb(var(--pointer));
+  }
+}
+
 .cask-cursor-pointer {
   cursor: pointer;
 

@@ -68,6 +68,8 @@
   "main_login_message_empty": "账号密码不能为空",
   "main_login_success": "登录成功",
   "main_login_success_logout": "登出成功",
+  "main_login_success_copy": "复制成功",
+  "main_login_fail_copy": "复制失败",
 
   "main-fa-mail": "邮箱",
   "main-fa-wechat": "微信",
@@ -164,6 +166,8 @@
   "main_chat_emoji_tabs_emoji_pro": "表情包",
   "main_chat_emoji_tabs_kaomoji": "颜文字",
   "main_chat_body_file_in_tree": "[图片或文件]",
+  "main_chat_operation_copy": "复制",
+  "main_chat_operation_star_emoji": "添加到我的表情包",
 
 
   "main_chat_chat_time_now": "刚刚",

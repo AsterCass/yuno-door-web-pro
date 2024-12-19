@@ -1,9 +1,26 @@
+import {notifyTopNegative, notifyTopPositive} from "@/utils/notification-tools";
+import i18n from "@/i18n";
+
+const t = i18n.global.t
+
 export function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function copy(text) {
+    if (!navigator.clipboard) {
+        notifyTopNegative(t('main_login_fail_copy'))
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function () {
+        notifyTopPositive(t('main_login_success_copy'))
+    }, function () {
+        notifyTopNegative(t('main_login_fail_copy'))
+    });
 }
 
 export function openLink(url, newBlank = true) {

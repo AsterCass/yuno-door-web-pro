@@ -301,17 +301,29 @@
                           </div>
                         </div>
                       </div>
-                      <img v-if="chatRow.webMessageFile" :src="chatRow.message"
-                           @click="showImgSrc = chatRow.message; showImg = true"
-                           class="cask-chatroom-chat-body-img" alt=""
+                      <div class="relative-position" style="margin-right: 15%;"
                            v-on:mouseover="chatRow.webFocusThisMsg=true"
-                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
-                      />
-                      <div v-else class="cask-chatroom-chat-body"
-                           v-on:mouseover="chatRow.webFocusThisMsg=true"
-                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
-                           style="white-space: break-spaces">
-                        {{ chatRow.message }}
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false">
+                        <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                             @click="showImgSrc = chatRow.message; showImg = true"
+                             class="cask-chatroom-chat-body-img" alt=""
+                        />
+                        <div v-else class="cask-chatroom-chat-body"
+                             style="white-space: break-spaces">
+                          {{ chatRow.message }}
+                        </div>
+                        <div v-show="chatRow.webFocusThisMsg"
+                             class="chat-body-label row items-end animate__animated animate__fadeIn">
+                          <div class="chat-body-label-mine-body">
+                            <div class="row cask-jump-link-in-text-more" v-if="chatRow.webMessageFile"
+                                 @click="notifyTopWarning($t('in_develop'))">
+                              {{ $t('main_chat_operation_star_emoji') }}
+                            </div>
+                            <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
+                              {{ $t('main_chat_operation_copy') }}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -339,16 +351,28 @@
                           {{ chatRow.sendUserNickname }}
                         </div>
                       </div>
-                      <img v-if="chatRow.webMessageFile" :src="chatRow.message"
-                           @click="showImgSrc = chatRow.message; showImg = true"
+                      <div class="relative-position" style="margin-left: 15%;"
                            v-on:mouseover="chatRow.webFocusThisMsg=true"
-                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
-                           class="cask-chatroom-chat-body-img" alt=""/>
-                      <div v-else class="cask-chatroom-chat-body-mine"
-                           v-on:mouseover="chatRow.webFocusThisMsg=true"
-                           v-on:mouseleave="chatRow.webFocusThisMsg=false"
-                           style="white-space: break-spaces">
-                        {{ chatRow.message }}
+                           v-on:mouseleave="chatRow.webFocusThisMsg=false">
+                        <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                             @click="showImgSrc = chatRow.message; showImg = true"
+                             class="cask-chatroom-chat-body-img" alt=""/>
+                        <div v-else class="cask-chatroom-chat-body-mine"
+                             style="white-space: break-spaces">
+                          {{ chatRow.message }}
+                        </div>
+                        <div v-show="chatRow.webFocusThisMsg"
+                             class="chat-body-label-mine row items-end animate__animated animate__fadeIn">
+                          <div class="chat-body-label-mine-body">
+                            <div class="row cask-jump-link-in-text-more" v-if="chatRow.webMessageFile"
+                                 @click="notifyTopWarning($t('in_develop'))">
+                              {{ $t('main_chat_operation_star_emoji') }}
+                            </div>
+                            <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
+                              {{ $t('main_chat_operation_copy') }}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <q-avatar size="40px" class="q-mx-sm">
@@ -579,7 +603,7 @@ import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {hideChat, moreMessage} from "@/api/chat";
 import {useI18n} from "vue-i18n";
-import {delay} from "@/utils/base-tools";
+import {copy, delay} from "@/utils/base-tools";
 import {uploadUserFile} from "@/api/file";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 
@@ -748,9 +772,25 @@ onBeforeUnmount(() => {
   padding: 8px;
   background-color: rgba(var(--text-color), 0.1);
   cursor: zoom-in;
-  margin-right: 15%;
   overflow-wrap: break-word;
   word-break: break-all;
+}
+
+.chat-body-label {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(100%, 0);
+  padding-left: 5px;
+
+  .chat-body-label-mine-body {
+    padding: 1px 8px;
+    border-radius: 4px;
+    background-color: rgba(var(--text-color), .07);
+    backdrop-filter: saturate(200%) blur(30px);
+  }
 }
 
 .cask-chatroom-chat-body-mine {
@@ -759,10 +799,25 @@ onBeforeUnmount(() => {
   background-color: rgba(var(--positive), 0.92);
   cursor: zoom-in;
   color: #eee;
-  margin-left: 15%;
   overflow-wrap: break-word;
   word-break: break-word;
-  white-space: pre-line;
+}
+
+.chat-body-label-mine {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-100%, 0);
+  padding-right: 5px;
+
+  .chat-body-label-mine-body {
+    padding: 1px 8px;
+    border-radius: 4px;
+    background-color: rgba(var(--text-color), .07);
+    backdrop-filter: saturate(200%) blur(30px);
+  }
 }
 
 .cask-chatroom-chat-body-img {

@@ -68,6 +68,8 @@
   "main_login_message_empty": "Account and password cannot be empty",
   "main_login_success": "Login successful",
   "main_login_success_logout": "Logout successful",
+  "main_login_success_copy": "Copied",
+  "main_login_fail_copy": "Copy fail",
 
   "main-fa-mail": "Mail",
   "main-fa-wechat": "WeChat",
@@ -164,6 +166,8 @@
   "main_chat_emoji_tabs_emoji_pro": "Emoji Pro",
   "main_chat_emoji_tabs_kaomoji": "Kaomoji",
   "main_chat_body_file_in_tree": "[Image or File]",
+  "main_chat_operation_copy": "Copy",
+  "main_chat_operation_star_emoji": "Add to my Emoji Pro",
 
 
   "main_chat_chat_time_now": "Just now",
