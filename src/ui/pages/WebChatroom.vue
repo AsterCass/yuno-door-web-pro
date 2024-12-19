@@ -307,6 +307,7 @@
                         <img v-if="chatRow.webMessageFile" :src="chatRow.message"
                              @click="showImgSrc = chatRow.message; showImg = true"
                              class="cask-chatroom-chat-body-img" alt=""
+                             @error="chatRow.message = '/img/main_expire.png'"
                         />
                         <div v-else class="cask-chatroom-chat-body"
                              style="white-space: break-spaces">
@@ -356,7 +357,8 @@
                            v-on:mouseleave="chatRow.webFocusThisMsg=false">
                         <img v-if="chatRow.webMessageFile" :src="chatRow.message"
                              @click="showImgSrc = chatRow.message; showImg = true"
-                             class="cask-chatroom-chat-body-img" alt=""/>
+                             class="cask-chatroom-chat-body-img" alt=""
+                             @error="chatRow.message = '/img/main_expire.png'"/>
                         <div v-else class="cask-chatroom-chat-body-mine"
                              style="white-space: break-spaces">
                           {{ chatRow.message }}
