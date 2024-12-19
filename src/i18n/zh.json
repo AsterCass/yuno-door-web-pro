@@ -20,6 +20,7 @@
   "error_request": "系统繁忙，请稍后再试",
   "no_login": "未登录用户无法进行该操作，请先登录",
   "no_auth": "权限不足，无法执行该操作，请联系管理员授权",
+  "file_no_limit": "上传数量达到最大限制，请明天再来吧😭",
 
   "file_upload_error_message": "文件不满足条件，请重新上传",
   "file_upload_title": "将文件拖拽到此处或点击该矩形框完成上传",

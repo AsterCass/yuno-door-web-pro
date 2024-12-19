@@ -20,6 +20,7 @@
   "error_request": "The system is busy. Please try again later",
   "no_login": "Unauthenticated users cannot perform this action. Please log in first",
   "no_auth": "Permission denied. Unable to perform this operation. Please contact the administrator for authorization",
+  "file_no_limit": "The upload limit has been reached. Please come back tomorrow😭",
 
   "file_upload_error_message": "The file does not meet the requirements, please upload again",
   "file_upload_title": "Drag and drop files here or click for upload",

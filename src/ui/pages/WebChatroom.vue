@@ -660,6 +660,7 @@ const sendImg = async (data) => {
   formData.append('file', data, data.name)
   const res = await uploadUserFile({fileType: 2}, formData)
   if (!res || !res.data || !res.data.data) {
+    notifyTopWarning(t('file_no_limit'))
     return false
   }
   const readAddress = res.data.data.readAddress
