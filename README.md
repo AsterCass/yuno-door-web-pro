@@ -8,18 +8,35 @@ yarn serve
 
 ## 网站说明
 
-[网站地址](https://www.astercasc.com) 预计使用该代码重构该网站主要功能
+[当前仓库网站地址](https://www.astercasc.com)
 
-## 计划功能
+[网站地址](https://previous.astercasc.com) 预计使用该代码重构该网站主要功能
+
+[旧版本仓库](https://github.com/AsterCass/yuno-door-web)
+
+## 新版本预览
+
+<img src="preview/1.jpg"  width="400"/>
+<img src="preview/2.jpg"  width="400"/>
+<img src="preview/3.jpg"  width="400"/>
+<img src="preview/4.jpg"  width="400"/>
+<img src="preview/5.jpg"  width="400"/>
+<img src="preview/6.jpg"  width="400"/>
+<img src="preview/7.jpg"  width="400"/>
+
+
+
+## 已完成
 
 * 主页
-* 文章页面
+* 文章列表页
+* 文章详情页
+* 聊天页
+
+## 计划中
+
 * 工具页面
-* 聊天页面
 * 个人资料页
-
-## 功能支持
-
 
 ## 项目文件结构
 
