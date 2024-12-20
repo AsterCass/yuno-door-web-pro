@@ -293,8 +293,7 @@ function socketMsgReceiveDataParse(callback) {
             alreadyInChatList = true
 
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
-            let chatScrollerDiv =
-                document.getElementById("chat-body-infinite-id-" + singleChatting.chatId)
+            const chatScrollerDiv = socketChatState.chatBodyScrollerOut.getScrollTarget()
             let needToBottom = false
             if (chatScrollerDiv) {
                 const isAtBottom = chatScrollerDiv.scrollHeight -

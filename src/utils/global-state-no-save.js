@@ -2,6 +2,7 @@ import {reactive, watch} from 'vue';
 import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {readMessage} from "@/api/chat";
+import {delay} from "@/utils/base-tools";
 
 export const scrollState = reactive({
     scrollTop: 0,
@@ -26,6 +27,8 @@ export const socketChatState = reactive({
     unReadAllMessages: new Set(),
     //是否需要浏览器通知，如果用户当前在聊天页面则不需要发送浏览器通知
     needBrowserNotification: true,
+    //聊天滚动条，用于每次切换聊天，滚动条发到底部
+    chatBodyScrollerOut: null,
 })
 
 
@@ -68,6 +71,13 @@ watch(
                 updateChattingDataWebAboutLast(singleChatting, false)
             }
         }
+
+        delay(10).then(() => {
+            if (socketChatState.chatBodyScrollerOut) {
+                const chatScrollerDiv = socketChatState.chatBodyScrollerOut.getScrollTarget()
+                chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight
+            }
+        })
 
         if (!inChattingData) {
             socketChatState.webChattingFocusChat = null
