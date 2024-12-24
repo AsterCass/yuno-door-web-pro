@@ -75,11 +75,27 @@ const router = createRouter({
                     }),
                 },
                 {
+                    path: "code/sql2kotlin",
+                    name: "mainToolsSql2kotlin",
+                    component: WebRedirect,
+                    props: () => ({
+                        path: "tools/code/sql2kotlin",
+                    }),
+                },
+                {
                     path: "timestamp",
                     name: "mainToolsTimestamp",
                     component: WebRedirect,
                     props: () => ({
                         path: "tools/timestamp",
+                    }),
+                },
+                {
+                    path: "qrcode",
+                    name: "mainToolsQrcode",
+                    component: WebRedirect,
+                    props: () => ({
+                        path: "tools/qrcode",
                     }),
                 },
                 {
@@ -99,6 +115,14 @@ const router = createRouter({
                     }),
                 },
                 {
+                    path: "mkHtmlPdf",
+                    name: "mainToolsMkHtmlPdf",
+                    component: WebRedirect,
+                    props: () => ({
+                        path: "tools/mkHtmlPdf",
+                    }),
+                },
+                {
                     path: "rgbHex",
                     name: "mainToolsRgbHex",
                     component: WebRedirect,
@@ -107,11 +131,11 @@ const router = createRouter({
                     }),
                 },
                 {
-                    path: "qrcode",
-                    name: "mainToolsQrcode",
+                    path: "cnIdCard",
+                    name: "mainToolsCnIdCard",
                     component: WebRedirect,
                     props: () => ({
-                        path: "tools/qrcode",
+                        path: "tools/cnIdCard",
                     }),
                 },
             ]
