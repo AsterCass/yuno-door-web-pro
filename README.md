@@ -17,11 +17,17 @@ yarn serve
 ## 新版本预览
 
 <img src="preview/1.jpg"  width="100%"/>
+
 <img src="preview/2.jpg"  width="100%"/>
+
 <img src="preview/3.jpg"  width="100%"/>
+
 <img src="preview/4.jpg"  width="100%"/>
+
 <img src="preview/5.jpg"  width="100%"/>
+
 <img src="preview/6.jpg"  width="100%"/>
+
 <img src="preview/7.jpg"  width="100%"/>
 
 
