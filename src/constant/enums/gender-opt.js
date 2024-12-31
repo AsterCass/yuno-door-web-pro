@@ -10,27 +10,27 @@ export const genderOptEnum = [
         category: 1
     },
     {
-        label: '中性',
+        label: '女同性恋',
         color: 'deep-purple-7',
         category: 2
     },
     {
-        label: '偏男两性人',
+        label: '男同性恋',
         color: 'green-7',
         category: 3
     },
     {
-        label: '偏女两性人',
+        label: '双性恋',
         color: 'purple-7',
         category: 4
     },
     {
-        label: '不完全男性',
+        label: '跨性别',
         color: 'light-green-7',
         category: 5
     },
     {
-        label: '不完全女性',
+        label: '酷儿',
         color: 'teal-7',
         category: 6
     },
