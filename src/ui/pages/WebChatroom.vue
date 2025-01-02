@@ -256,8 +256,7 @@
           </div>
 
           <div v-if="socketChatState.webChattingFocusChat" class="col">
-            <cask-chatroom-body v-for="(chatTab, index) in socketChatState.chattingData" :key="index"
-                                v-show="chatTab.chatId === socketChatState.webChattingFocusChat.chatId"/>
+            <cask-chatroom-body/>
           </div>
 
         </div>

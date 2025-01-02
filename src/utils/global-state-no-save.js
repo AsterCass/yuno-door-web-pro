@@ -2,7 +2,6 @@ import {reactive, watch} from 'vue';
 import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {readMessage} from "@/api/chat";
-import {delay} from "@/utils/base-tools";
 
 export const scrollState = reactive({
     scrollTop: 0,
@@ -71,13 +70,6 @@ watch(
                 updateChattingDataWebAboutLast(singleChatting, false)
             }
         }
-
-        delay(10).then(() => {
-            if (socketChatState.chatBodyScrollerOut) {
-                const chatScrollerDiv = socketChatState.chatBodyScrollerOut.getScrollTarget()
-                chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight
-            }
-        })
 
         if (!inChattingData) {
             socketChatState.webChattingFocusChat = null

@@ -83,7 +83,7 @@ export function messageTimeLabelBuilder(list) {
     const currentTime = new Date()
     let lastTime = '1970-01-01 00:00:00'
     const unit = 'minutes'
-    for (let count = 0; count < list.length; ++count) {
+    for (let count = list.length - 1; count >= 0; --count) {
         //渲染图片、文件等
         if (list[count].message.startsWith(RES_ADD)) {
             list[count].webMessageFile = true
@@ -293,7 +293,7 @@ function socketMsgReceiveDataParse(callback) {
             alreadyInChatList = true
 
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
-            const chatScrollerDiv = socketChatState.chatBodyScrollerOut.getScrollTarget()
+            const chatScrollerDiv = socketChatState.chatBodyScrollerOut
             let needToBottom = false
             if (chatScrollerDiv) {
                 const isAtBottom = chatScrollerDiv.scrollHeight -
@@ -304,7 +304,7 @@ function socketMsgReceiveDataParse(callback) {
             }
 
             //数据插入
-            singleChatting.userChattingData.push(
+            singleChatting.userChattingData.splice(0, 0,
                 {
                     messageId: data.sendMessageId,
                     sendUserId: data.sendUserId,
@@ -345,8 +345,8 @@ function socketMsgReceiveDataParse(callback) {
             updateChattingDataWebAboutLast(singleChatting, true)
             // 如果当前聊天框已经在底部，或者为本人发送就需要自动将鼓滚动条再次拉到底部
             if (needToBottom) {
-                delay(250).then(() => {
-                    gotoSpecifySite(chatScrollerDiv, chatScrollerDiv.scrollHeight)
+                delay(50).then(() => {
+                    gotoSpecifySite(chatScrollerDiv, 0)
                 })
             }
         }
@@ -394,8 +394,6 @@ export function chattingDataInit(selectFirst = false, resetSelected = true) {
         socketChatState.chattingData.forEach(data => {
             if (!data.userChattingData) {
                 data.userChattingData = []
-            } else {
-                data.userChattingData = data.userChattingData.reverse()
             }
             //用户在不同聊天框的输入
             data.webInputText = ""

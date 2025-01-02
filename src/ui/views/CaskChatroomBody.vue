@@ -1,16 +1,8 @@
 <template>
-  <q-scroll-area v-if="!chatBodyFirstLoading"
-                 ref="chatBodyScroller" :thumb-style="globalState.curThemeName === 'dark' ?
-                         { background: 'white', width: '6px' } : { background: 'black', width: '6px' }"
-                 style="height: 100%; max-width: 100%"
-                 @scroll="chatBodyOnScroll">
-    <div v-if="chatBodyScrollerInLoading" class="row justify-center q-my-md">
-      <q-spinner-pie size="50px"/>
-    </div>
+  <div class="cask-chatroom-chat-body-scroll-container" ref="chatBodyScroller" @scroll="chatBodyOnScroll">
     <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
-         :key="index" :style="
-                     socketChatState.webChattingFocusChat.userChattingData.length -1 === index
-                      ? 'margin-bottom: 30px' : ''" class="q-my-sm q-mx-md">
+         :key="index" :style="0 === index
+                  ? 'margin-bottom: 30px' : ''" class="q-my-sm q-mx-md">
       <div v-if="chatRow.webTimeLabel" class="q-my-md row justify-center">
         <div style="opacity:.5">
           {{ chatRow.webTimeLabel }}
@@ -131,7 +123,10 @@
 
 
     </div>
-  </q-scroll-area>
+    <div v-if="chatBodyScrollerInLoading" class="row justify-center q-my-md">
+      <q-spinner-pie size="50px"/>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -141,7 +136,7 @@ import {toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {notifyTopWarning} from "@/utils/notification-tools";
-import {copy, delay} from "@/utils/base-tools";
+import {copy} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
@@ -153,33 +148,31 @@ const globalState = useGlobalStateStore();
 
 const chatBodyScroller = ref(null)
 const chatBodyScrollerInLoading = ref(false)
-const chatBodyFirstLoading = ref(false)
 
-watch(() => chatBodyScroller.value,
+watch(
+    () => socketChatState.webChattingFocusChat,
     () => {
-  console.log("xxxxxxxxxxxxxxxx", chatBodyScroller.value)
-      if (chatBodyScroller.value) {
-        const scroller = chatBodyScroller.value.getScrollTarget()
-        scroller.scrollTop = scroller.scrollHeight
+      if (socketChatState.chattingDataWebSelected && socketChatState.webChattingFocusChat.chatId) {
+        chatBodyScroller.value.scrollTop = 0
+        if (socketChatState.webChattingFocusChat.userChattingData.length === 0) {
+          loadMoreChatRecord()
+        }
       }
     }
-)
+);
 
 const chatBodyOnScroll = (info) => {
-  if (info.verticalPosition < 5 && socketChatState.webChattingFocusChat
+  const topDistant = info.target.scrollHeight - info.target.clientHeight - Math.abs(info.target.scrollTop)
+  if (topDistant < 5 && socketChatState.webChattingFocusChat
       && !socketChatState.webChattingFocusChat.chatScrollDisable && !chatBodyScrollerInLoading.value) {
-    //记录当前位置
-    const chatScrollerDiv = chatBodyScroller.value.getScrollTarget()
-    chatScrollerDiv.scrollTop = 10
-    const currentPosRe = chatScrollerDiv.scrollHeight - chatScrollerDiv.scrollTop - chatScrollerDiv.clientHeight
     //加载图标
     chatBodyScrollerInLoading.value = true
     //加载新数据
-    loadMoreChatRecord(currentPosRe)
+    loadMoreChatRecord()
   }
 }
 
-function loadMoreChatRecord(savePosRe) {
+function loadMoreChatRecord() {
   //get last msg
   let lastMsgId = ""
   if (socketChatState.webChattingFocusChat && 0 !== socketChatState.webChattingFocusChat.userChattingData.length) {
@@ -188,7 +181,8 @@ function loadMoreChatRecord(savePosRe) {
       chatBodyScrollerInLoading.value = false
       return
     }
-    lastMsgId = socketChatState.webChattingFocusChat.userChattingData[0].messageId
+    const lastMsgIndex = socketChatState.webChattingFocusChat.userChattingData.length - 1
+    lastMsgId = socketChatState.webChattingFocusChat.userChattingData[lastMsgIndex].messageId
   }
   moreMessage({lastMessage: lastMsgId, chatId: socketChatState.webChattingFocusChat.chatId}).then(res => {
     if (!res || !res.data || !res.data.data) {
@@ -201,28 +195,12 @@ function loadMoreChatRecord(savePosRe) {
       chatBodyScrollerInLoading.value = false
       return
     }
-    let inputData = res.data.data.reverse()
-    //首次加载到最底部
-    const isFistLoad = socketChatState.webChattingFocusChat.userChattingData.length === 0
-    if (isFistLoad) {
-      chatBodyFirstLoading.value = true
-    }
+    let inputData = res.data.data
     //加载数据
-    socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
+    socketChatState.webChattingFocusChat.userChattingData.push(...inputData)
     messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
     //todo 当用户向上拉聊天框的时候，收到消息，此时未读（提示新消息），当用户拉到底部的时候，发送已读请求
-    //将滚动位置保留再当前位置
     chatBodyScrollerInLoading.value = false
-    const chatScrollerDiv = chatBodyScroller.value.getScrollTarget()
-    if (isFistLoad) {
-      chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight
-      delay(0).then(() => {
-        chatBodyFirstLoading.value = false
-      })
-    } else {
-      chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight - savePosRe - chatScrollerDiv.clientHeight
-    }
-
   })
 }
 
@@ -235,6 +213,21 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--text-color-select));
+}
+
+.cask-chatroom-chat-body-scroll-container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
 
 .cask-chatroom-chat-body {
   border-radius: 8px;
