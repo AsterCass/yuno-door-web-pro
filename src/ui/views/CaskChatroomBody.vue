@@ -1,0 +1,302 @@
+<template>
+  <q-scroll-area v-if="!chatBodyFirstLoading"
+                 ref="chatBodyScroller" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } : { background: 'black', width: '6px' }"
+                 style="height: 100%; max-width: 100%"
+                 @scroll="chatBodyOnScroll">
+    <div v-if="chatBodyScrollerInLoading" class="row justify-center q-my-md">
+      <q-spinner-pie size="50px"/>
+    </div>
+    <div v-for="(chatRow, index) in socketChatState.webChattingFocusChat.userChattingData"
+         :key="index" :style="
+                     socketChatState.webChattingFocusChat.userChattingData.length -1 === index
+                      ? 'margin-bottom: 30px' : ''" class="q-my-sm q-mx-md">
+      <div v-if="chatRow.webTimeLabel" class="q-my-md row justify-center">
+        <div style="opacity:.5">
+          {{ chatRow.webTimeLabel }}
+        </div>
+      </div>
+      <div v-if="!globalState.userData || globalState.userData.id !== chatRow.sendUserId" class="row">
+        <q-avatar class="q-mr-sm cask-cursor-pointer" size="40px"
+                  @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: chatRow.sendUserId})">
+          <q-img :src="chatRow.sendUserAvatar" spinner-size="1rem"/>
+        </q-avatar>
+        <div class="row col">
+          <div class="col-12 q-mb-sm q-pl-xs row items-center" style="font-size: .95rem">
+            <div :class=" chatRow.webFocusThisMsg ?
+                              'text-' + getRoleTypeObj(chatRow.sendUserRoleType).color : ''"
+                 style=" transition: color .5s ease;">
+              {{ chatRow.sendUserNickname }}
+            </div>
+            <div v-show="chatRow.webFocusThisMsg"
+                 class="row q-mx-sm items-center animate__animated animate__fadeIn">
+              <q-badge :color="getGenderObj(chatRow.sendUserGender).color"
+                       :label="getGenderObj(chatRow.sendUserGender).label"
+                       class="q-mx-xs"
+                       style="font-size: .7rem; padding: 3px 6px;">
+              </q-badge>
+              <q-badge :color="getRoleTypeObj(chatRow.sendUserRoleType).color"
+                       :label="getRoleTypeObj(chatRow.sendUserRoleType).label"
+                       class="q-mx-xs"
+                       style="font-size: .7rem; padding: 3px 6px;">
+              </q-badge>
+              <div class="q-mx-sm" style="font-size: .7rem; opacity: 0.5">
+                {{ chatRow.sendDate }}
+              </div>
+            </div>
+          </div>
+          <div class="relative-position" style="margin-right: 15%;"
+               v-on:mouseleave="chatRow.webFocusThisMsg=false"
+               v-on:mouseover="chatRow.webFocusThisMsg=true">
+            <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                 alt=""
+                 class="cask-chatroom-chat-body-img" @click="showImgSrc = chatRow.message; showImg = true"
+                 @error="chatRow.message = '/img/main_expire.png'"
+            />
+            <div v-else class="cask-chatroom-chat-body"
+                 style="white-space: break-spaces">
+              {{ chatRow.message }}
+            </div>
+            <div v-show="chatRow.webFocusThisMsg"
+                 class="chat-body-label row items-end animate__animated animate__fadeIn">
+              <div class="chat-body-label-mine-body">
+                <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
+                     @click="notifyTopWarning($t('in_develop'))">
+                  {{ $t('main_chat_operation_star_emoji') }}
+                </div>
+                <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
+                  {{ $t('main_chat_operation_copy') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="row justify-end">
+        <div class="row col justify-end">
+          <div class="col-12 q-mb-sm q-pr-xs row items-center justify-end"
+               style="font-size: .95rem">
+            <div v-show="chatRow.webFocusThisMsg"
+                 class="q-mx-sm text-right row items-center animate__animated animate__fadeIn">
+              <div class="q-mx-sm" style="font-size: .7rem; opacity: 0.5">
+                {{ chatRow.sendDate }}
+              </div>
+              <q-badge :color="getGenderObj(chatRow.sendUserGender).color"
+                       :label="getGenderObj(chatRow.sendUserGender).label"
+                       class="q-mx-xs"
+                       style="font-size: .7rem; padding: 3px 6px;">
+              </q-badge>
+              <q-badge :color="getRoleTypeObj(chatRow.sendUserRoleType).color"
+                       :label="getRoleTypeObj(chatRow.sendUserRoleType).label"
+                       class="q-mx-xs"
+                       style="font-size: .7rem; padding: 3px 6px;">
+              </q-badge>
+            </div>
+            <div :class=" chatRow.webFocusThisMsg ?
+                             'text-' + getRoleTypeObj(chatRow.sendUserRoleType).color : ''" class="text-right"
+                 style=" transition: color .5s ease;">
+              {{ chatRow.sendUserNickname }}
+            </div>
+          </div>
+          <div class="relative-position" style="margin-left: 15%;"
+               v-on:mouseleave="chatRow.webFocusThisMsg=false"
+               v-on:mouseover="chatRow.webFocusThisMsg=true">
+            <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+                 alt=""
+                 class="cask-chatroom-chat-body-img" @click="showImgSrc = chatRow.message; showImg = true"
+                 @error="chatRow.message = '/img/main_expire.png'"/>
+            <div v-else class="cask-chatroom-chat-body-mine"
+                 style="white-space: break-spaces">
+              {{ chatRow.message }}
+            </div>
+            <div v-show="chatRow.webFocusThisMsg"
+                 class="chat-body-label-mine row items-end animate__animated animate__fadeIn">
+              <div class="chat-body-label-mine-body">
+                <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
+                     @click="notifyTopWarning($t('in_develop'))">
+                  {{ $t('main_chat_operation_star_emoji') }}
+                </div>
+                <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
+                  {{ $t('main_chat_operation_copy') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <q-avatar class="q-mx-sm cask-cursor-pointer" size="40px"
+                  @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: chatRow.sendUserId})">
+          <q-img :src="chatRow.sendUserAvatar" spinner-size="1rem"/>
+        </q-avatar>
+      </div>
+
+
+    </div>
+  </q-scroll-area>
+</template>
+
+<script setup>
+
+import {socketChatState} from "@/utils/global-state-no-save";
+import {toSpecifyPageWithQuery} from "@/router";
+import {getRoleTypeObj} from "@/constant/enums/role-type";
+import {getGenderObj} from "@/constant/enums/gender-opt";
+import {notifyTopWarning} from "@/utils/notification-tools";
+import {copy, delay} from "@/utils/base-tools";
+import {onMounted, ref, watch} from "vue";
+import {useRouter} from "vue-router";
+import {useGlobalStateStore} from "@/utils/global-state";
+import {messageTimeLabelBuilder} from "@/utils/chat-socket";
+import {moreMessage} from "@/api/chat";
+
+const thisRouter = useRouter()
+const globalState = useGlobalStateStore();
+
+const chatBodyScroller = ref(null)
+const chatBodyScrollerInLoading = ref(false)
+const chatBodyFirstLoading = ref(false)
+
+watch(() => chatBodyScroller.value,
+    () => {
+  console.log("xxxxxxxxxxxxxxxx", chatBodyScroller.value)
+      if (chatBodyScroller.value) {
+        const scroller = chatBodyScroller.value.getScrollTarget()
+        scroller.scrollTop = scroller.scrollHeight
+      }
+    }
+)
+
+const chatBodyOnScroll = (info) => {
+  if (info.verticalPosition < 5 && socketChatState.webChattingFocusChat
+      && !socketChatState.webChattingFocusChat.chatScrollDisable && !chatBodyScrollerInLoading.value) {
+    //记录当前位置
+    const chatScrollerDiv = chatBodyScroller.value.getScrollTarget()
+    chatScrollerDiv.scrollTop = 10
+    const currentPosRe = chatScrollerDiv.scrollHeight - chatScrollerDiv.scrollTop - chatScrollerDiv.clientHeight
+    //加载图标
+    chatBodyScrollerInLoading.value = true
+    //加载新数据
+    loadMoreChatRecord(currentPosRe)
+  }
+}
+
+function loadMoreChatRecord(savePosRe) {
+  //get last msg
+  let lastMsgId = ""
+  if (socketChatState.webChattingFocusChat && 0 !== socketChatState.webChattingFocusChat.userChattingData.length) {
+    if (socketChatState.webChattingFocusChat.userChattingData.length < 10) {
+      socketChatState.webChattingFocusChat.chatScrollDisable = true
+      chatBodyScrollerInLoading.value = false
+      return
+    }
+    lastMsgId = socketChatState.webChattingFocusChat.userChattingData[0].messageId
+  }
+  moreMessage({lastMessage: lastMsgId, chatId: socketChatState.webChattingFocusChat.chatId}).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      socketChatState.webChattingFocusChat.chatScrollDisable = true
+      chatBodyScrollerInLoading.value = false
+      return
+    }
+    if (0 === res.data.data.length) {
+      socketChatState.webChattingFocusChat.chatScrollDisable = true
+      chatBodyScrollerInLoading.value = false
+      return
+    }
+    let inputData = res.data.data.reverse()
+    //首次加载到最底部
+    const isFistLoad = socketChatState.webChattingFocusChat.userChattingData.length === 0
+    if (isFistLoad) {
+      chatBodyFirstLoading.value = true
+    }
+    //加载数据
+    socketChatState.webChattingFocusChat.userChattingData.splice(0, 0, ...inputData)
+    messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
+    //todo 当用户向上拉聊天框的时候，收到消息，此时未读（提示新消息），当用户拉到底部的时候，发送已读请求
+    //将滚动位置保留再当前位置
+    chatBodyScrollerInLoading.value = false
+    const chatScrollerDiv = chatBodyScroller.value.getScrollTarget()
+    if (isFistLoad) {
+      chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight
+      delay(0).then(() => {
+        chatBodyFirstLoading.value = false
+      })
+    } else {
+      chatScrollerDiv.scrollTop = chatScrollerDiv.scrollHeight - savePosRe - chatScrollerDiv.clientHeight
+    }
+
+  })
+}
+
+onMounted(() => {
+  //将内部 ref 绑定到外部引用
+  socketChatState.chatBodyScrollerOut = chatBodyScroller
+})
+
+</script>
+
+<style lang="scss" scoped>
+
+
+.cask-chatroom-chat-body {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: rgba(var(--text-color), 0.1);
+  cursor: zoom-in;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.chat-body-label {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(100%, 0);
+  padding-left: 5px;
+
+  .chat-body-label-mine-body {
+    padding: 1px 8px;
+    border-radius: 4px;
+    background-color: rgba(var(--text-color), .07);
+    backdrop-filter: saturate(200%) blur(30px);
+  }
+}
+
+.cask-chatroom-chat-body-mine {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: rgba(var(--positive), 0.92);
+  cursor: zoom-in;
+  color: #eee;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.chat-body-label-mine {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-100%, 0);
+  padding-right: 5px;
+
+  .chat-body-label-mine-body {
+    padding: 1px 8px;
+    border-radius: 4px;
+    background-color: rgba(var(--text-color), .07);
+    backdrop-filter: saturate(200%) blur(30px);
+  }
+}
+
+.cask-chatroom-chat-body-img {
+  border-radius: 8px;
+  max-height: 400px;
+  max-width: 300px;
+  width: auto;
+  cursor: zoom-in;
+  height: auto;
+  object-fit: contain
+}
+
+</style>
