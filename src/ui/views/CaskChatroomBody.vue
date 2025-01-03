@@ -127,6 +127,9 @@
       <q-spinner-pie size="50px"/>
     </div>
   </div>
+
+
+  <cask-dialog-image v-model="showImg" :src="showImgSrc"/>
 </template>
 
 <script setup>
@@ -142,10 +145,13 @@ import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {messageTimeLabelBuilder} from "@/utils/chat-socket";
 import {moreMessage} from "@/api/chat";
+import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 
+const showImg = ref(false)
+const showImgSrc = ref("")
 const chatBodyScroller = ref(null)
 const chatBodyScrollerInLoading = ref(false)
 

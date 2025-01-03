@@ -449,8 +449,6 @@
 
     </div>
 
-    <cask-dialog-image v-model="showImg" :src="showImgSrc"/>
-
     <cask-base-footer :simple="true"/>
 
   </q-layout>
@@ -480,7 +478,6 @@ import {hideChat} from "@/api/chat";
 import {useI18n} from "vue-i18n";
 import {delay} from "@/utils/base-tools";
 import {uploadUserFile} from "@/api/file";
-import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import {toSpecifyPageWithQuery} from "@/router";
 import {useRouter} from "vue-router";
 import CaskChatroomBody from "@/ui/views/CaskChatroomBody.vue";
@@ -489,8 +486,6 @@ const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
-const showImg = ref(false)
-const showImgSrc = ref("")
 const chatNameFilter = ref("")
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
