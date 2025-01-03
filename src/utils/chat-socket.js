@@ -8,6 +8,7 @@ import i18n from "@/i18n";
 import {date} from "quasar";
 import {ZodiacSign} from "@/utils/date-to-zodiac";
 import {delay, gotoSpecifySite} from "@/utils/base-tools";
+import {getChatSettingObj} from "@/utils/global-tools";
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
@@ -361,9 +362,17 @@ function socketMsgReceiveDataParse(callback) {
     }
     if (socketChatState.needBrowserNotification && globalState.userData) {
         if (globalState.userData.id !== data.sendUserId) {
-            browserNotification(
-                `${t('main_chat_message_from')} ${data.sendUserNickname} ${t('main_chat_message_from_new')}`,
-                data.sendMessage)
+
+            const chatSettingObj = getChatSettingObj()
+            if(chatSettingObj && chatSettingObj.hideNotificationDetail) {
+                browserNotification(
+                    `${t('main_chat_message_from_hide')}`,
+                    "")
+            } else {
+                browserNotification(
+                    `${t('main_chat_message_from')} ${data.sendUserNickname} ${t('main_chat_message_from_new')}`,
+                    data.sendMessage)
+            }
         }
     }
 }

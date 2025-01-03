@@ -53,6 +53,8 @@
   "main_setting_lang": "Page language :",
   "main_setting_yes": "Yes",
   "main_setting_no": "No",
+  "main_setting_save": "Save",
+  "main_setting_cancel": "Cancel",
   "main_setting_theme_light": "Light",
   "main_setting_theme_dark": "Dark",
   "main_setting_theme_green": "Green",
@@ -140,6 +142,7 @@
   "main_chat_new_message": "New message !",
   "main_chat_message_from": "From",
   "main_chat_message_from_new": "'s new message",
+  "main_chat_message_from_hide": "You have a new message, please check it",
   "main_chat_type_con": "Contacts",
   "main_chat_type_group": "Group Chats",
   "main_chat_type_group_public": "Public Group Chats",
@@ -151,7 +154,7 @@
   "main_chat_no_tip_2": "2. Not receiving notifications? If you confirm that browser notification permissions are enabled but still not receiving message notifications, please check if the operating system allows browser notifications.",
   "main_chat_no_tip_3": "3. Due to limited server resources, each person can add up to 20 emoji packs. However, adding emoji packs uploaded by others to your own list does not count toward this limit.",
   "main_chat_not_login_message": "Sending messages is not supported for users who are not logged in. You can leave your suggestions or feedback on the website's Guestbook.\uD83D\uDE00",
-  "main_chat_setting": "Chat setting",
+  "main_chat_setting": "Chat Setting",
   "main_chat_launch_group": "Launch Group Chat",
   "main_chat_chat_pinned": "Pinned Chat",
   "main_chat_chat_pin": "Pin chat",
@@ -169,6 +172,7 @@
   "main_chat_body_file_in_tree": "[Image or File]",
   "main_chat_operation_copy": "Copy",
   "main_chat_operation_star_emoji": "Add to my Emoji Pro",
+  "main_chat_setting_hide_no_detail": "Chat notifications hide contact and sent content: ",
 
 
   "main_chat_chat_time_now": "Just now",

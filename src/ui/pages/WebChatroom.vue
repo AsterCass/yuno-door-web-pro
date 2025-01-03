@@ -180,7 +180,7 @@
           </div>
 
           <div class="row q-mb-sm">
-            <q-btn no-caps unelevated style="width: 100%" dense @click="notifyTopWarning($t('in_develop'))">
+            <q-btn no-caps unelevated style="width: 100%" dense @click="openChatSetting = true">
               <div class="row items-center full-width">
                 <q-icon class="col-2" name="fa-solid fa-sliders" size="1.2rem"/>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem">
@@ -210,7 +210,56 @@
       <div class="col-12 col-lg row relative-position" style="height: 100%">
         <q-separator class="component-separator-base" vertical style="margin: 5rem 2% 0 0"/>
 
-        <div class="col column" style="height: 100%; padding: 5rem 0 10rem 0">
+        <div v-show="openChatSetting" class="col column animate__animated animate__fadeIn"
+             style="height: 100%; padding: 5rem 0 2rem 0">
+          <div class="row q-mb-md justify-between q-mx-sm">
+            <div style="font-size: 1.4rem; font-weight: 600">
+              {{ $t('main_chat_setting') }}
+            </div>
+          </div>
+
+          <div class="col column justify-between">
+            <div class="col q-mx-sm">
+
+              <div class="q-mt-sm">
+                <h6>
+                  {{$t('main_chat_setting_hide_no_detail')}}
+                </h6>
+              </div>
+              <div class="q-mb-sm row justify-evenly">
+                <q-radio v-model="chatSetting.hideNotificationDetail" :val="true" :label="$t('main_setting_yes')"
+                         class="component-ratio-base"
+                         checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                         @update:model-value="(it) => updateHideNotificationDetail(it)"/>
+                <q-radio v-model="chatSetting.hideNotificationDetail" :val="false" :label="$t('main_setting_no')"
+                         class="component-ratio-base"
+                         checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                         @update:model-value="(it) => updateHideNotificationDetail(it)"/>
+              </div>
+
+            </div>
+            <div class="row justify-between" style="margin: 1% 20%">
+              <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="updateChatSetting">
+                <div class="row items-center">
+                  <div class="q-mx-xs">
+                    {{$t('main_setting_save')}}
+                  </div>
+                </div>
+              </q-btn>
+              <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="cancelChatSetting">
+                <div class="row items-center">
+                  <div class="q-mx-xs">
+                    {{$t('main_setting_cancel')}}
+                  </div>
+                </div>
+              </q-btn>
+            </div>
+          </div>
+        </div>
+
+
+        <div v-show="!openChatSetting" class="col column animate__animated animate__fadeIn"
+             style="height: 100%; padding: 5rem 0 10rem 0">
 
           <div class="row q-mb-md justify-between q-mx-sm">
             <div v-if="socketChatState.webChattingFocusChat" style="font-size: 1.4rem; font-weight: 600">
@@ -263,15 +312,18 @@
 
         <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 2%"/>
 
-        <cask-long-text-input v-if="socketChatState.webChattingFocusChat" is-absolute
-                              id="comment-reply-input" :elements="new Map([
+        <div v-show="!openChatSetting" class="animate__animated animate__fadeIn">
+          <cask-long-text-input v-if="socketChatState.webChattingFocusChat" is-absolute
+                                id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   [CaskLongTextInputElement.IMG, {callback: sendImg}],
                   [CaskLongTextInputElement.EMOJI, {callback: sendEmoji}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
-                              @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
-                              style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
+                                @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
+                                style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
+        </div>
+
       </div>
 
       <div v-show="!globalState.screenMini" style="width: 400px" class="column justify-end">
@@ -481,12 +533,15 @@ import {uploadUserFile} from "@/api/file";
 import {toSpecifyPageWithQuery} from "@/router";
 import {useRouter} from "vue-router";
 import CaskChatroomBody from "@/ui/views/CaskChatroomBody.vue";
+import {getChatSettingObj, updateChatSettingJson} from "@/utils/global-tools";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
+const openChatSetting = ref(false)
 const chatNameFilter = ref("")
+const chatSetting = ref(getChatSettingObj())
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
 });
@@ -504,6 +559,20 @@ watch(
 const searchChatName = (node, filter) => {
   const filterLow = filter.toLowerCase()
   return node.label && node.label.toLowerCase().indexOf(filterLow) > -1 && node.avatar
+}
+
+function updateHideNotificationDetail(data) {
+  chatSetting.value.hideNotificationDetail = data
+}
+
+const cancelChatSetting = () => {
+  chatSetting.value = getChatSettingObj()
+  openChatSetting.value = false
+}
+
+const updateChatSetting = () => {
+  updateChatSettingJson(chatSetting.value)
+  openChatSetting.value = false
 }
 
 function deleteChat(chatId) {

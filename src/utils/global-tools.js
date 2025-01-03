@@ -40,6 +40,18 @@ export function initGlobalState() {
     //more
 }
 
+export function getChatSettingObj() {
+    const globalState = useGlobalStateStore();
+    const chatSettingJson = globalState.chatSettingJson;
+    return JSON.parse(chatSettingJson)
+}
+
+export function updateChatSettingJson(settingObj) {
+    const globalState = useGlobalStateStore();
+    const chatSettingJson = JSON.stringify(settingObj);
+    globalState.updateChatSettingJson(chatSettingJson);
+}
+
 export function updateTheme(code) {
     if (code === 'dark' || code === 'light' || code === 'green') {
         const globalState = useGlobalStateStore();

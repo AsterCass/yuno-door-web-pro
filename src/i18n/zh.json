@@ -53,6 +53,8 @@
   "main_setting_lang": "页面语言：",
   "main_setting_yes": "是",
   "main_setting_no": "否",
+  "main_setting_save": "保存",
+  "main_setting_cancel": "取消",
   "main_setting_theme_light": "白天",
   "main_setting_theme_dark": "夜间",
   "main_setting_theme_green": "春季",
@@ -140,6 +142,7 @@
   "main_chat_new_message": "新消息 ！",
   "main_chat_message_from": "来自",
   "main_chat_message_from_new": "的新消息",
+  "main_chat_message_from_hide": "您有一条新消息，注意查收",
   "main_chat_type_con": "联系人",
   "main_chat_type_group": "群聊",
   "main_chat_type_group_public": "公开群",
@@ -169,6 +172,7 @@
   "main_chat_body_file_in_tree": "[图片或文件]",
   "main_chat_operation_copy": "复制",
   "main_chat_operation_star_emoji": "添加到我的表情包",
+  "main_chat_setting_hide_no_detail": "聊天通知隐藏联系人和发送内容：",
 
 
   "main_chat_chat_time_now": "刚刚",

@@ -29,6 +29,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         loginToken: "",
         userData: null,
         allowBrowserNotification: true,
+        chatSettingJson: "{\"hideNotificationDetail\":false}",
         readMessageMap: {},
         pinChatIdMap: {},
     }),
@@ -64,6 +65,9 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateUserData(data) {
             this.userData = data
+        },
+        updateChatSettingJson(data) {
+            this.chatSettingJson = data
         },
         updateAllowBrowserNotification(isAllowBrowser) {
             this.allowBrowserNotification = isAllowBrowser
