@@ -72,6 +72,7 @@
   "main_login_success": "Login successful",
   "main_login_success_logout": "Logout successful",
   "main_login_success_copy": "Copied",
+  "main_login_success_star_file": "Added",
   "main_login_fail_copy": "Copy failed",
 
   "main-fa-mail": "Mail",

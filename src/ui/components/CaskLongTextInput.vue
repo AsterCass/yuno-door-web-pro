@@ -165,6 +165,7 @@ import {customLargePage} from "@/utils/page";
 import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {useI18n} from "vue-i18n";
+import emitter from "@/utils/bus";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -360,10 +361,13 @@ onMounted(() => {
     caskLongTextInputRef.value.$el.addEventListener('paste', pasteEventHandle)
   }
   getAllStarEmoji()
+
+  emitter.on("reloadStarEmoji", getAllStarEmoji)
 })
 
 onBeforeUnmount(() => {
   caskLongTextInputRef.value.$el.removeEventListener('paste', pasteEventHandle)
+  emitter.off("reloadStarEmoji", getAllStarEmoji)
 })
 
 

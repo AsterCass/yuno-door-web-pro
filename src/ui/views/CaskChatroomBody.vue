@@ -53,7 +53,7 @@
                  class="chat-body-label row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
-                     @click="notifyTopWarning($t('in_develop'))">
+                     @click="starThisEmoji(chatRow.message)">
                   {{ $t('main_chat_operation_star_emoji') }}
                 </div>
                 <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
@@ -105,7 +105,7 @@
                  class="chat-body-label-mine row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
-                     @click="notifyTopWarning($t('in_develop'))">
+                     @click="starThisEmoji(chatRow.message)">
                   {{ $t('main_chat_operation_star_emoji') }}
                 </div>
                 <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
@@ -138,7 +138,7 @@ import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
-import {notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {copy} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
@@ -146,11 +146,15 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {messageTimeLabelBuilder} from "@/utils/chat-socket";
 import {moreMessage} from "@/api/chat";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
+import {starEmoji} from "@/api/file";
+import {useI18n} from "vue-i18n";
+import emitter from "@/utils/bus";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 
 const showImg = ref(false)
+const {t} = useI18n()
 const showImgSrc = ref("")
 const chatBodyScroller = ref(null)
 const chatBodyScrollerInLoading = ref(false)
@@ -207,6 +211,26 @@ function loadMoreChatRecord() {
     messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
     //todo 当用户向上拉聊天框的时候，收到消息，此时未读（提示新消息），当用户拉到底部的时候，发送已读请求
     chatBodyScrollerInLoading.value = false
+  })
+}
+
+function starThisEmoji(message) {
+  if (!globalState.isLogin) {
+    notifyTopWarning(t('no_login'))
+    return
+  }
+  const lastSlashIndex = message.lastIndexOf('/');
+  const lastDotIndex = message.lastIndexOf('.');
+  if (lastSlashIndex === -1 || lastDotIndex === -1 || lastDotIndex < lastSlashIndex) {
+    return
+  }
+  const emojiId = message.slice(lastSlashIndex + 1, lastDotIndex);
+  starEmoji(emojiId).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    notifyTopPositive(t('main_login_success_star_file'))
+    emitter.emit('reloadStarEmoji')
   })
 }
 

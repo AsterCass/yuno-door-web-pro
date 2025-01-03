@@ -72,6 +72,7 @@
   "main_login_success": "登录成功",
   "main_login_success_logout": "登出成功",
   "main_login_success_copy": "复制成功",
+  "main_login_success_star_file": "添加成功",
   "main_login_fail_copy": "复制失败",
 
   "main-fa-mail": "邮箱",

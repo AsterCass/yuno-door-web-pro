@@ -25,3 +25,10 @@ export function getStarEmojiList(params) {
         params: params,
     })
 }
+
+export function starEmoji(emojiId) {
+    return serviceShiro({
+        url: `yui/user/file/emoji/star/auth?emojiId=${emojiId}`,
+        method: 'post',
+    })
+}
