@@ -30,6 +30,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         userData: null,
         allowBrowserNotification: true,
         chatSettingJson: "{\"hideNotificationDetail\":false}",
+        chatEmojiCommonListJson: "{\"emoji\":[], \"emojipro\":[], \"kaomoji\":[]}",
         readMessageMap: {},
         pinChatIdMap: {},
     }),
@@ -68,6 +69,9 @@ export const useGlobalStateStore = defineStore('globalState', {
         },
         updateChatSettingJson(data) {
             this.chatSettingJson = data
+        },
+        updateChatEmojiCommonListJson(data) {
+            this.chatEmojiCommonListJson = data
         },
         updateAllowBrowserNotification(isAllowBrowser) {
             this.allowBrowserNotification = isAllowBrowser

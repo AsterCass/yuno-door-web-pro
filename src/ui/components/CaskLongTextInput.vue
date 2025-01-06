@@ -17,9 +17,23 @@
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
+            <div v-if="commonEmoji.emoji.length" class="row">
+              <div class="col-12 q-px-sm q-mt-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_recently') }}
+              </div>
+              <div v-for="(commonEmoji, index) in commonEmoji.emoji" :key="index">
+                <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.5rem"
+                     @click="addEmoji('emoji', commonEmoji)">
+                  {{ commonEmoji }}
+                </div>
+              </div>
+              <div class="col-12 q-px-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_all') }}
+              </div>
+            </div>
             <div class="row">
               <div v-for="(emoji, index) in EmojiExampleList" :key="index">
-                <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.5rem" @click="addEmoji(emoji)">
+                <div class="q-ma-sm cask-cursor-pointer" style="font-size: 1.5rem" @click="addEmoji('emoji', emoji)">
                   {{ emoji }}
                 </div>
               </div>
@@ -32,10 +46,28 @@
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
+            <div v-if="commonEmoji.kaomoji.length" class="row">
+              <div class="col-12 q-px-sm q-my-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_recently') }}
+              </div>
+              <div v-for="(commonEmoji, index) in commonEmoji.kaomoji" :key="index">
+                <q-btn no-caps unelevated class="component-none-btn-mini-grow q-ma-xs"
+                       style="font-size: 1.2rem" @click="addEmoji('kaomoji', commonEmoji)">
+                  <div class="row items-center">
+                    <div class="q-mx-xs">
+                      {{ commonEmoji }}
+                    </div>
+                  </div>
+                </q-btn>
+              </div>
+              <div class="col-12 q-px-sm q-my-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_all') }}
+              </div>
+            </div>
             <div class="row">
               <div v-for="(emoji, index) in KaomojiExampleList" :key="index">
                 <q-btn no-caps unelevated class="component-none-btn-mini-grow q-ma-xs"
-                       style="font-size: 1.2rem" @click="addEmoji(emoji)">
+                       style="font-size: 1.2rem" @click="addEmoji('kaomoji', emoji)">
                   <div class="row items-center">
                     <div class="q-mx-xs">
                       {{ emoji }}
@@ -52,9 +84,27 @@
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }"
                          class="full-width full-height">
+            <div v-if="commonEmoji.emojipro.length" class="row">
+              <div class="col-12 q-px-sm q-my-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_recently') }}
+              </div>
+              <div v-for="(commonEmoji, index) in commonEmoji.emojipro" :key="index"
+                   @click="addEmoji('emojipro', commonEmoji);
+                   hideEmojiBoard();
+                   elements.get(CaskLongTextInputElement.EMOJI).callback(commonEmoji)">
+                <q-img :ratio="1" fit="contain" :src="commonEmoji" class="q-ma-xs cask-cursor-pointer"
+                       style="height: 5rem; width: 5rem; border-radius: 8px">
+                </q-img>
+              </div>
+              <div class="col-12 q-px-sm q-my-sm" style="opacity: .75">
+                {{ $t('main_chat_emoji_all') }}
+              </div>
+            </div>
             <div class="row">
               <div v-for="(emoji, index) in starEmojiList" :key="index"
-                   @click="hideEmojiBoard(); elements.get(CaskLongTextInputElement.EMOJI).callback(emoji.readAddress)">
+                   @click="addEmoji('emojipro', emoji.readAddress);
+                   hideEmojiBoard();
+                   elements.get(CaskLongTextInputElement.EMOJI).callback(emoji.readAddress)">
                 <q-img :ratio="1" fit="contain" :src="emoji.readAddress" class="q-ma-xs cask-cursor-pointer"
                        style="height: 5rem; width: 5rem; border-radius: 8px">
                 </q-img>
@@ -166,6 +216,7 @@ import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {useI18n} from "vue-i18n";
 import emitter from "@/utils/bus";
+import {getChatEmojiCommonList, updateChatEmojiCommonListJson} from "@/utils/global-tools";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -220,6 +271,7 @@ const emojiTabs = ref([
 ])
 const uploadFileDialog = ref(null)
 const uploadEmojiDialog = ref(null)
+const commonEmoji = ref(getChatEmojiCommonList())
 
 watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
@@ -351,9 +403,23 @@ const uploadFileCallback = async (isSend, data) => {
   return res
 }
 
-function addEmoji(emoji) {
-  mainInput.value += emoji
-  emit('update:modelValue', mainInput.value)
+function addEmoji(type, emoji) {
+  //update common emoji
+  const index = commonEmoji.value[type].indexOf(emoji)
+  if (-1 === index) {
+    commonEmoji.value[type].splice(0, 0, emoji)
+  } else {
+    commonEmoji.value[type].splice(index, 1);
+    commonEmoji.value[type].unshift(emoji);
+  }
+  commonEmoji.value[type].splice(8)
+  //input
+  if ('emojipro' !== type) {
+    mainInput.value += emoji
+    emit('update:modelValue', mainInput.value)
+  }
+  //sync
+  updateChatEmojiCommonListJson(commonEmoji.value)
 }
 
 onMounted(() => {

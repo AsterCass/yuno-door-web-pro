@@ -52,6 +52,18 @@ export function updateChatSettingJson(settingObj) {
     globalState.updateChatSettingJson(chatSettingJson);
 }
 
+export function getChatEmojiCommonList() {
+    const globalState = useGlobalStateStore();
+    const json = globalState.chatEmojiCommonListJson;
+    return JSON.parse(json)
+}
+
+export function updateChatEmojiCommonListJson(settingObj) {
+    const globalState = useGlobalStateStore();
+    const json = JSON.stringify(settingObj);
+    globalState.updateChatEmojiCommonListJson(json);
+}
+
 export function updateTheme(code) {
     if (code === 'dark' || code === 'light' || code === 'green') {
         const globalState = useGlobalStateStore();
