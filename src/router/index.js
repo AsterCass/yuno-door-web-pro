@@ -8,6 +8,8 @@ import WebRedirect from "@/ui/pages/WebRedirect.vue";
 import WebArticleDetail from "@/ui/pages/WebArticleDetail.vue";
 import WebArticleList from "@/ui/pages/WebArticleList.vue";
 import WebChatroom from "@/ui/pages/WebChatroom.vue";
+import WebTools from "@/ui/pages/WebTools.vue";
+import CaskToolsSql2kotlin from "@/ui/views/CaskToolsSql2kotlin.vue";
 
 
 const router = createRouter({
@@ -61,6 +63,26 @@ const router = createRouter({
                         path: "essay/list",
                     }),
                 }
+            ]
+        },
+        {
+            path: "/toolsEx",
+            name: 'mainToolsEx',
+            component: WebTools,
+            children: [
+                {
+                    path: '',
+                    name: 'mainToolsDefaultEx',
+                    redirect: {name: 'mainToolsSql2kotlinEx'}
+                },
+                {
+                    path: "code/sql2kotlin",
+                    name: "mainToolsSql2kotlinEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: 'DDL语句转Kotlin数据类工具'
+                    },
+                },
             ]
         },
         {
