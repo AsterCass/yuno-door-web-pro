@@ -10,6 +10,12 @@ import WebArticleList from "@/ui/pages/WebArticleList.vue";
 import WebChatroom from "@/ui/pages/WebChatroom.vue";
 import WebTools from "@/ui/pages/WebTools.vue";
 import CaskToolsSql2kotlin from "@/ui/views/CaskToolsSql2kotlin.vue";
+import CaskToolsCnIdCard from "@/ui/views/CaskToolsCnIdCard.vue";
+import CaskToolsRgbHex from "@/ui/views/CaskToolsRgbHex.vue";
+import CaskToolsImageBase64 from "@/ui/views/CaskToolsImageBase64.vue";
+import CaskToolsMd5 from "@/ui/views/CaskToolsMd5.vue";
+import CaskToolsQrcode from "@/ui/views/CaskToolsQrcode.vue";
+import CaskToolsTimestamp from "@/ui/views/CaskToolsTimestamp.vue";
 
 
 const router = createRouter({
@@ -86,7 +92,7 @@ const router = createRouter({
                 {
                     path: "timestamp",
                     name: "mainToolsTimestampEx",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsTimestamp,
                     meta: {
                         title: '时间戳格式转换工具 | Timestamp Format Converter'
                     },
@@ -94,7 +100,7 @@ const router = createRouter({
                 {
                     path: "qrcode",
                     name: "mainToolsQrcodeEx",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsQrcode,
                     meta: {
                         title: '二维码解析工具 | 二维码生成工具 | QR Code Decoder | QR Code Generator'
                     },
@@ -102,7 +108,7 @@ const router = createRouter({
                 {
                     path: "md5",
                     name: "mainToolsSql2kotlinEx",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsMd5,
                     meta: {
                         title: 'MD5 | 字符串数据加密 | String Data Encryption'
                     },
@@ -110,7 +116,7 @@ const router = createRouter({
                 {
                     path: "imgBase64",
                     name: "mainToolsImgBase64Ex",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsImageBase64,
                     meta: {
                         title: '图片Base64转换工具 | Image Base64 Converter'
                     },
@@ -118,7 +124,7 @@ const router = createRouter({
                 {
                     path: "rgbHex",
                     name: "mainToolsRgbHexEx",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsRgbHex,
                     meta: {
                         title: 'RGB和十六进制颜色格式互转 | RGB and Hex Color Format Converter'
                     },
@@ -126,7 +132,7 @@ const router = createRouter({
                 {
                     path: "cnIdCard",
                     name: "mainToolsCnIdCardEx",
-                    component: CaskToolsSql2kotlin,
+                    component: CaskToolsCnIdCard,
                     meta: {
                         title: '大陆身份证生成 | Chinese Mainland ID Card Generator'
                     },
