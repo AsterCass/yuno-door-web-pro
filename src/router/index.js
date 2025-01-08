@@ -80,7 +80,55 @@ const router = createRouter({
                     name: "mainToolsSql2kotlinEx",
                     component: CaskToolsSql2kotlin,
                     meta: {
-                        title: 'DDL语句转Kotlin数据类工具'
+                        title: 'DDL语句转Kotlin数据类工具 | DDL to Kotlin Data Class Converter'
+                    },
+                },
+                {
+                    path: "timestamp",
+                    name: "mainToolsTimestampEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: '时间戳格式转换工具 | Timestamp Format Converter'
+                    },
+                },
+                {
+                    path: "qrcode",
+                    name: "mainToolsQrcodeEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: '二维码解析工具 | 二维码生成工具 | QR Code Decoder | QR Code Generator'
+                    },
+                },
+                {
+                    path: "md5",
+                    name: "mainToolsSql2kotlinEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: 'MD5 | 字符串数据加密 | String Data Encryption'
+                    },
+                },
+                {
+                    path: "imgBase64",
+                    name: "mainToolsImgBase64Ex",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: '图片Base64转换工具 | Image Base64 Converter'
+                    },
+                },
+                {
+                    path: "rgbHex",
+                    name: "mainToolsRgbHexEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: 'RGB和十六进制颜色格式互转 | RGB and Hex Color Format Converter'
+                    },
+                },
+                {
+                    path: "cnIdCard",
+                    name: "mainToolsCnIdCardEx",
+                    component: CaskToolsSql2kotlin,
+                    meta: {
+                        title: '大陆身份证生成 | Chinese Mainland ID Card Generator'
                     },
                 },
             ]
