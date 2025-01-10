@@ -107,7 +107,7 @@ const router = createRouter({
                 },
                 {
                     path: "md5",
-                    name: "mainToolsSql2kotlinEx",
+                    name: "mainToolsMd5Ex",
                     component: CaskToolsMd5,
                     meta: {
                         title: 'MD5 | 字符串数据加密 | String Data Encryption'

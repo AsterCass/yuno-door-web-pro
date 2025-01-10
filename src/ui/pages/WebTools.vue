@@ -18,8 +18,8 @@
 
       <div class="row q-my-xl q-mx-md" style="min-height: 50rem">
 
-        <div class="col-3">
-
+        <div class="col-3 q-pr-xl">
+          <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
         <div class="col">
@@ -48,8 +48,30 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
+import {ref} from "vue";
+import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
+import {toSpecifyPage} from "@/router";
+import {useRouter} from "vue-router";
 
 const globalState = useGlobalStateStore();
+const thisRouter = useRouter()
+
+const tabs = ref([
+  {value: 'mainToolsSql2kotlinEx', label: 'DDL语句转Kotlin数据类工具',},
+  {value: 'mainToolsTimestampEx', label: '时间戳格式转换工具',},
+  {value: 'mainToolsQrcodeEx', label: '二维码解析工具',},
+  {value: 'mainToolsMd5Ex', label: '字符串数据加密',},
+  {value: 'mainToolsImgBase64Ex', label: '图片Base64转换工具',},
+  {value: 'mainToolsRgbHexEx', label: 'RGB和十六进制颜色格式互转',},
+  {value: 'mainToolsCnIdCardEx', label: '大陆身份证生成',},
+])
+const tab = ref('mainToolsSql2kotlinEx');
+
+const updateTab = (newTabValue) => {
+  toSpecifyPage(thisRouter, newTabValue)
+}
+
+
 </script>
 
 <style scoped lang="scss">
