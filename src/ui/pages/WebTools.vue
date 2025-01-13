@@ -18,7 +18,7 @@
 
       <div class="row q-my-xl q-mx-md" style="min-height: 50rem">
 
-        <div class="col-3 q-pr-xl">
+        <div class="col-3 row justify-center">
           <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
@@ -57,13 +57,13 @@ const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
 
 const tabs = ref([
-  {value: 'mainToolsSql2kotlinEx', label: 'DDL语句转Kotlin数据类工具',},
-  {value: 'mainToolsTimestampEx', label: '时间戳格式转换工具',},
-  {value: 'mainToolsQrcodeEx', label: '二维码解析工具',},
-  {value: 'mainToolsMd5Ex', label: '字符串数据加密',},
-  {value: 'mainToolsImgBase64Ex', label: '图片Base64转换工具',},
-  {value: 'mainToolsRgbHexEx', label: 'RGB和十六进制颜色格式互转',},
-  {value: 'mainToolsCnIdCardEx', label: '大陆身份证生成',},
+  {value: 'mainToolsSql2kotlinEx', label: 'DDL语句转Kotlin数据类工具', color: 'rgb(211, 47, 47)'},
+  {value: 'mainToolsTimestampEx', label: '时间戳格式转换工具', color: 'rgb(194, 24, 91)'},
+  {value: 'mainToolsQrcodeEx', label: '二维码解析工具', color: 'rgb(123, 32, 163)'},
+  {value: 'mainToolsMd5Ex', label: '字符串数据加密', color: 'rgb(81, 45, 168)'},
+  {value: 'mainToolsImgBase64Ex', label: '图片Base64转换工具', color: 'rgb(48, 63, 159)'},
+  {value: 'mainToolsRgbHexEx', label: 'RGB和十六进制颜色格式互转', color: 'rgb(25, 118, 210)'},
+  {value: 'mainToolsCnIdCardEx', label: '大陆身份证生成', color: 'rgb(2, 136, 209)'},
 ])
 const tab = ref('mainToolsSql2kotlinEx');
 
