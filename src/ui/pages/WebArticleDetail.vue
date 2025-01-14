@@ -18,7 +18,7 @@
 
       <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 7.5rem">
         <div :class="globalState.screenMini ? '' : 'article-left-sidebar'">
-          <h2 style="font-size: 1.75rem; line-height: 2.9rem; word-wrap: break-word;">
+          <h2 style="word-wrap: break-word;">
             {{ blogMeta.articleTitle }}
           </h2>
 
@@ -27,7 +27,7 @@
               <q-btn round push color="black" @click="toSpecifyPageWithQuery(
                   thisRouter, 'space', {id: blogMeta.authorId})">
                 <q-avatar size="38px" style="margin: 2px">
-                  <q-img :src="blogMeta.authorAvatar"/>
+                <q-img :src="blogMeta.authorAvatar"/>
                 </q-avatar>
               </q-btn>
               <div style="font-size: 1rem; margin-left: 12px" class="cask-jump-link-in-text-origin"
@@ -64,7 +64,7 @@
       <div class="col-lg-6 col-12 component-marked-view q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem">
         <div ref="articleMainContent">
-          <div v-html="markdownToHtml" class="blogMarkDown"></div>
+          <div v-html="markdownToHtml"></div>
         </div>
       </div>
 

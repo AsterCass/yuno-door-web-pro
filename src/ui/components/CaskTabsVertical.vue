@@ -4,12 +4,12 @@
     <div class="cask-tabs-vertical-body row">
       <div v-for="(inTab, index) in tabs" :key="index">
 
-        <div class="cask-tabs-vertical-btn "
+        <div class="cask-tabs-vertical-btn component-max-line-text "
              :class="inTab.value === tab ? 'btn-active shadow-1' : 'btn-normal'"
              :style="inTab.value === tab ? `background-color: ${inTab.color};border: 2px solid ${inTab.color};`
             : `color: ${inTab.color};`"
              @click="updateCurrentTab(inTab.value)">
-          {{ inTab.label }}
+          {{ $t(inTab.label) }}
         </div>
 
 
@@ -60,7 +60,7 @@ function updateCurrentTab(thisTab) {
 .cask-tabs-vertical-btn {
   font-size: .95rem;
   margin: .5rem;
-  padding: 2px 5px;
+  padding: 4px 8px;
   cursor: pointer;
 
   transition: transform .3s linear .45s, width .3s linear, margin-left .15s linear .3s, background-color linear .6s;

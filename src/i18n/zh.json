@@ -181,6 +181,14 @@
   "main_chat_chat_time_now": "刚刚",
   "main_chat_chat_time_min": "分钟前",
 
+  "main_tools_title_sql_kotlin": "DDL语句转Kotlin数据类工具",
+  "main_tools_title_timestamp": "时间戳格式转换工具",
+  "main_tools_title_qrcode": "二维码生成/解析工具",
+  "main_tools_title_md5": "字符串数据加密",
+  "main_tools_title_base64": "图片Base64转换工具",
+  "main_tools_title_rgb_hex": "RGB和十六进制颜色格式互转",
+  "main_tools_title_cn_id_card": "大陆身份证生成",
+
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_cancel": "取消",

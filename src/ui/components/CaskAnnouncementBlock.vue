@@ -23,8 +23,6 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-@import "@fontsource/roboto-slab/index.css";
-@import "@/styles/base-components";
 @import "@/styles/independence-components";
 
 

@@ -181,6 +181,15 @@
   "main_chat_chat_time_now": "Just now",
   "main_chat_chat_time_min": "minutes ago",
 
+
+  "main_tools_title_sql_kotlin": "DDL to Kotlin Data Class Converter",
+  "main_tools_title_timestamp": "Timestamp Format Converter",
+  "main_tools_title_qrcode": "QR Code Decoder/Generator",
+  "main_tools_title_md5": "String Data Encryption",
+  "main_tools_title_base64": "Image Base64 Converter",
+  "main_tools_title_rgb_hex": "RGB and Hex Color Format Converter",
+  "main_tools_title_cn_id_card": "Chinese Mainland ID Card Generator",
+
   "main_long_text_input_send": "Send",
   "main_long_text_input_cancel": "Cancel",
   "main_long_text_input_image_title": "Send Image",
