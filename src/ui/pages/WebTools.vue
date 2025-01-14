@@ -16,13 +16,13 @@
 
     <q-page-container>
 
-      <div class="row q-my-xl q-mx-md" style="min-height: 50rem">
+      <div class="row q-my-xl q-mx-md">
 
         <div class="col-lg-3 col-12 row justify-center">
           <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
-        <div class="col-grow">
+        <div class="col-grow" style="min-height: 50rem">
           <router-view v-slot="{ Component, route }">
             <transition name="fade" mode="out-in">
               <div :key="route.name">

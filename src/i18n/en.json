@@ -189,6 +189,20 @@
   "main_tools_title_base64": "Image Base64 Converter",
   "main_tools_title_rgb_hex": "RGB and Hex Color Format Converter",
   "main_tools_title_cn_id_card": "Chinese Mainland ID Card Generator",
+  "main_tools_generate": "Generate",
+
+
+  "main_tools_sql_kotlin_package": "Package Name",
+  "main_tools_sql_kotlin_date": "Datetime Type:",
+  "main_tools_sql_kotlin_comment": "Whether Comments Are Needed:",
+  "main_tools_sql_kotlin_camel": "Whether Camel Case Conversion is Required:",
+  "main_tools_sql_kotlin_float": "Floating Point Type:",
+  "main_tools_sql_kotlin_null": "NULL Type Handling:",
+  "main_tools_sql_kotlin_default": "Whether All Attributes Should Have Default Values Assigned:",
+  "main_tools_sql_kotlin_error_empty_sql": "DDL not allow empty",
+  "main_tools_sql_kotlin_error_empty_package": "Package name not allow empty",
+  "main_tools_sql_kotlin_error": "Generation failed, please check the correctness of the DDL",
+  "main_tools_sql_kotlin_success": "Generated",
 
   "main_long_text_input_send": "Send",
   "main_long_text_input_cancel": "Cancel",

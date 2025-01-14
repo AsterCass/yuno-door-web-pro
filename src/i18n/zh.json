@@ -188,6 +188,20 @@
   "main_tools_title_base64": "图片Base64转换工具",
   "main_tools_title_rgb_hex": "RGB和十六进制颜色格式互转",
   "main_tools_title_cn_id_card": "大陆身份证生成",
+  "main_tools_generate": "生成",
+
+
+  "main_tools_sql_kotlin_package": "包名称：",
+  "main_tools_sql_kotlin_date": "时间类型：",
+  "main_tools_sql_kotlin_comment": "是否需要注释：",
+  "main_tools_sql_kotlin_camel": "是否是需要转驼峰：",
+  "main_tools_sql_kotlin_float": "浮点类型：",
+  "main_tools_sql_kotlin_null": "NULL类型处理：",
+  "main_tools_sql_kotlin_default": "是否所有属性赋默认值：",
+  "main_tools_sql_kotlin_error_empty_sql": "DDL不能为空",
+  "main_tools_sql_kotlin_error_empty_package": "包名不能为空",
+  "main_tools_sql_kotlin_error": "生成失败，请检查DDL正确性",
+  "main_tools_sql_kotlin_success": "生成成功",
 
 
   "main_long_text_input_send": "发送",
