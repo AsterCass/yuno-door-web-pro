@@ -1,7 +1,11 @@
 <template>
 
-  <div>
-    This is md5
+  <div class="q-mx-xl">
+
+    <h4>
+      {{ $t('main_tools_title_md5') }}
+    </h4>
+
   </div>
 
 </template>

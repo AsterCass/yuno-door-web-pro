@@ -1,7 +1,11 @@
 <template>
 
-  <div>
-    This is image base64
+  <div class="q-mx-xl">
+
+    <h4>
+      {{ $t('main_tools_title_base64') }}
+    </h4>
+
   </div>
 
 </template>

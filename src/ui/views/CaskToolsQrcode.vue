@@ -1,7 +1,12 @@
 <template>
 
-  <div>
-    This is qrcode
+
+  <div class="q-mx-xl">
+
+    <h4>
+      {{ $t('main_tools_title_qrcode') }}
+    </h4>
+
   </div>
 
 </template>
