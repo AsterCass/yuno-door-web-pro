@@ -57,7 +57,7 @@ function updateUiInput() {
     pickDate.value = date.formatDate(thisDate, 'YYYY/MM/DD')
     dateUiInput.value = pickDate.value
   }
-  emit('update:modelValue', dateStr);
+  emit('update:modelValue',  pickDate.value);
 }
 
 function saveDate() {
