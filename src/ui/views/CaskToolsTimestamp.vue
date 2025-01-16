@@ -33,7 +33,7 @@
 
           <div class="col-4 row justify-center relative-position">
             <q-input v-model="outputTimestamp" tabindex="0" dense outlined readonly
-                     class="q-ma-md component-outline-input-std">
+                     class="q-ma-md component-outline-dash-input-std">
               <template v-slot:append>
                 <q-icon name="fa-regular fa-copy" @click="copy(outputTimestamp)"
                         class="cursor-pointer cask-cursor-pointer" size="1rem"/>
@@ -69,7 +69,7 @@
 
           <div class="col-4 row justify-center">
             <q-input v-model="outputDate" tabindex="0" dense outlined readonly
-                     class="q-ma-md component-outline-input-std">
+                     class="q-ma-md component-outline-dash-input-std">
               <template v-slot:append>
                 <q-icon name="fa-regular fa-copy" @click="copy(outputDate)"
                         class="cursor-pointer cask-cursor-pointer" size="1rem"/>

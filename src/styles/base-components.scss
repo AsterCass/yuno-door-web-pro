@@ -484,6 +484,12 @@
   @include component-outline-input-base();
 }
 
+.component-outline-dash-input-std {
+  @include component-outline-input-base(
+          $thisBorder: 2px dashed rgb(var(--text-color))
+  );
+}
+
 .component-outline-input-mini {
   @include component-outline-input-base(
           $thisWidth: 9.5rem,
