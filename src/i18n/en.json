@@ -192,7 +192,7 @@
   "main_tools_generate": "Generate",
 
 
-  "main_tools_sql_kotlin_package": "Package Name",
+  "main_tools_sql_kotlin_package": "Package Name:",
   "main_tools_sql_kotlin_date": "Datetime Type:",
   "main_tools_sql_kotlin_comment": "Whether Comments Are Needed:",
   "main_tools_sql_kotlin_camel": "Whether Camel Case Conversion is Required:",
@@ -203,6 +203,13 @@
   "main_tools_sql_kotlin_error_empty_package": "Package name not allow empty",
   "main_tools_sql_kotlin_error": "Generation failed, please check the correctness of the DDL",
   "main_tools_sql_kotlin_success": "Generated",
+
+
+  "main_tools_timestamp_ms": "In Milliseconds:",
+  "main_tools_timestamp_to_timestamp": "Datetime Convert to Timestamp",
+  "main_tools_timestamp_to_date": "Timestamp Convert to Datetime",
+  "main_tools_timestamp_error": "Generation failed, please check the correctness of input",
+  "main_tools_timestamp_success": "Generated",
 
   "main_long_text_input_send": "Send",
   "main_long_text_input_cancel": "Cancel",

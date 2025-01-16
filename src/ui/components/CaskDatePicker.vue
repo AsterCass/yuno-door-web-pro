@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, ref} from "vue";
+import {defineEmits, defineProps, onMounted, ref} from "vue";
 import {date} from "quasar";
 
 const emit = defineEmits(['update:modelValue']);
@@ -57,6 +57,7 @@ function updateUiInput() {
     pickDate.value = date.formatDate(thisDate, 'YYYY/MM/DD')
     dateUiInput.value = pickDate.value
   }
+  emit('update:modelValue', dateStr);
 }
 
 function saveDate() {
@@ -67,6 +68,10 @@ function saveDate() {
     emit('update:modelValue', dateStr);
   }
 }
+
+onMounted(() => {
+  updateUiInput()
+})
 
 </script>
 

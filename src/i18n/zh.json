@@ -203,6 +203,12 @@
   "main_tools_sql_kotlin_error": "生成失败，请检查DDL正确性",
   "main_tools_sql_kotlin_success": "生成成功",
 
+  "main_tools_timestamp_ms": "是否毫秒为单位？",
+  "main_tools_timestamp_to_timestamp": "日期转时间戳",
+  "main_tools_timestamp_to_date": "时间戳转日期",
+  "main_tools_timestamp_error": "生成失败，请检查输入值格式",
+  "main_tools_timestamp_success": "生成成功",
+
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_cancel": "取消",

@@ -22,7 +22,7 @@
           <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
-        <div class="col-grow" style="min-height: 50rem">
+        <div class="col-grow">
           <router-view v-slot="{ Component, route }">
             <transition name="fade" mode="out-in">
               <div :key="route.name">
@@ -37,8 +37,9 @@
 
     </q-page-container>
 
-
-    <cask-base-footer/>
+    <q-footer class="bg-transparent">
+      <cask-base-footer/>
+    </q-footer>
 
   </q-layout>
 </template>
@@ -65,7 +66,7 @@ const tabs = ref([
   {value: 'mainToolsRgbHexEx', label: 'main_tools_title_rgb_hex', color: 'rgb(25, 118, 210)'},
   {value: 'mainToolsCnIdCardEx', label: 'main_tools_title_cn_id_card', color: 'rgb(2, 136, 209)'},
 ])
-const tab = ref('mainToolsSql2kotlinEx');
+const tab = ref(thisRouter.currentRoute.value.name);
 
 const updateTab = (newTabValue) => {
   toSpecifyPage(thisRouter, newTabValue)

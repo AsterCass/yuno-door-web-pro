@@ -184,6 +184,10 @@ p {
 
 //==================== cube ====================
 
+.cask-color-positive {
+  color: rgb(var(--positive))
+}
+
 .cask-litter-title-asterisk::before {
   content: '*';
   color: rgb(var(--negative));

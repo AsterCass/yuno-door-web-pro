@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, ref} from "vue";
+import {defineEmits, defineProps, onMounted, ref} from "vue";
 import CaskTime from "@/ui/components/CaskTime.vue";
 import {date} from "quasar";
 
@@ -61,6 +61,7 @@ function updateUiInput() {
     dateUiInput.value = thisDateStr.substring(0, 10)
     timeUiInput.value = thisDateStr.substring(11)
   }
+  emit("update:modelValue", pickDatetime.value)
 }
 
 function saveTime() {
@@ -69,6 +70,10 @@ function saveTime() {
     emit("update:modelValue", pickDatetime.value)
   }
 }
+
+onMounted(() => {
+  updateUiInput()
+})
 
 </script>
 
