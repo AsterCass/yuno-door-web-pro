@@ -209,6 +209,22 @@
   "main_tools_timestamp_error": "生成失败，请检查输入值格式",
   "main_tools_timestamp_success": "生成成功",
 
+  "main_tools_qr_generate": "二维码生成",
+  "main_tools_qr_generate_tip": "暂不支持中文值加密",
+  "main_tools_qr_parse": "二维码解析",
+  "main_tools_qr_value": "二维码值：",
+  "main_tools_qr_style": "阵列样式：",
+  "main_tools_qr_style_1": "方形阵列",
+  "main_tools_qr_style_2": "圆矩阵列",
+  "main_tools_qr_style_3": "圆点阵列",
+  "main_tools_qr_color": "颜色：",
+  "main_tools_qr_bg_color": "背景颜色：",
+  "main_tools_qr_image": "中心图像：",
+  "main_tools_qr_upload": "上传二维码：",
+  "main_tools_qr_parse_value": "二维码解析值：",
+  "main_tools_qr_upload_tips1": "仅支持webp、png、jpg、jpeg格式",
+  "main_tools_qr_upload_tips2": "图片大小不得超过2MB",
+
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_cancel": "取消",

@@ -1,7 +1,8 @@
 <template>
 
   <div class="component-cask-upload-input">
-    <q-file v-if="fileData" class="q-ma-md component-outline-input-large"
+    <q-file v-if="fileData" class="q-ma-md"
+            :class="isMini ? 'component-outline-input-larger' : 'component-outline-input-large'"
             v-model="fileData" borderless label-slot clearable clear-icon="fa-solid fa-xmark"
             :accept="accept" :max-file-size="maxFileSize"
             @rejected="notifyTopNegative(
@@ -26,7 +27,8 @@
         </div>
       </template>
     </q-file>
-    <q-file v-else class="q-ma-md component-outline-select-large"
+    <q-file v-else class="q-ma-md"
+            :class="isMini ? 'component-outline-select-larger' : 'component-outline-select-large'"
             v-model="fileData" borderless label-slot clearable clear-icon="fa-solid fa-xmark"
             :accept="accept" :max-file-size="maxFileSize"
             @rejected="notifyTopNegative(
@@ -84,6 +86,11 @@ const props = defineProps({
     required: false,
     default: ""
   },
+  isMini: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }
 })
 const fileData = ref(props.modelValue)
 
