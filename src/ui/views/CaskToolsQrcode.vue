@@ -9,13 +9,13 @@
 
 
     <div class="row">
-      <div class="col-lg-8 col-12 text-center" style="padding: 0 8rem">
+      <div class="col-lg-7 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{$t('main_tools_qr_generate')}}
         </h5>
         <div style="opacity: .5">
-          暂不支持中文值加密
+          {{ $t('main_tools_qr_generate_tip') }}
         </div>
 
         <div class="q-mt-md row items-center">
@@ -69,7 +69,7 @@
 
       </div>
 
-      <div class="col-lg-4 col-12 q-px-xl row justify-center relative-position">
+      <div class="col-lg-5 col-12 relative-position">
         <QRCodeVue3
             :width="280"
             :height="280"
@@ -102,7 +102,7 @@
     </div>
 
     <div class="row q-mt-xl">
-      <div class="col-lg-8 col-12 text-center" style="padding: 0 8rem">
+      <div class="col-lg-7 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{$t('main_tools_qr_parse')}}
@@ -145,8 +145,10 @@ import {useI18n} from "vue-i18n";
 import {copy} from "@/utils/base-tools";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 import jsQR from "jsqr";
+import {useGlobalStateStore} from "@/utils/global-state";
 
 const {t} = useI18n()
+const globalState = useGlobalStateStore();
 
 //qrcode config
 let qrType = ref("square")
@@ -155,8 +157,15 @@ let qrColor = ref("#303030")
 let qrBgColor = ref("Transparent")
 let uploadImg = ref(t('in_develop'))
 
-//qr parse
 
+watch(
+    () => globalState.language,
+    () => {
+      uploadImg.value = t("in_develop")
+    }
+);
+
+//qr parse
 const qrCodeUploadTips = ["main_tools_qr_upload_tips1", "main_tools_qr_upload_tips2",]
 let parseImg = ref(null)
 let parseImgBase64 = ref("");
@@ -204,8 +213,8 @@ watch(parseImg, () => {
 
 .qrcode-generator-download-btn {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 10%;
+  transform: translateX(50%);
   border-color: transparent;
   cursor: pointer;
   color: rgb(var(--full-container-text-color));

@@ -225,6 +225,19 @@
   "main_tools_qr_upload_tips1": "仅支持webp、png、jpg、jpeg格式",
   "main_tools_qr_upload_tips2": "图片大小不得超过2MB",
 
+  "main_tools_md5_input": "输入",
+  "main_tools_md5_input_value_title": "待加密值：",
+  "main_tools_md5_input_empty_error": "加密字符串不不能为空",
+  "main_tools_md5_output_md": "输出 Md5 加密",
+  "main_tools_md5_output_sha": "输出 SHA-1 加密",
+  "main_tools_md5_output_keccak": "输出 Keccak-256 加密",
+  "main_tools_md5_output_up": "大写：",
+  "main_tools_md5_output_low": "小写：",
+  "main_tools_md5_output_low_16": "16位小写：",
+  "main_tools_md5_output_up_16": "16位大写：",
+  "main_tools_md5_output_low_32": "32位小写：",
+  "main_tools_md5_output_up_32": "32位大写：",
+
 
   "main_long_text_input_send": "发送",
   "main_long_text_input_cancel": "取消",

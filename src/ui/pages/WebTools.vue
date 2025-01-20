@@ -22,7 +22,7 @@
           <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
-        <div class="col-grow">
+        <div class="col-lg-9 col-12">
           <router-view v-slot="{ Component, route }">
             <transition name="fade" mode="out-in">
               <div :key="route.name">
