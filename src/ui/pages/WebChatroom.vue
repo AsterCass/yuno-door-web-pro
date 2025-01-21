@@ -639,11 +639,13 @@ onMounted(() => {
   browserNotificationCheck()
   chattingDataInit(true)
   initChatSocket()
+  socketChatState.needBrowserNotification = false
   document.addEventListener("visibilitychange", handleVisibilityChange);
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener("visibilitychange", handleVisibilityChange);
+  socketChatState.needBrowserNotification = true
 })
 
 
