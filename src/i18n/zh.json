@@ -189,6 +189,9 @@
   "main_tools_title_rgb_hex": "RGB和十六进制颜色格式互转",
   "main_tools_title_cn_id_card": "大陆身份证生成",
   "main_tools_generate": "生成",
+  "main_tools_download": "下载",
+  "main_tools_convert": "转换",
+  "main_tools_copy": "复制",
 
 
   "main_tools_sql_kotlin_package": "包名称：",
@@ -237,6 +240,17 @@
   "main_tools_md5_output_up_16": "16位大写：",
   "main_tools_md5_output_low_32": "32位小写：",
   "main_tools_md5_output_up_32": "32位大写：",
+
+  "main_tools_base64_img_to_img": "Base64编码转图片",
+  "main_tools_base64_img_to_base64": "图片转Base64编码",
+  "main_tools_base64_upload_tip1": "仅支持webp、png、jpg、jpeg格式",
+  "main_tools_base64_upload_tip2": "图片大小不得超过5MB",
+  "main_tools_base64_to_img_error_type": "无法识别的图片类型",
+  "main_tools_base64_to_img_error_code": "Base64编码错误",
+  "main_tools_base64_to_img_error_code_type": "不支持的图片类型或者Base64编码错误",
+  "main_tools_base64_to_img_placeholder": "此处输入Base64字符串",
+  "main_tools_base64_copy_data_url": "复制Data URL",
+  "main_tools_base64_copy_base64": "复制Base64",
 
 
   "main_long_text_input_send": "发送",

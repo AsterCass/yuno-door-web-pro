@@ -12,13 +12,14 @@
       <div class="col-lg-6 col-12 text-center q-mb-xl">
 
         <h5 class="cask-color-positive">
-          Base64编码转图片
+          {{ $t('main_tools_base64_img_to_img') }}
         </h5>
 
         <div class="row q-mt-md items-center">
           <div class="col" id="inputBase64Div">
             <q-input v-model="base64Str" tabindex="0" dense borderless type="textarea" hide-bottom-space
-                     class="q-ma-md component-outline-input-textarea-grow" placeholder="请填入Base64字符串"/>
+                     class="q-ma-md component-outline-input-textarea-grow"
+                     :placeholder="$t('main_tools_base64_to_img_placeholder')"/>
           </div>
         </div>
 
@@ -26,7 +27,7 @@
                @click="convertToImg">
           <div class="row items-center">
             <div class="q-mx-xs">
-              转换
+              {{ $t('main_tools_convert') }}
             </div>
           </div>
         </q-btn>
@@ -35,7 +36,7 @@
                @click="download(base64StrOutput, 'output', base64StrType)">
           <div class="row items-center">
             <div class="q-mx-xs">
-              下载
+              {{ $t('main_tools_download') }}
             </div>
           </div>
         </q-btn>
@@ -48,13 +49,13 @@
 
       <div class="col-lg-6 col-12 text-center">
         <h5 class="cask-color-positive">
-          图片转Base64编码
+          {{ $t('main_tools_base64_img_to_base64') }}
         </h5>
 
 
         <div class="row q-mt-md items-center justify-center">
           <cask-upload-input v-model="parseImg" :tips="qrCodeUploadTips" :is-mini="true"
-                             accept=".jpg,.jpeg,.png,.webp" :max-file-size="2048000"/>
+                             accept=".jpg,.jpeg,.png,.webp" :max-file-size="5120000"/>
         </div>
 
 
@@ -63,6 +64,26 @@
             <q-input v-model="parseImgStr" tabindex="0" dense borderless type="textarea" hide-bottom-space readonly
                      class="q-ma-md component-outline-input-textarea-grow-dash"/>
           </div>
+        </div>
+
+        <div class="row justify-evenly">
+          <q-btn v-show="parseImgConverted" no-caps unelevated class="q-mt-md q-mx-md shadow-2 component-full-btn-grow"
+                 @click="copy(parseImgStr)">
+            <div class="row items-center">
+              <div class="q-mx-xs">
+                {{ $t('main_tools_base64_copy_data_url') }}
+              </div>
+            </div>
+          </q-btn>
+
+          <q-btn v-show="parseImgConverted" no-caps unelevated class="q-mt-md q-mx-md shadow-2 component-full-btn-grow"
+                 @click="copyPureBase64">
+            <div class="row items-center">
+              <div class="q-mx-xs">
+                {{ $t('main_tools_base64_copy_base64') }}
+              </div>
+            </div>
+          </q-btn>
         </div>
 
       </div>
@@ -80,11 +101,11 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {useI18n} from "vue-i18n";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
-import {download} from "@/utils/base-tools";
+import {copy, download} from "@/utils/base-tools";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
-const qrCodeUploadTips = ["main_tools_qr_upload_tips1", "main_tools_qr_upload_tips2",]
+const qrCodeUploadTips = ["main_tools_base64_upload_tip1", "main_tools_base64_upload_tip2",]
 
 // Base 64 to Img
 const base64Str = ref("")
@@ -113,7 +134,6 @@ watch(parseImg, () => {
   }
 })
 
-
 //check base64
 async function isBase64UrlImage(base64String) {
   if (!base64String) {
@@ -141,7 +161,7 @@ async function isBase64UrlImage(base64String) {
       'U': 'webp',
     }
     if (!knownTypes[base64String[0]]) {
-      notifyTopWarning("无法识别的图片类型")
+      notifyTopWarning(t('main_tools_base64_to_img_error_type'))
     } else {
       let image = new Image()
       image.src = knownTypes[base64String[0]] + base64String
@@ -149,7 +169,7 @@ async function isBase64UrlImage(base64String) {
       return await (new Promise((resolve) => {
         image.onload = function () {
           if (image.height === 0 || image.width === 0) {
-            notifyTopWarning("Base64编码错误")
+            notifyTopWarning(t('main_tools_base64_to_img_error_code'))
             resolve(false)
             return;
           }
@@ -160,13 +180,20 @@ async function isBase64UrlImage(base64String) {
         }
         image.onerror = () => {
           resolve(false)
-          notifyTopWarning("Base64编码错误")
+          notifyTopWarning(t('main_tools_base64_to_img_error_code'))
         }
       }))
     }
-
   } catch (e) {
-    notifyTopWarning("不支持的图片类型或者Base64编码错误")
+    notifyTopWarning(t('main_tools_base64_to_img_error_code_type'))
+  }
+}
+
+const copyPureBase64 = () => {
+  const replacePat = /^data:image\/((jpg)|(jpeg)|(png)|(gif)|(webp));base64,/
+  if (parseImgStr.value) {
+    const pureBase64 = parseImgStr.value.replace(replacePat, '')
+    copy(pureBase64)
   }
 }
 

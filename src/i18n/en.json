@@ -190,6 +190,9 @@
   "main_tools_title_rgb_hex": "RGB and Hex Color Format Converter",
   "main_tools_title_cn_id_card": "Chinese Mainland ID Card Generator",
   "main_tools_generate": "Generate",
+  "main_tools_download": "Download",
+  "main_tools_convert": "Convert",
+  "main_tools_copy": "Copy",
 
 
   "main_tools_sql_kotlin_package": "Package Name:",
@@ -239,6 +242,17 @@
   "main_tools_md5_output_up_16": "Hash (16 Uppercase): ",
   "main_tools_md5_output_low_32": "Hash (32 Lowercase): ",
   "main_tools_md5_output_up_32": "Hash (32 Uppercase): ",
+
+  "main_tools_base64_img_to_img": "Base64 Convert to Image",
+  "main_tools_base64_img_to_base64": "Image Convert to Base64",
+  "main_tools_base64_upload_tip1": "Only supports webp, png, jpg and jpeg formats.",
+  "main_tools_base64_upload_tip2": "The image size must not exceed 5MB.",
+  "main_tools_base64_to_img_error_type": "Unrecognized image type",
+  "main_tools_base64_to_img_error_code": "Base64 encoding error",
+  "main_tools_base64_to_img_error_code_type": "Unsupported image type, or Base64 encoding error",
+  "main_tools_base64_to_img_placeholder": "Enter the Base64 string here",
+  "main_tools_base64_copy_data_url": "Copy Data URL",
+  "main_tools_base64_copy_base64": "Copy Base64",
 
   "main_long_text_input_send": "Send",
   "main_long_text_input_cancel": "Cancel",
