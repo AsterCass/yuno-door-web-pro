@@ -541,6 +541,47 @@
   );
 }
 
+.component-outline-input-textarea-grow {
+  textarea {
+    resize: none !important;
+    color: rgb(var(--text-color));
+    border-radius: 4px;
+    padding: .75rem;
+    height: 16rem;
+    overflow-wrap: anywhere;
+    border: 2px solid rgb(var(--text-color), 0.75);
+
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--text-color-select));
+  }
+}
+
+.component-outline-input-textarea-grow-dash {
+  textarea {
+    resize: none !important;
+    color: rgb(var(--text-color));
+    border-radius: 4px;
+    padding: .75rem;
+    height: 16rem;
+    overflow-wrap: anywhere;
+    border: 2px dashed rgb(var(--text-color), 0.75);
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--text-color-select));
+  }
+}
+
 .component-none-input-grow {
   @include component-outline-input-base(
           $thisWidth: auto,

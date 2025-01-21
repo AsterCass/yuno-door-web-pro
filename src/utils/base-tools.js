@@ -11,6 +11,15 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function download(src, name, suffix) {
+    let link = document.createElement('a');
+    link.download = name + '.' + suffix;
+    link.href = src
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 export function copy(text) {
     if (!navigator.clipboard) {
         notifyTopNegative(t('main_login_fail_copy'))
