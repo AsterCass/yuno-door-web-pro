@@ -510,6 +510,21 @@
   );
 }
 
+.component-outline-input-mini-est {
+  @include component-outline-input-base(
+          $thisWidth: 4rem,
+          $thisMinWidth: 4rem,
+  );
+}
+
+.component-outline-dash-input-mini-est {
+  @include component-outline-input-base(
+          $thisWidth: 4rem,
+          $thisMinWidth: 4rem,
+          $thisBorder: 2px dashed rgb(var(--full-container-background-color)),
+  );
+}
+
 .component-outline-input-larger {
   @include component-outline-input-base(
           $thisWidth: 28rem,

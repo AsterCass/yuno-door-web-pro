@@ -231,7 +231,7 @@
   "main_tools_qr_upload_tips2": "The image size must not exceed 2MB.",
 
   "main_tools_md5_input": "Input",
-  "main_tools_md5_input_value_title": "Value to encrypt: ",
+  "main_tools_md5_input_value_title": "Value to Encrypt: ",
   "main_tools_md5_input_empty_error": "The value to be encrypted string cannot be empty.",
   "main_tools_md5_output_md": "Output Md5 Encryption",
   "main_tools_md5_output_sha": "Output SHA-1 Encryption",
@@ -253,6 +253,13 @@
   "main_tools_base64_to_img_placeholder": "Enter the Base64 string here",
   "main_tools_base64_copy_data_url": "Copy Data URL",
   "main_tools_base64_copy_base64": "Copy Base64",
+
+  "main_tools_hex_rgb_to_hex": "RGB Convert to Hex Color",
+  "main_tools_hex_rgb_to_rgb": "Hex Color Convert to RGB",
+  "main_tools_hex_rgb_to_rgb_error": "Invalid hexadecimal input format, please check",
+  "main_tools_hex_rgb_to_hex_error": "Invalid RGB input format, please check",
+  "main_tools_hex_rgb_to_hex_format": "RGB Input Format: ",
+
 
   "main_long_text_input_send": "Send",
   "main_long_text_input_cancel": "Cancel",
