@@ -510,10 +510,35 @@
   );
 }
 
+.component-outline-input-mini-short {
+  @include component-outline-input-base(
+          $thisWidth: 9.5rem,
+          $thisMinWidth: 9.5rem,
+          $thisHeight: 2rem,
+  );
+}
+
 .component-outline-input-mini-est {
   @include component-outline-input-base(
           $thisWidth: 4rem,
           $thisMinWidth: 4rem,
+  );
+}
+
+.component-outline-dash-input-mini {
+  @include component-outline-input-base(
+          $thisWidth: 9.5rem,
+          $thisMinWidth: 9.5rem,
+          $thisBorder: 2px dashed rgb(var(--full-container-background-color)),
+  );
+}
+
+.component-outline-dash-input-mini-short {
+  @include component-outline-input-base(
+          $thisWidth: 9.5rem,
+          $thisMinWidth: 9.5rem,
+          $thisHeight: 2rem,
+          $thisBorder: 2px dashed rgb(var(--full-container-background-color)),
   );
 }
 

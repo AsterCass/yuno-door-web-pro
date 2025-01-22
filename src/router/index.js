@@ -134,7 +134,7 @@ const router = createRouter({
                     name: "mainToolsCnIdCardEx",
                     component: CaskToolsCnIdCard,
                     meta: {
-                        title: '大陆身份证生成 | Chinese Mainland ID Card Generator'
+                        title: '在线身份证生成 | Chinese Mainland ID Card Generator'
                     },
                 },
             ]
