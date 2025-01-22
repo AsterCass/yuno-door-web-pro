@@ -49,7 +49,7 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
 import {toSpecifyPage} from "@/router";
 import {useRouter} from "vue-router";
@@ -58,15 +58,19 @@ const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
 
 const tabs = ref([
-  {value: 'mainToolsSql2kotlinEx', label: 'main_tools_title_sql_kotlin', color: 'rgb(211, 47, 47)'},
-  {value: 'mainToolsTimestampEx', label: 'main_tools_title_timestamp', color: 'rgb(194, 24, 91)'},
-  {value: 'mainToolsQrcodeEx', label: 'main_tools_title_qrcode', color: 'rgb(123, 32, 163)'},
-  {value: 'mainToolsMd5Ex', label: 'main_tools_title_md5', color: 'rgb(81, 45, 168)'},
-  {value: 'mainToolsImgBase64Ex', label: 'main_tools_title_base64', color: 'rgb(48, 63, 159)'},
-  {value: 'mainToolsRgbHexEx', label: 'main_tools_title_rgb_hex', color: 'rgb(25, 118, 210)'},
-  {value: 'mainToolsCnIdCardEx', label: 'main_tools_title_cn_id_card', color: 'rgb(2, 136, 209)'},
+  {value: 'mainToolsSql2kotlin', label: 'main_tools_title_sql_kotlin', color: 'rgb(211, 47, 47)'},
+  {value: 'mainToolsTimestamp', label: 'main_tools_title_timestamp', color: 'rgb(194, 24, 91)'},
+  {value: 'mainToolsQrcode', label: 'main_tools_title_qrcode', color: 'rgb(123, 32, 163)'},
+  {value: 'mainToolsMd5', label: 'main_tools_title_md5', color: 'rgb(81, 45, 168)'},
+  {value: 'mainToolsImgBase64', label: 'main_tools_title_base64', color: 'rgb(48, 63, 159)'},
+  {value: 'mainToolsRgbHex', label: 'main_tools_title_rgb_hex', color: 'rgb(25, 118, 210)'},
+  {value: 'mainToolsCnIdCard', label: 'main_tools_title_cn_id_card', color: 'rgb(2, 136, 209)'},
 ])
 const tab = ref(thisRouter.currentRoute.value.name);
+
+watch(thisRouter.currentRoute, () => {
+  tab.value = thisRouter.currentRoute.value.name
+});
 
 const updateTab = (newTabValue) => {
   toSpecifyPage(thisRouter, newTabValue)

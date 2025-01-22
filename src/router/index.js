@@ -72,18 +72,18 @@ const router = createRouter({
             ]
         },
         {
-            path: "/toolsEx",
-            name: 'mainToolsEx',
+            path: "/tools",
+            name: 'mainTools',
             component: WebTools,
             children: [
                 {
                     path: '',
-                    name: 'mainToolsDefaultEx',
-                    redirect: {name: 'mainToolsSql2kotlinEx'}
+                    name: 'mainToolsList',
+                    redirect: {name: 'mainToolsSql2kotlin'}
                 },
                 {
                     path: "code/sql2kotlin",
-                    name: "mainToolsSql2kotlinEx",
+                    name: "mainToolsSql2kotlin",
                     component: CaskToolsSql2kotlin,
                     meta: {
                         title: 'DDL语句转Kotlin数据类工具 | DDL to Kotlin Data Class Converter'
@@ -91,7 +91,7 @@ const router = createRouter({
                 },
                 {
                     path: "timestamp",
-                    name: "mainToolsTimestampEx",
+                    name: "mainToolsTimestamp",
                     component: CaskToolsTimestamp,
                     meta: {
                         title: '时间戳格式转换工具 | Timestamp Format Converter'
@@ -99,7 +99,7 @@ const router = createRouter({
                 },
                 {
                     path: "qrcode",
-                    name: "mainToolsQrcodeEx",
+                    name: "mainToolsQrcode",
                     component: CaskToolsQrcode,
                     meta: {
                         title: '二维码解析工具 | 二维码生成工具 | QR Code Decoder | QR Code Generator'
@@ -107,7 +107,7 @@ const router = createRouter({
                 },
                 {
                     path: "md5",
-                    name: "mainToolsMd5Ex",
+                    name: "mainToolsMd5",
                     component: CaskToolsMd5,
                     meta: {
                         title: 'MD5 | 字符串数据加密 | String Data Encryption'
@@ -115,7 +115,7 @@ const router = createRouter({
                 },
                 {
                     path: "imgBase64",
-                    name: "mainToolsImgBase64Ex",
+                    name: "mainToolsImgBase64",
                     component: CaskToolsImageBase64,
                     meta: {
                         title: '图片Base64转换工具 | Image Base64 Converter'
@@ -123,7 +123,7 @@ const router = createRouter({
                 },
                 {
                     path: "rgbHex",
-                    name: "mainToolsRgbHexEx",
+                    name: "mainToolsRgbHex",
                     component: CaskToolsRgbHex,
                     meta: {
                         title: 'RGB和十六进制颜色格式互转 | RGB and Hex Color Format Converter'
@@ -131,7 +131,7 @@ const router = createRouter({
                 },
                 {
                     path: "cnIdCard",
-                    name: "mainToolsCnIdCardEx",
+                    name: "mainToolsCnIdCard",
                     component: CaskToolsCnIdCard,
                     meta: {
                         title: '在线身份证生成 | Chinese Mainland ID Card Generator'
@@ -143,51 +143,11 @@ const router = createRouter({
             path: "/tools",
             children: [
                 {
-                    path: "list",
-                    name: "mainToolsList",
+                    path: "steam/search",
+                    name: "mainToolsSteamSearch",
                     component: WebRedirect,
                     props: () => ({
                         path: "tools/steam/search",
-                    }),
-                },
-                {
-                    path: "code/sql2kotlin",
-                    name: "mainToolsSql2kotlin",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/code/sql2kotlin",
-                    }),
-                },
-                {
-                    path: "timestamp",
-                    name: "mainToolsTimestamp",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/timestamp",
-                    }),
-                },
-                {
-                    path: "qrcode",
-                    name: "mainToolsQrcode",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/qrcode",
-                    }),
-                },
-                {
-                    path: "md5",
-                    name: "mainToolsMd5",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/md5",
-                    }),
-                },
-                {
-                    path: "imgBase64",
-                    name: "mainToolsImgBase64",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/imgBase64",
                     }),
                 },
                 {
@@ -196,22 +156,6 @@ const router = createRouter({
                     component: WebRedirect,
                     props: () => ({
                         path: "tools/mkHtmlPdf",
-                    }),
-                },
-                {
-                    path: "rgbHex",
-                    name: "mainToolsRgbHex",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/rgbHex",
-                    }),
-                },
-                {
-                    path: "cnIdCard",
-                    name: "mainToolsCnIdCard",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "tools/cnIdCard",
                     }),
                 },
             ]
