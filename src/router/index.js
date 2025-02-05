@@ -16,6 +16,7 @@ import CaskToolsImageBase64 from "@/ui/views/CaskToolsImageBase64.vue";
 import CaskToolsMd5 from "@/ui/views/CaskToolsMd5.vue";
 import CaskToolsQrcode from "@/ui/views/CaskToolsQrcode.vue";
 import CaskToolsTimestamp from "@/ui/views/CaskToolsTimestamp.vue";
+import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
 
 
 const router = createRouter({
@@ -186,6 +187,14 @@ const router = createRouter({
                     },
                 },
             ]
+        },
+        {
+            path: "/boardTmp",
+            name: "boardTmp",
+            component: WebGuestbook,
+            meta: {
+                title: 'AsterCasc | Guestbook | 留言板'
+            },
         },
         {
             path: "/board",
