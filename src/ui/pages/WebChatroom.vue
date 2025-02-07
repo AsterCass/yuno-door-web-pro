@@ -13,7 +13,7 @@
         <div class="col-9 column">
           <div class="col-grow column q-mx-md">
 
-            <q-input v-model="chatNameFilter" tabindex="0" dense outlined placeholder="查询"
+            <q-input v-model="chatNameFilter" tabindex="0" dense outlined :placeholder="$t('component_search')"
                      class="q-mb-md component-outline-input-grow">
               <template v-slot:prepend>
                 <q-icon name="fa-solid fa-magnifying-glass" size="1rem"/>
