@@ -132,6 +132,7 @@
   "main_article_recommend": "推荐",
   "main_article_comment": "评论",
   "main_article_reply": "回复",
+  "main_article_collapse_reply": "收起回复",
   "main_article_cancel_reply": "取消回复",
   "main_article_cancel_reply_error": "输入内容不允许为空，且不能超过500字符",
   "main_article_cancel_reply_successful": "回复成功",
@@ -307,6 +308,10 @@
   "main_redirect_pre": "该页面的新版迁移还未完成",
   "main_redirect_post": "秒后跳转到旧版页面访问该功能",
   "main_redirect_now": "直接跳转",
+
+  "main_comment_type_log": "更新日志",
+  "main_comment_type_comments": "用户评论",
+
 
 
   "home": "主页"
