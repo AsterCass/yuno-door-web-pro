@@ -57,7 +57,7 @@
           <div v-for="(comment, index) in commentTree" :key="index">
             <div class="row">
 
-              <div class="col-2 column justify-center items-center q-mt-md">
+              <div class="col-2 column  items-center q-mt-md">
                 <div class="relative-position q-mr-md cursor-pointer" style="width: 100px; height: 95px"
                      @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: comment.commentUserId})">
                   <q-avatar size="105px" style="filter: blur(5px); position: absolute;">
@@ -113,12 +113,25 @@
                       {{ $t('main_article_reply') }} ({{ comment.webChildData.length }})
                     </div>
                     <div v-else class="cask-jump-link-in-text guestbook-comment-footer-reply"
-                         @click="comment.webSubClose = true">
+                         @click="comment.webSubClose = true"
+                         style="border-radius: .5rem .5rem 0 0;
+                         padding: .3rem .6rem;
+                         background-color: rgba(var(--text-color), 0.1);">
                       {{ $t('main_article_collapse_reply') }}
                     </div>
                   </div>
-                </div>
 
+                  <transition name="guestbook-child-comment">
+                    <div v-if="!comment.webSubClose" class="guestbook-child-comment-body">
+                      <div v-if="0 !== comment.webChildData.length" class="q-pa-md">
+                        <div v-for="(childComment, childIndex) in comment.webChildData" :key="childIndex">
+                          {{ childComment.commentUserName }}
+                        </div>
+                      </div>
+
+                    </div>
+                  </transition>
+                </div>
               </div>
 
 
@@ -129,7 +142,7 @@
           </div>
 
 
-          <cask-long-text-input style="margin: 5.5rem 0 2rem 0" id="comment-reply-input" :elements="new Map([
+          <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
           [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
           ])" :sendCallback="submitCommentInput" v-model="commentContent"
@@ -290,6 +303,27 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
+.guestbook-child-comment-body {
+  max-height: 40rem;
+  overflow: hidden;
+  border-radius: 1rem 0 1rem 1rem;
+  background-color: rgba(var(--text-color), 0.1);
+}
+
+.guestbook-child-comment-enter-active {
+  transition: all .5s cubic-bezier(0.7, 0.1, 0.7, 0.2);
+}
+
+.guestbook-child-comment-leave-active {
+  transition: all .5s cubic-bezier(0.1, 0.7, 0.2, 0.7);
+}
+
+.guestbook-child-comment-enter-from,
+.guestbook-child-comment-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
 
 .guestbook-comment-body-main {
   margin-top: .5rem;
