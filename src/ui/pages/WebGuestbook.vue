@@ -116,7 +116,7 @@
                          @click="comment.webSubClose = true"
                          style="border-radius: .5rem .5rem 0 0;
                          padding: .3rem .6rem;
-                         background-color: rgba(var(--text-color), 0.1);">
+                         background-color: rgba(var(--text-color), 0.075);">
                       {{ $t('main_article_collapse_reply') }}
                     </div>
                   </div>
@@ -170,7 +170,8 @@
                                      @click="comment.webReplyMainSubId = childComment.id;
                                      comment.webReplySecondaryId = comment.id;
                                      comment.webReplyMainSubName = childComment.commentUserName;
-                                     comment.webReplyMainContext = childComment.commentContent;">
+                                     comment.webReplyMainContext =$t('main_article_reply') + ': ' +
+                                     childComment.commentContent;">
                                   {{ $t('main_article_reply') }}
                                 </div>
 
@@ -192,20 +193,48 @@
                                 </div>
                               </q-btn>
                             </div>
-
-                            <div v-if="comment.webChildData.length !== comment.childData.length"
-                                 class="row justify-center q-mt-md cask-cursor-pointer"
-                                 style="height: 20px;
-                                 background-color: rgba(var(--text-color), 0.15);
-                                 border-radius: 0 0 8px 8px;"
-                                 @click="comment.webChildData = comment.childData">
-                              <q-icon name="fa-solid fa-caret-down" size="20px"/>
-                            </div>
-                            <div v-else class="q-pb-md"/>
                           </div>
                         </div>
                       </div>
 
+
+                      <div v-if="comment.webReplyMainSubId" class="q-pt-lg q-mx-md">
+                        <div class="row items-center justify-between q-px-sm"
+                             style="height: 15px;color: rgb(var(--pointer))">
+                          <div v-if="comment.webReplyMainSubName" class="cask-cursor-pointer"
+                               style="font-size: 0.95rem">
+                            @{{ comment.webReplyMainSubName }}&nbsp;:
+                          </div>
+                          <div v-if="comment.webReplyMainSubName" class="q-mr-sm cask-jump-link-in-text-origin"
+                               style="font-size: 0.85rem"
+                               @click="comment.webReplyMainSubId = comment.id;
+                               comment.webReplySecondaryId = comment.id;
+                               comment.webReplyMainContext = '';
+                               comment.webReplyMainSubName=''">
+                            {{ $t('main_article_cancel_reply') }}
+                          </div>
+                        </div>
+
+                        <cask-long-text-input v-model="comment.webReplyContext"
+                                              :elements="new Map([])"
+                                              :placeholder="comment.webReplyMainContext"
+                                              :send-enable="globalSendEnable"
+                                              :sendCallback="() => {submitCommentInput(comment)}"
+                                              @update:model-value="data => comment.webReplyContext = data"
+                        />
+
+                      </div>
+
+
+                      <div v-if="comment.webChildData.length !== comment.childData.length"
+                           class="row justify-center q-mt-md cask-cursor-pointer"
+                           style="height: 20px;
+                                 background-color: rgba(var(--text-color), 0.15);
+                                 border-radius: 0 0 8px 8px;"
+                           @click="comment.webChildData = comment.childData">
+                        <q-icon name="fa-solid fa-caret-down" size="20px"/>
+                      </div>
+                      <div v-else-if="0 !== comment.webChildData.length || comment.webReplyMainSubId" class="q-my-md"/>
                     </div>
                   </transition>
                 </div>
@@ -233,7 +262,10 @@
         <div class="guestbook-left-sidebar">
           <div class="column justify-between items-center full-height" style="padding-bottom: 2rem; width: 5rem">
             <div class="col-10 column" style="padding-top: 6rem;">
-              <q-btn no-caps unelevated class="q-ma-xs component-none-btn-mini">
+              <q-btn :disable="commentPageNo <= 1" class="q-ma-xs component-none-btn-mini" no-caps
+                     unelevated
+                     @click="commentPageNo = Math.max(commentPageNo - 1, 1);
+                     refreshCommentTree();">
                 <div class="row justify-center">
                   <q-icon name="fa-solid fa-chevron-up" size="1rem"/>
                 </div>
@@ -252,7 +284,11 @@
                   </div>
                 </q-btn>
               </div>
-              <q-btn no-caps unelevated class="q-ma-xs component-none-btn-mini">
+              <q-btn :disable="commentPageNo > commentPageShow.length - 1" class="q-ma-xs component-none-btn-mini"
+                     no-caps
+                     unelevated
+                     @click="commentPageNo = Math.min(commentPageNo + 1, commentPageShow.length);
+                     refreshCommentTree();">
                 <div class="row justify-center">
                   <q-icon name="fa-solid fa-chevron-down" size="1rem"/>
                 </div>
@@ -288,16 +324,21 @@ import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {delay, gotoPageTop} from "@/utils/base-tools";
 import {commentTagEnums} from "@/constant/enums/comment-tag";
-import {getCommentWebsite} from "@/api/comment";
+import {getCommentWebsite, replyCommentWebsite} from "@/api/comment";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
+import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n()
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
 
 
 //页面元素
+const globalSendEnable = ref(true)
 const dataLoaded = ref(false)
 const showPic = ref(false)
 const commentPageNo = ref(1)
@@ -362,6 +403,32 @@ function deleteAndAddTagSet(code) {
   refreshCommentTree(true)
 }
 
+function submitCommentInput(comment) {
+  globalSendEnable.value = false
+  if (comment) {
+    if (!comment.webReplyContext || 0 === comment.webReplyContext.trim().length) {
+      notifyTopWarning(t('main_comment_send_empty'))
+      globalSendEnable.value = true
+    } else {
+      comment.webReplyContext = comment.webReplyContext.trim()
+      replyCommentWebsite({
+        commentContent: comment.webReplyContext,
+        secondaryId: comment.webReplySecondaryId,
+        mainSubId: comment.webReplyMainSubId,
+      }).then(res => {
+        if (!res || !res.data) {
+          globalSendEnable.value = true
+          return
+        }
+        notifyTopPositive(t('main_comment_send_successful'))
+        lastCommentId.value = comment.id
+        refreshCommentTree(false, false)
+        globalSendEnable.value = true
+      })
+    }
+  }
+}
+
 
 function refreshCommentTree(navigateTo1 = false, rebuild = true) {
   //reset data
@@ -386,6 +453,7 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
     commentTree.value = commentOriginObj.value.content
     commentPages.value = commentOriginObj.value.totalPages
     for (let obj of commentTree.value) {
+      obj.webReplyContext = ""
       if (obj.childData.length > 0) {
         if (obj.id !== lastCommentId.value) {
           obj.webChildData = obj.childData.slice(0, 5)
@@ -450,7 +518,7 @@ onMounted(() => {
 .guestbook-child-comment-body {
   overflow: hidden;
   border-radius: 1rem 0 1rem 1rem;
-  background-color: rgba(var(--text-color), 0.1);
+  background-color: rgba(var(--text-color), 0.075);
   font-size: .9rem;
   color: rgb(var(--text-color), 0.88);
   margin-bottom: 1rem;

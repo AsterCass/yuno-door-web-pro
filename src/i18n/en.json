@@ -314,6 +314,8 @@
   "main_comment_type_log": "Changelog",
   "main_comment_type_comments": "Comment",
   "main_comment_will_send": "I'll just meow a few words",
+  "main_comment_send_empty": "Input content cannot be empty",
+  "main_comment_send_successful": "Send successful",
 
   "home": "Home"
 }
