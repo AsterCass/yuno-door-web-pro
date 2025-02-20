@@ -52,8 +52,8 @@
       </div>
 
       <div class="col-lg-7 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
-           style="min-height: 60rem;" :style="globalState.screenMini ? 'margin-top: 3rem' : 'margin-top: 7rem'">
-        <div v-if="dataLoaded">
+           :style="globalState.screenMini ? 'margin-top: 3rem' : 'margin-top: 7rem'">
+        <div v-if="dataLoaded" style="min-height: 60rem;">
           <div v-for="(comment, index) in commentTree" :key="index">
             <div class="row">
 
@@ -247,6 +247,12 @@
 
           </div>
 
+        </div>
+
+        <div v-else style="min-height: 60rem;">
+          <div class="row justify-center q-my-xl">
+            <q-spinner-pie size="50px"/>
+          </div>
         </div>
 
         <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
