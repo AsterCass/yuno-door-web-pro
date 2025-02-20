@@ -391,6 +391,22 @@
   @include component-full-btn-base()
 }
 
+.component-full-btn-std-sq {
+  @include component-full-btn-base(
+          $thisHeight: 2.5rem,
+          $thisWidth: 2.5rem,
+          $thisMinWidth: 2.5rem,
+  )
+}
+
+.component-full-btn-mini {
+  @include component-full-btn-base(
+          $thisWidth: 2.2rem,
+          $thisHeight: 1.8rem,
+          $thisMinWidth: 2.2rem,
+  )
+}
+
 .component-full-btn-grow {
   @include component-full-btn-base(
           $thisWidth: auto,
@@ -470,6 +486,13 @@
 
 .component-none-btn-std {
   @include component-none-btn-base()
+}
+
+.component-none-btn-mini {
+  @include component-none-btn-base(
+          $thisWidth: 2.2rem,
+          $thisHeight: 1.8rem,
+  )
 }
 
 .component-outline-btn-mini {

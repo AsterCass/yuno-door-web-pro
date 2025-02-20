@@ -57,7 +57,7 @@
           <div v-for="(comment, index) in commentTree" :key="index">
             <div class="row">
 
-              <div class="col-2 column  items-center q-mt-md">
+              <div class="column  items-center q-mt-md" style="width: 150px">
                 <div class="relative-position q-mr-md cursor-pointer" style="width: 95px; height: 95px"
                      @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: comment.commentUserId})">
                   <q-avatar size="105px" style="filter: blur(5px); position: absolute;">
@@ -123,10 +123,10 @@
 
                   <transition name="guestbook-child-comment">
                     <div v-if="!comment.webSubClose" class="guestbook-child-comment-body">
-                      <div v-if="0 !== comment.webChildData.length" class="q-pa-md">
+                      <div v-if="0 !== comment.webChildData.length" class="q-pt-md">
                         <div v-for="(childComment, childIndex) in comment.webChildData" :key="childIndex">
 
-                          <div class="row">
+                          <div class="row q-px-md">
                             <div class="relative-position q-mr-md cursor-pointer" style="width: 50px; height: 50px"
                                  @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: childComment.commentUserId})">
                               <q-avatar size="56px" style="filter: blur(3px); position: absolute;">
@@ -181,6 +181,28 @@
                           <q-separator v-if="childIndex !== comment.webChildData.length - 1" inset
                                        class="component-separator-base" style="margin: 1rem 1rem 1.3rem 1rem"/>
 
+                          <div v-else-if="!comment.webReplyMainSubId">
+
+                            <div class="row justify-center">
+                              <q-btn no-caps unelevated class="shadow-2 component-full-btn-mini-grow"
+                                     @click="comment.webReplyMainSubId = comment.id;
+                                     comment.webReplySecondaryId = comment.id;">
+                                <div class="row items-center">
+                                  {{ $t('main_comment_will_send') }}
+                                </div>
+                              </q-btn>
+                            </div>
+
+                            <div v-if="comment.webChildData.length !== comment.childData.length"
+                                 class="row justify-center q-mt-md cask-cursor-pointer"
+                                 style="height: 20px;
+                                 background-color: rgba(var(--text-color), 0.15);
+                                 border-radius: 0 0 8px 8px;"
+                                 @click="comment.webChildData = comment.childData">
+                              <q-icon name="fa-solid fa-caret-down" size="20px"/>
+                            </div>
+                            <div v-else class="q-pb-md"/>
+                          </div>
                         </div>
                       </div>
 
@@ -196,22 +218,56 @@
 
           </div>
 
-
-          <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
-          [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
-          [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
-          ])" :sendCallback="submitCommentInput" v-model="commentContent"
-                                @update:model-value="data => commentContent = data" :send-enable="sendBtnEnable"
-          />
-
         </div>
+
+        <!--        <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([-->
+        <!--          [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],-->
+        <!--          [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],-->
+        <!--          ])" :sendCallback="submitCommentInput" v-model="commentContent"-->
+        <!--                              @update:model-value="data => commentContent = data" :send-enable="sendBtnEnable"-->
+        <!--        />-->
       </div>
 
 
-      <div class="col-lg-2 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 7.5rem">
-        <div :class="globalState.screenMini ? '' : 'guestbook-left-sidebar'">
-
-
+      <div v-if="!globalState.screenMini" class="col-lg-2 col-12" style="margin-top: 7.5rem">
+        <div class="guestbook-left-sidebar">
+          <div class="column justify-between items-center full-height" style="padding-bottom: 2rem; width: 5rem">
+            <div class="col-10 column" style="padding-top: 6rem;">
+              <q-btn no-caps unelevated class="q-ma-xs component-none-btn-mini">
+                <div class="row justify-center">
+                  <q-icon name="fa-solid fa-chevron-up" size="1rem"/>
+                </div>
+              </q-btn>
+              <div v-for="(page, index) in commentPageShow" :key="index">
+                <q-btn v-if="dataLoaded && page.code === commentPageNo" no-caps unelevated
+                       class="q-ma-xs shadow-2 component-full-btn-mini">
+                  <div class="row justify-center">
+                    {{ page.label }}
+                  </div>
+                </q-btn>
+                <q-btn v-else no-caps unelevated class="q-ma-xs component-none-btn-mini"
+                       @click="dataLoaded = false; commentPageNo = page.code;refreshCommentTree();">
+                  <div class="row justify-center">
+                    {{ page.label }}
+                  </div>
+                </q-btn>
+              </div>
+              <q-btn no-caps unelevated class="q-ma-xs component-none-btn-mini">
+                <div class="row justify-center">
+                  <q-icon name="fa-solid fa-chevron-down" size="1rem"/>
+                </div>
+              </q-btn>
+            </div>
+            <div class="col-2">
+              <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-std-sq" push
+                     @click="gotoPageTop()">
+                <div class="row justify-center items-center">
+                  <q-icon name="fa-solid fa-plane-up" size="1.2rem"/>
+                </div>
+              </q-btn>
+              <!--          todo dash animation -->
+            </div>
+          </div>
         </div>
       </div>
 
@@ -224,20 +280,18 @@
 </template>
 
 <script setup>
-import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/component-enums";
+import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import {delay} from "@/utils/base-tools";
+import {delay, gotoPageTop} from "@/utils/base-tools";
 import {commentTagEnums} from "@/constant/enums/comment-tag";
 import {getCommentWebsite} from "@/api/comment";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
-import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
-import {notifyTopWarning} from "@/utils/notification-tools";
 
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
@@ -247,9 +301,12 @@ const thisRouter = useRouter()
 const dataLoaded = ref(false)
 const showPic = ref(false)
 const commentPageNo = ref(1)
-let commentPages = ref(1)
+const commentPages = ref(1)
 const commentType = ref(null)
-let commentOriginObj = ref({
+const commentPageShow = ref([
+  {code: 1, label: "1"},
+])
+const commentOriginObj = ref({
   tree: [],
   sum: 0
 })
@@ -324,6 +381,7 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
     if (!res || !res.data || !res.data.data) {
       return
     }
+    // Build current page
     commentOriginObj.value = res.data.data
     commentTree.value = commentOriginObj.value.content
     commentPages.value = commentOriginObj.value.totalPages
@@ -338,6 +396,36 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
         obj.webChildData = []
       }
     }
+    // Build pagination
+    if (rebuild) {
+      const commentPageShowNew = []
+      const maxPageSlide = 2
+      let hasPreEllipsis = false
+      let hasPostEllipsis = false
+      for (let pageNo = 1; pageNo <= commentPages.value; pageNo++) {
+
+        // Deal with pre ellipsis
+        if (pageNo < commentPageNo.value && commentPageNo.value - pageNo - maxPageSlide > 1) {
+          hasPreEllipsis = true
+        }
+
+        // Deal with post ellipsis
+        if (pageNo > commentPageNo.value && pageNo - commentPageNo.value - maxPageSlide > 1) {
+          hasPostEllipsis = true
+        }
+
+        // Build
+        if (pageNo === 1 || pageNo === commentPages.value || Math.abs(commentPageNo.value - pageNo) <= maxPageSlide) {
+          commentPageShowNew.push({code: pageNo, label: pageNo})
+        } else if (hasPreEllipsis && commentPageNo.value - pageNo === maxPageSlide + 1) {
+          commentPageShowNew.push({code: pageNo, label: "···"})
+        } else if (hasPostEllipsis && pageNo - commentPageNo.value === maxPageSlide + 2) {
+          commentPageShowNew.push({code: pageNo - 1, label: "···"})
+        }
+        commentPageShow.value = commentPageShowNew
+      }
+    }
+    // Finish
     dataLoaded.value = true
   })
 }
@@ -365,6 +453,7 @@ onMounted(() => {
   background-color: rgba(var(--text-color), 0.1);
   font-size: .9rem;
   color: rgb(var(--text-color), 0.88);
+  margin-bottom: 1rem;
 
   .guestbook-child-comment-body-header {
     font-size: 0.8rem;
