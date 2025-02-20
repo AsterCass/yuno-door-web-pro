@@ -249,12 +249,14 @@
 
         </div>
 
-        <!--        <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([-->
-        <!--          [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],-->
-        <!--          [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],-->
-        <!--          ])" :sendCallback="submitCommentInput" v-model="commentContent"-->
-        <!--                              @update:model-value="data => commentContent = data" :send-enable="sendBtnEnable"-->
-        <!--        />-->
+        <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
+                  [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],])"
+                              :sendCallback="()=>{submitCommentInput()}"
+                              v-model="websiteReplyContext"
+                              @update:model-value="data => websiteReplyContext = data"
+                              :send-enable="globalSendEnable"
+        />
       </div>
 
 
@@ -316,7 +318,7 @@
 </template>
 
 <script setup>
-import {CaskModuleElement} from "@/constant/enums/component-enums";
+import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
@@ -341,6 +343,7 @@ const thisRouter = useRouter()
 const globalSendEnable = ref(true)
 const dataLoaded = ref(false)
 const showPic = ref(false)
+const websiteReplyContext = ref("")
 const commentPageNo = ref(1)
 const commentPages = ref(1)
 const commentType = ref(null)
@@ -426,6 +429,23 @@ function submitCommentInput(comment) {
         globalSendEnable.value = true
       })
     }
+  } else {
+    if (!websiteReplyContext.value || 0 === websiteReplyContext.value.trim().length) {
+      notifyTopWarning(t('main_comment_send_empty'))
+      globalSendEnable.value = true
+    } else {
+      websiteReplyContext.value = websiteReplyContext.value.trim()
+      replyCommentWebsite({commentContent: websiteReplyContext.value}).then(res => {
+        if (!res || !res.data) {
+          globalSendEnable.value = true
+          return
+        }
+        notifyTopPositive(t('main_comment_send_successful'))
+        websiteReplyContext.value = ""
+        refreshCommentTree(true)
+        globalSendEnable.value = true
+      })
+    }
   }
 }
 
@@ -435,6 +455,7 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
   if (rebuild) {
     dataLoaded.value = false
     commentTree.value = [];
+    gotoPageTop()
   }
   if (navigateTo1) {
     commentPageNo.value = 1
