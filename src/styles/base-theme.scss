@@ -217,6 +217,15 @@ p {
   }
 }
 
+.cask-jump-link-in-text-name {
+  color: rgb(var(--pointer));
+  cursor: pointer;
+
+  &:hover, &:active {
+    opacity: .8;
+  }
+}
+
 .cask-jump-link-in-text-origin {
   cursor: pointer;
 

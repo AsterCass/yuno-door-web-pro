@@ -58,7 +58,7 @@
             <div class="row">
 
               <div class="col-2 column  items-center q-mt-md">
-                <div class="relative-position q-mr-md cursor-pointer" style="width: 100px; height: 95px"
+                <div class="relative-position q-mr-md cursor-pointer" style="width: 95px; height: 95px"
                      @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: comment.commentUserId})">
                   <q-avatar size="105px" style="filter: blur(5px); position: absolute;">
                     <q-img :src="comment.commentUserAvatar"/>
@@ -125,7 +125,62 @@
                     <div v-if="!comment.webSubClose" class="guestbook-child-comment-body">
                       <div v-if="0 !== comment.webChildData.length" class="q-pa-md">
                         <div v-for="(childComment, childIndex) in comment.webChildData" :key="childIndex">
-                          {{ childComment.commentUserName }}
+
+                          <div class="row">
+                            <div class="relative-position q-mr-md cursor-pointer" style="width: 50px; height: 50px"
+                                 @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: childComment.commentUserId})">
+                              <q-avatar size="56px" style="filter: blur(3px); position: absolute;">
+                                <q-img :src="childComment.commentUserAvatar"/>
+                              </q-avatar>
+                              <q-avatar size="50x" style=" position: absolute; left: 3px; top: 3px">
+                                <q-img :src="childComment.commentUserAvatar"/>
+                              </q-avatar>
+                            </div>
+
+                            <div class="col">
+                              <div class="row items-center guestbook-child-comment-body-header">
+                                <div class="cask-cursor-pointer q-mt-xs"
+                                     style="font-size:.85rem; color: rgb(var(--positive))"
+                                     @click="toSpecifyPageWithQuery(
+                                       thisRouter, 'space', {id: childComment.commentUserId})">
+                                  {{ childComment.commentUserName }}
+                                </div>
+                                <q-badge class="q-ma-xs" style="font-size: 0.71rem; padding: 3px"
+                                         :color="getRoleTypeObj(childComment.commentUserRoleType).color"
+                                         :label="getRoleTypeObj(childComment.commentUserRoleType).label">
+                                </q-badge>
+                                <div>
+                                  &#32;·&#32;{{ childComment.commentTime }}&#32;·&#32;{{ childComment.ipAddressName }}
+                                </div>
+                              </div>
+
+                              <div class="q-mt-xs">
+                                <span
+                                    v-if="childComment.mainSubUserId && comment.id !== childComment.mainSubUserId"
+                                    @click="toSpecifyPageWithQuery(
+                                        thisRouter, 'space', {id: childComment.mainSubUserId})"
+                                    class="cask-jump-link-in-text-name">
+                                  @{{ childComment.mainSubUserName }}:
+                                </span>
+                                {{ childComment.commentContent }}
+                              </div>
+
+                              <div class="row justify-end q-mt-sm">
+                                <div class="cask-jump-link-in-text"
+                                     @click="comment.webReplyMainSubId = childComment.id;
+                                     comment.webReplySecondaryId = comment.id;
+                                     comment.webReplyMainSubName = childComment.commentUserName;
+                                     comment.webReplyMainContext = childComment.commentContent;">
+                                  {{ $t('main_article_reply') }}
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <q-separator v-if="childIndex !== comment.webChildData.length - 1" inset
+                                       class="component-separator-base" style="margin: 1rem 1rem 1.3rem 1rem"/>
+
                         </div>
                       </div>
 
@@ -305,17 +360,21 @@ onMounted(() => {
 <style scoped lang="scss">
 
 .guestbook-child-comment-body {
-  max-height: 40rem;
   overflow: hidden;
   border-radius: 1rem 0 1rem 1rem;
   background-color: rgba(var(--text-color), 0.1);
+  font-size: .9rem;
+  color: rgb(var(--text-color), 0.88);
+
+  .guestbook-child-comment-body-header {
+    font-size: 0.8rem;
+    color: rgb(var(--text-color), 0.86);
+  }
 }
 
-.guestbook-child-comment-enter-active {
-  transition: all .5s cubic-bezier(0.7, 0.1, 0.7, 0.2);
-}
-
+.guestbook-child-comment-enter-active,
 .guestbook-child-comment-leave-active {
+  max-height: 40rem;
   transition: all .5s cubic-bezier(0.1, 0.7, 0.2, 0.7);
 }
 
