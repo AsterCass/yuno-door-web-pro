@@ -189,20 +189,12 @@ const router = createRouter({
             ]
         },
         {
-            path: "/boardTmp",
-            name: "boardTmp",
+            path: "/board",
+            name: "board",
             component: WebGuestbook,
             meta: {
                 title: 'AsterCasc | Guestbook | 留言板'
             },
-        },
-        {
-            path: "/board",
-            name: "board",
-            component: WebRedirect,
-            props: () => ({
-                path: "board",
-            }),
         },
         {
             path: "/chatroom",
