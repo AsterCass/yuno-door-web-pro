@@ -464,6 +464,7 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
     gotoPageTop()
   }
   if (navigateTo1) {
+    commentPageShow.value = []
     commentPageNo.value = 1
   }
   //request

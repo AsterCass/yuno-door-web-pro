@@ -72,7 +72,7 @@
                           transition="slide-up" transition-duration="600" class="q-my-lg">
 
             <div class="full-width row justify-center">
-              <div class="col-11 col-lg article-list-card-body" @click="toSpecifyPageWithQuery(
+              <div class="col-11 col-lg article-list-card-body" @click="toSpecifyPageWithQueryNewTab(
                   thisRouter, 'webArticleDetail', {articleId: article.id})">
                 <h3>
                   {{ article.articleTitle }}
@@ -158,7 +158,7 @@ import {useRouter} from "vue-router";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {articleTagEnums, getArticleTagDescList} from "@/constant/enums/article-tag";
 import {delay, gotoPageTop} from "@/utils/base-tools";
-import {toSpecifyPageWithQuery} from "@/router";
+import {toSpecifyPageWithQueryNewTab} from "@/router";
 
 const props = defineProps({
   authorId: {
