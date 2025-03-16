@@ -140,7 +140,11 @@
   "main_user_detail_no_motto": "This person is very lazy and has left nothing behind.",
   "main_user_detail_no_community": "None or Hide",
   "main_user_detail_not_login": "Guest user",
+  "main_user_detail_detail": "Detail",
 
+  "main_chat_to_chat": "Chat",
+  "main_chat_to_chat_self_error": "Not allow chat with yourself",
+  "main_chat_to_chat_null": "The user not exist",
   "main_chat_new_message": "New message !",
   "main_chat_message_from": "From",
   "main_chat_message_from_new": "'s new message",

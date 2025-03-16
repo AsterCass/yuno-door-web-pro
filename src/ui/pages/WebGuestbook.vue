@@ -66,6 +66,13 @@
                   <q-avatar size="95px" style=" position: absolute; left: 5px; top: 5px">
                     <q-img :src="comment.commentUserAvatar"/>
                   </q-avatar>
+                  <cask-user-tool-tip :user-info="{
+                  userId: comment.commentUserId,
+                  userAvatar: comment.commentUserAvatar,
+                  userNickname: comment.commentUserName,
+                  userGender:comment.commentUserGender,
+                  userRoleType: comment.commentUserRoleType,
+                }"/>
                 </div>
 
                 <div class="cask-cursor-pointer q-mt-md" style="font-size:.95rem; color: rgb(var(--positive))"
@@ -135,6 +142,13 @@
                               <q-avatar size="50x" style=" position: absolute; left: 3px; top: 3px">
                                 <q-img :src="childComment.commentUserAvatar"/>
                               </q-avatar>
+                              <cask-user-tool-tip :user-info="{
+                  userId: childComment.commentUserId,
+                  userAvatar: childComment.commentUserAvatar,
+                  userNickname: childComment.commentUserName,
+                  userGender:childComment.commentUserGender,
+                  userRoleType: childComment.commentUserRoleType,
+                }"/>
                             </div>
 
                             <div class="col">
@@ -339,6 +353,7 @@ import {getRoleTypeObj} from "@/constant/enums/role-type";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {useI18n} from "vue-i18n";
+import CaskUserToolTip from "@/ui/views/CaskUserToolTip.vue";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();

@@ -140,7 +140,6 @@
             </q-scroll-area>
 
 
-
           </div>
           <q-separator class="component-separator-base q-my-md" inset/>
         </div>
@@ -223,7 +222,7 @@
 
               <div class="q-mt-sm">
                 <h6>
-                  {{$t('main_chat_setting_hide_no_detail')}}
+                  {{ $t('main_chat_setting_hide_no_detail') }}
                 </h6>
               </div>
               <div class="q-mb-sm row justify-evenly">
@@ -242,14 +241,14 @@
               <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="updateChatSetting">
                 <div class="row items-center">
                   <div class="q-mx-xs">
-                    {{$t('main_setting_save')}}
+                    {{ $t('main_setting_save') }}
                   </div>
                 </div>
               </q-btn>
               <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="cancelChatSetting">
                 <div class="row items-center">
                   <div class="q-mx-xs">
-                    {{$t('main_setting_cancel')}}
+                    {{ $t('main_setting_cancel') }}
                   </div>
                 </div>
               </q-btn>
@@ -555,6 +554,15 @@ watch(
       rebuildChattingDataWeb()
     }
 );
+
+watch(
+    () => socketChatState.forceFocusChat,
+    () => {
+      if (socketChatState.forceFocusChat.chatId) {
+        chattingDataInit(true)
+      }
+    }
+)
 
 const searchChatName = (node, filter) => {
   const filterLow = filter.toLowerCase()

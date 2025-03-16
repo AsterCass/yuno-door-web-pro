@@ -19,6 +19,11 @@
               <q-avatar size="50px" style=" position: absolute; left: 3px; top: 3px">
                 <q-img :src="comment.commentUserAvatar"/>
               </q-avatar>
+              <cask-user-tool-tip :user-info="{
+                  userId: comment.commentUserId,
+                  userAvatar: comment.commentUserAvatar,
+                  userNickname: comment.commentUserName,
+                }"/>
             </div>
             <div class="col row items-center  q-ml-sm">
               <div class="q-mr-sm cask-cursor-pointer" style="font-size: 1.1rem; color: rgb(var(--positive))"
@@ -78,6 +83,11 @@
                     <q-avatar size="30px" style=" position: absolute; left: 3px; top: 3px">
                       <q-img :src="childComment.commentUserAvatar"/>
                     </q-avatar>
+                    <cask-user-tool-tip :user-info="{
+                  userId: childComment.commentUserId,
+                  userAvatar: childComment.commentUserAvatar,
+                  userNickname: childComment.commentUserName,
+                }"/>
                   </div>
                   <div class="col row items-center  q-ml-sm">
                     <div class="q-mr-sm cask-cursor-pointer" style="font-size: .95rem; color: rgb(var(--positive))"
@@ -169,6 +179,7 @@ import {checkReply} from "@/utils/format-check";
 import {useI18n} from "vue-i18n";
 import {toSpecifyPageWithQuery} from "@/router";
 import {useRouter} from "vue-router";
+import CaskUserToolTip from "@/ui/views/CaskUserToolTip.vue";
 
 const thisRouter = useRouter()
 const props = defineProps({

@@ -281,6 +281,13 @@ export function toSpecifyPageWithQuery(thisRouter, pageName, queryMap) {
     })
 }
 
+export function toSpecifyPageWithState(thisRouter, pageName, state) {
+    thisRouter.push({
+        name: pageName,
+        state: state,
+    })
+}
+
 export function toSpecifyPageWithQueryNewTab(thisRouter, pageName, queryMap) {
     const {href} = thisRouter.resolve({name: pageName, query: queryMap});
     const absoluteUrl = `${window.location.origin}${href}`;

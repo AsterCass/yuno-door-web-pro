@@ -433,6 +433,15 @@
   )
 }
 
+.component-full-btn-mini-mini-grow {
+  @include component-full-btn-base(
+          $thisHeight: 1.8rem,
+          $thisWidth: auto,
+          $thisMinWidth: 4rem,
+  );
+  font-size: .75rem !important;
+}
+
 .component-outline-btn-std {
   @include component-outline-btn-base()
 }

@@ -12,6 +12,11 @@
         <q-avatar class="q-mr-sm cask-cursor-pointer" size="40px"
                   @click="toSpecifyPageWithQuery( thisRouter, 'space',{id: chatRow.sendUserId})">
           <q-img :src="chatRow.sendUserAvatar" spinner-size="1rem"/>
+          <cask-user-tool-tip :user-info="{
+                  userId: chatRow.sendUserId,
+                  userAvatar: chatRow.sendUserAvatar,
+                  userNickname:  chatRow.sendUserNickname,
+                }"/>
         </q-avatar>
         <div class="row col">
           <div class="col-12 q-mb-sm q-pl-xs row items-center" style="font-size: .95rem">
@@ -149,6 +154,7 @@ import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import {starEmoji} from "@/api/file";
 import {useI18n} from "vue-i18n";
 import emitter from "@/utils/bus";
+import CaskUserToolTip from "@/ui/views/CaskUserToolTip.vue";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();

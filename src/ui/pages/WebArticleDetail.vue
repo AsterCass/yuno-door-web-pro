@@ -27,8 +27,13 @@
               <q-btn round push color="black" @click="toSpecifyPageWithQuery(
                   thisRouter, 'space', {id: blogMeta.authorId})">
                 <q-avatar size="38px" style="margin: 2px">
-                <q-img :src="blogMeta.authorAvatar"/>
+                  <q-img :src="blogMeta.authorAvatar"/>
                 </q-avatar>
+                <cask-user-tool-tip :user-info="{
+                  userId: blogMeta.authorId,
+                  userAvatar: blogMeta.authorAvatar,
+                  userNickname: blogMeta.authorName,
+                }"/>
               </q-btn>
               <div style="font-size: 1rem; margin-left: 12px" class="cask-jump-link-in-text-origin"
                    @click="toSpecifyPageWithQuery( thisRouter, 'space', {id: blogMeta.authorId})">
@@ -157,6 +162,7 @@ import {toSpecifyPage, toSpecifyPageWithQuery, toSpecifyPageWithQueryNewTab} fro
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
+import CaskUserToolTip from "@/ui/views/CaskUserToolTip.vue";
 
 const props = defineProps({
   articleId: {

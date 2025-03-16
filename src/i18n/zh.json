@@ -140,7 +140,11 @@
   "main_user_detail_no_motto": "这个人很懒，什么都没有留下",
   "main_user_detail_no_community": "未填写或隐藏",
   "main_user_detail_not_login": "未登录用户",
+  "main_user_detail_detail": "主页",
 
+  "main_chat_to_chat": "私聊",
+  "main_chat_to_chat_self_error": "不支持私聊自己",
+  "main_chat_to_chat_null": "用户不存在",
   "main_chat_new_message": "新消息 ！",
   "main_chat_message_from": "来自",
   "main_chat_message_from_new": "的新消息",

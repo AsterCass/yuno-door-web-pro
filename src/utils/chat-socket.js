@@ -134,7 +134,7 @@ export function updateChattingDataWebAboutLast(chat, toTop) {
         if (chatTree.children[index].id === chat.chatId) {
             chatTree.children[index].lastMessageTime = chat.lastMessageTime
             chatTree.children[index].lastMessageTimeWeb = timeToText(chat.lastMessageTime)
-            if (chat.lastMessageText.startsWith(RES_ADD)) {
+            if (chat.lastMessageText && chat.lastMessageText.startsWith(RES_ADD)) {
                 chatTree.children[index].lastMessageText = t('main_chat_body_file_in_tree')
             } else {
                 chatTree.children[index].lastMessageText = chat.lastMessageText
@@ -240,7 +240,7 @@ export function rebuildChattingDataWeb(selectFirst) {
             singleChattingWeb.latestRead = singleChatting.latestRead
             singleChattingWeb.lastMessageTime = singleChatting.lastMessageTime
             singleChattingWeb.lastMessageTimeWeb = timeToText(singleChatting.lastMessageTime)
-            if (singleChatting.lastMessageText.startsWith(RES_ADD)) {
+            if (singleChatting.lastMessageText && singleChatting.lastMessageText.startsWith(RES_ADD)) {
                 singleChattingWeb.lastMessageText = t('main_chat_body_file_in_tree')
             } else {
                 singleChattingWeb.lastMessageText = singleChatting.lastMessageText
@@ -258,8 +258,14 @@ export function rebuildChattingDataWeb(selectFirst) {
             //push
             socketChatState.chattingDataWeb[singleChatting.chatType].children.push(singleChattingWeb)
             if (!insertFirstChat && selectFirst) {
-                socketChatState.chattingDataWebSelected = singleChattingWeb.id
-                insertFirstChat = true
+                if (socketChatState.forceFocusChat.chatId) {
+                    socketChatState.chattingDataWebSelected = socketChatState.forceFocusChat.chatId
+                    socketChatState.forceFocusChat = {}
+                    insertFirstChat = true
+                } else if (selectFirst) {
+                    socketChatState.chattingDataWebSelected = singleChattingWeb.id
+                    insertFirstChat = true
+                }
             }
             //子聊天一个未读，则全部父分组未读
             if (false === singleChattingWeb.latestRead) {
@@ -325,11 +331,13 @@ function socketMsgReceiveDataParse(callback) {
             if (socketChatState.chattingDataWebSelected === singleChatting.chatId && needToBottom) {
                 singleChatting.latestRead = true
                 if (globalState.userData.id !== data.sendUserId) {
-                    readMessage({
-                        chatId: data.fromChatId,
-                        messageId: data.sendMessageId
-                    }).then(r => {
-                    })
+                    if (data.sendMessageId) {
+                        readMessage({
+                            chatId: data.fromChatId,
+                            messageId: data.sendMessageId
+                        }).then(r => {
+                        })
+                    }
                 } else if (!globalState.isLogin) {
                     globalState.updateReadMessageMap(
                         data.fromChatId, data.sendMessageId
@@ -364,7 +372,7 @@ function socketMsgReceiveDataParse(callback) {
         if (globalState.userData.id !== data.sendUserId) {
 
             const chatSettingObj = getChatSettingObj()
-            if(chatSettingObj && chatSettingObj.hideNotificationDetail) {
+            if (chatSettingObj && chatSettingObj.hideNotificationDetail) {
                 browserNotification(
                     `${t('main_chat_message_from_hide')}`,
                     "")
@@ -404,6 +412,11 @@ export function chattingDataInit(selectFirst = false, resetSelected = true) {
             if (!data.userChattingData) {
                 data.userChattingData = []
             }
+
+            if (socketChatState.forceFocusChat.chatId && socketChatState.forceFocusChat.chatId === data.chatId) {
+                data.userChattingData = socketChatState.forceFocusChat.userChattingData
+            }
+
             //用户在不同聊天框的输入
             data.webInputText = ""
             //侧片栏生效
@@ -420,6 +433,10 @@ export function chattingDataInit(selectFirst = false, resetSelected = true) {
                     socketChatState.unReadAllMessages.add(data.chatId)
                 }
             } else {
+                // todo 这里后端有问题，空聊天lastRead给了false，得空再该后端吧，先前端兼容
+                if (!data.lastMessageId) {
+                    data.latestRead = true
+                }
                 if (!data.latestRead) {
                     socketChatState.unReadAllMessages.add(data.chatId)
                 }
