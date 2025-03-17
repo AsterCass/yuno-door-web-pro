@@ -558,7 +558,8 @@ watch(
 watch(
     () => socketChatState.forceFocusChat,
     () => {
-      if (socketChatState.forceFocusChat.chatId) {
+      if (socketChatState.forceFocusChat.chatId &&
+          socketChatState.forceFocusChat.chatId !== socketChatState.chattingDataWebSelected) {
         chattingDataInit(true)
       }
     }
