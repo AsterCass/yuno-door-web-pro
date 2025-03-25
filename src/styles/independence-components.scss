@@ -185,10 +185,12 @@
 .component-cask-dialog-image-std {
   max-width: 75% !important;
   max-height: 75% !important;
-  display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+
+  &::-webkit-scrollbar {
+    width: 16px !important;
+  }
 }
 
 .component-cask-dialog-image-std img {
