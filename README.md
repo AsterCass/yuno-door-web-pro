@@ -65,8 +65,7 @@ yarn serve
 * juice: 类样式直接嵌入页面元素（for pdfmkae.js）
 * raw-loader: 文件内容读取（for juice.js）
 * pdfmake/html-to-pdfmake: pdf生成/转换
-* sockjs-client：websocket
-* webstomp-client：websocket
+* stomp/stompjs：websocket
 * qrcode-vue3：二维码生成
 * jsqr：二维码解析
 * sql-ddl-to-json-schema：DDL转基本json，用于自动生成类
@@ -86,6 +85,7 @@ yarn serve
 * qs：接口调用序列化
 * quasar：ui美化
 * video.js：视频样式封装（暂未用到）
+* vue3-google-login: 谷歌登录
 * vue：vue
 * vue-router：vue
 * vue-i18n: 多语言支持

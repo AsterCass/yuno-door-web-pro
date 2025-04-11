@@ -3525,11 +3525,6 @@ events@^3.2.0:
   resolved "https://registry.npmmirror.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
-eventsource@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmmirror.com/eventsource/-/eventsource-2.0.2.tgz#76dfcc02930fb2ff339520b6d290da573a9e8508"
-  integrity sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==
-
 execa@^0.8.0:
   version "0.8.0"
   resolved "https://registry.npmmirror.com/execa/-/execa-0.8.0.tgz#d8d76bbc1b55217ed190fd6dd49d3c774ecfc8da"
@@ -3641,7 +3636,7 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-faye-websocket@^0.11.3, faye-websocket@^0.11.4:
+faye-websocket@^0.11.3:
   version "0.11.4"
   resolved "https://registry.npmmirror.com/faye-websocket/-/faye-websocket-0.11.4.tgz#7f0d9275cfdd86a1c963dc8b65fcc451edcbb1da"
   integrity sha512-CzbClwlXAuiRQAlUyfqPgvPoNKTckTPGfwZV4ZdAhVcP2lh9KUxJg2b5GkE7XbjKQ3YJnQ9z6D9ntLAlB+tP8g==
@@ -5778,11 +5773,6 @@ quasar@^2.16.1:
   resolved "https://registry.npmmirror.com/quasar/-/quasar-2.16.1.tgz#0e1e69d9d9d744d5f5f5abf524c44aeee2693cf7"
   integrity sha512-aTFt/K6JWTuPf2Jmf4d3vxsR8O505Aq8Z7Q5kkgbkfebJ1r5O0+62jOD9+k/uFihVb1mj3cfHuf3xUSoxoGdIw==
 
-querystringify@^2.1.1:
-  version "2.2.0"
-  resolved "https://registry.npmmirror.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
-  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
-
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.npmmirror.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
@@ -6305,17 +6295,6 @@ slick@^1.12.2:
   resolved "https://registry.npmmirror.com/slick/-/slick-1.12.2.tgz#bd048ddb74de7d1ca6915faa4a57570b3550c2d7"
   integrity sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==
 
-sockjs-client@1.6.1:
-  version "1.6.1"
-  resolved "https://registry.npmmirror.com/sockjs-client/-/sockjs-client-1.6.1.tgz#350b8eda42d6d52ddc030c39943364c11dcad806"
-  integrity sha512-2g0tjOR+fRs0amxENLi/q5TiJTqY+WXFOzb5UwXndlK6TO3U/mirZznpx6w34HVMoc3g7cY24yC/ZMIYnDlfkw==
-  dependencies:
-    debug "^3.2.7"
-    eventsource "^2.0.2"
-    faye-websocket "^0.11.4"
-    inherits "^2.0.4"
-    url-parse "^1.5.10"
-
 sockjs@^0.3.24:
   version "0.3.24"
   resolved "https://registry.npmmirror.com/sockjs/-/sockjs-0.3.24.tgz#c9bc8995f33a111bea0395ec30aa3206bdb5ccce"
@@ -6770,14 +6749,6 @@ uri-js@^4.2.2, uri-js@^4.4.1:
   dependencies:
     punycode "^2.1.0"
 
-url-parse@^1.5.10:
-  version "1.5.10"
-  resolved "https://registry.npmmirror.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
-  integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
-  dependencies:
-    querystringify "^2.1.1"
-    requires-port "^1.0.0"
-
 url-toolkit@^2.2.1:
   version "2.2.5"
   resolved "https://registry.npmmirror.com/url-toolkit/-/url-toolkit-2.2.5.tgz#58406b18e12c58803e14624df5e374f638b0f607"
@@ -6933,6 +6904,11 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue3-google-login@^2.0.33:
+  version "2.0.33"
+  resolved "https://registry.npmmirror.com/vue3-google-login/-/vue3-google-login-2.0.33.tgz#0b3b3a653b6026cbb2d39b92fc1782f0057c1d43"
+  integrity sha512-Hx3JJUREXWCFOOB4AzZKy/x7C+X18kxmT0AquBekm0TRubp11nrWijOLEgmhuij48dQPNumyaAi5IQAeDKk7yw==
 
 vue@^3.2.13:
   version "3.4.27"
