@@ -10,7 +10,6 @@ export const scrollState = reactive({
 
 export const socketChatState = reactive({
     stompClient: null,
-    socket: null,
     socketConnected: false,
     // 强制聚焦的聊天，正常进入聊天界面会聚焦最新聊天，当该对象有值的时候，会聚焦该聊天
     forceFocusChat: {},

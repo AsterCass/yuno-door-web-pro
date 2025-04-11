@@ -1,18 +1,18 @@
 import {chattingUsers, readMessage} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
-import SockJS from "sockjs-client/dist/sockjs";
-import Stomp from "webstomp-client";
 import {browserNotification, notifyTopWarning} from "@/utils/notification-tools";
 import i18n from "@/i18n";
 import {date} from "quasar";
 import {ZodiacSign} from "@/utils/date-to-zodiac";
 import {delay, gotoSpecifySite} from "@/utils/base-tools";
 import {getChatSettingObj} from "@/utils/global-tools";
+import {Client} from '@stomp/stompjs';
 
 const t = i18n.global.t
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
 const RES_ADD = process.env.VUE_APP_RES_ADD
+const WS_ADD = process.env.VUE_APP_WS_ADD
 const emojiRegex = /\[#b[0-9][0-9]]/g;
 const emojiCodeFormat = "[#b%s]"
 
@@ -462,7 +462,7 @@ export function socketSend(chatId, message) {
     socketSendStatus = true
     if (socketChatState.stompClient && socketChatState.socketConnected) {
         const msg = {chatId: chatId, message: message};
-        socketChatState.stompClient.send("/socket/message/send", JSON.stringify(msg));
+        socketChatState.stompClient.publish({destination: "/socket/message/send", body: JSON.stringify(msg)});
     }
     socketSendStatus = false
 }
@@ -479,42 +479,59 @@ export function initChatSocket() {
 
     if (!globalState.isLogin) {
         if (socketChatState.stompClient) {
-            socketChatState.stompClient.disconnect();
+            socketChatState.stompClient.deactivate();
             socketChatState.stompClient = null
-            socketChatState.socket = null
         }
         socketChatState.socketConnected = false;
         initChatSocketStatus = false
         return
     }
 
-    if (socketChatState.stompClient && socketChatState.stompClient.connected && socketChatState.socketConnected) {
+    if (socketChatState.stompClient && socketChatState.stompClient.active && socketChatState.socketConnected) {
         initChatSocketStatus = false
         return
     }
 
-    socketChatState.socket = new SockJS(BASE_ADD +
-        "yui/chat-websocket/socketAuthNoError?User-Token=" + globalState.loginToken)
-    socketChatState.stompClient = Stomp.over(socketChatState.socket)
-    socketChatState.stompClient.connect(
-        {},
-        () => {
-            socketChatState.socketConnected = true;
-            socketChatState.stompClient.subscribe("/user/" + globalState.loginToken + "/message/receive", callback => {
-                socketMsgReceiveDataParse(callback);
-            });
-            socketChatState.stompClient.subscribe("/user/all/message/receive", callback => {
-                socketMsgReceiveDataParse(callback);
-            });
-            socketChatState.stompClient.subscribe("/user/" + globalState.loginToken + "/error/receive", callback => {
-                notifyTopWarning(callback.body)
-            });
-            initChatSocketStatus = false
-        },
-        () => {
-            socketChatState.socketConnected = false;
-            initChatSocketStatus = false
-        }
-    )
+    socketChatState.stompClient = new Client({
+        brokerURL: WS_ADD + "yui/chat-websocket/no-js/socketAuthNoError?User-Token=" + globalState.loginToken,
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+        automaticReconnect: true,
+        maxReconnectDelay: 30000,
+        reconnectDelayExponent: 1.5,
+        connectionTimeout: 10000,
+        // debug: function (str) {
+        //     console.log(str);
+        // },
+    });
 
+
+    socketChatState.stompClient.onConnect = () => {
+
+        socketChatState.stompClient.subscribe("/user/" + globalState.loginToken + "/message/receive", callback => {
+            socketMsgReceiveDataParse(callback);
+        });
+        socketChatState.stompClient.subscribe("/user/all/message/receive", callback => {
+            socketMsgReceiveDataParse(callback);
+        });
+        socketChatState.stompClient.subscribe("/user/" + globalState.loginToken + "/error/receive", callback => {
+            notifyTopWarning(callback.body)
+        });
+        socketChatState.socketConnected = true;
+        initChatSocketStatus = false
+    };
+
+    socketChatState.stompClient.onDisconnect = () => {
+        socketChatState.socketConnected = false;
+        initChatSocketStatus = false
+    }
+
+    socketChatState.stompClient.onStompError = () => {
+        socketChatState.socketConnected = false;
+        initChatSocketStatus = false
+    }
+
+    socketChatState.stompClient.activate();
 }
+
