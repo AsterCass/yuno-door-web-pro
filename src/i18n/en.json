@@ -75,6 +75,8 @@
   "main_login_success_star_file": "Added",
   "main_login_fail_copy": "Copy failed",
 
+  "main_login_google_client_fail": "Get user info from Google fail",
+
   "main-fa-mail": "Mail",
   "main-fa-wechat": "WeChat",
   "main-fa-qq": "QQ",

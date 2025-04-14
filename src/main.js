@@ -23,7 +23,7 @@ app.use(router)
 app.directive('click-outside', clickOutside);
 // google
 app.use(vue3GoogleLogin, {
-    clientId: '659109772475-5iqbu7d6lvjcbns5njqfbfucv07die69.apps.googleusercontent.com'
+    clientId: '1040525610111-i83lfidjd5bhfi6m5v1amoeasdbal02s.apps.googleusercontent.com'
 })
 
 

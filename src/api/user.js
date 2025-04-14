@@ -9,6 +9,14 @@ export function userLogin(body) {
     })
 }
 
+export function userLoginGoogle(body) {
+    return serviceShiro({
+        url: `/yui/user/google/login`,
+        method: 'post',
+        data: body
+    })
+}
+
 export function sendRegMail(body) {
     return serviceShiro({
         url: `/yui/user/sendRegMail`,
