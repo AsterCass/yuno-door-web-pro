@@ -425,13 +425,13 @@ const googleLoginCallback = (response) => {
     notifyTopWarning(t('main_login_google_client_fail'));
     return
   }
+  morphWithLogin.value = 'btn'
   userLoginGoogle({code: response.code}).then(res => {
     if (!res || !res.data || !res.data.data) {
       return
     }
     globalState.updateUserData(res.data.data)
     notifyTopPositive(t('main_login_success'))
-    morphWithLogin.value = 'btn'
   })
 }
 
