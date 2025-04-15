@@ -90,10 +90,7 @@
       <div class="row items-center justify-end col-4">
         <div class="row col justify-end items-center">
           <q-btn v-show="!globalState.isLogin" no-caps unelevated class="component-none-btn-grow q-mx-xs"
-                 v-morph:btn:withLogin:800.resize="morphWithLogin"
-                 @click="delay(50).then(() => {
-                   showHeaderLogin(true)
-                 })">
+                 @click="showUserLogin = true">
             <div class="row items-center">
               <div class="q-ma-xs">
                 {{ $t('main_login') }}
@@ -222,132 +219,7 @@
     </div>
 
 
-    <div v-click-outside="() => {showHeaderLogin(false)}"
-         class="top-semi-trans-header-login absolute-right"
-         v-morph:page:withLogin:500.resize="morphWithLogin">
-      <div v-show="morphWithLoginContentShow" class="full-height column justify-evenly">
-
-        <div class="row justify-end">
-          <q-btn no-caps unelevated dense size="10px" class="q-mt-sm q-mr-sm q-pa-xs" round
-                 icon="fa-solid fa-down-left-and-up-right-to-center"
-                 @click="showHeaderLogin(false)"/>
-        </div>
-
-        <div class="row justify-center" style="margin-top: -15px !important">
-          <h5>
-            astercasc.com
-          </h5>
-        </div>
-        <div class="row justify-center q-mx-md text-center q-mb-md">
-          <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
-          <span @click="toSpecifyPage(thisRouter, 'previous')"
-                class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
-          <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
-        </div>
-
-        <div class="q-mx-md">
-          <q-input v-model="inputAccount" tabindex="0" dense outlined
-                   class="q-ma-md component-outline-input-grow-on-semi-trans">
-            <template v-slot:prepend>
-              <div class="row items-center justify-between">
-                <q-icon class="q-mr-sm" name="fa-regular fa-address-card" size="1rem"/>
-                <div style="opacity: 0.8">
-                  {{ $t('main_login_account') }}
-                </div>
-              </div>
-            </template>
-          </q-input>
-
-          <q-input v-model="inputPassword" tabindex="0" dense outlined type="password"
-                   class="q-ma-md component-outline-input-grow-on-semi-trans">
-            <template v-slot:prepend>
-              <div class="row items-center justify-between">
-                <q-icon class="q-mr-sm" name="fa-solid fa-unlock-keyhole" size="1rem"/>
-                <div style="opacity: 0.8">
-                  {{ $t('main_login_password') }}
-                </div>
-
-              </div>
-            </template>
-          </q-input>
-
-          <div class="q-my-md row justify-start q-mx-md text-center items-center">
-            <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
-                        checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
-            <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
-            <span @click="toSpecifyPage(thisRouter, 'privacy')"
-                  class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
-          </div>
-        </div>
-
-
-        <div class="row justify-center">
-          <q-btn no-caps unelevated class="q-ma-md shadow-2 component-full-btn-grow"
-                 style="background-color: rgb(var(--semi-bg-container-background-color)) !important"
-                 @click="headerLogin">
-            <div class="row items-center">
-              <div class="q-mr-sm" style="font-size: 14px">
-                {{ $t('main_login') }}
-              </div>
-              <q-icon name="fa-solid fa-arrow-right-to-bracket" size="15px"/>
-            </div>
-          </q-btn>
-        </div>
-
-        <div class="q-mx-md q-mb-md row justify-evenly items-center">
-          <q-separator class="component-separator-base col-grow" inset size="1px"/>
-          <div style="opacity:.9">
-            {{ $t('main_login_more') }}
-          </div>
-          <q-separator class="component-separator-base col-grow" inset size="1px"/>
-        </div>
-
-
-        <div class="q-mb-md row justify-evenly items-center">
-
-
-          <q-icon name="fa-brands fa-github" size="2rem" class="cursor-pointer"
-                  @click="notifyTopWarning($t('in_develop'))"/>
-
-
-          <div class="relative-position">
-            <GoogleLogin :callback="googleLoginCallback">
-              <button class="gsi-material-button">
-                <div class="gsi-material-button-state"></div>
-                <div class="gsi-material-button-content-wrapper">
-                  <div class="gsi-material-button-icon">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-                      <path fill="#EA4335"
-                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                      <path fill="#4285F4"
-                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                      <path fill="#FBBC05"
-                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                      <path fill="#34A853"
-                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                      <path fill="none" d="M0 0h48v48H0z"></path>
-                    </svg>
-                  </div>
-                </div>
-              </button>
-            </GoogleLogin>
-            <div v-show="!agreePrivacy"
-                 class="absolute bg-transparent gsi-material-button-mask cursor-pointer "
-                 @click="notifyTopWarning(t('main_login_message_check'))">
-            </div>
-          </div>
-
-
-          <q-icon name="fa-brands fa-qq" size="2rem" class="cursor-pointer"
-                  @click="notifyTopWarning($t('in_develop'))" style="color: rgb(0, 153, 255)"/>
-
-        </div>
-
-
-      </div>
-    </div>
-
+    <CaskBaseLogin v-model:showUserLogin="showUserLogin"/>
 
   </q-header>
 
@@ -359,15 +231,15 @@ import {defineProps, onMounted, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive} from "@/utils/notification-tools";
 import {scrollState, socketChatState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
 import {toSpecifyPage} from "@/router";
-import {userLogin, userLoginGoogle, userLogout} from "@/api/user";
+import {userLogout} from "@/api/user";
 import {useI18n} from "vue-i18n";
 import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
-import {GoogleLogin} from "vue3-google-login";
+import CaskBaseLogin from "@/ui/views/CaskBaseLogin.vue";
 
 const props = defineProps({
   centerElements: {
@@ -400,16 +272,10 @@ const {t} = useI18n()
 
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
-const morphWithLogin = ref('btn')
-const morphWithLoginContentShow = ref(false)
-
-const inputAccount = ref('')
-const inputPassword = ref('')
-const agreePrivacy = ref(false)
+const showUserLogin = ref(false)
 
 const showHeaderSetting = (isShow) => {
   if (isShow) {
-    showHeaderLogin(false)
     morphWithSetting.value = 'page'
     delay(500).then(() => {
       morphWithSettingContentShow.value = true
@@ -418,54 +284,6 @@ const showHeaderSetting = (isShow) => {
     morphWithSetting.value = 'btn'
     morphWithSettingContentShow.value = false
   }
-}
-
-const googleLoginCallback = (response) => {
-  if (!response || !response.code) {
-    notifyTopWarning(t('main_login_google_client_fail'));
-    return
-  }
-  morphWithLogin.value = 'btn'
-  userLoginGoogle({code: response.code}).then(res => {
-    if (!res || !res.data || !res.data.data) {
-      return
-    }
-    globalState.updateUserData(res.data.data)
-    notifyTopPositive(t('main_login_success'))
-  })
-}
-
-const showHeaderLogin = (isShow) => {
-  if (isShow) {
-    showHeaderSetting(false)
-    morphWithLogin.value = 'page'
-    delay(500).then(() => {
-      morphWithLoginContentShow.value = true
-    })
-  } else {
-    morphWithLogin.value = 'btn'
-    morphWithLoginContentShow.value = false
-  }
-}
-
-const headerLogin = () => {
-  if (!agreePrivacy.value) {
-    notifyTopWarning(t('main_login_message_check'))
-    return
-  }
-  if (!inputAccount.value || !inputPassword.value) {
-    notifyTopWarning(t('main_login_message_empty'))
-    return
-  }
-  let currentBody = {accountMail: inputAccount.value, passwd: inputPassword.value}
-  userLogin(currentBody).then(res => {
-    if (!res || !res.data || !res.data.data) {
-      return
-    }
-    globalState.updateUserData(res.data.data)
-    notifyTopPositive(t('main_login_success'))
-    morphWithLogin.value = 'btn'
-  })
 }
 
 const headerLogout = () => {
@@ -548,21 +366,6 @@ onMounted(() => {
   font-size: .9rem;
 }
 
-.top-semi-trans-header-login {
-  top: 5rem;
-  height: 500px;
-  width: 390px;
-
-  color: rgb(var(--text-color));
-  border-radius: 8px;
-  background-color: rgb(var(--container-background-color));
-  border: solid 2px rgba(var(--text-color), .8);
-  backdrop-filter: blur(30px);
-  padding: 2px;
-
-  font-size: .9rem;
-}
-
 
 </style>
 
@@ -578,40 +381,4 @@ onMounted(() => {
     font-size: 1rem;
   }
 }
-
-
-.gsi-material-button {
-  background-color: transparent;
-  background-image: none;
-  border: none;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  box-sizing: border-box;
-  color: #1f1f1f;
-  cursor: pointer;
-  font-family: 'Roboto', arial, sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.25px;
-  outline: none;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-  text-align: center;
-  -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
-  transition: background-color .218s, border-color .218s, box-shadow .218s;
-  vertical-align: middle;
-  white-space: nowrap;
-  max-width: 400px;
-  min-width: min-content;
-  height: 2rem;
-  width: 2rem;
-}
-
-.gsi-material-button-mask {
-  top: -1rem;
-  left: -1rem;
-  height: 4rem;
-  width: 4rem;
-}
-
 </style>

@@ -70,11 +70,13 @@
   "main_login_message_check": "Please check the relevant policies and agreements",
   "main_login_message_empty": "Account and password cannot be empty",
   "main_login_success": "Login successful",
+  "main_login_failed": "Login failed, please try again",
   "main_login_success_logout": "Logout successful",
   "main_login_success_copy": "Copied",
   "main_login_success_star_file": "Added",
   "main_login_fail_copy": "Copy failed",
 
+  "main_in_login_auth": "Logging in... Please do not leave this page...",
   "main_login_google_client_fail": "Get user info from Google fail",
 
   "main-fa-mail": "Mail",
@@ -323,5 +325,6 @@
   "main_comment_send_empty": "Input content cannot be empty",
   "main_comment_send_successful": "Send successful",
 
-  "home": "Home"
+  "home": "Home",
+  "back_home": "Back to Home"
 }

@@ -70,11 +70,13 @@
   "main_login_message_check": "请勾选相关政策和协议",
   "main_login_message_empty": "账号密码不能为空",
   "main_login_success": "登录成功",
+  "main_login_failed": "登录失败，请重试",
   "main_login_success_logout": "登出成功",
   "main_login_success_copy": "复制成功",
   "main_login_success_star_file": "添加成功",
   "main_login_fail_copy": "复制失败",
 
+  "main_in_login_auth": "正在登录中... 请勿离开当前页面 ...",
   "main_login_google_client_fail": "获取用户信息失败",
 
   "main-fa-mail": "邮箱",
@@ -323,5 +325,6 @@
 
 
 
-  "home": "主页"
+  "home": "主页",
+  "back_home": "回到主页"
 }

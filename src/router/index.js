@@ -17,6 +17,7 @@ import CaskToolsMd5 from "@/ui/views/CaskToolsMd5.vue";
 import CaskToolsQrcode from "@/ui/views/CaskToolsQrcode.vue";
 import CaskToolsTimestamp from "@/ui/views/CaskToolsTimestamp.vue";
 import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
+import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
 
 
 const router = createRouter({
@@ -224,6 +225,36 @@ const router = createRouter({
             path: "/previous",
             name: "previous",
             component: WebRedirect,
+        },
+        {
+            path: "/auth",
+            name: 'mainAuth',
+            children: [
+                {
+                    path: "google/callback",
+                    name: "authGoogleCallback",
+                    component: WebAuthLogin,
+                    meta: {
+                        title: 'Auth Callback | 鉴权回调',
+                    },
+                    props: ($route) => ({
+                        code: $route.query.code,
+                        brand: 'google',
+                    }),
+                },
+                {
+                    path: "github/callback",
+                    name: "authGithubCallback",
+                    component: WebAuthLogin,
+                    meta: {
+                        title: 'Auth Callback | 鉴权回调',
+                    },
+                    props: ($route) => ({
+                        code: $route.query.code,
+                        brand: 'github',
+                    }),
+                },
+            ]
         },
         {
             path: "/404",
