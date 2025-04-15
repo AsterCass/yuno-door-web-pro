@@ -70,7 +70,7 @@ function googleLoginCallback(code) {
     loginText.value = loginSuccess
     disableHomeBtn.value = false
     notifyTopPositive(t('main_login_success'))
-    backToHome()
+    backToHome(thisRouter)
   })
 }
 

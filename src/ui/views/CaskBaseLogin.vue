@@ -12,10 +12,12 @@
           </h4>
         </div>
         <div class="row justify-center q-mx-md text-center q-mb-md">
-          <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
-          <span @click="toSpecifyPage(thisRouter, 'previous')"
-                class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
-          <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
+          <div>
+            <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
+            <span @click="toSpecifyPage(thisRouter, 'previous')"
+                  class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
+            <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
+          </div>
         </div>
 
         <div class="q-mx-md">
