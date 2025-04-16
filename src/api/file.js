@@ -32,3 +32,10 @@ export function starEmoji(emojiId) {
         method: 'post',
     })
 }
+
+export function unstarEmoji(emojiId) {
+    return serviceShiro({
+        url: `yui/user/file/emoji/unstar/auth?emojiId=${emojiId}`,
+        method: 'delete',
+    })
+}

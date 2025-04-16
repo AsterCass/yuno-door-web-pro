@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
+import {updateStarEmoji} from "@/utils/biz";
 
 export function createPersistedStatePlugin() {
     return (context) => {
@@ -33,6 +34,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         chatEmojiCommonListJson: "{\"emoji\":[], \"emojipro\":[], \"kaomoji\":[]}",
         readMessageMap: {},
         pinChatIdMap: {},
+        starEmojiList: [],
     }),
     actions: {
         updateTheme(code) {
@@ -61,6 +63,7 @@ export const useGlobalStateStore = defineStore('globalState', {
             }
             chattingDataInit(true)
             initChatSocket()
+            updateStarEmoji(true)
             this.pinChatIdMap = {}
 
         },

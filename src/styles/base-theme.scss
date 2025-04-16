@@ -249,3 +249,11 @@ p {
     opacity: .8;
   }
 }
+
+.cask-jump-link-neg {
+  cursor: pointer;
+
+  &:hover, &:active {
+    color: rgb(var(--negative));
+  }
+}

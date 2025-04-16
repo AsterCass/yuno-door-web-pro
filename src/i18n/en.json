@@ -201,6 +201,8 @@
   "main_chat_setting_hide_no_detail": "Chat notifications hide contact and sent content: ",
   "main_chat_emoji_recently": "Recently Used:",
   "main_chat_emoji_all": "All:",
+  "main_chat_setting_emoji_pro": "Add/Delete emoji pro:",
+  "main_chat_setting_emoji_tips": "No need to save, and please note that deleting the emoji pack after adding will not restore the upload limit. For example, if the original limit was 20, adding 20 emoji images and then deleting them will not allow further uploads. If you need to increase the emoji pro upload limit, please contact the administrator",
 
 
   "main_chat_chat_time_now": "Just now",

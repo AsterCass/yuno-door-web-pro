@@ -101,7 +101,7 @@
               </div>
             </div>
             <div class="row">
-              <div v-for="(emoji, index) in starEmojiList" :key="index"
+              <div v-for="(emoji, index) in globalState.starEmojiList" :key="index"
                    @click="addEmoji('emojipro', emoji.readAddress);
                    hideEmojiBoard();
                    elements.get(CaskLongTextInputElement.EMOJI).callback(emoji.readAddress)">
@@ -210,13 +210,13 @@ import {EmojiExampleList, KaomojiExampleList} from "@/constant/enums/emoji-ex";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {delay} from "@/utils/base-tools";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
-import {getStarEmojiList, uploadUserFile} from "@/api/file";
-import {customLargePage} from "@/utils/page";
+import {uploadUserFile} from "@/api/file";
 import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {useI18n} from "vue-i18n";
 import emitter from "@/utils/bus";
 import {getChatEmojiCommonList, updateChatEmojiCommonListJson} from "@/utils/global-tools";
+import {updateStarEmoji} from "@/utils/biz";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -263,7 +263,6 @@ const showEmojiBoard = ref(false)
 const showImageUpload = ref(false)
 const showEmojiUpload = ref(false)
 const currentEmojiTab = ref('emoji');
-const starEmojiList = ref([])
 const emojiTabs = ref([
   {value: 'emoji', label: 'main_chat_emoji_tabs_emoji',},
   {value: 'kaomoji', label: 'main_chat_emoji_tabs_kaomoji',},
@@ -277,23 +276,9 @@ watch(() => props.modelValue, () => {
   mainInput.value = props.modelValue
 })
 
-function getAllStarEmoji() {
-  if (!globalState.isLogin) {
-    starEmojiList.value = []
-    return
-  }
-  getStarEmojiList(customLargePage({})).then(res => {
-    if (!res || !res.data || !res.data.data) {
-      return
-    }
-    starEmojiList.value = res.data.data.fileEmojis
-  })
+function getAllStarEmojiForce() {
+  updateStarEmoji(true)
 }
-
-watch(
-    () => globalState.isLogin,
-    () => getAllStarEmoji()
-);
 
 function forLineBreakSend(event) {
   if (event.ctrlKey) {
@@ -379,7 +364,7 @@ const uploadEmojiCallback = async (isSend, data) => {
     notifyTopWarning(t('file_no_limit'))
     return false
   } else {
-    getAllStarEmoji()
+    getAllStarEmojiForce()
     showEmojiUpload.value = false
     notifyTopPositive(t('main_long_text_input_emoji_upload_success'))
     return true
@@ -426,14 +411,14 @@ onMounted(() => {
   if (props.elements.has(CaskLongTextInputElement.FILE) || props.elements.has(CaskLongTextInputElement.IMG)) {
     caskLongTextInputRef.value.$el.addEventListener('paste', pasteEventHandle)
   }
-  getAllStarEmoji()
+  updateStarEmoji(false)
 
-  emitter.on("reloadStarEmoji", getAllStarEmoji)
+  emitter.on("reloadStarEmoji", getAllStarEmojiForce)
 })
 
 onBeforeUnmount(() => {
   caskLongTextInputRef.value.$el.removeEventListener('paste', pasteEventHandle)
-  emitter.off("reloadStarEmoji", getAllStarEmoji)
+  emitter.off("reloadStarEmoji", getAllStarEmojiForce)
 })
 
 

@@ -236,6 +236,42 @@
                          @update:model-value="(it) => updateHideNotificationDetail(it)"/>
               </div>
 
+              <div class="q-mt-sm">
+                <h6>
+                  {{ $t('main_chat_setting_emoji_pro') }}
+                </h6>
+                <div class="q-mb-sm" style="opacity: .5; font-size: .75rem">
+                  {{ $t('main_chat_setting_emoji_tips') }}
+                </div>
+              </div>
+              <div class="q-mb-sm row justify-start">
+                <div class="row">
+                  <div v-for="(emoji, index) in globalState.starEmojiList" :key="index">
+                    <div class="relative-position"
+                         @mouseenter="emoji.show = true"
+                         @mouseleave="emoji.show = false">
+                      <q-img :ratio="1" fit="contain" :src="emoji.readAddress" class="q-ma-sm"
+                             style="height: 5.5rem; width: 5.5rem; border-radius: 8px">
+                      </q-img>
+                      <div v-show="emoji.show" @click="deleteEmojiPro(emoji)"
+                           class="cask-chatroom-setting-emoji-delete-btn
+                           row justify-end items-start cask-jump-link-neg">
+                        <q-icon size="20px" name="fa-solid fa-circle-xmark" style="opacity: .95;"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="q-ma-xs cask-cursor-pointer column justify-center items-center"
+                       @click="showEmojiUpload = true"
+                       style="height: 5rem; width: 5rem; border-radius: 8px; border: 2px dashed rgb(var(--text-color));">
+                    <q-icon class="q-my-xs" size="1rem" name="fa-solid fa-upload" style="opacity: .95;"/>
+                    <div class="q-my-xs" style="opacity: .95; font-size: .72rem">
+                      {{ $t('main_long_text_upload_emoji') }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
             <div class="row justify-between" style="margin: 1% 20%">
               <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="updateChatSetting">
@@ -502,13 +538,22 @@
 
     <cask-base-footer :simple="true"/>
 
+    <cask-dialog-upload-file ref="uploadEmojiDialog" :dialog-judgment-data="{
+      title: 'main_long_text_input_emoji_title', content: 'main_long_text_input_image_content',
+      uploadAccept: '.webp,.png,.jpg,.jpeg,.gif',uploadMaxSize: 20480,
+      falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_emoji_upload', tips:
+      ['main_long_text_input_emoji_tip1','main_long_text_input_emoji_tip2','main_long_text_input_emoji_tip3',]}"
+                             :callback-method="uploadEmojiCallback"
+                             v-model="showEmojiUpload"
+    />
+
   </q-layout>
 </template>
 
 <script setup>
 
 import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
-import {browserNotificationCheck, notifyTopWarning} from "@/utils/notification-tools";
+import {browserNotificationCheck, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {
   chattingDataInit,
   deleteChattingData,
@@ -528,16 +573,20 @@ import {getGenderObj} from "@/constant/enums/gender-opt";
 import {hideChat} from "@/api/chat";
 import {useI18n} from "vue-i18n";
 import {delay} from "@/utils/base-tools";
-import {uploadUserFile} from "@/api/file";
+import {unstarEmoji, uploadUserFile} from "@/api/file";
 import {toSpecifyPageWithQuery} from "@/router";
 import {useRouter} from "vue-router";
 import CaskChatroomBody from "@/ui/views/CaskChatroomBody.vue";
 import {getChatSettingObj, updateChatSettingJson} from "@/utils/global-tools";
+import {updateStarEmoji} from "@/utils/biz";
+import CaskDialogUploadFile from "@/ui/components/CaskDialogUploadFile.vue";
+import emitter from "@/utils/bus";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
 
+const showEmojiUpload = ref(false)
 const openChatSetting = ref(false)
 const chatNameFilter = ref("")
 const chatSetting = ref(getChatSettingObj())
@@ -639,6 +688,43 @@ const sendChatMsg = () => {
   }
 }
 
+const uploadEmojiCallback = async (isSend, data) => {
+  if (!isSend) {
+    showEmojiUpload.value = false
+    return
+  }
+  if (!data) {
+    notifyTopWarning(t('main_long_text_input_image_empty'))
+    return
+  }
+  if (!globalState.isLogin) {
+    notifyTopWarning(t('no_login'))
+    return
+  }
+  //build
+  let formData = new FormData();
+  formData.append('file', data, data.name)
+  const res = await uploadUserFile({fileType: 1}, formData)
+  if (!res || !res.data || !res.data.data) {
+    notifyTopWarning(t('file_no_limit'))
+    return false
+  } else {
+    updateStarEmoji(true)
+    showEmojiUpload.value = false
+    notifyTopPositive(t('main_long_text_input_emoji_upload_success'))
+    return true
+  }
+}
+
+function deleteEmojiPro(emoji) {
+  unstarEmoji(emoji.id).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    emitter.emit('reloadStarEmoji')
+  })
+}
+
 
 function handleVisibilityChange() {
   socketChatState.needBrowserNotification = document.hidden
@@ -648,6 +734,7 @@ onMounted(() => {
   browserNotificationCheck()
   chattingDataInit(true)
   initChatSocket()
+  updateStarEmoji(false)
   socketChatState.needBrowserNotification = false
   document.addEventListener("visibilitychange", handleVisibilityChange);
 })
@@ -694,6 +781,14 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.cask-chatroom-setting-emoji-delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
 }
 
 </style>
