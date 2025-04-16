@@ -14,9 +14,11 @@
         <div class="row justify-center q-mx-md text-center q-mb-md">
           <div>
             <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
-            <span @click="toSpecifyPage(thisRouter, 'previous')"
-                  class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_subtitle_center') }}&nbsp;</span>
-            <span style="opacity: .5"> {{ $t('main_login_subtitle_post') }}</span>
+            <span @click=" emit('update:showUserLogin', false); showUserRegister = true"
+                  class="cask-jump-link-in-text">{{ $t('main_login_subtitle_center') }}</span>
+            <!--            <span style="opacity: .5"> {{ $t('main_login_subtitle_reset_pre') }}</span>-->
+            <!--            <span @click="showUserReset = true"-->
+            <!--                  class="cask-jump-link-in-text">{{ $t('main_login_subtitle_reset_center') }}</span>-->
           </div>
         </div>
 
@@ -34,7 +36,7 @@
           </q-input>
 
           <q-input v-model="inputPassword" tabindex="0" dense outlined type="password"
-                   class="q-ma-md component-outline-input-grow-on-semi-trans">
+                   class="q-mt-md q-mx-md component-outline-input-grow-on-semi-trans">
             <template v-slot:prepend>
               <div class="row items-center justify-between">
                 <q-icon class="q-mr-sm" name="fa-solid fa-unlock-keyhole" size="1rem"/>
@@ -46,13 +48,10 @@
             </template>
           </q-input>
 
-          <div class="q-my-md row justify-start q-mx-md text-center items-center">
-            <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
-                        checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
-            <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
-            <span @click="toSpecifyPage(thisRouter, 'privacy')"
-                  class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
+          <div class="q-mx-lg q-mt-sm" style="opacity: .5; font-size: .75rem">
+            {{ $t('main_login_passwd_tips') }}
           </div>
+
         </div>
 
 
@@ -119,9 +118,20 @@
 
 
       </div>
+
+      <div class="q-my-md row justify-center q-mx-md text-center items-center">
+        <q-checkbox v-model="agreePrivacy" :val="true" class="component-ratio-base q-mr-sm" dense
+                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye" style="margin-top: 1px"/>
+        <span style="opacity: .9">{{ $t('main_login_privacy_pre') }}</span>
+        <span @click="toSpecifyPage(thisRouter, 'privacy')"
+              class="cask-jump-link-in-text">&nbsp;{{ $t('main_login_privacy_center') }}&nbsp;</span>
+      </div>
     </div>
 
   </q-dialog>
+
+  <CaskBaseRegister v-model:showUserRegister="showUserRegister"/>
+
 </template>
 
 <script setup>
@@ -133,6 +143,7 @@ import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {openLink} from "@/utils/base-tools";
+import CaskBaseRegister from "@/ui/views/CaskBaseRegister.vue";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -157,6 +168,9 @@ const googleLoginUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
 const inputAccount = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
+
+const showUserRegister = ref(false)
+// const showUserReset = ref(false)
 
 const headerLogin = () => {
   if (!agreePrivacy.value) {

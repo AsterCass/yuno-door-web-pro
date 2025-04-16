@@ -613,6 +613,14 @@
   );
 }
 
+.component-outline-input-grow-on-semi-trans-mini {
+  @include component-outline-input-base(
+          $thisWidth: 10rem,
+          $thisMinWidth: 10rem,
+          $thisBorder: 2px solid rgb(var(--semi-bg-container-background-color)),
+  );
+}
+
 .component-outline-input-textarea-grow {
   textarea {
     resize: none !important;

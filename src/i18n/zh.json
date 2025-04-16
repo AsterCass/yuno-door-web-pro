@@ -61,6 +61,8 @@
 
   "main_login_subtitle_pre": "没有账号？可以尝试使用下方第三方账号登录，或者",
   "main_login_subtitle_center": "注册您的账号",
+  "main_login_subtitle_reset_pre": "。如果忘记您密码或者希望修改密码，请",
+  "main_login_subtitle_reset_center": "点击",
   "main_login_subtitle_post": "",
   "main_login_account": "账号",
   "main_login_password": "密码",
@@ -75,9 +77,24 @@
   "main_login_success_copy": "复制成功",
   "main_login_success_star_file": "添加成功",
   "main_login_fail_copy": "复制失败",
+  "main_login_passwd_tips": "密码8-20位且需要包含大写、小写和数字",
 
   "main_in_login_auth": "正在登录中... 请勿离开当前页面 ...",
   "main_login_google_client_fail": "获取用户信息失败",
+
+  "main_register_btn": "注册",
+  "main_register_subtitle": "请填写下方基本信息以供注册",
+  "main_register_show_passwd": "显示密码",
+  "main_register_hide_passwd": "隐藏密码",
+  "main_register_account": "账号",
+  "main_register_mail": "邮箱",
+  "main_register_passwd": "密码",
+  "main_register_code": "验证码",
+  "main_register_code_send": "发送验证码",
+  "main_register_mail_check": "邮箱格式错误",
+  "main_register_account_check": "账号格式错误，8-20位且只能由英文字母和数字组成验证码不能为空",
+  "main_register_passwd_check": "密码格式错误，8-20位且需要包含大写、小写和数字",
+  "main_register_code_check": "验证码不能为空",
 
   "main-fa-mail": "邮箱",
   "main-fa-wechat": "微信",
