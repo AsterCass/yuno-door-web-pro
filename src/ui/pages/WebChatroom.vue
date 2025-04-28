@@ -468,7 +468,9 @@
                       size="40px" class="q-ma-xs">
                     <q-img spinner-size="1rem" :src="thisUser.userAvatar"/>
                   </q-avatar>
-                  <q-btn round style="height: 40px; width: 40px" no-wrap flat class="q-mt-xs q-ml-xs">
+                  <q-btn v-if="socketChatState.webChattingFocusChat.chatGroupUsers &&
+                  socketChatState.webChattingFocusChat.chatGroupUsers.length "
+                         round style="height: 40px; width: 40px" no-wrap flat class="q-mt-xs q-ml-xs">
                     <div style="padding-bottom: 13px; font-size: 25px">
                       ...
                     </div>
