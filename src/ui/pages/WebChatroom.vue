@@ -209,6 +209,13 @@
       <div class="col-12 col-lg row relative-position" style="height: 100%">
         <q-separator class="component-separator-base" vertical style="margin: 5rem 2% 0 0"/>
 
+        <div v-show="!socketChatState.webChattingFocusChat
+        || !socketChatState.webChattingFocusChat.userChattingData
+        || !socketChatState.webChattingFocusChat.userChattingData.length">
+          <q-spinner-bars style="position: absolute; top: 50%;right: 50%" size="40px"/>
+        </div>
+
+
         <div v-show="openChatSetting" class="col column animate__animated animate__fadeIn"
              style="height: 100%; padding: 5rem 0 2rem 0">
           <div class="row q-mb-md justify-between q-mx-sm">

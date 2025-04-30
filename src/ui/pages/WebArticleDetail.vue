@@ -68,8 +68,12 @@
 
       <div class="col-lg-6 col-12 component-marked-view q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem">
-        <div ref="articleMainContent">
+
+        <div v-if="markdownToHtml" ref="articleMainContent">
           <div v-html="markdownToHtml"></div>
+        </div>
+        <div v-else>
+          <q-spinner-pie style="position: fixed; top: 50%;right: 50%;" size="50px"/>
         </div>
       </div>
 
