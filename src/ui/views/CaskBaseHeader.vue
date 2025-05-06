@@ -97,13 +97,19 @@
               </div>
             </div>
           </q-btn>
-          <q-btn v-show="globalState.isLogin" no-caps unelevated class="component-none-btn-grow q-mx-xs"
-                 @click="headerLogout">
-            <div class="row items-center">
-              <div class="q-ma-xs">
-                {{ $t('main_logout') }}
-              </div>
-            </div>
+          <q-btn v-if="globalState.isLogin && globalState.userData" @click="toSpecifyPageWithQuery(
+                  thisRouter, 'space', {id: globalState.userData.id})"
+                 round style="margin: 0 1.5rem 0 1.5rem" color="transparent" size="11px">
+            <q-avatar size="33px">
+              <q-img :src="globalState.userData.avatar"/>
+            </q-avatar>
+            <cask-user-self-tool-tip :user-info="{
+                  userId: globalState.userData.id,
+                  userAvatar: globalState.userData.avatar,
+                  userNickname: globalState.userData.nickName,
+                  userGender: globalState.userData.gender,
+                  userRoleType: globalState.userData.roleType,
+                }"/>
           </q-btn>
           <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs" @click="switchLanguage()">
             <div class="row items-center q-ma-xs">
@@ -231,15 +237,13 @@ import {defineProps, onMounted, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
 import {delay} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {notifyTopPositive} from "@/utils/notification-tools";
 import {scrollState, socketChatState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
-import {toSpecifyPage} from "@/router";
-import {userLogout} from "@/api/user";
-import {useI18n} from "vue-i18n";
+import {toSpecifyPage, toSpecifyPageWithQuery} from "@/router";
 import {chattingDataInit, initChatSocket} from "@/utils/chat-socket";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseLogin from "@/ui/views/CaskBaseLogin.vue";
+import CaskUserSelfToolTip from "@/ui/views/CaskUserSelfToolTip.vue";
 
 const props = defineProps({
   centerElements: {
@@ -268,7 +272,6 @@ const props = defineProps({
 
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
-const {t} = useI18n()
 
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
@@ -284,16 +287,6 @@ const showHeaderSetting = (isShow) => {
     morphWithSetting.value = 'btn'
     morphWithSettingContentShow.value = false
   }
-}
-
-const headerLogout = () => {
-  userLogout().then(res => {
-    if (!res || !res.data || 200 !== res.data.status) {
-      return
-    }
-    notifyTopPositive(t('main_login_success_logout'))
-    globalState.updateToken(null)
-  })
 }
 
 onMounted(() => {
