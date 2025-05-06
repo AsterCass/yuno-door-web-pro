@@ -29,7 +29,7 @@
 import {defineProps, onMounted, ref} from "vue";
 import {backToHome} from "@/router";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
-import {userLoginGoogle} from "@/api/user";
+import {userLoginGithub, userLoginGoogle} from "@/api/user";
 import {useI18n} from "vue-i18n";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
@@ -74,6 +74,21 @@ function googleLoginCallback(code) {
   })
 }
 
+function googleGithubCallback(code) {
+  userLoginGithub({code: code}).then(res => {
+    if (!res || !res.data || !res.data.data) {
+      loginText.value = loginFail
+      disableHomeBtn.value = false
+      return
+    }
+    globalState.updateUserData(res.data.data)
+    loginText.value = loginSuccess
+    disableHomeBtn.value = false
+    notifyTopPositive(t('main_login_success'))
+    backToHome(thisRouter)
+  })
+}
+
 onMounted(() => {
   if (!props.code) {
     loginText.value = loginFail
@@ -83,6 +98,8 @@ onMounted(() => {
   }
   if ('google' === props.brand) {
     googleLoginCallback(props.code);
+  } else if ('github' === props.brand) {
+    googleGithubCallback(props.code);
   }
 })
 

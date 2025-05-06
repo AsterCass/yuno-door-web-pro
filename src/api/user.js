@@ -17,6 +17,14 @@ export function userLoginGoogle(body) {
     })
 }
 
+export function userLoginGithub(body) {
+    return serviceShiro({
+        url: `/yui/user/github/login`,
+        method: 'post',
+        data: body
+    })
+}
+
 export function sendRegMail(body) {
     return serviceShiro({
         url: `/yui/user/sendRegMail`,

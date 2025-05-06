@@ -81,7 +81,7 @@
 
 
           <q-icon name="fa-brands fa-github" size="2rem" class="cursor-pointer"
-                  @click="notifyTopWarning($t('in_develop'))"/>
+                  @click="openLink(githubLoginUrl, false)"/>
 
 
           <div class="relative-position">
@@ -165,6 +165,9 @@ const googleLoginUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
     "?client_id=1040525610111-i83lfidjd5bhfi6m5v1amoeasdbal02s.apps.googleusercontent.com" +
     "&redirect_uri=https://www.astercasc.com/auth/google/callback" +
     "&response_type=code&scope=email profile&access_type=offline"
+
+const githubLoginUrl = "https://github.com/login/oauth/authorize?" +
+    "client_id=Iv23li6nHiBxyapgxcmi&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=user"
 const inputAccount = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
