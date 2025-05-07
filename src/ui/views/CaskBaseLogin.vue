@@ -166,7 +166,7 @@ const googleLoginUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
     "&response_type=code&scope=email profile&access_type=offline"
 
 const githubLoginUrl = "https://github.com/login/oauth/authorize?" +
-    "client_id=Iv23li6nHiBxyapgxcmi&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=user user:email"
+    "client_id=Ov23liujVlKgU8PoEOfb&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=user user:email"
 const inputAccount = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
