@@ -79,9 +79,8 @@
 
         <div class="q-mb-md row justify-evenly items-center">
 
-
           <q-icon name="fa-brands fa-github" size="2rem" class="cursor-pointer"
-                  @click="openLink(githubLoginUrl, false)"/>
+                  @click="githubLogin"/>
 
 
           <div class="relative-position">
@@ -106,7 +105,7 @@
             </button>
             <div v-show="!agreePrivacy"
                  class="absolute bg-transparent gsi-material-button-mask cursor-pointer "
-                 @click="notifyTopWarning(t('main_login_message_check'))">
+                 @click="notifyTopWarning($t('main_login_message_check'))">
             </div>
           </div>
 
@@ -167,13 +166,21 @@ const googleLoginUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
     "&response_type=code&scope=email profile&access_type=offline"
 
 const githubLoginUrl = "https://github.com/login/oauth/authorize?" +
-    "client_id=Iv23li6nHiBxyapgxcmi&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=user"
+    "client_id=Iv23li6nHiBxyapgxcmi&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=user,user:email"
 const inputAccount = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
 
 const showUserRegister = ref(false)
 // const showUserReset = ref(false)
+
+const githubLogin = () => {
+  if (!agreePrivacy.value) {
+    notifyTopWarning(t('main_login_message_check'))
+    return
+  }
+  openLink(githubLoginUrl, false)
+}
 
 const headerLogin = () => {
   if (!agreePrivacy.value) {
