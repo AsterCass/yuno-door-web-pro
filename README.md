@@ -78,7 +78,7 @@ yarn serve
 * animate.css：动画
 * axios：接口调用
 * core-js：base
-* crypto-js：解密
+* crypto-js：加密解密
 * dplayer：播放器封装
 * highlight.js：markdown解析代码高亮
 * marked-highlight: markdown解析代码高亮

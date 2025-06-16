@@ -24,3 +24,10 @@ export function decrypt(blob) {
     })
 }
 
+export function hashPassword(username, password) {
+    return CryptoJS.SHA256(password + "_astercasc_" + username).toString();
+}
+
+export function hashPasswordNew(account, mail, password) {
+    return hashPassword(account, password) + "&" + hashPassword(mail, password)
+}
