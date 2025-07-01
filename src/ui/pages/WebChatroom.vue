@@ -653,6 +653,7 @@ function deleteChat(chatId) {
       socketChatState.chattingDataWebSelected = null
     })
     hideChat({hideChatId: chatId})
+    globalState.deletePinChat(chatId)
   } else {
     notifyTopWarning(t('no_login'))
   }
