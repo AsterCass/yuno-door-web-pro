@@ -127,10 +127,6 @@ const privateChat = () => {
       notifyTopWarning(t('main_chat_to_chat_null'))
       return;
     }
-    if (globalState.userData.id === props.userInfo.userId) {
-      notifyTopWarning(t('main_chat_to_chat_self_error'))
-      return;
-    }
     privateInitChat({toUserId: props.userInfo.userId}).then(res => {
       if (!res || !res.data || 200 !== res.data.status) {
         return

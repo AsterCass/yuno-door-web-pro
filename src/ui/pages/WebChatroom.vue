@@ -210,8 +210,7 @@
         <q-separator class="component-separator-base" vertical style="margin: 5rem 2% 0 0"/>
 
         <div v-show="!socketChatState.webChattingFocusChat
-        || !socketChatState.webChattingFocusChat.userChattingData
-        || !socketChatState.webChattingFocusChat.userChattingData.length">
+        || !socketChatState.webChattingFocusChat.userChattingData">
           <q-spinner-bars style="position: absolute; top: 50%;right: 50%" size="40px"/>
         </div>
 
