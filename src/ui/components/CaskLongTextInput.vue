@@ -125,14 +125,25 @@
 
     </div>
 
-    <cask-dialog-upload-file ref="uploadFileDialog" :dialog-judgment-data="{
+    <cask-dialog-upload-file ref="uploadImgDialog" :dialog-judgment-data="{
       title: 'main_long_text_input_image_title', content: 'main_long_text_input_image_content',
       uploadAccept: '.webp,.png,.jpg,.jpeg,.gif',uploadMaxSize: 5242880,
       falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_send', tips:
       ['main_long_text_input_image_tip1','main_long_text_input_image_tip2','main_long_text_input_image_tip3',
       'main_long_text_input_image_tip4',]}"
-                             :callback-method="uploadFileCallback"
+                             :callback-method="uploadImgCallback"
                              v-model="showImageUpload"
+    />
+
+
+    <cask-dialog-upload-file ref="uploadFileDialog" :dialog-judgment-data="{
+      title: 'main_long_text_input_file_title', content: 'main_long_text_input_file_content',
+      uploadAccept: '*',uploadMaxSize: 10485760,
+      falseLabel: 'main_long_text_input_cancel', trueLabel: 'main_long_text_input_send', tips:
+      ['main_long_text_input_file_tip1','main_long_text_input_file_tip2',
+      'main_long_text_input_file_tip3','main_long_text_input_file_tip4',]}"
+                             :callback-method="uploadFileCallback"
+                             v-model="showFileUpload"
     />
 
     <cask-dialog-upload-file ref="uploadEmojiDialog" :dialog-judgment-data="{
@@ -151,7 +162,7 @@
       <div class="row items-center">
         <div v-if="elements.has(CaskLongTextInputElement.FILE)" class="q-mr-sm">
           <q-btn class="component-none-btn-mini-grow" no-caps style="padding: 0!important;" unelevated
-                 @click="elements.get(CaskLongTextInputElement.FILE).callback">
+                 @click="fileHandler">
             <div class="row items-center q-ma-xs">
               <q-icon name="fa-solid fa-paperclip" size="1.2rem"/>
             </div>
@@ -261,6 +272,7 @@ const mainInput = ref(props.modelValue)
 const caskLongTextInputRef = ref(null)
 const showEmojiBoard = ref(false)
 const showImageUpload = ref(false)
+const showFileUpload = ref(false)
 const showEmojiUpload = ref(false)
 const currentEmojiTab = ref('emoji');
 const emojiTabs = ref([
@@ -268,6 +280,7 @@ const emojiTabs = ref([
   {value: 'kaomoji', label: 'main_chat_emoji_tabs_kaomoji',},
   {value: 'emojipro', label: 'main_chat_emoji_tabs_emoji_pro'},
 ])
+const uploadImgDialog = ref(null)
 const uploadFileDialog = ref(null)
 const uploadEmojiDialog = ref(null)
 const commonEmoji = ref(getChatEmojiCommonList())
@@ -294,20 +307,19 @@ function pasteEventHandle(event) {
     if (item.type.startsWith('image/')) {
       if (props.elements.has(CaskLongTextInputElement.IMG)) {
         const file = item.getAsFile();
-        if (uploadFileDialog.value) {
+        if (uploadImgDialog.value) {
           imageHandler()
-          uploadFileDialog.value.insertDialogUploadFileData(file)
+          uploadImgDialog.value.insertDialogUploadFileData(file)
         }
       }
     } else if (!item.type.startsWith('text/')) {
-      const file = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = (data) => {
-        if (props.elements.has(CaskLongTextInputElement.FILE)) {
-          props.elements.get(CaskLongTextInputElement.FILE).callback(file.name, data.target.result);
+      if (props.elements.has(CaskLongTextInputElement.FILE)) {
+        const file = item.getAsFile();
+        if (uploadFileDialog.value) {
+          fileHandler()
+          uploadFileDialog.value.insertDialogUploadFileData(file)
         }
-      };
-      reader.readAsDataURL(file);
+      }
     }
   }
 }
@@ -343,6 +355,22 @@ const imageHandler = () => {
   }
 }
 
+const hideFileBoard = () => {
+  if (showFileUpload.value) {
+    showFileUpload.value = false
+  }
+}
+
+const fileHandler = () => {
+  if (showFileUpload.value) {
+    showFileUpload.value = false
+  } else {
+    delay(100).then(() => {
+      showFileUpload.value = true
+    })
+  }
+}
+
 const uploadEmojiCallback = async (isSend, data) => {
   if (!isSend) {
     showEmojiUpload.value = false
@@ -371,7 +399,7 @@ const uploadEmojiCallback = async (isSend, data) => {
   }
 }
 
-const uploadFileCallback = async (isSend, data) => {
+const uploadImgCallback = async (isSend, data) => {
   if (!isSend) {
     hideImageBoard()
     return
@@ -380,13 +408,30 @@ const uploadFileCallback = async (isSend, data) => {
     notifyTopWarning(t('main_long_text_input_image_empty'))
     return
   }
-  //todo 兼容文件发送
   const res = await props.elements.get(CaskLongTextInputElement.IMG).callback(data)
   if (res) {
     hideImageBoard()
   }
   return res
 }
+
+
+const uploadFileCallback = async (isSend, data) => {
+  if (!isSend) {
+    hideFileBoard()
+    return
+  }
+  if (!data) {
+    notifyTopWarning(t('main_long_text_input_file_empty'))
+    return
+  }
+  const res = await props.elements.get(CaskLongTextInputElement.FILE).callback(data)
+  if (res) {
+    hideFileBoard()
+  }
+  return res
+}
+
 
 function addEmoji(type, emoji) {
   //update common emoji

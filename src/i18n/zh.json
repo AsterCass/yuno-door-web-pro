@@ -331,6 +331,13 @@
   "main_long_text_input_emoji_tip1": "仅支持webp、png、jpg、jpeg、gif格式",
   "main_long_text_input_emoji_tip2": "图片大小不得超过20K",
   "main_long_text_input_emoji_tip3": "发送表情包不会消耗每日上传限制",
+  "main_long_text_input_file_title": "发送文件",
+  "main_long_text_input_file_empty": "发送文件不能为空",
+  "main_long_text_input_file_content": "单日上传上限次数为20。发送文件、图片以及上传表情包会消耗该限制。历史记录中的文件，单用户最多保存5个文件，超过该数量，会将最旧的文件过期",
+  "main_long_text_input_file_tip1": "支持任意文件格式，但是注意确认上传的是否为文件夹或者快捷键方式等非独立文件，造成您的额度浪费",
+  "main_long_text_input_file_tip2": "文件大小不得超过10MB",
+  "main_long_text_input_file_tip3": "如果文件在剪贴板中可以直接在输入框粘贴",
+  "main_long_text_input_file_tip4": "发送表情包不会消耗每日上传限制",
 
 
   "main_redirect_pre": "该页面的新版迁移还未完成",

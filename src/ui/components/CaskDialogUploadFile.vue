@@ -22,6 +22,9 @@
 
             <img v-if="uploadDataBase64" :src="uploadDataBase64"
                  class="q-mt-xl cask-dialog-upload-file-img" alt=""/>
+            <div v-else-if="uploadDataName" class="q-mt-md">
+              {{ uploadDataName }}
+            </div>
             <cask-upload-input v-else class="q-mt-md" v-model="uploadData"
                                :tips="dialogJudgmentData.tips"
                                :accept="dialogJudgmentData.uploadAccept"
@@ -60,14 +63,17 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, ref, watch, defineExpose} from "vue";
+import {defineEmits, defineExpose, defineProps, ref, watch} from "vue";
 import CaskUploadInput from "@/ui/components/CaskUploadInput.vue";
 
 const emit = defineEmits(['update:modelValue']);
 const reader = new FileReader();
-reader.onload = (data) => {
-  if (data && data.target) {
-    uploadDataBase64.value = data.target.result
+reader.onload = (event) => {
+  if (event && event.target) {
+    const result = event.target.result;
+    if (typeof result === 'string' && result.startsWith('data:image/')) {
+      uploadDataBase64.value = result
+    }
   } else {
     uploadDataBase64.value = null
   }
@@ -103,6 +109,7 @@ const props = defineProps({
 const showDialogJudgment = ref(props.modelValue);
 const uploadData = ref(null)
 const uploadDataBase64 = ref(null)
+const uploadDataName = ref("")
 const trueBtnEnable = ref(true)
 
 watch(() => props.modelValue, () => {
@@ -116,9 +123,11 @@ watch(() => props.modelValue, () => {
 
 watch(uploadData, () => {
   if (uploadData.value) {
+    uploadDataName.value = uploadData.value.name
     reader.readAsDataURL(uploadData.value);
   } else {
     uploadDataBase64.value = null
+    uploadDataName.value = ""
   }
 })
 

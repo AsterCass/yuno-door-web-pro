@@ -356,7 +356,7 @@
         <div v-show="!openChatSetting">
           <cask-long-text-input v-if="socketChatState.webChattingFocusChat" is-absolute
                                 id="comment-reply-input" :elements="new Map([
-                  [CaskLongTextInputElement.FILE, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.FILE, {callback: sendFile}],
                   [CaskLongTextInputElement.IMG, {callback: sendImg}],
                   [CaskLongTextInputElement.EMOJI, {callback: sendEmoji}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
@@ -656,6 +656,24 @@ function deleteChat(chatId) {
   } else {
     notifyTopWarning(t('no_login'))
   }
+}
+
+const sendFile = async (data) => {
+  if (!globalState.isLogin) {
+    notifyTopWarning(t('no_login'))
+    return false
+  }
+  //build
+  let formData = new FormData();
+  formData.append('file', data, data.name)
+  const res = await uploadUserFile({fileType: 0}, formData)
+  if (!res || !res.data || !res.data.data) {
+    notifyTopWarning(t('file_no_limit'))
+    return false
+  }
+  const readAddress = res.data.data.readAddress
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress)
+  return true
 }
 
 const sendImg = async (data) => {

@@ -331,6 +331,13 @@
   "main_long_text_input_emoji_tip1": "Only supports webp, png, jpg, jpeg, and gif formats.",
   "main_long_text_input_emoji_tip2": "The image size must not exceed 20KB.",
   "main_long_text_input_emoji_tip3": "Sending Emoji Pro does not count towards upload limit.",
+  "main_long_text_input_file_title": "Send File",
+  "main_long_text_input_file_empty": "File data cannot be empty",
+  "main_long_text_input_file_content": "The upload limit per day is 20 times. Sending files, images, and uploading Emoji Pro will count towards this limit. In the history, each user can save up to 5 files. If this number is exceeded, the oldest files will expire.",
+  "main_long_text_input_file_tip1": "Arbitrary file formats are supported. However, please make sure the uploaded item is not a folder or a shortcut, as these are not standalone files and may result in unnecessary quota usage.",
+  "main_long_text_input_file_tip2": "The file size must not exceed 10MB.",
+  "main_long_text_input_file_tip3": "If the file is in the clipboard, can be directly pasted into the input box.",
+  "main_long_text_input_file_tip4": "Sending Emoji Pro does not count towards upload limit.",
 
   "main_redirect_pre": "The migration to the new version of this page is not yet complete. You will be redirected to the old version in",
   "main_redirect_post": "seconds to access this feature.",
