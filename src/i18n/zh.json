@@ -207,6 +207,7 @@
   "main_chat_setting_emoji_tips": "无需保存，同时注意添加后删除并不会恢复上传量（比如原本限制为20，添加20张表情包再删除也无法再上传），如需增加表情包上传上限请联系管理员",
   "main_chat_message_file_pre": "[文件] ",
   "main_chat_message_file_expire": "该文件已过期",
+  "main_chat_message_file_prepare": "正在准备下载文件中...",
 
 
   "main_chat_chat_time_now": "刚刚",

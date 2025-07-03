@@ -206,6 +206,7 @@
   "main_chat_setting_emoji_tips": "No need to save, and please note that deleting the emoji pack after adding will not restore the upload limit. For example, if the original limit was 20, adding 20 emoji images and then deleting them will not allow further uploads. If you need to increase the emoji pro upload limit, please contact the administrator",
   "main_chat_message_file_pre": "[File] ",
   "main_chat_message_file_expire": "This file has expired",
+  "main_chat_message_file_prepare": "Preparing to download the file...",
 
 
   "main_chat_chat_time_now": "Just now",

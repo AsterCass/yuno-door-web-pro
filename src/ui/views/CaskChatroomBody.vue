@@ -47,10 +47,12 @@
                v-on:mouseover="chatRow.webFocusThisMsg=true">
             <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body"
                  style="white-space: break-spaces; color: rgb(var(--pointer));
-                 background-color: transparent; font-size: 15px; text-decoration: underline;">
+                 background-color: transparent; font-size: 15px;">
               <q-icon name="eva-file-text-outline" size="20px"/>
               {{ $t('main_chat_message_file_pre') }}
               {{ chatRow.webMessageFileName }}
+              &nbsp;
+              <q-spinner-ios v-if="chatRow.inDownloading" size="20px"/>
             </div>
             <img v-else-if="chatRow.webMessageImg" :src="chatRow.message"
                  alt=""
@@ -65,7 +67,7 @@
                  class="chat-body-label row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
-                     @click="downloadChatFile(chatRow.message, chatRow.webMessageFileName)">
+                     @click="downloadChatFile(chatRow)">
                   {{ $t('main_chat_operation_download_file') }}
                 </div>
                 <div v-else-if="chatRow.webMessageImg" class="row cask-jump-link-in-text-more"
@@ -111,7 +113,8 @@
                v-on:mouseover="chatRow.webFocusThisMsg=true">
             <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body-mine"
                  style="white-space: break-spaces; color: rgb(var(--pointer));
-                 background-color: transparent; font-size: 15px; text-decoration: underline;">
+                 background-color: transparent; font-size: 15px;">
+              <q-spinner-ios v-if="chatRow.inDownloading" size="20px"/>&nbsp;
               <q-icon name="eva-file-text-outline" size="20px"/>
               {{ $t('main_chat_message_file_pre') }}
               {{ chatRow.webMessageFileName }}
@@ -128,7 +131,7 @@
                  class="chat-body-label-mine row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
-                     @click="downloadChatFile(chatRow.message, chatRow.webMessageFileName)">
+                     @click="downloadChatFile(chatRow)">
                   {{ $t('main_chat_operation_download_file') }}
                 </div>
                 <div v-else-if="chatRow.webMessageImg" class="row cask-jump-link-in-text-more"
@@ -165,8 +168,8 @@ import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
-import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
-import {copy, downloadUrlName} from "@/utils/base-tools";
+import {notifyTopNegative, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {copy} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
@@ -186,6 +189,7 @@ const {t} = useI18n()
 const showImgSrc = ref("")
 const chatBodyScroller = ref(null)
 const chatBodyScrollerInLoading = ref(false)
+const inDownloadFile = ref(false)
 
 watch(
     () => socketChatState.webChattingFocusChat,
@@ -210,11 +214,46 @@ const chatBodyOnScroll = (info) => {
   }
 }
 
-function downloadChatFile(url, fileName) {
+function downloadChatFile(chatRow) {
+  const url = chatRow.message
+  const fileName = chatRow.webMessageFileName
   if (!fileName) {
     return
   }
-  downloadUrlName(url, fileName)
+  if (inDownloadFile.value) {
+    notifyTopWarning(t('main_chat_message_file_prepare'))
+    return
+  }
+  inDownloadFile.value = true
+  chatRow.inDownloading = true
+  fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          notifyTopNegative(t('main_chat_message_file_expire'))
+          return null
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        if (!blob) {
+          inDownloadFile.value = false
+          chatRow.inDownloading = false
+          return
+        }
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+        inDownloadFile.value = false
+        chatRow.inDownloading = false
+      })
+      .catch(_ => {
+        notifyTopNegative(t('main_chat_message_file_expire'))
+      });
 }
 
 function loadMoreChatRecord() {
