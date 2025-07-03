@@ -11,6 +11,27 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export async function checkFileExists(url) {
+    const response = await fetch(url, {method: 'HEAD'});
+    return response.ok;
+}
+
+export function downloadUrlName(url, name) {
+    checkFileExists(url).then(exists => {
+        if (exists) {
+            let link = document.createElement('a');
+            link.download = name;
+            link.href = url
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            link.remove();
+        } else {
+            notifyTopNegative(t('main_chat_message_file_expire'))
+        }
+    });
+}
+
 export function download(src, name, suffix) {
     let link = document.createElement('a');
     link.download = name + '.' + suffix;
@@ -18,6 +39,7 @@ export function download(src, name, suffix) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    link.remove();
 }
 
 export function copy(text) {

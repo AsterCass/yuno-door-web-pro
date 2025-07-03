@@ -312,7 +312,7 @@ function pasteEventHandle(event) {
           uploadImgDialog.value.insertDialogUploadFileData(file)
         }
       }
-    } else if (!item.type.startsWith('text/')) {
+    } else if (item.kind === 'file') {
       if (props.elements.has(CaskLongTextInputElement.FILE)) {
         const file = item.getAsFile();
         if (uploadFileDialog.value) {

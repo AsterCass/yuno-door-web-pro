@@ -165,8 +165,8 @@ import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
-import {notifyTopNegative, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
-import {copy} from "@/utils/base-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {copy, downloadUrlName} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
@@ -214,26 +214,7 @@ function downloadChatFile(url, fileName) {
   if (!fileName) {
     return
   }
-  fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          notifyTopNegative(t('main_chat_message_file_expire'))
-        }
-        return response.blob();
-      })
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(blobUrl);
-      })
-      .catch(_ => {
-        notifyTopNegative(t('main_chat_message_file_expire'))
-      });
+  downloadUrlName(url, fileName)
 }
 
 function loadMoreChatRecord() {
