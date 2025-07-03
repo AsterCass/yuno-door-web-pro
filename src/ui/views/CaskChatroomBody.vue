@@ -45,7 +45,14 @@
           <div class="relative-position" style="margin-right: 15%;"
                v-on:mouseleave="chatRow.webFocusThisMsg=false"
                v-on:mouseover="chatRow.webFocusThisMsg=true">
-            <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+            <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body"
+                 style="white-space: break-spaces; color: rgb(var(--pointer));
+                 background-color: transparent; font-size: 15px; text-decoration: underline;">
+              <q-icon name="eva-file-text-outline" size="20px"/>
+              {{ $t('main_chat_message_file_pre') }}
+              {{ chatRow.webMessageFileName }}
+            </div>
+            <img v-else-if="chatRow.webMessageImg" :src="chatRow.message"
                  alt=""
                  class="cask-chatroom-chat-body-img" @click="showImgSrc = chatRow.message; showImg = true"
                  @error="chatRow.message = '/img/main_expire.png'"
@@ -58,6 +65,10 @@
                  class="chat-body-label row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
+                     @click="downloadChatFile(chatRow.message, chatRow.webMessageFileName)">
+                  {{ $t('main_chat_operation_download_file') }}
+                </div>
+                <div v-else-if="chatRow.webMessageImg" class="row cask-jump-link-in-text-more"
                      @click="starThisEmoji(chatRow.message)">
                   {{ $t('main_chat_operation_star_emoji') }}
                 </div>
@@ -98,7 +109,14 @@
           <div class="relative-position" style="margin-left: 15%;"
                v-on:mouseleave="chatRow.webFocusThisMsg=false"
                v-on:mouseover="chatRow.webFocusThisMsg=true">
-            <img v-if="chatRow.webMessageFile" :src="chatRow.message"
+            <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body-mine"
+                 style="white-space: break-spaces; color: rgb(var(--pointer));
+                 background-color: transparent; font-size: 15px; text-decoration: underline;">
+              <q-icon name="eva-file-text-outline" size="20px"/>
+              {{ $t('main_chat_message_file_pre') }}
+              {{ chatRow.webMessageFileName }}
+            </div>
+            <img v-else-if="chatRow.webMessageImg" :src="chatRow.message"
                  alt=""
                  class="cask-chatroom-chat-body-img" @click="showImgSrc = chatRow.message; showImg = true"
                  @error="chatRow.message = '/img/main_expire.png'"/>
@@ -110,6 +128,10 @@
                  class="chat-body-label-mine row items-end animate__animated animate__fadeIn">
               <div class="chat-body-label-mine-body">
                 <div v-if="chatRow.webMessageFile" class="row cask-jump-link-in-text-more"
+                     @click="downloadChatFile(chatRow.message, chatRow.webMessageFileName)">
+                  {{ $t('main_chat_operation_download_file') }}
+                </div>
+                <div v-else-if="chatRow.webMessageImg" class="row cask-jump-link-in-text-more"
                      @click="starThisEmoji(chatRow.message)">
                   {{ $t('main_chat_operation_star_emoji') }}
                 </div>
@@ -143,7 +165,7 @@ import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
-import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopNegative, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {copy} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
@@ -186,6 +208,32 @@ const chatBodyOnScroll = (info) => {
     //加载新数据
     loadMoreChatRecord()
   }
+}
+
+function downloadChatFile(url, fileName) {
+  if (!fileName) {
+    return
+  }
+  fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          notifyTopNegative(t('main_chat_message_file_expire'))
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+      })
+      .catch(_ => {
+        notifyTopNegative(t('main_chat_message_file_expire'))
+      });
 }
 
 function loadMoreChatRecord() {

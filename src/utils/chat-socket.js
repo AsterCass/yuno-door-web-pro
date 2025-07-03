@@ -87,7 +87,16 @@ export function messageTimeLabelBuilder(list) {
     for (let count = list.length - 1; count >= 0; --count) {
         //渲染图片、文件等
         if (list[count].message.startsWith(RES_ADD)) {
-            list[count].webMessageFile = true
+            list[count].webMessageImg = true
+
+            // 临时逻辑，判断是否有两个点来判断是否为非图片文件
+            const first = list[count].message.indexOf(".", RES_ADD.length);
+            const second = list[count].message.indexOf(".", first + 1);
+            if (first !== -1 && second !== -1) {
+                list[count].webMessageFile = true
+                list[count].webMessageImg = false
+                list[count].webMessageFileName = list[count].message.substring(first + 1)
+            }
         }
         //从没有被渲染过的地方开始渲染，或者从type为1的地方开始渲染
         if (list[count].webTimeLabelType === 1) {

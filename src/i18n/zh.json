@@ -199,12 +199,14 @@
   "main_chat_body_file_in_tree": "[图片或文件]",
   "main_chat_operation_copy": "复制",
   "main_chat_operation_star_emoji": "添加到我的表情包",
+  "main_chat_operation_download_file": "下载该文件",
   "main_chat_setting_hide_no_detail": "聊天通知隐藏联系人和发送内容：",
   "main_chat_emoji_recently": "最近使用：",
   "main_chat_emoji_all": "全部表情：",
   "main_chat_setting_emoji_pro": "添加/删除表情包：",
   "main_chat_setting_emoji_tips": "无需保存，同时注意添加后删除并不会恢复上传量（比如原本限制为20，添加20张表情包再删除也无法再上传），如需增加表情包上传上限请联系管理员",
-
+  "main_chat_message_file_pre": "[文件] ",
+  "main_chat_message_file_expire": "该文件已过期",
 
 
   "main_chat_chat_time_now": "刚刚",
