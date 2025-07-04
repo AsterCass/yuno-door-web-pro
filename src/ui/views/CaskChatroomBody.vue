@@ -268,6 +268,7 @@ function loadMoreChatRecord() {
     if (socketChatState.webChattingFocusChat.userChattingData.length < 10) {
       socketChatState.webChattingFocusChat.chatScrollDisable = true
       chatBodyScrollerInLoading.value = false
+      inLoadMoreChat.value = false
       return
     }
     const lastMsgIndex = socketChatState.webChattingFocusChat.userChattingData.length - 1
@@ -277,11 +278,13 @@ function loadMoreChatRecord() {
     if (!res || !res.data || !res.data.data) {
       socketChatState.webChattingFocusChat.chatScrollDisable = true
       chatBodyScrollerInLoading.value = false
+      inLoadMoreChat.value = false
       return
     }
     if (0 === res.data.data.length) {
       socketChatState.webChattingFocusChat.chatScrollDisable = true
       chatBodyScrollerInLoading.value = false
+      inLoadMoreChat.value = false
       return
     }
     let inputData = res.data.data
