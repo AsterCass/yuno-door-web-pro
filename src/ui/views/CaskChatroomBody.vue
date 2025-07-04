@@ -190,6 +190,7 @@ const showImgSrc = ref("")
 const chatBodyScroller = ref(null)
 const chatBodyScrollerInLoading = ref(false)
 const inDownloadFile = ref(false)
+const inLoadMoreChat = ref(false)
 
 watch(
     () => socketChatState.webChattingFocusChat,
@@ -257,6 +258,10 @@ function downloadChatFile(chatRow) {
 }
 
 function loadMoreChatRecord() {
+  if(inLoadMoreChat.value) {
+    return
+  }
+  inLoadMoreChat.value = true
   //get last msg
   let lastMsgId = ""
   if (socketChatState.webChattingFocusChat && 0 !== socketChatState.webChattingFocusChat.userChattingData.length) {
@@ -285,6 +290,7 @@ function loadMoreChatRecord() {
     messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
     //todo 当用户向上拉聊天框的时候，收到消息，此时未读（提示新消息），当用户拉到底部的时候，发送已读请求
     chatBodyScrollerInLoading.value = false
+    inLoadMoreChat.value = false
   })
 }
 
