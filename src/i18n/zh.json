@@ -353,6 +353,8 @@
   "main_comment_send_empty": "输入内容不允许为空",
   "main_comment_send_successful": "发送成功",
 
+  "main_space_lack_data": "未填写或隐藏",
+
 
 
   "home": "主页",

@@ -5,7 +5,7 @@
       <div class="row justify-center">
         <div class="col-lg-12 text-center">
           <h1>
-            Error 601
+            Error 403
           </h1>
           <h2>
             Erm. User authentication failed

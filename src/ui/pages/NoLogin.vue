@@ -5,7 +5,7 @@
       <div class="row justify-center">
         <div class="col-lg-12 text-center">
           <h1>
-            Error 600
+            Error 401
           </h1>
           <h2>
             Erm. User not login
@@ -14,7 +14,7 @@
             您还有没有登录喔，请登录
           </p>
           <q-btn class="q-mt-lg error-page-btn"
-                 outline push label="Go to Homepage" @click="toSpecifyPage(thisRouter, 'login')"/>
+                 outline push label="Go to Homepage" @click="backToHome(thisRouter)"/>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import {toSpecifyPage} from "@/router/index.js"
+import {backToHome} from "@/router/index.js"
 import {useRouter} from "vue-router";
 
 const thisRouter = useRouter()

@@ -18,6 +18,7 @@ import CaskToolsQrcode from "@/ui/views/CaskToolsQrcode.vue";
 import CaskToolsTimestamp from "@/ui/views/CaskToolsTimestamp.vue";
 import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
 import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
+import WebSpace from "@/ui/pages/WebSpace.vue";
 
 
 const router = createRouter({
@@ -40,7 +41,7 @@ const router = createRouter({
                     name: "webArticleDetail",
                     component: WebArticleDetail,
                     meta: {
-                        title: 'AsterCasc | Technical Articles'
+                        title: 'AsterCasc | Articles | 文章列表'
                     },
                     props: ($route) => ({
                         articleId: $route.query.articleId,
@@ -51,7 +52,7 @@ const router = createRouter({
                     name: "webArticleList",
                     component: WebArticleList,
                     meta: {
-                        title: 'AsterCasc | Technical Articles'
+                        title: 'AsterCasc | Article | 文章详情'
                     },
                     props: ($route) => ({
                         authorId: $route.query.author,
@@ -88,7 +89,7 @@ const router = createRouter({
                     name: "mainToolsSql2kotlin",
                     component: CaskToolsSql2kotlin,
                     meta: {
-                        title: 'DDL语句转Kotlin数据类工具 | DDL to Kotlin Data Class Converter'
+                        title: 'DDL to Kotlin Data Class Converter | DDL语句转Kotlin数据类工具'
                     },
                 },
                 {
@@ -96,7 +97,7 @@ const router = createRouter({
                     name: "mainToolsTimestamp",
                     component: CaskToolsTimestamp,
                     meta: {
-                        title: '时间戳格式转换工具 | Timestamp Format Converter'
+                        title: 'Timestamp Format Converter | 时间戳格式转换工具'
                     },
                 },
                 {
@@ -104,7 +105,7 @@ const router = createRouter({
                     name: "mainToolsQrcode",
                     component: CaskToolsQrcode,
                     meta: {
-                        title: '二维码解析工具 | 二维码生成工具 | QR Code Decoder | QR Code Generator'
+                        title: 'QR Code Decoder | QR Code Generator | 二维码解析工具 | 二维码生成工具'
                     },
                 },
                 {
@@ -112,7 +113,7 @@ const router = createRouter({
                     name: "mainToolsMd5",
                     component: CaskToolsMd5,
                     meta: {
-                        title: 'MD5 | 字符串数据加密 | String Data Encryption'
+                        title: 'MD5 | String Data Encryption | 字符串数据加密'
                     },
                 },
                 {
@@ -120,7 +121,7 @@ const router = createRouter({
                     name: "mainToolsImgBase64",
                     component: CaskToolsImageBase64,
                     meta: {
-                        title: '图片Base64转换工具 | Image Base64 Converter'
+                        title: 'Image Base64 Converter | 图片Base64转换工具'
                     },
                 },
                 {
@@ -128,7 +129,7 @@ const router = createRouter({
                     name: "mainToolsRgbHex",
                     component: CaskToolsRgbHex,
                     meta: {
-                        title: 'RGB和十六进制颜色格式互转 | RGB and Hex Color Format Converter'
+                        title: 'RGB and Hex Color Format Converter | RGB和十六进制颜色格式互转'
                     },
                 },
                 {
@@ -136,7 +137,7 @@ const router = createRouter({
                     name: "mainToolsCnIdCard",
                     component: CaskToolsCnIdCard,
                     meta: {
-                        title: '在线身份证生成 | Chinese Mainland ID Card Generator'
+                        title: 'Chinese Mainland ID Card Generator | 在线身份证生成'
                     },
                 },
             ]
@@ -184,7 +185,7 @@ const router = createRouter({
                     name: 'testComponents',
                     component: TestComponents,
                     meta: {
-                        title: '组件测试'
+                        title: 'AsterCasc | Test Components'
                     },
                 },
             ]
@@ -206,12 +207,15 @@ const router = createRouter({
             },
         },
         {
-            path: "/space",
+            path: '/space',
             name: "space",
-            component: WebRedirect,
-            props: ($route) => {
-                return $route.query.id ? {path: "space?id=" + $route.query.id} : {path: "space"}
-            }
+            component: WebSpace,
+            meta: {
+                title: 'AsterCasc | User Space'
+            },
+            props: ($route) => ({
+                id: $route.query.id,
+            }),
         },
         {
             path: "/privacy",

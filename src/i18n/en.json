@@ -354,6 +354,10 @@
   "main_comment_send_empty": "Input content cannot be empty",
   "main_comment_send_successful": "Send successful",
 
+  "main_space_lack_data": "None or hidden",
+
+
+
   "home": "Home",
   "back_home": "Back to Home"
 }
