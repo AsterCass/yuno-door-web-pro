@@ -354,6 +354,11 @@
   "main_comment_send_successful": "发送成功",
 
   "main_space_lack_data": "未填写或隐藏",
+  "main_space_follow": "关注",
+  "main_space_follow_success": "关注成功 ~",
+  "main_space_unfollow": "取消关注",
+  "main_space_unfollow_success": "取关成功 ~",
+  "main_space_send_message": "发送消息",
 
 
 

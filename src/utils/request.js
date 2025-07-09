@@ -24,7 +24,7 @@ const responseConfig = response => {
         if (serverData instanceof Object) {
             bizStatus = serverData.status
             if (600 === bizStatus) {
-                notifyTopWarning(t('error_request'))
+                notifyTopWarning(t('no_login'))
                 globalState.updateToken(null)
                 return null
             }

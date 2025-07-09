@@ -57,6 +57,39 @@
           {{ userDetailData.socialLink.github ? userDetailData.socialLink.github : t('main_space_lack_data') }}
         </div>
 
+        <div style="padding-right: 8rem; margin-top: 2.2rem">
+          <q-btn v-if="isAlreadyFollow" no-caps unelevated class="component-full-btn-full" push :disable="isFollowing"
+                 @click="followMethod">
+            <div class="row items-center">
+              <q-icon name="fa-solid fa-user-slash" size="1rem"/>
+              <div class="q-mx-sm">
+                {{ $t('main_space_unfollow') }}
+              </div>
+            </div>
+          </q-btn>
+          <q-btn v-else no-caps unelevated class="component-full-btn-full" push :disable="isFollowing"
+                 @click="followMethod">
+            <div class="row items-center">
+              <q-icon name="fa-solid fa-plus" size="1rem"/>
+              <div class="q-mx-sm">
+                {{ $t('main_space_follow') }}
+              </div>
+            </div>
+          </q-btn>
+
+        </div>
+
+        <div style="padding-right: 8rem; margin-top: .75rem">
+          <q-btn no-caps unelevated class="component-outline-btn-full" push :disable="isPrivacyChatting"
+                 @click="privateChat(userDetailData.id)">
+            <div class="row items-center">
+              <q-icon name="fa-regular fa-message" size="1rem"/>
+              <div class="q-mx-sm">
+                {{ $t('main_space_send_message') }}
+              </div>
+            </div>
+          </q-btn>
+        </div>
 
       </div>
 
@@ -79,8 +112,12 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {defineProps, onMounted, ref, watch} from "vue";
-import {userDetailSimple} from "@/api/user";
+import {follow, isFollow, userDetailSimple} from "@/api/user";
 import {ZodiacSign} from "@/utils/date-to-zodiac";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {privateInitChat} from "@/api/chat";
+import {socketChatState} from "@/utils/global-state-no-save";
+import {toSpecifyPage} from "@/router";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();
@@ -100,6 +137,9 @@ const userDetailData = ref({
   roleType: "",
   socialLink: {},
 })
+const isAlreadyFollow = ref(false);
+const isFollowing = ref(false);
+const isPrivacyChatting = ref(false);
 
 const props = defineProps({
   id: {
@@ -118,19 +158,69 @@ watch(
     }
 );
 
+function getUserDetail(id) {
+  userDetailSimple({userId: id}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    userDetailData.value = res.data.data;
+    if (userDetailData.value.birth) {
+      userDetailData.value.start = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).sign
+      userDetailData.value.zodiac = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).chinese.sign
+    }
+  })
+}
+
+function getFollowing(id) {
+  isFollow({mainId: id}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    isAlreadyFollow.value = res.data.data
+  })
+}
+
+function followMethod() {
+  isFollowing.value = true
+  follow({isFollow: !isAlreadyFollow.value, userId: userDetailData.value.id}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      isFollowing.value = false
+      return
+    }
+    isAlreadyFollow.value = !isAlreadyFollow.value
+    notifyTopPositive(isAlreadyFollow.value ? t('main_space_follow_success') : t('main_space_unfollow_success'))
+    isFollowing.value = false
+  })
+}
+
+const privateChat = (id) => {
+  if (globalState.isLogin && globalState.userData) {
+    if (!id || id.startsWith('UV')) {
+      notifyTopWarning(t('main_chat_to_chat_null'))
+      return;
+    }
+    isPrivacyChatting.value = true
+    privateInitChat({toUserId: id}).then(res => {
+      if (!res || !res.data || 200 !== res.data.status) {
+        isPrivacyChatting.value = false
+        return
+      }
+      socketChatState.forceFocusChat = res.data.data
+      if (thisRouter.currentRoute.value.name !== 'chatroom') {
+        toSpecifyPage(thisRouter, 'chatroom')
+      }
+      isPrivacyChatting.value = false
+    })
+  } else {
+    notifyTopWarning(t('no_login'))
+  }
+}
+
 
 onMounted(() => {
   if (props.id) {
-    userDetailSimple({userId: props.id}).then(res => {
-      if (!res || !res.data || 200 !== res.data.status) {
-        return
-      }
-      userDetailData.value = res.data.data;
-      if (userDetailData.value.birth) {
-        userDetailData.value.start = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).sign
-        userDetailData.value.zodiac = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).chinese.sign
-      }
-    })
+    getUserDetail(props.id)
+    getFollowing(props.id)
   }
 })
 
