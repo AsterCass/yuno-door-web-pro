@@ -22,17 +22,29 @@
           </q-avatar>
         </q-btn>
 
-        <h2 class="q-mt-md">
+        <h2 class="q-mt-md" style="padding-right: 6rem;">
           {{ userDetailData.nickName }}
+          <q-badge class="q-mx-xs q-py-xs q-px-sm" style="transform: translateY(-.13rem)"
+                   :color="getRoleTypeObj(userDetailData.roleType).color"
+                   :label="getRoleTypeObj(userDetailData.roleType).label">
+            <q-icon
+                :name="getRoleTypeObj(userDetailData.roleType).logo"
+                class="q-ml-xs"
+            />
+          </q-badge>
         </h2>
+
+        <div style="opacity: .75; padding-right: 6rem;">
+          {{ userDetailData.motto ? userDetailData.motto : t('main_user_detail_no_motto') }}
+        </div>
 
         <div class="q-mt-md row items-center">
           <q-icon name="fa-solid fa-cake-candles" class="q-mr-sm" style="opacity: .8"/>
           {{ userDetailData.birth ? userDetailData.birth : t('main_space_lack_data') }}
-          <q-separator class="q-mx-md q-my-xs" vertical/>
+          <q-separator class="q-mx-md q-my-xs component-separator-base" style="opacity: .2;" vertical/>
           <q-icon name="fa-solid fa-star-and-crescent" class="q-mr-sm" style="opacity: .8"/>
           {{ userDetailData.start ? userDetailData.start : t('main_space_lack_data') }}
-          <q-separator class="q-mx-md q-my-xs" vertical/>
+          <q-separator class="q-mx-md q-my-xs component-separator-base" style="opacity: .2;" vertical/>
           <q-icon name="fa-solid fa-paw" class="q-mr-sm" style="opacity: .8"/>
           {{ userDetailData.zodiac ? userDetailData.zodiac : t('main_space_lack_data') }}
         </div>
@@ -57,7 +69,7 @@
           {{ userDetailData.socialLink.github ? userDetailData.socialLink.github : t('main_space_lack_data') }}
         </div>
 
-        <div style="padding-right: 8rem; margin-top: 2.2rem">
+        <div style="padding-right: 6rem; margin-top: 2.2rem">
           <q-btn v-if="isAlreadyFollow" no-caps unelevated class="component-full-btn-full" push :disable="isFollowing"
                  @click="followMethod">
             <div class="row items-center">
@@ -79,17 +91,80 @@
 
         </div>
 
-        <div style="padding-right: 8rem; margin-top: .75rem">
+        <div style="padding-right: 6rem; margin-top: .75rem">
           <q-btn no-caps unelevated class="component-outline-btn-full" push :disable="isPrivacyChatting"
                  @click="privateChat(userDetailData.id)">
             <div class="row items-center">
               <q-icon name="fa-regular fa-message" size="1rem"/>
               <div class="q-mx-sm">
-                {{ $t('main_space_send_message') }}
+                {{ isPrivacyChatting ? $t('main_space_send_message_connect') : $t('main_space_send_message') }}
               </div>
+              <q-spinner-ios v-if="isPrivacyChatting" size="1rem"/>
             </div>
           </q-btn>
         </div>
+
+        <div class="full-width row">
+          <div class="cask-user-space-invite q-px-md q-py-xs">
+
+            <h5>
+              {{ t('main_space_invite') }}
+            </h5>
+
+            <q-separator class="component-separator-base" style="opacity: 0.1"/>
+
+
+            <div class="row items-center q-py-md q-my-sm full-width cask-cursor-pointer"
+                 @click="notifyTopWarning($t('main_space_invite_error'))">
+              <q-icon name="fa-regular fa-calendar-plus" class="q-mr-md" size="1.5rem"/>
+              <div style="min-width: 15rem">
+                <div style="font-size: .9rem">
+                  {{ t('main_space_invite_btn') }}
+                </div>
+                <div style="font-size: .8rem; opacity: .8">
+                  {{ t('main_space_invite_tips') }}
+                </div>
+              </div>
+              <q-icon name="fa-solid fa-chevron-right" class="q-ml-md" size="1.2rem"/>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-right: 20rem; margin-top: 2.2rem; font-size: 0.9rem">
+          <div class="row items-center justify-between q-my-xs">
+            <div>
+              {{ t('main_space_follower') }}
+            </div>
+            <div>
+              {{ userDetailData.community.followNum ? userDetailData.community.followNum : 0 }}
+            </div>
+          </div>
+          <div class="row items-center justify-between q-my-xs">
+            <div>
+              {{ t('main_space_following') }}
+            </div>
+            <div>
+              {{ userDetailData.community.fansNum ? userDetailData.community.fansNum : 0 }}
+            </div>
+          </div>
+          <div class="row items-center justify-between q-my-xs">
+            <div>
+              {{ t('main_space_article') }}
+            </div>
+            <div>
+              {{ userDetailData.articleNum ? userDetailData.articleNum : 0 }}
+            </div>
+          </div>
+          <div class="row items-center justify-between q-my-xs">
+            <div>
+              {{ t('main_space_essay') }}
+            </div>
+            <div>
+              {{ userDetailData.essayNum ? userDetailData.essayNum : 0 }}
+            </div>
+          </div>
+        </div>
+
 
       </div>
 
@@ -118,6 +193,7 @@ import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {privateInitChat} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPage} from "@/router";
+import {getRoleTypeObj} from "@/constant/enums/role-type";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();
@@ -135,6 +211,8 @@ const userDetailData = ref({
   motto: "",
   nickName: "",
   roleType: "",
+  articleNum: 0,
+  essayNum: 0,
   socialLink: {},
 })
 const isAlreadyFollow = ref(false);
@@ -221,6 +299,7 @@ onMounted(() => {
   if (props.id) {
     getUserDetail(props.id)
     getFollowing(props.id)
+
   }
 })
 
@@ -244,8 +323,13 @@ onMounted(() => {
 }
 
 .cask-user-space-main {
-  margin: 20rem 2rem 5rem 2rem;
-  min-height: 50rem;
+  margin: 20rem 2rem 10rem 2rem;
+}
+
+.cask-user-space-invite {
+  margin-top: 2.2rem;
+  border-radius: 4px;
+  border: 1px solid rgb(var(--text-color), 0.1);
 }
 
 

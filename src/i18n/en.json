@@ -360,6 +360,15 @@
   "main_space_unfollow": "Unfollow",
   "main_space_unfollow_success": "Unfollowed ~",
   "main_space_send_message": "Send message",
+  "main_space_send_message_connect": "Connecting the user...",
+  "main_space_invite": "Invite",
+  "main_space_invite_btn": "Invite this user to join your group",
+  "main_space_invite_tips": "You can only invite users to groups you have permission for",
+  "main_space_invite_error": "You don't have any private groups yet",
+  "main_space_follower": "Follower",
+  "main_space_following": "Following",
+  "main_space_article": "Technical Articles",
+  "main_space_essay": "Personal Essays",
 
 
   "home": "Home",

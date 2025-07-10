@@ -359,6 +359,15 @@
   "main_space_unfollow": "取消关注",
   "main_space_unfollow_success": "取关成功 ~",
   "main_space_send_message": "发送消息",
+  "main_space_send_message_connect": "正在连接该用户...",
+  "main_space_invite": "邀请",
+  "main_space_invite_btn": "邀请该用户加入您的群组",
+  "main_space_invite_tips": "只能邀请您有权限的群组",
+  "main_space_invite_error": "您还没有任何私有群组",
+  "main_space_follower": "关注的人",
+  "main_space_following": "关注他的人",
+  "main_space_article": "技术文章",
+  "main_space_essay": "个人杂谈",
 
 
 
