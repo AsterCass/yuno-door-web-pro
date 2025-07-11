@@ -24,6 +24,14 @@ export function getBlogList(param) {
     })
 }
 
+export function getArticleUserSimple(param) {
+    return serviceShiro({
+        url: `/kotomi/article/user/simple`,
+        method: 'get',
+        params: param
+    })
+}
+
 export function getBlogListCount(param) {
     return serviceShiro({
         url: `/kotomi/article/list/count`,

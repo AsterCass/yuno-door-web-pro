@@ -14,7 +14,7 @@
     </div>
 
     <div class="cask-user-space-main row">
-      <div class="col-lg-4 col-12 q-px-xl">
+      <div class="col-lg-4 col-12" style="padding: 0 2% 0 2%">
 
         <q-btn round unelevated style="background-color: rgb(var(--background-color))">
           <q-avatar size="100px" style="margin: 3px">
@@ -194,6 +194,7 @@ import {privateInitChat} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPage} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
+import {getArticleUserSimple} from "@/api/article";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();
@@ -215,6 +216,8 @@ const userDetailData = ref({
   essayNum: 0,
   socialLink: {},
 })
+const articleList = ref([]);
+const essayList = ref([]);
 const isAlreadyFollow = ref(false);
 const isFollowing = ref(false);
 const isPrivacyChatting = ref(false);
@@ -246,6 +249,7 @@ function getUserDetail(id) {
       userDetailData.value.start = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).sign
       userDetailData.value.zodiac = new ZodiacSign(new Date(userDetailData.value.birth), globalState.language).chinese.sign
     }
+    searchArticleListMethod(id);
   })
 }
 
@@ -294,12 +298,38 @@ const privateChat = (id) => {
   }
 }
 
+function searchArticleListMethod(authorId) {
+  //参数插入
+  let currentParam = {authorId: authorId}
+  getArticleUserSimple(currentParam).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    for (const type in res.data.data.articleTypeSimpleData) {
+      if (type === 1) {
+        articleList.value = res.data.data.articleTypeSimpleData[type]
+      }
+      if (type === 2) {
+        essayList.value = res.data.data.articleTypeSimpleData[type]
+      }
+    }
+    for (const type in res.data.data.articleTypeCount) {
+      if (type === 1) {
+        userDetailData.value.articleNum = res.data.data.articleTypeCount[type]
+      }
+      if (type === 2) {
+        userDetailData.value.essayNum = res.data.data.articleTypeCount[type]
+      }
+    }
+
+  })
+}
+
 
 onMounted(() => {
   if (props.id) {
     getUserDetail(props.id)
     getFollowing(props.id)
-
   }
 })
 
