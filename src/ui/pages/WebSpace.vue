@@ -165,6 +165,15 @@
           </div>
         </div>
 
+        <div style="margin-top: 1.5rem; font-size: 0.7rem; opacity: .75">
+          {{t('main_space_join_on')}}{{ userDetailData.createTime }}
+        </div>
+
+        <div style="margin-top: 1rem; font-size: 0.8rem;" class="cask-jump-link-neg"
+             @click="notifyTopWarning($t('in_develop'))">
+          {{ t('main_space_report')}}
+        </div>
+
 
       </div>
 
@@ -215,6 +224,7 @@ const userDetailData = ref({
   articleNum: 0,
   essayNum: 0,
   socialLink: {},
+  createTime: "",
 })
 const articleList = ref([]);
 const essayList = ref([]);
@@ -305,23 +315,10 @@ function searchArticleListMethod(authorId) {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
-    for (const type in res.data.data.articleTypeSimpleData) {
-      if (type === 1) {
-        articleList.value = res.data.data.articleTypeSimpleData[type]
-      }
-      if (type === 2) {
-        essayList.value = res.data.data.articleTypeSimpleData[type]
-      }
-    }
-    for (const type in res.data.data.articleTypeCount) {
-      if (type === 1) {
-        userDetailData.value.articleNum = res.data.data.articleTypeCount[type]
-      }
-      if (type === 2) {
-        userDetailData.value.essayNum = res.data.data.articleTypeCount[type]
-      }
-    }
-
+    articleList.value = res.data.data.articleTypeSimpleData[1]
+    essayList.value = res.data.data.articleTypeSimpleData[2]
+    userDetailData.value.articleNum = res.data.data.articleTypeCount[1]
+    userDetailData.value.essayNum = res.data.data.articleTypeCount[2]
   })
 }
 
