@@ -177,7 +177,127 @@
 
       </div>
 
-      <div class="col-lg-8 col-12">
+      <div class="col-lg-8 col-12 ">
+
+        <div class="row">
+          <cask-tabs style="margin-top: 7.5rem;" class="" :tabs="tabs" v-model="tab" shadow/>
+        </div>
+
+
+        <q-tab-panels v-model="tab" animated class="bg-transparent" transition-duration="500"
+                      transition-prev="jump-right" transition-next="jump-left">
+          <q-tab-panel name="art" style="min-height: 50rem; padding: 0; margin-top: 2rem">
+            <div v-for="(article, index) in articleList" :key="index" class="q-mr-xl">
+              <div>
+                <h3>
+                  {{ article.articleTitle }}
+                </h3>
+                <div class=" q-mb-md component-max-line-text-2">
+                  {{ article.articleBrief }}
+                </div>
+                <div class="row justify-between items-center">
+                  <div class="row items-center">
+                    <q-btn no-caps unelevated class="component-none-btn-grow"
+                           @click="toSpecifyPageWithQuery(
+                       thisRouter, 'webArticleDetail', {articleId: article.id})">
+                      <div class="row items-center">
+                        <div class="q-mr-sm">
+                          {{ $t('route-more') }}
+                        </div>
+                        <q-icon name="fa-solid fa-align-right" size="15px"/>
+                      </div>
+                    </q-btn>
+                  </div>
+                  <div class="row q-mr-xs relative-position">
+                    <div class="row justify-end">
+                      <div v-for="(tag, index) in getArticleTagDescList(article.articleTagList).reverse()" :key="index"
+                           class="q-mx-sm" :style="`background-color: ${tag.rbg}`"
+                           style="padding: 2px 5px; color: #eee; border-radius: 4px">
+                        {{ tag.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <q-separator v-if="index !== articleList.length - 1"
+                             class="component-separator-base" spaced="1rem" style="opacity: .25"/>
+                <div v-else class="q-mt-xl row justify-center">
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
+                         @click="toSpecifyPageWithQuery(thisRouter, 'webArticleList',
+                          {type: 1, author: article.authorId})">
+                    <div class="row items-center">
+                      <div class="q-mx-xs">
+                        {{ $t('route-more-list') }}
+                      </div>
+                    </div>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+            <div v-if="!articleList || articleList.length === 0" style="opacity: .5"
+                 class="row justify-center q-mr-xl q-pt-xl">
+              {{ t('main_user_detail_no_motto') }}
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="es" style="min-height: 50rem; padding: 0; margin-top: 2rem">
+            <div v-for="(article, index) in essayList" :key="index" class="q-mr-xl">
+              <div>
+                <h3>
+                  {{ article.articleTitle }}
+                </h3>
+                <div class=" q-mb-md component-max-line-text-2">
+                  {{ article.articleBrief }}
+                </div>
+                <div class="row justify-between items-center">
+                  <div class="row items-center">
+                    <q-btn no-caps unelevated class="component-none-btn-grow"
+                           @click="toSpecifyPageWithQuery(
+                       thisRouter, 'webArticleDetail', {articleId: article.id})">
+                      <div class="row items-center">
+                        <div class="q-mr-sm">
+                          {{ $t('route-more') }}
+                        </div>
+                        <q-icon name="fa-solid fa-align-right" size="15px"/>
+                      </div>
+                    </q-btn>
+                  </div>
+                  <div class="row q-mr-xs relative-position">
+                    <div class="row justify-end">
+                      <div v-for="(tag, index) in getArticleTagDescList(article.articleTagList).reverse()" :key="index"
+                           class="q-mx-sm" :style="`background-color: ${tag.rbg}`"
+                           style="padding: 2px 5px; color: #eee; border-radius: 4px">
+                        {{ tag.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <q-separator v-if="index !== essayList.length - 1"
+                             class="component-separator-base" spaced="1rem" style="opacity: .25"/>
+                <div v-else class="q-mt-xl row justify-center">
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
+                         @click="toSpecifyPageWithQuery(thisRouter, 'webArticleList',
+                          {type: 2, author: article.authorId})">
+                    <div class="row items-center">
+                      <div class="q-mx-xs">
+                        {{ $t('route-more-list') }}
+                      </div>
+                    </div>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+            <div v-if="!articleList || articleList.length === 0" style="opacity: .5"
+                 class="row justify-center q-mr-xl q-pt-xl">
+              {{ t('main_user_detail_no_motto') }}
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="frd" style="min-height: 50rem; padding: 0; margin-top: 2rem">
+
+
+          </q-tab-panel>
+        </q-tab-panels>
+
 
       </div>
 
@@ -201,9 +321,11 @@ import {ZodiacSign} from "@/utils/date-to-zodiac";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {privateInitChat} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
-import {toSpecifyPage} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQuery} from "@/router";
 import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getArticleUserSimple} from "@/api/article";
+import CaskTabs from "@/ui/components/CaskTabs.vue";
+import {getArticleTagDescList} from "@/constant/enums/article-tag";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();
@@ -231,6 +353,12 @@ const essayList = ref([]);
 const isAlreadyFollow = ref(false);
 const isFollowing = ref(false);
 const isPrivacyChatting = ref(false);
+const tabs = ref([
+  {value: 'art', label: 'main_space_article',},
+  {value: 'es', label: 'main_space_essay',},
+  {value: 'frd', label: 'main_space_friend',},
+])
+const tab = ref('art');
 
 const props = defineProps({
   id: {
@@ -350,7 +478,7 @@ onMounted(() => {
 }
 
 .cask-user-space-main {
-  margin: 20rem 2rem 10rem 2rem;
+  margin: 20rem 2rem 5rem 2rem;
 }
 
 .cask-user-space-invite {
@@ -358,7 +486,6 @@ onMounted(() => {
   border-radius: 4px;
   border: 1px solid rgb(var(--text-color), 0.1);
 }
-
 
 
 </style>

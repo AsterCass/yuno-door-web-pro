@@ -7,6 +7,7 @@
       <!--animation-->
       <div
           class="component-cask-tab-mask"
+          :class="shadow ? 'shadow-2' : ''"
           :style="{
             width: `${indicatorWidth}px`,
             left: `0px`,
@@ -35,7 +36,9 @@
 import {defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {delay} from "@/utils/base-tools";
 import emitter from "@/utils/bus";
+import {useGlobalStateStore} from "@/utils/global-state";
 
+const globalState = useGlobalStateStore();
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   modelValue: {
@@ -52,7 +55,12 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
-  }
+  },
+  shadow: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const tab = ref(props.modelValue)
@@ -60,6 +68,13 @@ const tabsRef = ref(null)
 const tabRefs = ref({})
 const indicatorWidth = ref(0)
 const indicatorLeft = ref(0)
+
+watch(
+    () => globalState.language,
+    () => {
+      updateIndicator()
+    }
+);
 
 const updateIndicator = () => {
   delay(0).then(() => {
