@@ -189,7 +189,8 @@
           <q-tab-panel name="art" style="min-height: 50rem; padding: 0; margin-top: 2rem">
             <div v-for="(article, index) in articleList" :key="index" class="q-mr-xl">
               <div>
-                <h3>
+                <h3 class="cask-jump-link-in-text-more" @click="toSpecifyPageWithQuery(
+                       thisRouter, 'webArticleDetail', {articleId: article.id})">
                   {{ article.articleTitle }}
                 </h3>
                 <div class=" q-mb-md component-max-line-text-2">
@@ -242,7 +243,8 @@
           <q-tab-panel name="es" style="min-height: 50rem; padding: 0; margin-top: 2rem">
             <div v-for="(article, index) in essayList" :key="index" class="q-mr-xl">
               <div>
-                <h3>
+                <h3 class="cask-jump-link-in-text-more" @click="toSpecifyPageWithQuery(
+                       thisRouter, 'webArticleDetail', {articleId: article.id})">
                   {{ article.articleTitle }}
                 </h3>
                 <div class=" q-mb-md component-max-line-text-2">
@@ -294,6 +296,47 @@
           </q-tab-panel>
           <q-tab-panel name="frd" style="min-height: 50rem; padding: 0; margin-top: 2rem">
 
+            <div v-if="!userDetailData.friendList || userDetailData.friendList.length === 0" style="opacity: .5"
+                 class="row justify-center q-mr-xl q-pt-xl">
+              {{ t('main_user_detail_no_friend') }}
+            </div>
+            <div v-else class="row q-mr-xl q-ml-sm">
+              <div v-for="(frd, index) in userDetailData.friendList" :key="index" class="col-6 q-mb-lg">
+                <div class="row">
+                  <div class="column justify-center">
+                    <q-btn round unelevated style="background-color: rgb(var(--background-color))"
+                           @click="toSpecifyPageWithQuery(thisRouter, 'space',{id: frd.id})">
+                      <q-avatar size="60px" style="margin: 2px">
+                        <q-img :src="frd.avatar"/>
+                      </q-avatar>
+                    </q-btn>
+                  </div>
+                  <div class="q-mx-sm col">
+                    <h6 class="cask-jump-link-in-text-more" @click="toSpecifyPageWithQuery(
+                        thisRouter, 'space',{id: frd.id})">
+                      {{ frd.nickName }}
+                    </h6>
+                    <div class="row q-mb-xs">
+                      <q-badge class="q-mr-xs" style="font-size: 0.7rem"
+                               :color="getGenderObj(frd.gender).color"
+                               :label="getGenderObj(frd.gender).label">
+                      </q-badge>
+                      <q-badge class="q-mx-xs" style="font-size: 0.7rem"
+                               :color="getRoleTypeObj(frd.roleType).color"
+                               :label="getRoleTypeObj(frd.roleType).label">
+                      </q-badge>
+                    </div>
+                    <div v-if="frd.motto" style="opacity: 0.5">
+                      {{ frd.motto }}
+                    </div>
+                    <div v-else style="opacity: 0.5">
+                      {{ t('main_user_detail_no_motto') }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
           </q-tab-panel>
         </q-tab-panels>
@@ -326,6 +369,7 @@ import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getArticleUserSimple} from "@/api/article";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import {getArticleTagDescList} from "@/constant/enums/article-tag";
+import {getGenderObj} from "@/constant/enums/gender-opt";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();

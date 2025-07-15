@@ -159,6 +159,7 @@
   "main_article_cancel_reply_successful": "回复成功",
 
   "main_user_detail_no_motto": "这个人很懒，什么都没有留下",
+  "main_user_detail_no_friend": "这个人很享受孤独，现在还不需要朋友",
   "main_user_detail_no_community": "未填写或隐藏",
   "main_user_detail_not_login": "未登录用户",
   "main_user_detail_detail": "主页",
