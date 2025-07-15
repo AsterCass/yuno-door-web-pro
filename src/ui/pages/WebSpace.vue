@@ -179,8 +179,18 @@
 
       <div class="col-lg-8 col-12 ">
 
-        <div class="row">
-          <cask-tabs style="margin-top: 7.5rem;" class="" :tabs="tabs" v-model="tab" shadow/>
+        <div class="row q-mr-xl items-center" style="margin-top: 7.5rem;">
+          <cask-tabs class="" :tabs="tabs" v-model="tab" shadow/>
+          <div class="col"/>
+          <q-btn v-if="props.id === globalState.userData.id" @click="showUserSpaceSetting = true"
+                 no-caps unelevated class="shadow-2 component-full-btn-grow">
+            <div class="row items-center">
+              <q-icon name="fa-solid fa-gear" size="1rem"/>
+              <div class="q-ml-sm">
+                {{ $t('main_space_setting') }}
+              </div>
+            </div>
+          </q-btn>
         </div>
 
 
@@ -346,6 +356,8 @@
 
     </div>
 
+    <cask-space-setting v-model="showUserSpaceSetting"/>
+
     <cask-base-footer/>
 
   </q-layout>
@@ -356,7 +368,7 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {useRouter} from "vue-router";
+import {onBeforeRouteUpdate, useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {defineProps, onMounted, ref, watch} from "vue";
 import {follow, isFollow, userDetailSimple} from "@/api/user";
@@ -370,6 +382,7 @@ import {getArticleUserSimple} from "@/api/article";
 import CaskTabs from "@/ui/components/CaskTabs.vue";
 import {getArticleTagDescList} from "@/constant/enums/article-tag";
 import {getGenderObj} from "@/constant/enums/gender-opt";
+import CaskSpaceSetting from "@/ui/views/CaskSpaceSetting.vue";
 
 const {t} = useI18n()
 const globalState = useGlobalStateStore();
@@ -403,6 +416,7 @@ const tabs = ref([
   {value: 'frd', label: 'main_space_friend',},
 ])
 const tab = ref('art');
+const showUserSpaceSetting = ref(false)
 
 const props = defineProps({
   id: {
@@ -499,6 +513,14 @@ onMounted(() => {
   if (props.id) {
     getUserDetail(props.id)
     getFollowing(props.id)
+  }
+})
+
+onBeforeRouteUpdate((to, from) => {
+  if (to.query !== from.query) {
+    const toId = to.query.id ? to.query.id : ''
+    getUserDetail(toId)
+    getFollowing(toId)
   }
 })
 

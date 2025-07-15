@@ -1,22 +1,19 @@
 <template>
-  <div>
+  <div class="cask-tabs-vertical-body column" :style="`width: ${props.width}`">
+    <div v-for="(inTab, index) in tabs" :key="index" :class="inTab.isStretch ? 'col' : ''">
 
-    <div class="cask-tabs-vertical-body row">
-      <div v-for="(inTab, index) in tabs" :key="index">
-
-        <div class="cask-tabs-vertical-btn component-max-line-text "
-             :class="inTab.value === tab ? 'btn-active shadow-1' : 'btn-normal'"
-             :style="inTab.value === tab ? `background-color: ${inTab.color};border: 2px solid ${inTab.color};`
-            : `color: ${inTab.color};`"
-             @click="updateCurrentTab(inTab.value)">
-          {{ $t(inTab.label) }}
-        </div>
-
-
+      <div v-if="inTab.isStretch">
       </div>
+      <div v-else class="cask-tabs-vertical-btn component-max-line-text "
+           :class="inTab.value === tab ? 'btn-active shadow-1' : 'btn-normal'"
+           :style="inTab.value === tab ? `background-color: ${inTab.color};border: 2px solid ${inTab.color};`
+            : `color: ${inTab.color};`"
+           @click="updateCurrentTab(inTab.value)">
+        {{ $t(inTab.label) }}
+      </div>
+
+
     </div>
-
-
   </div>
 </template>
 
@@ -35,6 +32,11 @@ const props = defineProps({
     required: true,
     default: () => [],
   },
+  width: {
+    type: String,
+    required: false,
+    default: '20rem'
+  }
 });
 
 const tab = ref(props.modelValue)
@@ -54,7 +56,7 @@ function updateCurrentTab(thisTab) {
 <style scoped lang="scss">
 
 .cask-tabs-vertical-body {
-  width: 20rem;
+  min-width: 1rem;
 }
 
 .cask-tabs-vertical-btn {
