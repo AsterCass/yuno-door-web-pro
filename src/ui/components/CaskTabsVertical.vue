@@ -1,5 +1,5 @@
 <template>
-  <div class="cask-tabs-vertical-body column" :style="`width: ${props.width}`">
+  <div class="cask-tabs-vertical-body column">
     <div v-for="(inTab, index) in tabs" :key="index" :class="inTab.isStretch ? 'col' : ''">
 
       <div v-if="inTab.isStretch">
@@ -36,6 +36,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: '20rem'
+  },
+  textWidth: {
+    type: String,
+    required: false,
+    default: '15rem'
   }
 });
 
@@ -56,7 +61,7 @@ function updateCurrentTab(thisTab) {
 <style scoped lang="scss">
 
 .cask-tabs-vertical-body {
-  min-width: 1rem;
+  width: v-bind(width);
 }
 
 .cask-tabs-vertical-btn {
@@ -69,7 +74,7 @@ function updateCurrentTab(thisTab) {
 
   &.btn-active {
     color: #eee;
-    width: 20rem;
+    width: v-bind(width);
     border-radius: 4px 4px 12px 4px;
     margin-left: .5rem;
     transform: translateX(-.5rem);
@@ -80,7 +85,7 @@ function updateCurrentTab(thisTab) {
   }
 
   &.btn-normal {
-    width: 15rem;
+    width: v-bind(textWidth);
     border-radius: 4px;
     margin-left: 0;
     transform: translateX(0);

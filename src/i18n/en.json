@@ -360,7 +360,7 @@
   "main_space_follow_success": "Followed ~",
   "main_space_unfollow": "Unfollow",
   "main_space_unfollow_success": "Unfollowed ~",
-  "main_space_send_message": "Send message",
+  "main_space_send_message": "Send Message",
   "main_space_send_message_connect": "Connecting the user...",
   "main_space_invite": "Invite",
   "main_space_invite_btn": "Invite this user to join your group",
@@ -373,7 +373,11 @@
   "main_space_friend": "Their Friends",
   "main_space_join_on": "Joined on: ",
   "main_space_report": "Report",
-  "main_space_setting": "Personal setting",
+  "main_space_setting": "Personal Setting",
+  "main_space_setting_profile": "Public Profile",
+  "main_space_setting_privacy": "Privacy & Security",
+  "main_space_setting_developer": "Advanced",
+  "main_space_setting_account": "Account",
 
 
   "home": "Home",

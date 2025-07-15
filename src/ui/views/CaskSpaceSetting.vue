@@ -2,10 +2,25 @@
   <div>
     <q-dialog :model-value="showUserSpaceSetting" @hide="closeUserSpaceSetting"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-judgement-std row">
-        <cask-tabs-vertical :tabs="tabs" v-model="tab"/>
-        <div class="col" style="min-height: 20rem;">
-
+      <q-card class="component-cask-dialog-judgement-std row" style="max-width: 2000px !important">
+        <cask-tabs-vertical :tabs="tabs" v-model="tab" width="12rem" text-width="10rem"/>
+        <div class="col row" style="min-height: 30rem;">
+          <q-separator class="component-separator-base q-mx-lg" vertical/>
+          <q-tab-panels v-model="tab" animated class="bg-transparent col" transition-duration="500"
+                        transition-prev="jump-down" transition-next="jump-up">
+            <q-tab-panel name="base" style="min-width: 30rem; padding: 0">
+              1111
+            </q-tab-panel>
+            <q-tab-panel name="pro" style="min-width: 30rem; padding: 0">
+              2222
+            </q-tab-panel>
+            <q-tab-panel name="sec" style="min-width: 30rem; padding: 0">
+              3333
+            </q-tab-panel>
+            <q-tab-panel name="account" style="min-width: 30rem; padding: 0">
+              4444
+            </q-tab-panel>
+          </q-tab-panels>
         </div>
       </q-card>
     </q-dialog>
@@ -46,18 +61,18 @@ const thisRouter = useRouter()
 
 const tabs = ref([
   {
-    value: 'mainToolsSql2kotlin',
-    label: 'main_tools_title_sql_kotlin',
+    value: 'base',
+    label: 'main_space_setting_profile',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
-    value: 'mainToolsTimestamp',
-    label: 'main_tools_title_timestamp',
+    value: 'pro',
+    label: 'main_space_setting_developer',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
-    value: 'mainToolsQrcode',
-    label: 'main_tools_title_qrcode',
+    value: 'sec',
+    label: 'main_space_setting_privacy',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
@@ -65,12 +80,12 @@ const tabs = ref([
     isStretch: true,
   },
   {
-    value: 'mainToolsCnIdCard',
-    label: 'main_tools_title_cn_id_card',
+    value: 'account',
+    label: 'main_space_setting_account',
     color: 'rgb(var(--full-container-background-color))'
   },
 ])
-const tab = ref("mainToolsSql2kotlin");
+const tab = ref("base");
 
 watch(thisRouter.currentRoute, () => {
   tab.value = thisRouter.currentRoute.value.name

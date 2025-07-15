@@ -373,6 +373,10 @@
   "main_space_join_on": "成为会员日期：",
   "main_space_report": "举报",
   "main_space_setting": "个人设置",
+  "main_space_setting_profile": "基础设置",
+  "main_space_setting_privacy": "隐私和安全",
+  "main_space_setting_developer": "进阶设置",
+  "main_space_setting_account": "账户设置",
 
 
   "home": "主页",
