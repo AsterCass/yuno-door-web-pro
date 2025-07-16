@@ -377,6 +377,17 @@
   "main_space_setting_privacy": "隐私和安全",
   "main_space_setting_developer": "进阶设置",
   "main_space_setting_account": "账户设置",
+  "main_space_setting_account_mail": "邮箱：",
+  "main_space_setting_account_nickname": "昵称：",
+  "main_space_setting_account_gender": "性别：",
+  "main_space_setting_account_birth": "生日：",
+  "main_space_setting_account_motto": "个性签名：",
+  "main_space_setting_account_avatar_change": "修改头像",
+  "main_space_setting_account_avatar_tips": "头像支持在500KB以内的PNG、JPG、JPEG图片",
+  "main_space_setting_account_error_nickname": "昵称过长或者包含非法字符",
+  "main_space_setting_account_error_motto": "个性签名过长，需要在50个字符以内",
+
+
 
 
   "home": "主页",

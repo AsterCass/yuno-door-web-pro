@@ -378,6 +378,15 @@
   "main_space_setting_privacy": "Privacy & Security",
   "main_space_setting_developer": "Advanced",
   "main_space_setting_account": "Account",
+  "main_space_setting_account_mail": "Mail: ",
+  "main_space_setting_account_nickname": "Nickname: ",
+  "main_space_setting_account_gender": "Gender: ",
+  "main_space_setting_account_birth": "Birthday: ",
+  "main_space_setting_account_motto": "Bio: ",
+  "main_space_setting_account_avatar_change": "Change Avatar",
+  "main_space_setting_account_avatar_tips": "Avatar must be a PNG, JPG, or JPEG image under 500KB",
+  "main_space_setting_account_error_nickname": "Nickname is too long or contains invalid characters",
+  "main_space_setting_account_error_motto": "Bio is too long. Please keep it within 50 characters",
 
 
   "home": "Home",

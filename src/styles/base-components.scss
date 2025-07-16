@@ -605,6 +605,15 @@
   );
 }
 
+.component-outline-input-mini-grow {
+  @include component-outline-input-base(
+          $thisWidth: auto,
+          $thisHeight: 2.05rem,
+          $thisMinWidth: 12rem,
+  );
+}
+
+
 .component-outline-input-grow-on-semi-trans {
   @include component-outline-input-base(
           $thisWidth: auto,

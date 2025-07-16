@@ -182,7 +182,8 @@
         <div class="row q-mr-xl items-center" style="margin-top: 7.5rem;">
           <cask-tabs class="" :tabs="tabs" v-model="tab" shadow/>
           <div class="col"/>
-          <q-btn v-if="props.id === globalState.userData.id" @click="showUserSpaceSetting = true"
+          <q-btn v-if="globalState.userData && props.id === globalState.userData.id"
+                 @click="showUserSpaceSetting = true"
                  no-caps unelevated class="shadow-2 component-full-btn-grow">
             <div class="row items-center">
               <q-icon name="fa-solid fa-gear" size="1rem"/>
