@@ -386,6 +386,8 @@
   "main_space_setting_account_avatar_tips": "头像支持在500KB以内的PNG、JPG、JPEG图片",
   "main_space_setting_account_error_nickname": "昵称过长或者包含非法字符",
   "main_space_setting_account_error_motto": "个性签名过长，需要在50个字符以内",
+  "main_space_setting_account_avatar_suc": "头像上传成功",
+  "main_space_setting_account_data_suc": "基础设置修改成功",
 
 
 

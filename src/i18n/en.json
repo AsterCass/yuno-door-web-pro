@@ -387,6 +387,8 @@
   "main_space_setting_account_avatar_tips": "Avatar must be a PNG, JPG, or JPEG image under 500KB",
   "main_space_setting_account_error_nickname": "Nickname is too long or contains invalid characters",
   "main_space_setting_account_error_motto": "Bio is too long. Please keep it within 50 characters",
+  "main_space_setting_account_avatar_suc": "Avatar uploaded successfully",
+  "main_space_setting_account_data_suc": "Public Profile updated successfully",
 
 
   "home": "Home",

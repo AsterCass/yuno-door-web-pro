@@ -436,6 +436,15 @@ watch(
     }
 );
 
+watch(
+    () => globalState.userData,
+    () => {
+      if (props.id) {
+        getUserDetail(props.id)
+      }
+    }
+);
+
 function getUserDetail(id) {
   userDetailSimple({userId: id}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
