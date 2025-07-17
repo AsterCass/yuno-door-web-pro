@@ -236,7 +236,7 @@ function saveUserData() {
   const updateUserData = {
     id: globalState.userData.id,
     nickName: userSettingData.value.nickName,
-    gender: userSettingData.value.genderObj.value,
+    gender: userSettingData.value.genderObj ? userSettingData.value.genderObj.value : 0,
     birth: userSettingData.value.birth.replaceAll("/", "-"),
     motto: userSettingData.value.motto,
   }
