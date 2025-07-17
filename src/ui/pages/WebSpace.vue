@@ -520,9 +520,9 @@ function searchArticleListMethod(authorId) {
 
 const reportUser = ()=>{
   if(props.id && props.id === 'YU1') {
-    notifyTopNegative($t('main_space_setting_report_admin'))
+    notifyTopNegative(t('main_space_setting_report_admin'))
   } else {
-    notifyTopWarning($t('in_develop'))
+    notifyTopWarning(t('in_develop'))
   }
 }
 
