@@ -202,10 +202,6 @@ reader.onload = function () {
   currentAvatarBase64.value = this.result
 };
 
-watch(thisRouter.currentRoute, () => {
-  tab.value = thisRouter.currentRoute.value.name
-});
-
 watch(currentAvatar, () => {
   isDbAvatar.value = false
   reader.readAsDataURL(currentAvatar.value);
