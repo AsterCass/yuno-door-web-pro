@@ -7,7 +7,7 @@
       <div v-else class="cask-tabs-vertical-btn component-max-line-text "
            :class="inTab.value === tab ? 'btn-active shadow-1' : 'btn-normal'"
            :style="inTab.value === tab ? `background-color: ${inTab.color};border: 2px solid ${inTab.color};`
-            : `color: ${inTab.color};`"
+            : `color: ${forceTextColor ? forceTextColor : inTab.color};`"
            @click="updateCurrentTab(inTab.value)">
         {{ $t(inTab.label) }}
       </div>
@@ -41,6 +41,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: '15rem'
+  },
+  forceTextColor: {
+    type: String,
+    required: false,
+    default: ''
   }
 });
 

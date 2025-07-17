@@ -3,7 +3,8 @@
     <q-dialog :model-value="showUserSpaceSetting" @hide="closeUserSpaceSetting"
               transition-show="fade" transition-hide="fade">
       <q-card class="component-cask-dialog-judgement-std row" style="max-width: 2000px !important">
-        <cask-tabs-vertical :tabs="tabs" v-model="tab" width="12rem" text-width="10rem"/>
+        <cask-tabs-vertical :tabs="tabs" v-model="tab" width="12rem" text-width="10rem"
+                            force-text-color="rgb(var(--text-color))"/>
         <div class="col row" style="min-height: 35rem;">
           <q-separator class="component-separator-base q-mx-lg" vertical/>
           <q-tab-panels v-model="tab" animated class="bg-transparent col" transition-duration="500"
