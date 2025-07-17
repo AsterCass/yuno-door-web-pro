@@ -170,7 +170,7 @@
         </div>
 
         <div style="margin-top: 1rem; font-size: 0.8rem;" class="cask-jump-link-neg"
-             @click="notifyTopWarning($t('in_develop'))">
+             @click="reportUser">
           {{ t('main_space_report')}}
         </div>
 
@@ -374,7 +374,7 @@ import {useI18n} from "vue-i18n";
 import {defineProps, onMounted, ref, watch} from "vue";
 import {follow, isFollow, userDetailSimple} from "@/api/user";
 import {ZodiacSign} from "@/utils/date-to-zodiac";
-import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopNegative, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {privateInitChat} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {toSpecifyPage, toSpecifyPageWithQuery} from "@/router";
@@ -516,6 +516,14 @@ function searchArticleListMethod(authorId) {
     userDetailData.value.articleNum = res.data.data.articleTypeCount[1]
     userDetailData.value.essayNum = res.data.data.articleTypeCount[2]
   })
+}
+
+const reportUser = ()=>{
+  if(props.id && props.id === 'YU1') {
+    notifyTopNegative($t('main_space_setting_report_admin'))
+  } else {
+    notifyTopWarning($t('in_develop'))
+  }
 }
 
 
