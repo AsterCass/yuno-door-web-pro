@@ -286,9 +286,11 @@ function closeUserSpaceSetting() {
 
 function reloadData() {
   isDbAvatar.value = true
-  userSettingData.value = structuredClone(globalState.userData)
-  userSettingData.value.genderObj = getGenderObj(userSettingData.value.gender)
-  userSettingData.value.birth = userSettingData.value.birth.replaceAll("-", "/")
+  if (globalState.userData && globalState.userData.id) {
+    userSettingData.value = structuredClone(globalState.userData)
+    userSettingData.value.genderObj = getGenderObj(userSettingData.value.gender)
+    userSettingData.value.birth = userSettingData.value.birth.replaceAll("-", "/")
+  }
 }
 
 onMounted(() => {
