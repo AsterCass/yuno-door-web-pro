@@ -133,7 +133,7 @@
         <div style="padding-right: 20rem; margin-top: 2.2rem; font-size: 0.9rem">
           <div class="row items-center justify-between q-my-xs">
             <div>
-              {{ t('main_space_follower') }}
+              {{ t('main_space_following') }}
             </div>
             <div>
               {{ userDetailData.community.followNum ? userDetailData.community.followNum : 0 }}
@@ -141,7 +141,7 @@
           </div>
           <div class="row items-center justify-between q-my-xs">
             <div>
-              {{ t('main_space_following') }}
+              {{ t('main_space_follower') }}
             </div>
             <div>
               {{ userDetailData.community.fansNum ? userDetailData.community.fansNum : 0 }}
