@@ -12,6 +12,7 @@ export function chattingUsers() {
     return serviceShiro({
         url: `/yui/user/chat/chattingUsers/authNoError`,
         method: 'get',
+        params: {path: window.location.pathname + window.location.search},
     })
 }
 
