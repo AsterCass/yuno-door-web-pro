@@ -24,7 +24,6 @@
     "axios": "^1.7.7",
     "core-js": "^3.8.3",
     "crypto-js": "^4.2.0",
-    "dplayer": "1.27.1",
     "highlight.js": "11.10.0",
     "marked-highlight": "2.2.1",
     "marked-gfm-heading-id": "4.1.1",

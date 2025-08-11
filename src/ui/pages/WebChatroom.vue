@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh lpr fff" class="component-full-screen column">
+  <q-layout view="hhh lpr fff" class="component-full-screen column cask-chatroom-bg">
     <cask-base-header :chatroom-select-first="true" :center-elements="[
         CaskModuleElement.HOME,
     ]" :always-show="true" :mini="true"/>
@@ -776,6 +776,12 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+
+.cask-chatroom-bg {
+  background-color: rgba(var(--background-color));
+  background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+}
+
 
 .cask-chatroom-pinned-chat {
   height: 8rem;

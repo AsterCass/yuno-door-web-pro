@@ -19,6 +19,7 @@ import CaskToolsTimestamp from "@/ui/views/CaskToolsTimestamp.vue";
 import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
 import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
 import WebSpace from "@/ui/pages/WebSpace.vue";
+import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
 
 
 const router = createRouter({
@@ -166,14 +167,20 @@ const router = createRouter({
         {
             path: "/video",
             children: [
+
+                {
+                    path: '',
+                    name: 'collection',
+                    redirect: {name: 'mainVideoCollection'}
+                },
                 {
                     path: "collection",
                     name: "mainVideoCollection",
-                    component: WebRedirect,
-                    props: () => ({
-                        path: "video/collection",
-                    }),
-                }
+                    component: WebVideoCollection,
+                    meta: {
+                        title: 'Video Collection | 视频集合'
+                    },
+                },
             ]
         },
         {
