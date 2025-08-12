@@ -14,7 +14,19 @@
     </div>
 
 
-    <div class="row justify-center cask-base-simple-main" style="min-height: 100rem">
+    <div class="row cask-base-simple-main" style="padding-top: 5rem; min-height: 50rem">
+
+      <cask-video-card-pro
+          cover-image="https://api.astercasc.com/public/resources/video/clannad_1.jpg"
+          character-image="https://api.astercasc.com/public/resources/video/clannad_1_up.png"
+          name="clannad 第一季"
+      />
+
+      <cask-video-card-pro
+          cover-image="https://api.astercasc.com/public/resources/video/clannad_2.jpg"
+          character-image="https://api.astercasc.com/public/resources/video/clannad_2_up.png"
+          name="clannad 第二季"
+      />
 
 
     </div>
@@ -29,6 +41,7 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
+import CaskVideoCardPro from "@/ui/views/CaskVideoCardPro.vue";
 
 const globalState = useGlobalStateStore();
 
