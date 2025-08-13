@@ -7,7 +7,7 @@
       </h2>
     </div>
 
-    <div class="col-12 text-center q-px-md" style="margin-bottom: 2rem; opacity: .5;max-width: 52rem">
+    <div class="col-12 text-center q-px-md" style="opacity: .5;max-width: 52rem">
       {{ $t('subtitle-6') }}
     </div>
 
@@ -30,9 +30,14 @@
             class="component-no-scroller"
             virtual-scroll-item-size="0" virtual-scroll-horizontal
             v-slot="{index}" :items="videoList">
-          <div :id="videoList[index].id" style="height: 320px; width: 180px;"
-               class="q-my-xl q-mx-md">
-            <cask-video-card :video-col-data="videoList[index]"/>
+          <div :id="videoList[index].id" style="margin: 5rem 1rem 2rem 1rem;">
+            <cask-video-card-pro
+                :cover-image="videoList[index].collectionImg"
+                :character-image="videoList[index].collectionImgExtra"
+                :name="videoList[index].collectionName"
+                :on-click="()=> {toSpecifyPageWithQueryNewTab(thisRouter, 'mainVideoPlay',
+                 {colId: videoList[index].id})}"
+            />
           </div>
         </q-virtual-scroll>
       </div>
@@ -68,9 +73,9 @@ import {onMounted, ref} from "vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {getAllVideoCol} from "@/api/video";
 import {customPageNP} from "@/utils/page";
-import CaskVideoCard from "@/ui/views/CaskVideoCard.vue";
-import {toSpecifyPage} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 import {useRouter} from "vue-router";
+import CaskVideoCardPro from "@/ui/views/CaskVideoCardPro.vue";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();

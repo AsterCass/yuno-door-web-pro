@@ -391,7 +391,13 @@
   "main_space_setting_account_data_suc": "Public Profile updated successfully",
 
   "main_space_setting_report_admin": "Who stands before this court, and why do you bring charges against this official?",
-
+  "main_video_public": "Public Videos",
+  "main_video_public_tips": "Videos that logged-in users can watch directly, intended only for testing playback-related features",
+  "main_video_shared": "Shared Videos",
+  "main_video_shared_tips": "A collection of videos shared by other users. Access requires the uploader’s approval, or that the viewer belongs to an access group pre-set by the uploader",
+  "main_video_my": "My Videos",
+  "main_video_my_tips": "Videos uploaded by the user themselves. The visibility of different collections can be adjusted in the settings",
+  "main_video_upload": "Upload",
 
   "home": "Home",
   "back_home": "Back to Home"

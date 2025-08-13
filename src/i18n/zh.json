@@ -391,7 +391,13 @@
 
   "main_space_setting_report_admin": "堂下何人，为何状告本官？",
 
-
+  "main_video_public": "公共视频",
+  "main_video_public_tips": "登录用户直接观看的视频，仅用于测试相关播功能",
+  "main_video_shared": "分享视频",
+  "main_video_shared_tips": "其他用户分享的视频的合集，但是如果访问需要上传人同意，或者在上传人预设的可访问组内",
+  "main_video_my": "我的视频",
+  "main_video_my_tips": "用户自己上传的视频，可以在设置中调整不同合集的可见性",
+  "main_video_upload": "上传视频",
 
   "home": "主页",
   "back_home": "回到主页"

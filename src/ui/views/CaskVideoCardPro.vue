@@ -1,14 +1,16 @@
 <template>
 
-  <div class="column items-center justify-center" style="width: 10rem">
-    <div class="card cursor-pointer">
-      <div class="wrapper">
-        <img :src="coverImage" class="cover-image"/>
+  <div>
+    <div class="column items-center justify-center" style="width: 10rem;" @click="onClick">
+      <div class="card cursor-pointer">
+        <div class="wrapper">
+          <img :src="coverImage" class="cover-image"/>
+        </div>
+        <img :src="characterImage" class="character"/>
       </div>
-      <img :src="characterImage" class="character"/>
-    </div>
-    <div class="title">
-      {{ name }}
+      <div class="title">
+        {{ name }}
+      </div>
     </div>
   </div>
 
@@ -35,10 +37,11 @@ const props = defineProps({
     required: false,
     default: '',
   },
-  address: {
-    type: String,
+  onClick: {
+    type: Function,
     required: false,
-    default: '',
+    default: () => {
+    },
   }
 })
 

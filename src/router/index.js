@@ -20,6 +20,7 @@ import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
 import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
 import WebSpace from "@/ui/pages/WebSpace.vue";
 import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
+import WebVideoPlay from "@/ui/pages/WebVideoPlay.vue";
 
 
 const router = createRouter({
@@ -181,6 +182,19 @@ const router = createRouter({
                         title: 'Video Collection | 视频集合'
                     },
                 },
+                {
+                    path: 'play',
+                    name: 'mainVideoPlay',
+                    component: WebVideoPlay,
+                    meta: {
+                        title: 'Video Player | 视频播放'
+                    },
+                    props: ($route) => ({
+                        colId: $route.query.colId,
+                        vdoId: $route.query.vdoId,
+                    }),
+                }
+
             ]
         },
         {
