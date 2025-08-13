@@ -9,7 +9,7 @@
            :style="inTab.value === tab ? `background-color: ${inTab.color};border: 2px solid ${inTab.color};`
             : `color: ${forceTextColor ? forceTextColor : inTab.color};`"
            @click="updateCurrentTab(inTab.value)">
-        {{ $t(inTab.label) }}
+        {{ i18n ? $t(inTab.label) : inTab.label }}
       </div>
 
 
@@ -46,6 +46,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: ''
+  },
+  i18n: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 });
 
