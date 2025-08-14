@@ -9,7 +9,7 @@
 
     <div class="row">
 
-      <div class="col-lg-7 col-12 text-center">
+      <div class="col-md-7 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_md5_input') }}
@@ -38,7 +38,7 @@
 
       </div>
 
-      <div class="col-lg-5 col-12 relative-position q-mt-xl">
+      <div class="col-md-5 col-12 relative-position q-mt-xl">
 
         <div v-if="!globalState.screenMini" class="row justify-center relative-position q-mt-lg">
           <q-img v-show="showPic" class="col-7" :no-native-menu="false" :ratio="1" fit="cover"
@@ -56,7 +56,7 @@
 
       </div>
 
-      <div v-show="showRet" class="col-lg-7 col-12 text-center q-mt-lg">
+      <div v-show="showRet" class="col-md-7 col-12 text-center q-mt-lg">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_md5_output_md') }}
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div v-show="showRet" class="col-lg-7 col-12 text-center q-mt-lg">
+      <div v-show="showRet" class="col-md-7 col-12 text-center q-mt-lg">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_md5_output_sha') }}
@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div v-show="showRet" class="col-lg-7 col-12 text-center q-mt-lg">
+      <div v-show="showRet" class="col-md-7 col-12 text-center q-mt-lg">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_md5_output_keccak') }}

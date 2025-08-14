@@ -9,7 +9,7 @@
 
     <div class="row">
 
-      <div class="col-lg-6 col-12 text-center q-mb-xl">
+      <div class="col-md-6 col-12 text-center q-mb-xl">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_base64_img_to_img') }}
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-12 text-center">
+      <div class="col-md-6 col-12 text-center">
         <h5 class="cask-color-positive">
           {{ $t('main_tools_base64_img_to_base64') }}
         </h5>

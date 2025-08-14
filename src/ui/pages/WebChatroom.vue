@@ -8,7 +8,7 @@
 
     <div class="col row">
 
-      <div v-show="!globalState.screenMini" style="width: 400px" class="column">
+      <div v-show="!globalState.screenMini" style="width: 21%" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -144,7 +144,10 @@
           </div>
           <q-separator class="component-separator-base q-my-md" inset/>
         </div>
-        <div class="col-2 column q-mx-md">
+        <q-scroll-area class="col-2 q-mx-md" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
+
 
           <div class="row q-mb-xs">
             <q-btn v-if="globalState.isLogin" no-caps unelevated style="width: 100%" dense
@@ -202,12 +205,12 @@
             </q-btn>
           </div>
 
+        </q-scroll-area>
 
-        </div>
 
       </div>
 
-      <div class="col-12 col-lg row relative-position" style="height: 100%">
+      <div class="col-12 col-md row relative-position" style="height: 100%">
         <q-separator class="component-separator-base" vertical style="margin: 5rem 2% 0 0"/>
 
         <div v-show="!socketChatState.webChattingFocusChat
@@ -368,7 +371,7 @@
 
       </div>
 
-      <div v-show="!globalState.screenMini" style="width: 400px" class="column justify-end">
+      <div v-show="!globalState.screenMini" style="width: 21%" class="column justify-end">
 
         <div class="q-px-md col-11 column">
           <q-scroll-area class="col" v-if="socketChatState.webChattingFocusChat"

@@ -8,17 +8,17 @@
 
     <div class="col row">
 
-      <div class="col-lg-3 col-12 column" style="padding: 10rem 2rem 10rem 5rem">
+      <div v-if="!globalState.screenMini" class="col-3 column" style="padding: 8% 1% 2% 4%">
 
         <h3>
           播放列表
         </h3>
 
-        <q-scroll-area delay="100" style="height: 450px;"
+        <q-scroll-area delay="100" style="height: 80%;"
                        :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
-          <cask-tabs-vertical :tabs="tabs" v-model="tab"
+          <cask-tabs-vertical :tabs="tabs" v-model="tab" width="90%" text-width="60%"
                               force-text-color="rgb(var(--text-color))" :i18n="false"/>
 
         </q-scroll-area>
@@ -26,11 +26,11 @@
 
       </div>
 
-      <div class="col-lg-6 col-12">
-
+      <div class="col row items-center justify-center">
+        <video ref="videoRef" class="video-js" style="width: 100%"></video>
       </div>
 
-      <div class="col-lg-3 col-12">
+      <div v-if="!globalState.screenMini" class="col-3">
 
       </div>
 
@@ -46,10 +46,11 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useI18n} from "vue-i18n";
-import {defineProps, onMounted, ref} from "vue";
+import {defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import {getVideoListByColId} from "@/api/video";
+import videojs from "video.js";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -70,8 +71,11 @@ const props = defineProps({
 // data
 let vdoListData = ref([])
 const tabs = ref([])
-const tab = ref("base");
+const tab = ref("base")
+const videoRef = ref(null)
 
+
+let player = null
 
 onMounted(() => {
   if (!globalState.isLogin) {
@@ -92,13 +96,33 @@ onMounted(() => {
       tabs.value.push(newTab)
     }
     tab.value = vdoListData.value[0].id
+
+
+    player = videojs(videoRef.value, {
+      autoplay: true,
+      controls: true,
+      sources: [
+        {
+          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/1.mp4',
+          type: 'video/mp4'
+        }
+      ]
+    });
+
   })
+})
+
+
+onBeforeUnmount(() => {
+  if (player) {
+    player.dispose();
+  }
 })
 
 
 </script>
 
 <style scoped lang="scss">
-
+@import 'video.js/dist/video-js.css';
 
 </style>

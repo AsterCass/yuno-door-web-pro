@@ -64,7 +64,7 @@ export function openLink(url, newBlank = true) {
 }
 
 export function isMiniScreenMethod() {
-    return document.documentElement.clientWidth < 1440
+    return document.documentElement.clientWidth <= 1024
 }
 
 export function gotoPageTop() {

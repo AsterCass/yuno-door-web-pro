@@ -17,7 +17,7 @@
         <q-spinner-bars size="40px"/>
       </div>
 
-      <div v-for="(article, index) in articleList" :key="index" class="col-12 col-lg-4 q-mb-lg">
+      <div v-for="(article, index) in articleList" :key="index" class="col-12 col-md-4 q-mb-lg">
         <div class="q-mx-lg q-pa-sm justify-between"
              style="border-radius: 8px; background-color: rgb(var(--full-container-background-color-light))">
 

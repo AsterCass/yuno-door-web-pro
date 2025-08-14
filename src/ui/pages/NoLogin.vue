@@ -3,7 +3,7 @@
     <span class="error-page-mask"/>
     <div class="error-page-container">
       <div class="row justify-center">
-        <div class="col-lg-12 text-center">
+        <div class="col-md-12 text-center">
           <h1>
             Error 401
           </h1>

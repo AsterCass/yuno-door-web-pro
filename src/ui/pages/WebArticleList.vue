@@ -16,7 +16,7 @@
 
     <div class="row justify-center cask-base-simple-main">
 
-      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 7.5rem">
+      <div class="col-md-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 7.5rem">
         <div :class="globalState.screenMini ? '' : 'article-list-left-sidebar'">
           <h2 style="font-size: 1.75rem; line-height: 2.9rem; word-wrap: break-word;">
             {{ type === '1' ? $t('main-nav-article') : $t('main-nav-essay') }}
@@ -60,11 +60,11 @@
         </div>
       </div>
 
-      <div v-if="firstLoading" class="col-lg-9 col-12 q-mt-xl row items-center justify-center">
+      <div v-if="firstLoading" class="col-md-9 col-12 q-mt-xl row items-center justify-center">
         <q-spinner-pie size="75px"/>
       </div>
 
-      <div v-else class="col-lg-9 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+      <div v-else class="col-md-9 col-12 q-mt-xl" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            style="min-height: 60rem;">
 
         <q-infinite-scroll @load="onLoadArticleListData" :offset="250" :disable="scrollDisable">
@@ -72,7 +72,7 @@
                           transition="slide-up" transition-duration="600" class="q-my-lg">
 
             <div class="full-width row justify-center">
-              <div class="col-11 col-lg article-list-card-body" @click="toSpecifyPageWithQueryNewTab(
+              <div class="col-11 col-md article-list-card-body" @click="toSpecifyPageWithQueryNewTab(
                   thisRouter, 'webArticleDetail', {articleId: article.id})">
                 <h3>
                   {{ article.articleTitle }}
@@ -116,7 +116,7 @@
                  margin: 12px 0 18px 0; border-radius: 1px;">
                 </div>
               </div>
-              <div v-if="!globalState.screenMini" class="col-lg-3 q-mt-xs">
+              <div v-if="!globalState.screenMini" class="col-md-3 q-mt-xs">
                 <div>
                   {{ $t('dynamic-create-time') }}:&nbsp;{{ article.createTime }}
                 </div>

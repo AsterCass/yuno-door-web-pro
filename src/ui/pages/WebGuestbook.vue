@@ -16,7 +16,7 @@
 
     <div class="row justify-center cask-base-simple-main">
 
-      <div class="col-lg-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 10rem">
+      <div class="col-md-3 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-pl-lg'" style="margin-top: 10rem">
         <div :class="globalState.screenMini ? '' : 'guestbook-left-sidebar'">
           <h2 style="font-size: 1.75rem; line-height: 2.9rem; word-wrap: break-word;">
             {{ $t('main_board') }}
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="col-lg-7 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
+      <div class="col-md-7 col-12" :class="globalState.screenMini ? 'q-px-sm' : 'q-px-xl'"
            :style="globalState.screenMini ? 'margin-top: 3rem' : 'margin-top: 7rem'">
         <div v-if="dataLoaded" style="min-height: 60rem;">
           <div v-for="(comment, index) in commentTree" :key="index">
@@ -280,7 +280,7 @@
       </div>
 
 
-      <div v-if="!globalState.screenMini" class="col-lg-2 col-12" style="margin-top: 7.5rem">
+      <div v-if="!globalState.screenMini" class="col-md-2 col-12" style="margin-top: 7.5rem">
         <div class="guestbook-left-sidebar">
           <div class="column justify-between items-center full-height" style="padding-bottom: 2rem; width: 5rem">
             <div class="col-10 column" style="padding-top: 6rem;">

@@ -18,11 +18,11 @@
 
       <div class="row q-my-xl q-mx-md">
 
-        <div class="col-lg-3 col-12 row justify-center">
+        <div class="col-md-3 col-12 row justify-center">
           <cask-tabs-vertical :tabs="tabs" v-model="tab" @update:model-value="updateTab"/>
         </div>
 
-        <div class="col-lg-9 col-12">
+        <div class="col-md-9 col-12">
           <router-view v-slot="{ Component, route }">
             <transition name="fade" mode="out-in">
               <div :key="route.name">

@@ -8,7 +8,7 @@
 
 
     <div class="row">
-      <div class="col-lg-8 col-12 text-center">
+      <div class="col-md-8 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{ $t('main_tools_hex_rgb_to_hex') }}
@@ -147,7 +147,7 @@
 
       </div>
 
-      <div class="col-lg-4 col-12 q-px-xl">
+      <div class="col-md-4 col-12 q-px-xl">
 
         <h5>
           {{ $t('main_tools_hex_rgb_to_hex_format') }}

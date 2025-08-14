@@ -13,7 +13,7 @@
 
     <div class="col-12 row">
 
-      <div v-for="(game, index) in gameList" :key="index" class="col-12 col-lg-6 q-mb-lg">
+      <div v-for="(game, index) in gameList" :key="index" class="col-12 col-md-6 q-mb-lg">
         <div class="q-mx-lg q-pa-sm justify-between">
           <div style="width: 90%; margin: 0 5%">
 

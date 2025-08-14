@@ -7,7 +7,7 @@
     </h4>
 
     <div class="row">
-      <div class="col-lg-7 col-12 text-center">
+      <div class="col-md-7 col-12 text-center">
 
         <div class="row items-center q-my-lg justify-center">
 
@@ -35,7 +35,7 @@
 
       </div>
 
-      <div class="col-lg-5 col-12 q-px-xl">
+      <div class="col-md-5 col-12 q-px-xl">
 
         <h5>
           {{ $t('main_tools_cn_card_setting_city') }}

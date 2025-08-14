@@ -44,33 +44,33 @@
       <div id="main-first-element"/>
 
       <div class="row justify-center">
-        <cask-main-article-container class="col-lg-11 col-12"/>
+        <cask-main-article-container class="col-md-11 col-12"/>
       </div>
 
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
       <div class="row justify-center">
-        <cask-main-essay-container class="col-lg-11 col-12"/>
-      </div>
-
-      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
-
-
-      <div class="row justify-center">
-        <cask-main-toolkit-container class="col-lg-11 col-12"/>
-      </div>
-
-      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
-
-      <div class="row justify-center">
-        <cask-main-game-container class="col-lg-11 col-12"/>
+        <cask-main-essay-container class="col-md-11 col-12"/>
       </div>
 
       <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
 
 
       <div class="row justify-center">
-        <cask-main-video-container class="col-lg-11 col-12"/>
+        <cask-main-toolkit-container class="col-md-11 col-12"/>
+      </div>
+
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
+
+      <div class="row justify-center">
+        <cask-main-game-container class="col-md-11 col-12"/>
+      </div>
+
+      <q-separator class="component-separator-base" style="margin: 0 5rem 2rem 5rem; opacity: .2"/>
+
+
+      <div class="row justify-center">
+        <cask-main-video-container class="col-md-11 col-12"/>
       </div>
 
     </div>

@@ -9,7 +9,7 @@
 
 
     <div class="row">
-      <div class="col-lg-7 col-12 text-center">
+      <div class="col-md-7 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{$t('main_tools_qr_generate')}}
@@ -69,7 +69,7 @@
 
       </div>
 
-      <div class="col-lg-5 col-12 relative-position">
+      <div class="col-md-5 col-12 relative-position">
         <QRCodeVue3
             :width="280"
             :height="280"
@@ -102,7 +102,7 @@
     </div>
 
     <div class="row q-mt-xl">
-      <div class="col-lg-7 col-12 text-center">
+      <div class="col-md-7 col-12 text-center">
 
         <h5 class="cask-color-positive">
           {{$t('main_tools_qr_parse')}}

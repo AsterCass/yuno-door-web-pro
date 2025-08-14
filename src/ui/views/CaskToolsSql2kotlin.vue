@@ -7,12 +7,12 @@
     </h4>
 
     <div class="row">
-      <div class="col-lg-6 col-12">
+      <div class="col-md-6 col-12">
 
         <cask-long-text-input-simple v-model:value="inputDDl" input-height="32rem"/>
 
       </div>
-      <div class="col-lg-6 col-12 q-px-xl">
+      <div class="col-md-6 col-12 q-px-xl">
 
         <h5>
           {{ $t('main_tools_sql_kotlin_package') }}
@@ -103,7 +103,7 @@
 
       </div>
 
-      <div class="col-lg-6 col-12">
+      <div class="col-md-6 col-12">
         <div class="row justify-center">
           <q-btn no-caps unelevated class="shadow-2 component-full-btn-std"
                  @click="generateSql2KotlinCode">

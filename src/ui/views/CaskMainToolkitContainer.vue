@@ -4,7 +4,7 @@
     <div class="col-12 row justify-center items-center">
 
 
-      <div class="col-11 col-lg-4 q-mb-lg q-mx-md row justify-center">
+      <div class="col-11 col-md-4 q-mb-lg q-mx-md row justify-center">
 
         <h2 class="col-12" :class="globalState.screenMini ? 'text-center' : ''">
           {{ $t('main-nav-toolkit') }}
@@ -55,7 +55,7 @@
 
       </div>
 
-      <div v-if="!globalState.screenMini" class="col-lg-3 q-mb-lg">
+      <div v-if="!globalState.screenMini" class="col-md-3 q-mb-lg">
         <div class="q-mx-lg q-pa-sm justify-between" style="border-radius: 8px">
           <q-img :no-native-menu="false" :ratio="16/9" fit="cover" class="shadow-2"
                  :src="`/img/main-toolkit.jpg`" style="height: 30rem;border-radius: 8px;">

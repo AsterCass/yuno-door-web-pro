@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-center">
-    <div class="col-lg-6 col-12">
+    <div class="col-md-6 col-12">
 
       <div id="comment-reply-title" class="text-center q-mb-lg">
         <h2>

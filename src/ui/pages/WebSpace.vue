@@ -14,7 +14,7 @@
     </div>
 
     <div class="cask-user-space-main row">
-      <div class="col-lg-4 col-12" style="padding: 0 2% 0 2%">
+      <div class="col-md-4 col-12" style="padding: 0 2% 0 2%">
 
         <q-btn round unelevated style="background-color: rgb(var(--background-color))">
           <q-avatar size="100px" style="margin: 3px">
@@ -177,7 +177,7 @@
 
       </div>
 
-      <div class="col-lg-8 col-12 ">
+      <div class="col-md-8 col-12 ">
 
         <div class="row q-mr-xl items-center" style="margin-top: 7.5rem;">
           <cask-tabs class="" :tabs="tabs" v-model="tab" shadow/>
