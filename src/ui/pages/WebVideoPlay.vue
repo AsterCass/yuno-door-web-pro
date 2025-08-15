@@ -14,7 +14,7 @@
           播放列表
         </h3>
 
-        <q-scroll-area delay="100" style="height: 80%;"
+        <q-scroll-area delay="100" style="height: 60%;"
                        :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
                           { background: 'black', width: '6px' }">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="col row items-center justify-center">
-        <video ref="videoRef" class="video-js" style="width: 100%"></video>
+        <div id="mainPlayer" ref="mainPlayerRef"></div>
       </div>
 
       <div v-if="!globalState.screenMini" class="col-3">
@@ -50,7 +50,8 @@ import {defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import {getVideoListByColId} from "@/api/video";
-import videojs from "video.js";
+import Player from 'xgplayer';
+
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -72,10 +73,30 @@ const props = defineProps({
 let vdoListData = ref([])
 const tabs = ref([])
 const tab = ref("base")
-const videoRef = ref(null)
+const mainPlayerRef = ref(null)
+
+let player = null;
+
+function resetPlayer(url) {
+
+  if (mainPlayerRef.value && !player) {
+    player = new Player({
+      id: mainPlayerRef.value.id,
+      url: [
+        {
+          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/1.mp4',
+          type: 'video/mp4'
+        },
+        {
+          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/2.mp4',
+          type: 'video/mp4'
+        },
+      ]
+    })
+  }
 
 
-let player = null
+}
 
 onMounted(() => {
   if (!globalState.isLogin) {
@@ -97,32 +118,22 @@ onMounted(() => {
     }
     tab.value = vdoListData.value[0].id
 
-
-    player = videojs(videoRef.value, {
-      autoplay: true,
-      controls: true,
-      sources: [
-        {
-          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/1.mp4',
-          type: 'video/mp4'
-        }
-      ]
-    });
+    resetPlayer(vdoListData.value[0].videoRes)
 
   })
 })
 
 
 onBeforeUnmount(() => {
-  if (player) {
-    player.dispose();
-  }
+  // if (player) {
+  //   player.dispose();
+  // }
 })
 
 
 </script>
 
 <style scoped lang="scss">
-@import 'video.js/dist/video-js.css';
+@import 'xgplayer/dist/index.min.css';
 
 </style>
