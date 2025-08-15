@@ -2,7 +2,7 @@
   <q-layout view="hhh lpr fff" class="component-full-screen column"
             style="background-color: rgba(var(--background-color));background-image: url('/img/video-play-bg.png');">
     <cask-base-header :chatroom-select-first="true" :center-elements="[
-        CaskModuleElement.HOME, CaskModuleElement.CHATROOM,
+        CaskModuleElement.HOME, CaskModuleElement.CHATROOM, CaskModuleElement.VIDEO,
     ]" :always-show="true" :mini="true"/>
 
 
@@ -26,12 +26,21 @@
 
       </div>
 
-      <div class="col row items-center justify-center">
-        <div id="mainPlayer" ref="mainPlayerRef"></div>
+      <div class="col column items-center justify-center">
+
+        <div class="main-player-pre">
+
+        </div>
+        <div id="mainPlayer" ref="mainPlayerRef" style="aspect-ratio: 16 / 9;"></div>
+
+        <div class="main-player-post">
+
+        </div>
+
       </div>
 
       <div v-if="!globalState.screenMini" class="col-3">
-
+        <!--        <cask-base-comment-tree :main-id="colId"/>-->
       </div>
 
     </div>
@@ -74,28 +83,19 @@ let vdoListData = ref([])
 const tabs = ref([])
 const tab = ref("base")
 const mainPlayerRef = ref(null)
+const currentVideoId = ref("");
 
 let player = null;
 
 function resetPlayer(url) {
-
   if (mainPlayerRef.value && !player) {
     player = new Player({
       id: mainPlayerRef.value.id,
-      url: [
-        {
-          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/1.mp4',
-          type: 'video/mp4'
-        },
-        {
-          src: 'https://api.astercasc.com/ushio/video/play/VC1648909883875288/2.mp4',
-          type: 'video/mp4'
-        },
-      ]
+      url: url,
+      width: '95%',
+      height: 'auto',
     })
   }
-
-
 }
 
 onMounted(() => {
@@ -125,9 +125,10 @@ onMounted(() => {
 
 
 onBeforeUnmount(() => {
-  // if (player) {
-  //   player.dispose();
-  // }
+  if (player) {
+    player.destroy();
+    player = null
+  }
 })
 
 
@@ -135,5 +136,19 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 @import 'xgplayer/dist/index.min.css';
+
+.main-player-pre {
+  height: 2rem;
+  background: rgb(var(--full-container-background-color));
+  border-radius: 8px 8px 0 0;
+  width: 95%;
+}
+
+.main-player-post {
+  height: 2rem;
+  background: rgb(var(--full-container-background-color));
+  border-radius: 0 0 8px 8px;
+  width: 95%;
+}
 
 </style>
