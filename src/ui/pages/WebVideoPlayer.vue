@@ -32,15 +32,20 @@
 
         </div>
 
-        <div class="main-player">
-          <video
-              id="mainPlayer"
-              ref="mainPlayerRef"
-              class="plyr"
-              playsinline
-              controls
-          >
-          </video>
+        <div class="main-player relative-position">
+          <div v-show="!inLoading">
+            <video
+                id="mainPlayer"
+                ref="mainPlayerRef"
+                class="plyr"
+                playsinline
+                controls
+            >
+            </video>
+          </div>
+          <q-spinner-tail v-show="inLoading" class="absolute-top-left q-ma-md"
+                          style="color: #eee" size="30px">
+          </q-spinner-tail>
         </div>
 
         <div class="main-player-post">
@@ -102,6 +107,7 @@ const currentVideoData = ref(
       videoNum: 0,
     }
 )
+const inLoading = ref(true);
 
 let player = null
 
@@ -134,6 +140,15 @@ function initPlayer() {
           tab.value = currentVideoData.value.id
           resetPlayer(currentVideoData.value)
         }
+      }
+    });
+    player.on('ready', () => {
+      inLoading.value = true
+    });
+    player.on('canplay', (event) => {
+      const instance = event.detail.plyr;
+      if (instance.duration > 0) {
+        inLoading.value = false
       }
     });
   }

@@ -20,7 +20,7 @@ import WebGuestbook from "@/ui/pages/WebGuestbook.vue";
 import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
 import WebSpace from "@/ui/pages/WebSpace.vue";
 import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
-import WebVideoPlay from "@/ui/pages/WebVideoPlay.vue";
+import WebVideoPlay from "@/ui/pages/WebVideoPlayer.vue";
 
 
 const router = createRouter({
