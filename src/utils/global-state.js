@@ -21,6 +21,9 @@ export function createPersistedStatePlugin() {
 
 export const useGlobalStateStore = defineStore('globalState', {
     state: () => ({
+        curPlayerAutoPlay: false,
+        curPlayerAutoNext: true,
+        curPlayerEnableDanmaku: true,
         curThemeName: 'light',
         hideScroller: true,
         language: 'en',
@@ -37,6 +40,15 @@ export const useGlobalStateStore = defineStore('globalState', {
         starEmojiList: [],
     }),
     actions: {
+        updateCurPlayerAutoPlay(code) {
+            this.curPlayerAutoPlay = code;
+        },
+        updateCurPlayerAutoNext(code) {
+            this.curPlayerAutoNext = code;
+        },
+        updateCurPlayerEnableDanmaku(code) {
+            this.curPlayerEnableDanmaku = code;
+        },
         updateTheme(code) {
             this.curThemeName = code;
         },

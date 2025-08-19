@@ -398,6 +398,12 @@
   "main_video_my": "My Videos",
   "main_video_my_tips": "Videos uploaded by the user themselves. The visibility of different collections can be adjusted in the settings",
   "main_video_upload": "Upload",
+  "main_video_speed": "Speed",
+  "main_video_speed_normal": "Normal",
+  "main_video_autoplay": "Autoplay",
+  "main_video_playlist": "Playlist",
+  "main_video_auto_next": "Auto Next Episode",
+  "main_video_enable_danmuku": "Enable Danmaku",
 
   "home": "Home",
   "back_home": "Back to Home"

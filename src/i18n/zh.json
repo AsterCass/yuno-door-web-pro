@@ -398,6 +398,12 @@
   "main_video_my": "我的视频",
   "main_video_my_tips": "用户自己上传的视频，可以在设置中调整不同合集的可见性",
   "main_video_upload": "上传视频",
+  "main_video_speed": "倍速",
+  "main_video_speed_normal": "正常",
+  "main_video_autoplay": "自动播放",
+  "main_video_playlist": "播放列表",
+  "main_video_auto_next": "自动下一集",
+  "main_video_enable_danmuku": "开启弹幕",
 
   "home": "主页",
   "back_home": "回到主页"

@@ -11,7 +11,7 @@
       <div v-if="!globalState.screenMini" class="col-3 column" style="padding: 8% 1% 2% 4%">
 
         <h3>
-          播放列表
+          {{ $t('main_video_playlist') }}
         </h3>
 
         <q-scroll-area delay="100" style="height: 60%;"
@@ -63,33 +63,37 @@
           </div>
 
 
-          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer" style="font-size: 13px"
                :style="autoPlay ? '' : 'opacity: .5'" @click="updateAutoPlay">
             <div class="q-mr-xs">
-              自动播放
+              {{ $t('main_video_autoplay') }}
             </div>
-            <q-icon v-show="autoPlay" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
-            <q-icon v-show="!autoPlay" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+            <q-icon v-show="autoPlay" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!autoPlay" name="fa-solid fa-xmark" size="14px"/>
           </div>
 
 
-          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer" style="font-size: 13px"
                :style="autoNext ? '' : 'opacity: .5'" @click="updateAutoNext">
             <div class="q-mr-xs">
-              自动下一集
+              {{ $t('main_video_auto_next') }}
             </div>
-            <q-icon v-show="autoNext" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
-            <q-icon v-show="!autoNext" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+            <q-icon v-show="autoNext" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!autoNext" name="fa-solid fa-xmark" size="14px"/>
           </div>
 
-          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer" style="font-size: 13px;"
                :style="enableDanmaku ? '' : 'opacity: .5'" @click="updateDanmuku">
             <div class="q-mr-xs">
-              开启弹幕
+              {{ $t('main_video_enable_danmuku') }}
             </div>
-            <q-icon v-show="enableDanmaku" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
-            <q-icon v-show="!enableDanmaku" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+            <q-icon v-show="enableDanmaku" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!enableDanmaku" name="fa-solid fa-xmark" size="14px"/>
           </div>
+
+          <q-input class="main-danmuku-input q-mx-md col" v-model="danmakuInput"
+                   @keydown.enter.prevent="forLineBreakSend"
+                   type="textarea" :placeholder="$t('main_long_text_input_placeholder')" borderless/>
 
 
         </div>
@@ -112,12 +116,13 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useI18n} from "vue-i18n";
-import {defineProps, onBeforeUnmount, onMounted, ref} from "vue";
+import {defineProps, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
 import {getVideoListByColId} from "@/api/video";
 import Plyr from "plyr";
 import {toReplacePage, toSpecifyPage} from "@/router";
 import {useRouter} from "vue-router";
+import {notifyTopWarning} from "@/utils/notification-tools";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -150,15 +155,28 @@ const currentVideoData = ref(
     }
 )
 const inLoading = ref(true);
-const autoPlay = ref(false);
-const autoNext = ref(true);
-const enableDanmaku = ref(true);
+const autoPlay = ref(globalState.curPlayerAutoPlay);
+const autoNext = ref(globalState.curPlayerAutoNext);
+const enableDanmaku = ref(globalState.curPlayerEnableDanmaku);
+const danmakuInput = ref("")
 
 let player = null
 
+watch(
+    () => globalState.language,
+    () => {
+      initPlayer()
+      resetPlayer(currentVideoData.value)
+    }
+);
+
 function initPlayer() {
-  if (mainPlayerRef.value && !player) {
-    player = new Plyr(mainPlayerRef.value,
+  if (player) {
+    player.destroy()
+    player = null
+  }
+  if (mainPlayerRef.value) {
+    player = new Plyr('#mainPlayer',
         {
           controls: [
             'play-large', // The large play button in the center
@@ -172,11 +190,11 @@ function initPlayer() {
             'settings', // Settings menu
             'fullscreen', // Toggle fullscreen
           ],
-          autoplay: false,
+          autoplay: autoPlay.value,
           keyboard: {focused: true, global: true},
           i18n: {
-            speed: '倍速',
-            normal: '正常',
+            speed: t('main_video_speed'),
+            normal: t('main_video_speed_normal'),
           },
         }
     )
@@ -224,15 +242,20 @@ function playNext() {
 
 function updateAutoPlay() {
   autoPlay.value = !autoPlay.value;
-  player.autoplay = autoPlay.value
+  globalState.updateCurPlayerAutoPlay(autoPlay.value)
+  if (player) {
+    player.autoplay = autoPlay.value
+  }
 }
 
 function updateAutoNext() {
   autoNext.value = !autoNext.value;
+  globalState.updateCurPlayerAutoNext(autoNext.value)
 }
 
 function updateDanmuku() {
   enableDanmaku.value = !enableDanmaku.value;
+  globalState.updateCurPlayerEnableDanmaku(enableDanmaku.value)
 }
 
 function updateVdo(newVdoId) {
@@ -259,6 +282,14 @@ function resetPlayer(data) {
       }
     ]
   };
+}
+
+function forLineBreakSend(event) {
+  if (event.ctrlKey) {
+    danmakuInput.value += '\n'
+  } else {
+    notifyTopWarning(t('in_develop'))
+  }
 }
 
 onMounted(() => {
@@ -303,6 +334,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (player) {
     player.destroy()
+    player = null
   }
 })
 
@@ -319,7 +351,7 @@ onBeforeUnmount(() => {
 }
 
 .main-player-post {
-  min-height: 3.2rem;
+  min-height: 3.3rem;
   background: rgb(var(--full-container-background-color));
   border-radius: 0 0 8px 8px;
   width: 95%;
@@ -336,13 +368,31 @@ onBeforeUnmount(() => {
 <style lang="scss">
 @import "plyr/dist/plyr.css";
 
-:root {
-  --plyr-color-main: rgb(var(--full-container-background-color));
-}
-
 .plyr {
+  --plyr-color-main: rgb(var(--full-container-background-color));
   aspect-ratio: 16 / 9;
   width: 100%;
+}
+
+.main-danmuku-input {
+  height: 2.2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+
+  textarea {
+    resize: none !important;
+    height: 2.1rem;
+    font-size: .9rem;
+    color: white;
+    letter-spacing: 0.023rem;
+    line-height: 1.3rem;
+    min-height: 1.3rem !important;
+    background-color: transparent;
+    margin: 0;
+    padding: 8px 12px !important;
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+  }
 }
 
 </style>
