@@ -48,7 +48,49 @@
           </q-spinner-tail>
         </div>
 
-        <div class="main-player-post">
+        <div class="main-player-post row items-center">
+
+          <div class="q-ml-md" @click="playLast"
+               :class="!currentVideoData || currentVideoData.videoNum <= 1 ?
+            'cask-cursor-disabled' : 'cask-cursor-pointer' ">
+            <q-icon name="fa-solid fa-backward-step" color="white" size="22px"/>
+          </div>
+
+          <div class="q-ml-md" @click="playNext"
+               :class="!currentVideoData || currentVideoData.videoNum >= vdoListData.length ?
+            'cask-cursor-disabled' : 'cask-cursor-pointer' ">
+            <q-icon name="fa-solid fa-forward-step" color="white" size="22px"/>
+          </div>
+
+
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+               :style="autoPlay ? '' : 'opacity: .5'" @click="updateAutoPlay">
+            <div class="q-mr-xs">
+              自动播放
+            </div>
+            <q-icon v-show="autoPlay" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!autoPlay" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+          </div>
+
+
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+               :style="autoNext ? '' : 'opacity: .5'" @click="updateAutoNext">
+            <div class="q-mr-xs">
+              自动下一集
+            </div>
+            <q-icon v-show="autoNext" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!autoNext" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+          </div>
+
+          <div class="q-ml-md row items-center text-white cask-cursor-pointer"
+               :style="enableDanmaku ? '' : 'opacity: .5'" @click="updateDanmuku">
+            <div class="q-mr-xs">
+              开启弹幕
+            </div>
+            <q-icon v-show="enableDanmaku" style="margin-top: 1px" name="fa-solid fa-check" size="14px"/>
+            <q-icon v-show="!enableDanmaku" style="margin-top: 1px" name="fa-solid fa-xmark" size="14px"/>
+          </div>
+
 
         </div>
 
@@ -108,6 +150,9 @@ const currentVideoData = ref(
     }
 )
 const inLoading = ref(true);
+const autoPlay = ref(false);
+const autoNext = ref(true);
+const enableDanmaku = ref(true);
 
 let player = null
 
@@ -127,20 +172,19 @@ function initPlayer() {
             'settings', // Settings menu
             'fullscreen', // Toggle fullscreen
           ],
-          autoplay: true,
+          autoplay: false,
           keyboard: {focused: true, global: true},
+          i18n: {
+            speed: '倍速',
+            normal: '正常',
+          },
         }
     )
     player.on('ended', () => {
-      if (vdoListData.value && vdoListData.value.length > 0) {
-        const nextCount = currentVideoData.value.videoNum
-        if (vdoListData.value.length > nextCount) {
-          currentVideoData.value = vdoListData.value[nextCount]
-          toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
-          tab.value = currentVideoData.value.id
-          resetPlayer(currentVideoData.value)
-        }
+      if (!autoNext.value) {
+        return
       }
+      playNext()
     });
     player.on('ready', () => {
       inLoading.value = true
@@ -154,6 +198,43 @@ function initPlayer() {
   }
 }
 
+function playLast() {
+  if (vdoListData.value && vdoListData.value.length > 0) {
+    const lastCount = currentVideoData.value.videoNum - 2
+    if (lastCount >= 0) {
+      currentVideoData.value = vdoListData.value[lastCount]
+      toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
+      tab.value = currentVideoData.value.id
+      resetPlayer(currentVideoData.value)
+    }
+  }
+}
+
+function playNext() {
+  if (vdoListData.value && vdoListData.value.length > 0) {
+    const nextCount = currentVideoData.value.videoNum
+    if (vdoListData.value.length > nextCount) {
+      currentVideoData.value = vdoListData.value[nextCount]
+      toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
+      tab.value = currentVideoData.value.id
+      resetPlayer(currentVideoData.value)
+    }
+  }
+}
+
+function updateAutoPlay() {
+  autoPlay.value = !autoPlay.value;
+  player.autoplay = autoPlay.value
+}
+
+function updateAutoNext() {
+  autoNext.value = !autoNext.value;
+}
+
+function updateDanmuku() {
+  enableDanmaku.value = !enableDanmaku.value;
+}
+
 function updateVdo(newVdoId) {
   for (const vdo of vdoListData.value) {
     if (vdo.id === newVdoId) {
@@ -161,6 +242,7 @@ function updateVdo(newVdoId) {
       break;
     }
   }
+  toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
   resetPlayer(currentVideoData.value)
 }
 
@@ -230,14 +312,14 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 
 .main-player-pre {
-  height: 2rem;
+  height: 1.5rem;
   background: rgb(var(--full-container-background-color));
   border-radius: 8px 8px 0 0;
   width: 95%;
 }
 
 .main-player-post {
-  height: 2rem;
+  min-height: 3.2rem;
   background: rgb(var(--full-container-background-color));
   border-radius: 0 0 8px 8px;
   width: 95%;

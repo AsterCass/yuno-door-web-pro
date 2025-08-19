@@ -306,6 +306,11 @@ p {
   }
 }
 
+.cask-cursor-disabled {
+  cursor: not-allowed;
+  opacity: .2;
+}
+
 .cask-jump-link-neg {
   cursor: pointer;
 
