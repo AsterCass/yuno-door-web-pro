@@ -32,7 +32,7 @@
 
         </div>
 
-        <div class="main-player relative-position abp">
+        <div id="player-wrapper" class="main-player relative-position">
           <div v-show="!inLoading && !inLoadingDanmaku">
             <video
                 id="mainPlayer"
@@ -43,7 +43,6 @@
             >
             </video>
           </div>
-          <div id='main-danmuku' class='container' style="pointer-events: none"></div>
 
           <q-spinner-tail v-show="inLoading || inLoadingDanmaku" class="absolute-top-left q-ma-md"
                           style="color: #eee" size="30px">
@@ -85,15 +84,15 @@
           </div>
 
           <div class="q-ml-md row items-center text-white cask-cursor-pointer" style="font-size: 13px;"
-               :style="enableDanmaku ? '' : 'opacity: .5'" @click="updateDanmuku">
+               :style="enableDanmaku ? '' : 'opacity: .5'" @click="updateDanmaku">
             <div class="q-mr-xs">
-              {{ $t('main_video_enable_danmuku') }}
+              {{ $t('main_video_enable_danmaku') }}
             </div>
             <q-icon v-show="enableDanmaku" name="fa-solid fa-check" size="14px"/>
             <q-icon v-show="!enableDanmaku" name="fa-solid fa-xmark" size="14px"/>
           </div>
 
-          <q-input class="main-danmuku-input q-mx-md col" v-model="danmakuInput"
+          <q-input class="main-danmaku-input q-mx-md col" v-model="danmakuInput"
                    @keydown.enter.prevent="forLineBreakSend"
                    type="textarea" :placeholder="$t('main_long_text_input_placeholder')" borderless/>
 
@@ -124,9 +123,9 @@ import {getVideoListByColId} from "@/api/video";
 import Plyr from "plyr";
 import {toReplacePage, toSpecifyPage} from "@/router";
 import {useRouter} from "vue-router";
-import {notifyTopWarning} from "@/utils/notification-tools";
 import {loadCCL} from "@/utils/use-ccl";
 import {getVideoBarrage} from "@/api/barrage";
+import {notifyTopWarning} from "@/utils/notification-tools";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -212,8 +211,12 @@ watch(
     }
 );
 
-function initDanmuku() {
-  danmakuPlayer = new window.CommentManager(document.getElementById('main-danmuku'));
+function initdanmaku() {
+  if (danmakuPlayer) {
+    danmakuPlayer.stop()
+    danmakuPlayer = null
+  }
+  danmakuPlayer = new window.CommentManager(document.getElementById('main-danmaku'));
   danmakuPlayer.init();
   danmakuPlayer.start();
 }
@@ -250,6 +253,7 @@ function initPlayer() {
     )
     player.on("play", () => {
       if (danmakuPlayer && enableDanmaku.value) {
+        danmakuPlayer.setBounds();
         danmakuPlayer.start()
       }
     })
@@ -282,6 +286,16 @@ function initPlayer() {
       inLoading.value = true
       if (danmakuPlayer) {
         danmakuPlayer.clear()
+      } else {
+        const container = player.elements.container
+        const danmakuContainer = document.createElement('div');
+        danmakuContainer.id = "main-danmaku";
+        danmakuContainer.classList.add("container")
+        danmakuContainer.style.cssText = `
+        pointer-events: none;
+        `;
+        container.appendChild(danmakuContainer);
+        initdanmaku()
       }
     });
     player.on('canplay', (event) => {
@@ -324,7 +338,7 @@ function updateAutoNext() {
   globalState.updateCurPlayerAutoNext(autoNext.value)
 }
 
-function updateDanmuku() {
+function updateDanmaku() {
   enableDanmaku.value = !enableDanmaku.value;
   globalState.updateCurPlayerEnableDanmaku(enableDanmaku.value)
   if (danmakuPlayer) {
@@ -365,7 +379,7 @@ function forLineBreakSend(event) {
 }
 
 function thisScreenEventHandler() {
-  if (player && danmakuPlayer) {
+  if (danmakuPlayer) {
     danmakuPlayer.setBounds();
   }
 }
@@ -377,7 +391,6 @@ onMounted(async () => {
   }
   window.addEventListener("resize", thisScreenEventHandler);
   await loadCCL()
-  initDanmuku()
   initPlayer()
   let param = {collectionId: props.colId}
   getVideoListByColId(param).then(res => {
@@ -457,7 +470,7 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
-.main-danmuku-input {
+.main-danmaku-input {
   height: 2rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
