@@ -32,8 +32,8 @@
 
         </div>
 
-        <div class="main-player relative-position">
-          <div v-show="!inLoading">
+        <div class="main-player relative-position abp">
+          <div v-show="!inLoading && !inLoadingDanmaku">
             <video
                 id="mainPlayer"
                 ref="mainPlayerRef"
@@ -43,7 +43,9 @@
             >
             </video>
           </div>
-          <q-spinner-tail v-show="inLoading" class="absolute-top-left q-ma-md"
+          <div id='main-danmuku' class='container' style="pointer-events: none"></div>
+
+          <q-spinner-tail v-show="inLoading || inLoadingDanmaku" class="absolute-top-left q-ma-md"
                           style="color: #eee" size="30px">
           </q-spinner-tail>
         </div>
@@ -100,8 +102,8 @@
 
       </div>
 
-      <div v-if="!globalState.screenMini" class="col-3">
-        <!--        <cask-base-comment-tree :main-id="colId"/>-->
+      <div v-if="!globalState.screenMini" class="col-2">
+        <!--        todo comment -->
       </div>
 
     </div>
@@ -123,6 +125,8 @@ import Plyr from "plyr";
 import {toReplacePage, toSpecifyPage} from "@/router";
 import {useRouter} from "vue-router";
 import {notifyTopWarning} from "@/utils/notification-tools";
+import {loadCCL} from "@/utils/use-ccl";
+import {getVideoBarrage} from "@/api/barrage";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -155,12 +159,15 @@ const currentVideoData = ref(
     }
 )
 const inLoading = ref(true);
+const inLoadingDanmaku = ref(true);
 const autoPlay = ref(globalState.curPlayerAutoPlay);
 const autoNext = ref(globalState.curPlayerAutoNext);
 const enableDanmaku = ref(globalState.curPlayerEnableDanmaku);
 const danmakuInput = ref("")
 
 let player = null
+let danmakuPlayer = null
+let lastVdoId = null
 
 watch(
     () => globalState.language,
@@ -169,6 +176,47 @@ watch(
       resetPlayer(currentVideoData.value)
     }
 );
+
+watch(
+    () => currentVideoData.value,
+    () => {
+      toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
+      tab.value = currentVideoData.value.id
+      resetPlayer(currentVideoData.value)
+      if (currentVideoData.value && currentVideoData.value.id !== lastVdoId) {
+        lastVdoId = currentVideoData.value.id
+        if (lastVdoId) {
+          inLoadingDanmaku.value = true
+          getVideoBarrage(lastVdoId).then(res => {
+            if (!res || !res.data) {
+              inLoadingDanmaku.value = false
+              return
+            }
+            if (!danmakuPlayer) {
+              inLoadingDanmaku.value = false
+              return
+            }
+            const objs = res.data.map(d => ({
+              mode: d.type === 0 ? 1 : 5,
+              dur: 6000,
+              text: d.text,
+              stime: d.time * 1000,
+              size: 20,
+              color: d.color
+            }));
+            danmakuPlayer.load(objs)
+            inLoadingDanmaku.value = false
+          })
+        }
+      }
+    }
+);
+
+function initDanmuku() {
+  danmakuPlayer = new window.CommentManager(document.getElementById('main-danmuku'));
+  danmakuPlayer.init();
+  danmakuPlayer.start();
+}
 
 function initPlayer() {
   if (player) {
@@ -196,16 +244,45 @@ function initPlayer() {
             speed: t('main_video_speed'),
             normal: t('main_video_speed_normal'),
           },
+          blankVideo: "",
+          iconUrl: "/img/plyr.more.svg",
         }
     )
+    player.on("play", () => {
+      if (danmakuPlayer && enableDanmaku.value) {
+        danmakuPlayer.start()
+      }
+    })
+    player.on("pause", () => {
+      if (danmakuPlayer && enableDanmaku.value) {
+        danmakuPlayer.stop()
+      }
+    })
+    player.on("seeked", () => {
+      if (danmakuPlayer && enableDanmaku.value) {
+        // danmakuPlayer.clear()
+        danmakuPlayer.time(player.currentTime * 1000)
+      }
+    })
+    player.on("timeupdate", () => {
+      if (danmakuPlayer && enableDanmaku.value) {
+        danmakuPlayer.time(player.currentTime * 1000)
+      }
+    })
     player.on('ended', () => {
       if (!autoNext.value) {
         return
+      }
+      if (danmakuPlayer) {
+        danmakuPlayer.clear()
       }
       playNext()
     });
     player.on('ready', () => {
       inLoading.value = true
+      if (danmakuPlayer) {
+        danmakuPlayer.clear()
+      }
     });
     player.on('canplay', (event) => {
       const instance = event.detail.plyr;
@@ -221,9 +298,6 @@ function playLast() {
     const lastCount = currentVideoData.value.videoNum - 2
     if (lastCount >= 0) {
       currentVideoData.value = vdoListData.value[lastCount]
-      toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
-      tab.value = currentVideoData.value.id
-      resetPlayer(currentVideoData.value)
     }
   }
 }
@@ -233,9 +307,6 @@ function playNext() {
     const nextCount = currentVideoData.value.videoNum
     if (vdoListData.value.length > nextCount) {
       currentVideoData.value = vdoListData.value[nextCount]
-      toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
-      tab.value = currentVideoData.value.id
-      resetPlayer(currentVideoData.value)
     }
   }
 }
@@ -256,6 +327,9 @@ function updateAutoNext() {
 function updateDanmuku() {
   enableDanmaku.value = !enableDanmaku.value;
   globalState.updateCurPlayerEnableDanmaku(enableDanmaku.value)
+  if (danmakuPlayer) {
+    danmakuPlayer.clear()
+  }
 }
 
 function updateVdo(newVdoId) {
@@ -265,8 +339,6 @@ function updateVdo(newVdoId) {
       break;
     }
   }
-  toReplacePage(thisRouter, {colId: props.colId, vdoId: currentVideoData.value.id})
-  resetPlayer(currentVideoData.value)
 }
 
 function resetPlayer(data) {
@@ -292,11 +364,20 @@ function forLineBreakSend(event) {
   }
 }
 
-onMounted(() => {
+function thisScreenEventHandler() {
+  if (player && danmakuPlayer) {
+    danmakuPlayer.setBounds();
+  }
+}
+
+onMounted(async () => {
   if (!globalState.isLogin) {
     toSpecifyPage(thisRouter, "401")
     return
   }
+  window.addEventListener("resize", thisScreenEventHandler);
+  await loadCCL()
+  initDanmuku()
   initPlayer()
   let param = {collectionId: props.colId}
   getVideoListByColId(param).then(res => {
@@ -324,17 +405,19 @@ onMounted(() => {
         currentVideoData.value = vdo
       }
     }
-    tab.value = currentVideoData.value.id
-    // play
-    resetPlayer(currentVideoData.value)
   })
 })
 
 
 onBeforeUnmount(() => {
+  window.removeEventListener("resize", thisScreenEventHandler);
   if (player) {
     player.destroy()
     player = null
+  }
+  if (danmakuPlayer) {
+    danmakuPlayer.stop()
+    danmakuPlayer = null
   }
 })
 
@@ -375,24 +458,29 @@ onBeforeUnmount(() => {
 }
 
 .main-danmuku-input {
-  height: 2.2rem;
+  height: 2rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
 
   textarea {
     resize: none !important;
-    height: 2.1rem;
-    font-size: .9rem;
+    height: 1.8rem;
+    font-size: .8rem;
     color: white;
     letter-spacing: 0.023rem;
-    line-height: 1.3rem;
-    min-height: 1.3rem !important;
+    line-height: 1.1rem;
+    min-height: 1.1rem !important;
     background-color: transparent;
     margin: 0;
-    padding: 8px 12px !important;
+    padding: 6px 12px !important;
     border-radius: 4px;
     overflow-wrap: anywhere;
   }
 }
+
+</style>
+
+<style lang="scss">
+@import "@/styles/comment-core-lib.css";
 
 </style>

@@ -87,7 +87,7 @@ yarn serve
 * pinia：本地存储
 * qs：接口调用序列化
 * quasar：ui美化
-* video.js：视频样式封装（暂未用到）
+* plyr：视频样式封装
 * vue3-google-login: 谷歌登录
 * vue：vue
 * vue-router：vue
