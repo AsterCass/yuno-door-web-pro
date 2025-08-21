@@ -126,6 +126,7 @@ import {useRouter} from "vue-router";
 import {loadCCL} from "@/utils/use-ccl";
 import {getVideoBarrage} from "@/api/barrage";
 import {notifyTopWarning} from "@/utils/notification-tools";
+import emitter from "@/utils/bus";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -377,7 +378,7 @@ function forLineBreakSend(event) {
   }
 }
 
-function thisScreenEventHandler() {
+function updateDanmakuBounds() {
   if (danmakuPlayer) {
     danmakuPlayer.setBounds();
   }
@@ -388,7 +389,7 @@ onMounted(async () => {
     toSpecifyPage(thisRouter, "401")
     return
   }
-  window.addEventListener("resize", thisScreenEventHandler);
+  emitter.on("screenResizeEvent", updateDanmakuBounds)
   await loadCCL()
   initPlayer()
   let param = {collectionId: props.colId}
@@ -422,7 +423,7 @@ onMounted(async () => {
 
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", thisScreenEventHandler);
+  emitter.off("screenResizeEvent", updateDanmakuBounds)
   if (player) {
     player.destroy()
     player = null
