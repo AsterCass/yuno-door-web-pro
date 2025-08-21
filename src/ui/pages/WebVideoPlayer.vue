@@ -33,7 +33,7 @@
         </div>
 
         <div id="player-wrapper" class="main-player relative-position">
-          <div v-show="!inLoading && !inLoadingDanmaku">
+          <div>
             <video
                 id="mainPlayer"
                 ref="mainPlayerRef"
@@ -252,13 +252,12 @@ function initPlayer() {
         }
     )
     player.on("play", () => {
-      if (danmakuPlayer && enableDanmaku.value) {
-        danmakuPlayer.setBounds();
+      if (danmakuPlayer) {
         danmakuPlayer.start()
       }
     })
     player.on("pause", () => {
-      if (danmakuPlayer && enableDanmaku.value) {
+      if (danmakuPlayer) {
         danmakuPlayer.stop()
       }
     })
