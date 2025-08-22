@@ -8,7 +8,7 @@
 
     <div class="col row">
 
-      <div v-show="!globalState.screenMini" style="width: 21%" class="column">
+      <div v-show="!globalState.screenMini" style="width: 20.5%" class="column">
 
         <div class="col-1"/>
         <div class="col-9 column">
@@ -228,8 +228,11 @@
           </div>
 
           <div class="col column justify-between">
-            <div class="col q-mx-sm">
 
+            <q-scroll-area class="col q-mx-sm q-pb-xl"
+                           :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
               <div class="q-mt-sm">
                 <h6>
                   {{ $t('main_chat_setting_hide_no_detail') }}
@@ -280,9 +283,9 @@
                   </div>
                 </div>
               </div>
+            </q-scroll-area>
 
 
-            </div>
             <div class="row justify-between" style="margin: 1% 20%">
               <q-btn no-caps unelevated class="shadow-2 component-full-btn-std" @click="updateChatSetting">
                 <div class="row items-center">
@@ -371,7 +374,7 @@
 
       </div>
 
-      <div v-show="!globalState.screenMini" style="width: 21%" class="column justify-end">
+      <div v-show="!globalState.screenMini" style="width: 20.5%" class="column justify-end">
 
         <div class="q-px-md col-11 column">
           <q-scroll-area class="col" v-if="socketChatState.webChattingFocusChat"
