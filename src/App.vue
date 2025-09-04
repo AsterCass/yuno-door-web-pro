@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
   //resize
   window.removeEventListener("resize", screenEventHandler);
   //scroll
-  window.removeEventListener("resize", scrollEventHandle);
+  window.removeEventListener("scroll", scrollEventHandle);
 
 })
 </script>
