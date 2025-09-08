@@ -84,6 +84,12 @@ const articleTagEnums = [
         color: "orange-8",
         rbg: "rgb(245, 124, 0)",
     },
+    {
+        name: "Python",
+        code: 16384,
+        color: "deep-orange-8",
+        rbg: "rgb(230, 74, 25)",
+    },
 ]
 
 function getArticleTagDesc(code) {
