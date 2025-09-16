@@ -168,7 +168,7 @@
                                 </div>
                               </div>
 
-                              <div class="q-mt-xs">
+                              <div class="q-mt-xs" style="white-space: pre-wrap;">
                                 <span
                                     v-if="childComment.mainSubUserId && comment.id !== childComment.mainSubUserId"
                                     @click="toSpecifyPageWithQuery(

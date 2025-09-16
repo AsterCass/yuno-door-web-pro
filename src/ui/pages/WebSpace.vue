@@ -34,7 +34,7 @@
           </q-badge>
         </h2>
 
-        <div style="opacity: .75; padding-right: 6rem;">
+        <div style="opacity: .75; padding-right: 6rem; white-space: pre-wrap;">
           {{ userDetailData.motto ? userDetailData.motto : t('main_user_detail_no_motto') }}
         </div>
 
@@ -246,7 +246,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="!articleList || articleList.length === 0" style="opacity: .5"
+            <div v-if="!articleList || articleList.length === 0" style="opacity: .5; white-space: pre-wrap;"
                  class="row justify-center q-mr-xl q-pt-xl">
               {{ t('main_user_detail_no_motto') }}
             </div>
@@ -300,7 +300,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="!articleList || articleList.length === 0" style="opacity: .5"
+            <div v-if="!articleList || articleList.length === 0" style="opacity: .5; white-space: pre-wrap;"
                  class="row justify-center q-mr-xl q-pt-xl">
               {{ t('main_user_detail_no_motto') }}
             </div>
@@ -337,10 +337,10 @@
                                :label="getRoleTypeObj(frd.roleType).label">
                       </q-badge>
                     </div>
-                    <div v-if="frd.motto" style="opacity: 0.5">
+                    <div v-if="frd.motto" style="opacity: 0.5; white-space: pre-wrap;">
                       {{ frd.motto }}
                     </div>
-                    <div v-else style="opacity: 0.5">
+                    <div v-else style="opacity: 0.5; white-space: pre-wrap;">
                       {{ t('main_user_detail_no_motto') }}
                     </div>
                   </div>
