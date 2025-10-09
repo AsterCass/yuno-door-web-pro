@@ -490,6 +490,7 @@ export function socketSend(chatId, message) {
 
 
 let initChatSocketStatus = false
+let hasConnectedBefore = false
 
 export function initChatSocket() {
     if (initChatSocketStatus) {
@@ -541,6 +542,13 @@ export function initChatSocket() {
         });
         socketChatState.socketConnected = true;
         initChatSocketStatus = false
+
+        // 是否是重连，重连则重新加载聊天数据
+        if (hasConnectedBefore) {
+            chattingDataInit(false, false)
+        } else {
+            hasConnectedBefore = true;
+        }
     };
 
     socketChatState.stompClient.onDisconnect = () => {
