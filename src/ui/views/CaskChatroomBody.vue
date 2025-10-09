@@ -173,8 +173,8 @@ import {copy} from "@/utils/base-tools";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {messageTimeLabelBuilder} from "@/utils/chat-socket";
-import {moreMessage} from "@/api/chat";
+import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
+import {moreMessage, readMessage} from "@/api/chat";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import {starEmoji} from "@/api/file";
 import {useI18n} from "vue-i18n";
@@ -212,6 +212,18 @@ const chatBodyOnScroll = (info) => {
     chatBodyScrollerInLoading.value = true
     //加载新数据
     loadMoreChatRecord()
+  }
+  const isAtBottom = info.target.scrollTop > -10;
+  if (isAtBottom && socketChatState.webChattingFocusChat && !socketChatState.webChattingFocusChat.latestRead) {
+    socketChatState.webChattingFocusChat.latestRead = true
+    if (globalState.pinChatIdMap[socketChatState.webChattingFocusChat.chatId]) {
+      globalState.pinChatIdMap[socketChatState.webChattingFocusChat.chatId].read = true
+    }
+    readMessage({
+      chatId: socketChatState.webChattingFocusChat.chatId,
+      messageId: socketChatState.webChattingFocusChat.lastMessageId
+    })
+    updateChattingDataWebAboutLast(socketChatState.webChattingFocusChat, false)
   }
 }
 

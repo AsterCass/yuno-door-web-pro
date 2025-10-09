@@ -312,8 +312,9 @@ async function socketMsgReceiveDataParse(callback) {
             const chatScrollerDiv = socketChatState.chatBodyScrollerOut
             let needToBottom = false
             if (chatScrollerDiv) {
-                const isAtBottom = chatScrollerDiv.scrollHeight -
-                    chatScrollerDiv.scrollTop - chatScrollerDiv.clientHeight < 5;
+                // const isAtBottom = chatScrollerDiv.scrollHeight -
+                //     chatScrollerDiv.scrollTop - chatScrollerDiv.clientHeight < 5;
+                const isAtBottom = chatScrollerDiv.scrollTop > -10;
                 if (isAtBottom || (globalState.userData && globalState.userData.id === data.sendUserId)) {
                     needToBottom = true
                 }
