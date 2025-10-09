@@ -1,4 +1,4 @@
-import {chattingUsers, readMessage} from "@/api/chat";
+import {chattingUsers, moreMessage, readMessage} from "@/api/chat";
 import {socketChatState} from "@/utils/global-state-no-save";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {browserNotification, notifyTopWarning} from "@/utils/notification-tools";
@@ -297,7 +297,7 @@ export function rebuildChattingDataWeb(selectFirst) {
 }
 
 
-function socketMsgReceiveDataParse(callback) {
+async function socketMsgReceiveDataParse(callback) {
     const globalState = useGlobalStateStore()
 
     const data = JSON.parse(callback.body)
@@ -319,19 +319,30 @@ function socketMsgReceiveDataParse(callback) {
                 }
             }
 
-            //数据插入
-            singleChatting.userChattingData.splice(0, 0,
-                {
-                    messageId: data.sendMessageId,
-                    sendUserId: data.sendUserId,
-                    sendUserAvatar: data.sendUserAvatar,
-                    sendUserNickname: data.sendUserNickname,
-                    sendUserGender: data.sendUserGender,
-                    sendUserRoleType: data.sendUserRoleType,
-                    message: data.sendMessage,
-                    sendDate: data.sendDate,
+            // 如果该聊天已经存在，但是还有没有加载过
+            if (singleChatting.userChattingData.length === 0) {
+                let res = await moreMessage({chatId: singleChatting.chatId});
+                if (res && res.data && res.data.data && res.data.data.length > 0) {
+                    let inputData = res.data.data
+                    singleChatting.userChattingData.push(...inputData)
                 }
-            )
+            } else {
+                //加载过则直接数据插入
+                singleChatting.userChattingData.splice(0, 0,
+                    {
+                        messageId: data.sendMessageId,
+                        sendUserId: data.sendUserId,
+                        sendUserAvatar: data.sendUserAvatar,
+                        sendUserNickname: data.sendUserNickname,
+                        sendUserGender: data.sendUserGender,
+                        sendUserRoleType: data.sendUserRoleType,
+                        message: data.sendMessage,
+                        sendDate: data.sendDate,
+                    }
+                )
+            }
+
+
             singleChatting.lastMessageTime = data.sendDate
             singleChatting.lastMessageId = data.sendMessageId
             singleChatting.lastMessageText = data.sendMessage
