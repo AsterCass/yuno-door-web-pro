@@ -353,7 +353,7 @@
           </div>
 
           <div v-if="socketChatState.webChattingFocusChat" class="col">
-            <cask-chatroom-body/>
+            <cask-chatroom-body :reset-rely-data="updateChatReply"/>
           </div>
 
         </div>
@@ -361,6 +361,16 @@
         <q-separator class="component-separator-base" vertical style="margin: 5rem 0 0 2%"/>
 
         <div v-show="!openChatSetting">
+          <div style="height: 15px;color: rgb(var(--pointer)); right: 3%; left: 3%; bottom: 10rem"
+               class="absolute bg-transparent row items-center justify-between q-px-sm">
+            <div v-if="replyChatUserName" style="font-size: 0.95rem" class="cask-cursor-pointer">
+              @{{ replyChatUserName }}&nbsp;:
+            </div>
+            <div v-if="replyChatUserName" style="font-size: 0.85rem" class="q-mr-sm cask-jump-link-in-text-origin"
+                 @click="cancelReplySub">
+              {{ $t('main_article_cancel_reply') }}
+            </div>
+          </div>
           <cask-long-text-input v-if="socketChatState.webChattingFocusChat" is-absolute
                                 id="comment-reply-input" :elements="new Map([
                   [CaskLongTextInputElement.FILE, {callback: sendFile}],
@@ -368,6 +378,7 @@
                   [CaskLongTextInputElement.EMOJI, {callback: sendEmoji}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   ])" :sendCallback="sendChatMsg" v-model="socketChatState.webChattingFocusChat.webInputText"
+                                :placeholder="replyChatContent"
                                 @update:model-value="data => socketChatState.webChattingFocusChat.webInputText = data"
                                 style="right: 3%; left: 3%; bottom: .5rem" class="absolute"/>
         </div>
@@ -600,6 +611,7 @@ import emitter from "@/utils/bus";
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
+const RES_ADD = process.env.VUE_APP_RES_ADD
 
 const showEmojiUpload = ref(false)
 const openChatSetting = ref(false)
@@ -608,6 +620,16 @@ const chatSetting = ref(getChatSettingObj())
 const pinChatIdMapArr = computed(() => {
   return Object.entries(globalState.pinChatIdMap).filter(([key, value]) => value !== undefined);
 });
+// reply
+const replyChatMessageId = ref("")
+const replyChatMessage = ref("")
+const replyChatContent = ref("")
+const replyChatUserName = ref("")
+
+
+watch(() => socketChatState.chattingDataWebSelected, () => {
+  cancelReplySub()
+})
 
 watch(
     () => globalState.language,
@@ -628,6 +650,24 @@ watch(
       }
     }
 )
+
+function updateChatReply(id, userName, message) {
+  replyChatMessageId.value = id
+  replyChatMessage.value = message
+  replyChatUserName.value = userName
+  if (message && message.startsWith(RES_ADD)) {
+    replyChatContent.value = t('main_chat_operation_reply') + ": " + t('main_chat_body_file_in_tree')
+  } else {
+    replyChatContent.value = t('main_chat_operation_reply') + ": " + message
+  }
+}
+
+function cancelReplySub() {
+  replyChatMessageId.value = ""
+  replyChatMessage.value = ""
+  replyChatUserName.value = ""
+  replyChatContent.value = ""
+}
 
 const searchChatName = (node, filter) => {
   const filterLow = filter.toLowerCase()
@@ -679,7 +719,8 @@ const sendFile = async (data) => {
     return false
   }
   const readAddress = res.data.data.readAddress
-  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress)
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress, replyChatMessageId.value, replyChatMessage.value)
+  cancelReplySub()
   return true
 }
 
@@ -697,13 +738,15 @@ const sendImg = async (data) => {
     return false
   }
   const readAddress = res.data.data.readAddress
-  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress)
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress, replyChatMessageId.value, replyChatMessage.value)
+  cancelReplySub()
   return true
 }
 
 const sendEmoji = (url) => {
   if (globalState.isLogin) {
-    socketSend(socketChatState.webChattingFocusChat.chatId, url)
+    socketSend(socketChatState.webChattingFocusChat.chatId, url, replyChatMessageId.value, replyChatMessage.value)
+    cancelReplySub()
   } else {
     notifyTopWarning(t('main_chat_not_login_message'))
   }
@@ -712,7 +755,9 @@ const sendEmoji = (url) => {
 const sendChatMsg = () => {
   if (socketChatState.webChattingFocusChat.webInputText) {
     if (globalState.isLogin) {
-      socketSend(socketChatState.webChattingFocusChat.chatId, socketChatState.webChattingFocusChat.webInputText)
+      socketSend(socketChatState.webChattingFocusChat.chatId, socketChatState.webChattingFocusChat.webInputText,
+          replyChatMessageId.value, replyChatMessage.value)
+      cancelReplySub()
       socketChatState.webChattingFocusChat.webInputText = ""
     } else {
       notifyTopWarning(t('main_chat_not_login_message'))

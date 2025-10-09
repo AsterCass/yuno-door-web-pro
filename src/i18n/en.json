@@ -198,6 +198,7 @@
   "main_chat_emoji_tabs_kaomoji": "Kaomoji",
   "main_chat_body_file_in_tree": "[Image or File]",
   "main_chat_operation_copy": "Copy",
+  "main_chat_operation_reply": "Reply",
   "main_chat_operation_star_emoji": "Add to my Emoji Pro",
   "main_chat_operation_download_file": "Download the file",
   "main_chat_setting_hide_no_detail": "Chat notifications hide contact and sent content: ",

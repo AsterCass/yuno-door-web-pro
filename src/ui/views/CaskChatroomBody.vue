@@ -45,6 +45,15 @@
           <div class="relative-position" style="margin-right: 15%;"
                v-on:mouseleave="chatRow.webFocusThisMsg=false"
                v-on:mouseover="chatRow.webFocusThisMsg=true">
+            <div v-if="chatRow.replyData" class="relative-position q-mb-xs" style="height: 1.75rem;">
+              <div class="chat-body-reply">
+                {{ $t('main_chat_operation_reply') }}:&nbsp;{{
+                  chatRow.replyData.startsWith(RES_ADD) ?
+                      $t('main_chat_body_file_in_tree') :
+                      chatRow.replyData
+                }}
+              </div>
+            </div>
             <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body"
                  style="white-space: break-spaces; color: rgb(var(--pointer));
                  background-color: transparent; font-size: 15px;">
@@ -77,6 +86,14 @@
                 <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
                   {{ $t('main_chat_operation_copy') }}
                 </div>
+
+                <q-separator class="component-separator-base" style="margin: 5px 6px; opacity: .3" vertical/>
+
+                <div class="cask-jump-link-in-text-more" @click="
+                resetRelyData(chatRow.messageId, chatRow.sendUserNickname, chatRow.message)">
+                  {{ $t('main_chat_operation_reply') }}
+                </div>
+
               </div>
             </div>
           </div>
@@ -111,6 +128,15 @@
           <div class="relative-position" style="margin-left: 15%;"
                v-on:mouseleave="chatRow.webFocusThisMsg=false"
                v-on:mouseover="chatRow.webFocusThisMsg=true">
+            <div v-if="chatRow.replyData" class="relative-position q-mb-xs" style="height: 1.75rem;">
+              <div class="chat-body-reply-mine">
+                {{ $t('main_chat_operation_reply') }}:&nbsp;{{
+                  chatRow.replyData.startsWith(RES_ADD) ?
+                      $t('main_chat_body_file_in_tree') :
+                      chatRow.replyData
+                }}
+              </div>
+            </div>
             <div v-if="chatRow.webMessageFile" class="cask-chatroom-chat-body-mine"
                  style="white-space: break-spaces; color: rgb(var(--pointer));
                  background-color: transparent; font-size: 15px;">
@@ -141,6 +167,14 @@
                 <div v-else class="cask-jump-link-in-text-more" @click="copy(chatRow.message)">
                   {{ $t('main_chat_operation_copy') }}
                 </div>
+
+                <q-separator class="component-separator-base" style="margin: 5px 6px; opacity: .3" vertical/>
+
+                <div class="cask-jump-link-in-text-more" @click="
+                resetRelyData(chatRow.messageId, chatRow.sendUserNickname, chatRow.message)">
+                  {{ $t('main_chat_operation_reply') }}
+                </div>
+
               </div>
             </div>
           </div>
@@ -170,7 +204,7 @@ import {getRoleTypeObj} from "@/constant/enums/role-type";
 import {getGenderObj} from "@/constant/enums/gender-opt";
 import {notifyTopNegative, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {copy} from "@/utils/base-tools";
-import {onMounted, ref, watch} from "vue";
+import {defineProps, onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {messageTimeLabelBuilder, updateChattingDataWebAboutLast} from "@/utils/chat-socket";
@@ -180,6 +214,12 @@ import {starEmoji} from "@/api/file";
 import {useI18n} from "vue-i18n";
 import emitter from "@/utils/bus";
 import CaskUserToolTip from "@/ui/views/CaskUserToolTip.vue";
+
+const RES_ADD = process.env.VUE_APP_RES_ADD
+
+const props = defineProps({
+  resetRelyData: Function
+})
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -373,6 +413,8 @@ onMounted(() => {
   padding-left: 5px;
 
   .chat-body-label-mine-body {
+    display: flex;
+    width: fit-content;
     padding: 1px 8px;
     border-radius: 4px;
     background-color: rgba(var(--text-color), .07);
@@ -400,11 +442,46 @@ onMounted(() => {
   padding-right: 5px;
 
   .chat-body-label-mine-body {
+    display: flex;
+    width: fit-content;
     padding: 1px 8px;
     border-radius: 4px;
     background-color: rgba(var(--text-color), .07);
     backdrop-filter: saturate(200%) blur(30px);
   }
+}
+
+.chat-body-reply {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 100%;
+  transform: translate(100%, 0);
+  padding-left: 5px;
+  opacity: 0.5;
+  font-size: 0.8rem;
+  width: 20rem;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+.chat-body-reply-mine {
+  white-space: nowrap;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  transform: translate(-100%, 0);
+  padding-right: 5px;
+  opacity: 0.5;
+  font-size: 0.8rem;
+  width: 20rem;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .cask-chatroom-chat-body-img {
