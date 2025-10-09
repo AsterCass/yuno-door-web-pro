@@ -28,40 +28,49 @@ export {
 }
 
 // 代码样式选择 https://highlightjs.org/static/demo/
+// copy from node_modules/highlight.js/styles/
 const styleEnums = [
     'androidstudio',
-    // 'codepen-embed',
-    'felipec',
-    'hybrid',
-    // 'kimbie-dark',
     'lioshi',
-    // 'nord',
-    'panda-syntax-dark',
-    // 'paraiso-dark',
-    // 'srcery',
-    // 'stackoverflow-dark',
-    'tomorrow-night-bright',
-    'vs2015',
 ]
 
 const styleEnumsLight = [
     'panda-syntax-light',
-    // 'stackoverflow-light',
     'tokyo-night-light',
-    // 'codepen-embed',
-    // 'hybrid',
 ]
 
 export function importStyle() {
     const random = Math.floor(Math.random() * 10000)
     const randomStyle = styleEnums[random % styleEnums.length]
-    import('../../node_modules/highlight.js/styles/' + randomStyle + '.css')
+    setHighlightStyle(randomStyle)
 }
 
 export function importStyleLight() {
     const random = Math.floor(Math.random() * 10000)
     const randomStyle = styleEnumsLight[random % styleEnumsLight.length]
-    import('../../node_modules/highlight.js/styles/' + randomStyle + '.css')
+    setHighlightStyle(randomStyle)
+}
+
+export function setHighlightStyle(styleName) {
+    const linkId = 'hljs-theme-link';
+    const href = `/style/${styleName}.css`;
+
+    let link = document.getElementById(linkId);
+
+    if (link) {
+        // 已存在则直接替换 href
+        if (link.href.endsWith(href)) {
+            return;
+        }
+        link.href = href;
+    } else {
+        // 不存在则创建新的 link
+        link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
 }
 
 export function headToHtmlTag(meta) {

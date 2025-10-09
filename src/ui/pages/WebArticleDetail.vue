@@ -153,7 +153,7 @@
 
 <script setup>
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
-import {computed, defineProps, onBeforeUnmount, onMounted, ref} from "vue";
+import {computed, defineProps, onBeforeUnmount, onMounted, ref, watch} from "vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {getBlogContent, getBlogList, getBlogMeta} from "@/api/article";
@@ -162,7 +162,7 @@ import {decrypt} from "@/utils/crypto";
 import {buildImgFormat, headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
-import {toSpecifyPage, toSpecifyPageWithQuery, toSpecifyPageWithQueryNewTab} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQuery} from "@/router";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
@@ -203,6 +203,18 @@ const blogMeta = ref({
   authorId: "",
   authorName: "",
 })
+
+// 主题变换
+watch(
+    () => globalState.curThemeName,
+    () => {
+      if (globalState.curThemeName.includes("dark")) {
+        importStyle()
+      } else {
+        importStyleLight()
+      }
+    }
+);
 
 //请求后端获取文章内容
 function getBlogContentMethod() {
