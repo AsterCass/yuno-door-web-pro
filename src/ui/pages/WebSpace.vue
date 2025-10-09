@@ -177,7 +177,7 @@
 
       </div>
 
-      <div class="col-md-8 col-12 ">
+      <div class="col-md-8 col-12 cask-user-space-data">
 
         <div class="row q-mr-xl items-center" style="margin-top: 7.5rem;">
           <cask-tabs class="" :tabs="tabs" v-model="tab" shadow/>
@@ -571,5 +571,15 @@ onBeforeRouteUpdate((to, from) => {
   border: 1px solid rgb(var(--text-color), 0.1);
 }
 
+
+</style>
+
+<style lang="scss">
+
+.cask-user-space-data {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
 
 </style>
