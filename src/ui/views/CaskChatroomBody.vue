@@ -47,9 +47,9 @@
                v-on:mouseover="chatRow.webFocusThisMsg=true">
             <div v-if="chatRow.replyData" class="relative-position q-mb-xs" style="height: 1.75rem;">
               <div class="chat-body-reply">
-                {{ $t('main_chat_operation_reply') }}:&nbsp;{{
-                  chatRow.replyData.startsWith(RES_ADD) ?
-                      $t('main_chat_body_file_in_tree') :
+                {{ $t('main_chat_operation_reply') }}&nbsp;{{
+                  chatRow.replyData.includes(RES_ADD) ?
+                      chatRow.replyData.replace(new RegExp(RES_ADD + ".*"), $t('main_chat_body_file_in_tree')) :
                       chatRow.replyData
                 }}
               </div>
@@ -130,9 +130,9 @@
                v-on:mouseover="chatRow.webFocusThisMsg=true">
             <div v-if="chatRow.replyData" class="relative-position q-mb-xs" style="height: 1.75rem;">
               <div class="chat-body-reply-mine">
-                {{ $t('main_chat_operation_reply') }}:&nbsp;{{
-                  chatRow.replyData.startsWith(RES_ADD) ?
-                      $t('main_chat_body_file_in_tree') :
+                {{ $t('main_chat_operation_reply') }}&nbsp;{{
+                  chatRow.replyData.includes(RES_ADD) ?
+                      chatRow.replyData.replace(new RegExp(RES_ADD + ".*"), $t('main_chat_body_file_in_tree')) :
                       chatRow.replyData
                 }}
               </div>

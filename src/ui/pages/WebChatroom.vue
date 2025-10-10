@@ -637,6 +637,13 @@ watch(
       if (socketChatState.webChattingFocusChat) {
         messageTimeLabelBuilder(socketChatState.webChattingFocusChat.userChattingData)
       }
+      if (replyChatMessage.value) {
+        if (replyChatMessage.value.startsWith(RES_ADD)) {
+          replyChatContent.value = t('main_chat_operation_reply') + ": " + t('main_chat_body_file_in_tree')
+        } else {
+          replyChatContent.value = t('main_chat_operation_reply') + ": " + replyChatMessage.value
+        }
+      }
       rebuildChattingDataWeb()
     }
 );
@@ -719,7 +726,8 @@ const sendFile = async (data) => {
     return false
   }
   const readAddress = res.data.data.readAddress
-  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress, replyChatMessageId.value, replyChatMessage.value)
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress,
+      replyChatMessageId.value, replyChatUserName.value, replyChatMessage.value)
   cancelReplySub()
   return true
 }
@@ -738,14 +746,16 @@ const sendImg = async (data) => {
     return false
   }
   const readAddress = res.data.data.readAddress
-  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress, replyChatMessageId.value, replyChatMessage.value)
+  socketSend(socketChatState.webChattingFocusChat.chatId, readAddress,
+      replyChatMessageId.value, replyChatUserName.value, replyChatMessage.value)
   cancelReplySub()
   return true
 }
 
 const sendEmoji = (url) => {
   if (globalState.isLogin) {
-    socketSend(socketChatState.webChattingFocusChat.chatId, url, replyChatMessageId.value, replyChatMessage.value)
+    socketSend(socketChatState.webChattingFocusChat.chatId, url,
+        replyChatMessageId.value, replyChatUserName.value, replyChatMessage.value)
     cancelReplySub()
   } else {
     notifyTopWarning(t('main_chat_not_login_message'))
@@ -756,7 +766,7 @@ const sendChatMsg = () => {
   if (socketChatState.webChattingFocusChat.webInputText) {
     if (globalState.isLogin) {
       socketSend(socketChatState.webChattingFocusChat.chatId, socketChatState.webChattingFocusChat.webInputText,
-          replyChatMessageId.value, replyChatMessage.value)
+          replyChatMessageId.value, replyChatUserName.value, replyChatMessage.value)
       cancelReplySub()
       socketChatState.webChattingFocusChat.webInputText = ""
     } else {

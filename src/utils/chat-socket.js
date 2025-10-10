@@ -478,13 +478,16 @@ export function chattingDataInit(selectFirst = false, resetSelected = true) {
 
 let socketSendStatus = false
 
-export function socketSend(chatId, message, replyMessageId, replayMessageData) {
+export function socketSend(chatId, message, replyMessageId, replyUserName, replayMessageData) {
     if (socketSendStatus) {
         return
     }
     socketSendStatus = true
     if (socketChatState.stompClient && socketChatState.socketConnected) {
-        const msg = {chatId: chatId, message: message, replyId: replyMessageId, replyData: replayMessageData};
+        const msg = {
+            chatId: chatId, message: message, replyId: replyMessageId,
+            replyData: `${replyUserName}: ${replayMessageData}`
+        };
         socketChatState.stompClient.publish({destination: "/socket/message/send", body: JSON.stringify(msg)});
     }
     socketSendStatus = false
