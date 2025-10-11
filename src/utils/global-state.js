@@ -26,7 +26,7 @@ export const useGlobalStateStore = defineStore('globalState', {
         curPlayerEnableDanmaku: true,
         curThemeName: 'light',
         hideScroller: true,
-        language: 'en',
+        language: 'zh',
         saveLoginData: true,
         screenMini: false,
         isLogin: false,

@@ -1,6 +1,6 @@
 // https://quasar.dev/options/installing-icon-libraries
 import 'quasar/dist/quasar.sass'
-import en from 'quasar/lang/en-US'
+import zh from 'quasar/lang/zh-CN'
 import '@quasar/extras/material-icons/material-icons.css'
 import '@quasar/extras/eva-icons/eva-icons.css'
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
@@ -12,5 +12,5 @@ import {Loading, Notify} from 'quasar'
 export default {
     plugins: {Loading, Notify},
     config: {loading: {}, notify: {}},
-    lang: en,
+    lang: zh,
 }
