@@ -154,7 +154,7 @@ const globalState = useGlobalStateStore();
 let qrType = ref("square")
 let qrValue = ref("https://astercasc.com")
 let qrColor = ref("#303030")
-let qrBgColor = ref("Transparent")
+let qrBgColor = ref("White")
 let uploadImg = ref(t('in_develop'))
 
 
