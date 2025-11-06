@@ -521,7 +521,7 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
         }
 
         // Deal with post ellipsis
-        if (pageNo > commentPageNo.value && pageNo - commentPageNo.value - maxPageSlide > 1) {
+        if (pageNo > commentPageNo.value && pageNo - commentPageNo.value - maxPageSlide > 0) {
           hasPostEllipsis = true
         }
 
@@ -530,11 +530,11 @@ function refreshCommentTree(navigateTo1 = false, rebuild = true) {
           commentPageShowNew.push({code: pageNo, label: pageNo})
         } else if (hasPreEllipsis && commentPageNo.value - pageNo === maxPageSlide + 1) {
           commentPageShowNew.push({code: pageNo, label: "···"})
-        } else if (hasPostEllipsis && pageNo - commentPageNo.value === maxPageSlide + 2) {
-          commentPageShowNew.push({code: pageNo - 1, label: "···"})
+        } else if (hasPostEllipsis && pageNo - commentPageNo.value === maxPageSlide + 1) {
+          commentPageShowNew.push({code: pageNo, label: "···"})
         }
-        commentPageShow.value = commentPageShowNew
       }
+      commentPageShow.value = commentPageShowNew
     }
     // Finish
     dataLoaded.value = true
