@@ -110,10 +110,10 @@
 
               </div>
               <div v-if="!globalState.screenMini" class="column items-center" style="width: 50px">
-                <div style="width: 10px;height: 10px;border-radius: 50%; margin-top: 12px;
+                <div style="width: .35rem;height: .35rem;border-radius: 50%; margin-top: 12px;
                         background-color: rgba(var(--text-color), .75)"/>
-                <div class="col" style="width: 2px; background-color: rgba(var(--text-color), .5);
-                 margin: 12px 0 18px 0; border-radius: 1px;">
+                <div class="col" style="width: .078rem; background-color: rgba(var(--text-color), .25);
+                 margin: 12px 0 48px 0; border-radius: 1px;">
                 </div>
               </div>
               <div v-if="!globalState.screenMini" class="col-md-3 q-mt-xs">
