@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import {defineEmits, defineProps, onMounted, ref} from "vue";
+import {defineEmits, defineProps, onMounted, ref, watch} from "vue";
 import {date} from "quasar";
 
 const emit = defineEmits(['update:modelValue']);
@@ -44,9 +44,9 @@ const props = defineProps({
 })
 
 const pickDate = ref(props.modelValue)
-// watch(() => props.modelValue, () => {
-//   pickDate.value = props.modelValue
-// })
+watch(() => props.modelValue, () => {
+  pickDate.value = props.modelValue
+})
 
 let dateUiInput = ref("")
 

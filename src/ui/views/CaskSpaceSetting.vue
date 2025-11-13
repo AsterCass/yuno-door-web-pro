@@ -130,6 +130,10 @@ import {updateAvatar, updateInfo, userDetail} from "@/api/user";
 import {checkMotto, checkNickName} from "@/utils/format-check";
 
 
+const {t} = useI18n()
+const globalState = useGlobalStateStore();
+const thisRouter = useRouter()
+
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   modelValue: {
@@ -157,10 +161,9 @@ watch(() => props.modelValue, () => {
   showUserSpaceSetting.value = props.modelValue
 })
 
-const {t} = useI18n()
-const globalState = useGlobalStateStore();
-const thisRouter = useRouter()
-
+watch(() => globalState.loginToken, () => {
+  reloadData();
+})
 
 const tabs = ref([
   {
