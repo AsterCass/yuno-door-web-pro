@@ -52,7 +52,11 @@ const responseConfig = response => {
     return response;
 }
 const responseErrorConfig = error => {
-    notifyTopWarning(t('error_request'))
+    if(error.status === 429) {
+        notifyTopWarning(t('error_request_429'))
+    } else {
+        notifyTopWarning(t('error_request'))
+    }
     return undefined
 }
 

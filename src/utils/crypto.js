@@ -1,5 +1,27 @@
 import CryptoJS from "crypto-js";
 
+export async  function generalOneWayEncryptStr(password, salt){
+    const enc = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits"]
+    );
+    const derivedBits = await crypto.subtle.deriveBits(
+        {
+            name: "PBKDF2",
+            salt: enc.encode(salt),
+            iterations: 10000,
+            hash: "SHA-256",
+        },
+        key,
+        256
+    );
+    return btoa(String.fromCharCode(...new Uint8Array(derivedBits)));
+}
+
 export function decrypt(blob) {
     const passphrase = "ASTER_cass_NO_el_mind_auth_company";
     const saltWA = CryptoJS.enc.Hex.parse("0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f");

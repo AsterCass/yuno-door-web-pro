@@ -130,6 +130,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {checkAccount, checkIsMail, checkIsPasswd} from "@/utils/format-check";
 import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import {registry, sendRegMail} from "@/api/user";
+import {generalOneWayEncryptStr} from "@/utils/crypto";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -212,7 +213,7 @@ const userSendCode = () => {
   })
 }
 
-const userRegister = () => {
+const userRegister = async () => {
   let registryBody = {}
   if (!agreePrivacy.value) {
     notifyTopWarning(t('main_login_message_check'))
@@ -241,6 +242,9 @@ const userRegister = () => {
   // Call
   inRegistering.value = true
   registryBody.gender = 1
+  // passwd
+  registryBody.passwdMail = await generalOneWayEncryptStr(inputPassword.value, inputMail.value)
+  registryBody.passwdAccount = await generalOneWayEncryptStr(inputPassword.value, inputAccount.value)
   registry(registryBody).then(res => {
     if (!res || !res.data || !res.data.data) {
       inRegistering.value = false

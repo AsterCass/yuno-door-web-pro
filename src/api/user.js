@@ -3,7 +3,7 @@ import {serviceShiro} from '@/utils/request'
 
 export function userLogin(body) {
     return serviceShiro({
-        url: `/yui/user/login`,
+        url: `/yui/user/login/v2`,
         method: 'post',
         data: body
     })
@@ -91,7 +91,7 @@ export function updateAvatar(data) {
 
 export function registry(body) {
     return serviceShiro({
-        url: `/yui/user/registry`,
+        url: `/yui/user/registry/v2`,
         method: 'post',
         data: body
     })
@@ -99,7 +99,7 @@ export function registry(body) {
 
 export function resetPasswd(body) {
     return serviceShiro({
-        url: `/yui/user/resetPasswd`,
+        url: `/yui/user/resetPasswd/v2`,
         method: 'post',
         data: body
     })

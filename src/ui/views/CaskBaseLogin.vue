@@ -16,9 +16,8 @@
             <span style="opacity: .5">{{ $t('main_login_subtitle_pre') }}</span>
             <span @click=" emit('update:showUserLogin', false); showUserRegister = true"
                   class="cask-jump-link-in-text">{{ $t('main_login_subtitle_center') }}</span>
-            <!--            <span style="opacity: .5"> {{ $t('main_login_subtitle_reset_pre') }}</span>-->
-            <!--            <span @click="showUserReset = true"-->
-            <!--                  class="cask-jump-link-in-text">{{ $t('main_login_subtitle_reset_center') }}</span>-->
+                        <span style="opacity: .5"> {{ $t('main_login_subtitle_reset_pre') }}</span>
+                        <span class="cask-jump-link-in-text">{{ $t('main_login_subtitle_reset_center') }}</span>
           </div>
         </div>
 
@@ -143,6 +142,7 @@ import {useI18n} from "vue-i18n";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {openLink} from "@/utils/base-tools";
 import CaskBaseRegister from "@/ui/views/CaskBaseRegister.vue";
+import {generalOneWayEncryptStr} from "@/utils/crypto";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -182,7 +182,7 @@ const githubLogin = () => {
   openLink(githubLoginUrl, false)
 }
 
-const headerLogin = () => {
+const headerLogin = async () => {
   if (!agreePrivacy.value) {
     notifyTopWarning(t('main_login_message_check'))
     return
@@ -191,7 +191,9 @@ const headerLogin = () => {
     notifyTopWarning(t('main_login_message_empty'))
     return
   }
-  let currentBody = {accountMail: inputAccount.value, passwd: inputPassword.value}
+  const encryptedPassword = await generalOneWayEncryptStr(inputPassword.value, inputAccount.value)
+  let currentBody = {accountMail: inputAccount.value,
+    passwd: encryptedPassword}
   userLogin(currentBody).then(res => {
     if (!res || !res.data || !res.data.data) {
       return

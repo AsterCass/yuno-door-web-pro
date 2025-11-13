@@ -18,6 +18,7 @@
 
   "in_develop": "This feature is under development. Stay tuned",
   "error_request": "The system is busy. Please try again later",
+  "error_request_429": "You are sending requests too frequently. Please wait a moment and try again.",
   "no_login": "Unauthenticated users cannot perform this action. Please log in first",
   "no_auth": "Permission denied. Unable to perform this operation. Please contact the administrator for authorization",
   "file_no_limit": "The upload limit has been reached. Please come back tomorrow😭",
@@ -61,7 +62,7 @@
 
   "main_login_subtitle_pre": "Don't have an account? You can log in with a third-party account below, or ",
   "main_login_subtitle_center": "register a new account",
-  "main_login_subtitle_reset_pre": ". If you have forgotten your password or wish to change it, please ",
+  "main_login_subtitle_reset_pre": ". If you have forgotten your password or wish to reset it, please ",
   "main_login_subtitle_reset_center": "click",
   "main_login_account": "Account",
   "main_login_password": "Password",
