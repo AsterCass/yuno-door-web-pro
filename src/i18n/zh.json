@@ -65,6 +65,7 @@
   "main_login_subtitle_reset_pre": "。如果忘记您密码或者希望重置密码，请",
   "main_login_subtitle_reset_center": "点击",
   "main_login_subtitle_post": "",
+  "main_login_mail": "邮箱",
   "main_login_account": "账号",
   "main_login_password": "密码",
   "main_login_privacy_pre": "我同意",
@@ -84,7 +85,7 @@
   "main_login_google_client_fail": "获取用户信息失败",
 
   "main_register_btn": "注册",
-  "main_register_subtitle": "请填写下方基本信息以供注册",
+  "main_register_subtitle": "请填写下方基本信息以供注册。注意：密码8-20位且需要包含大写、小写和数字",
   "main_register_show_passwd": "显示密码",
   "main_register_hide_passwd": "隐藏密码",
   "main_register_account": "账号",
@@ -93,9 +94,12 @@
   "main_register_code": "验证码",
   "main_register_code_send": "发送验证码",
   "main_register_mail_check": "邮箱格式错误",
-  "main_register_account_check": "账号格式错误，8-20位且只能由英文字母和数字组成验证码不能为空",
+  "main_register_account_check": "账号格式错误，8-20位且只能由英文字母和数字组成",
   "main_register_passwd_check": "密码格式错误，8-20位且需要包含大写、小写和数字",
   "main_register_code_check": "验证码不能为空",
+
+  "main_reset_passwd_btn": "重置",
+  "main_reset_passwd_subtitle": "请输入邮箱和希望修改的密码，再点击发送验证码，收到邮件后填入验证码即可重置完成。注意：密码8-20位且需要包含大写、小写和数字",
 
   "main-fa-mail": "邮箱",
   "main-fa-wechat": "微信",

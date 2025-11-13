@@ -18,17 +18,6 @@
         </div>
 
         <div class="q-mx-md">
-          <q-input v-model="inputAccount" tabindex="0" dense outlined
-                   class="q-ma-md component-outline-input-grow-on-semi-trans">
-            <template v-slot:prepend>
-              <div class="row items-center justify-between">
-                <q-icon class="q-mr-sm" name="fa-regular fa-address-card" size="1rem"/>
-                <div style="opacity: 0.8">
-                  {{ $t('main_register_account') }}
-                </div>
-              </div>
-            </template>
-          </q-input>
 
           <q-input v-model="inputMail" tabindex="0" dense outlined
                    class="q-ma-md component-outline-input-grow-on-semi-trans">
@@ -149,7 +138,6 @@ const props = defineProps({
 const emit = defineEmits(['update:showUserRegister'])
 
 
-const inputAccount = ref('')
 const inputMail = ref('')
 const inputPassword = ref('')
 const inputCode = ref('')
@@ -224,16 +212,11 @@ const userRegister = async () => {
     return
   }
   registryBody.mail = inputMail.value
+  registryBody.account = inputMail.value
   if (!checkIsPasswd(inputPassword.value)) {
     notifyTopWarning(t('main_register_passwd_check'))
     return
   }
-  registryBody.passwd = inputPassword.value
-  if (!checkAccount(inputAccount.value)) {
-    notifyTopWarning(t('main_register_account_check'))
-    return
-  }
-  registryBody.account = inputAccount.value
   if (!inputCode.value) {
     notifyTopWarning(t('main_register_code_check'))
     return
@@ -244,7 +227,6 @@ const userRegister = async () => {
   registryBody.gender = 1
   // passwd
   registryBody.passwdMail = await generalOneWayEncryptStr(inputPassword.value, inputMail.value)
-  registryBody.passwdAccount = await generalOneWayEncryptStr(inputPassword.value, inputAccount.value)
   registry(registryBody).then(res => {
     if (!res || !res.data || !res.data.data) {
       inRegistering.value = false

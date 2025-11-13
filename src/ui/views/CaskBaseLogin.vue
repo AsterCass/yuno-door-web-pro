@@ -17,18 +17,19 @@
             <span @click=" emit('update:showUserLogin', false); showUserRegister = true"
                   class="cask-jump-link-in-text">{{ $t('main_login_subtitle_center') }}</span>
                         <span style="opacity: .5"> {{ $t('main_login_subtitle_reset_pre') }}</span>
-                        <span class="cask-jump-link-in-text">{{ $t('main_login_subtitle_reset_center') }}</span>
+                        <span @click=" emit('update:showUserLogin', false); showUserResetPassword = true"
+                              class="cask-jump-link-in-text">{{ $t('main_login_subtitle_reset_center') }}</span>
           </div>
         </div>
 
         <div class="q-mx-md">
-          <q-input v-model="inputAccount" tabindex="0" dense outlined
+          <q-input v-model="inputMail" tabindex="0" dense outlined
                    class="q-ma-md component-outline-input-grow-on-semi-trans">
             <template v-slot:prepend>
               <div class="row items-center justify-between">
-                <q-icon class="q-mr-sm" name="fa-regular fa-address-card" size="1rem"/>
+                <q-icon class="q-mr-sm" name="fa-regular fa-envelope" size="1rem"/>
                 <div style="opacity: 0.8">
-                  {{ $t('main_login_account') }}
+                  {{ $t('main_login_mail') }}
                 </div>
               </div>
             </template>
@@ -130,6 +131,8 @@
 
   <CaskBaseRegister v-model:showUserRegister="showUserRegister"/>
 
+  <CaskBaseResetPasswd v-model:showUserResetPassword="showUserResetPassword"/>
+
 </template>
 
 <script setup>
@@ -143,6 +146,7 @@ import {useGlobalStateStore} from "@/utils/global-state";
 import {openLink} from "@/utils/base-tools";
 import CaskBaseRegister from "@/ui/views/CaskBaseRegister.vue";
 import {generalOneWayEncryptStr} from "@/utils/crypto";
+import CaskBaseResetPasswd from "@/ui/views/CaskBaseResetPasswd.vue";
 
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
@@ -167,12 +171,12 @@ const googleLoginUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
 
 const githubLoginUrl = "https://github.com/login/oauth/authorize?" +
     "client_id=Ov23liujVlKgU8PoEOfb&redirect_uri=https://www.astercasc.com/auth/github/callback&scope=read:user user:email"
-const inputAccount = ref('')
+const inputMail = ref('')
 const inputPassword = ref('')
 const agreePrivacy = ref(false)
 
 const showUserRegister = ref(false)
-// const showUserReset = ref(false)
+const showUserResetPassword = ref(false)
 
 const githubLogin = () => {
   if (!agreePrivacy.value) {
@@ -187,12 +191,12 @@ const headerLogin = async () => {
     notifyTopWarning(t('main_login_message_check'))
     return
   }
-  if (!inputAccount.value || !inputPassword.value) {
+  if (!inputMail.value || !inputPassword.value) {
     notifyTopWarning(t('main_login_message_empty'))
     return
   }
-  const encryptedPassword = await generalOneWayEncryptStr(inputPassword.value, inputAccount.value)
-  let currentBody = {accountMail: inputAccount.value,
+  const encryptedPassword = await generalOneWayEncryptStr(inputPassword.value, inputMail.value)
+  let currentBody = {accountMail: inputMail.value,
     passwd: encryptedPassword}
   userLogin(currentBody).then(res => {
     if (!res || !res.data || !res.data.data) {
