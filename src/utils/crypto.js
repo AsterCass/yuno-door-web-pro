@@ -13,7 +13,7 @@ export async  function generalOneWayEncryptStr(password, salt){
         {
             name: "PBKDF2",
             salt: enc.encode(salt),
-            iterations: 10000,
+            iterations: 110000,
             hash: "SHA-256",
         },
         key,
