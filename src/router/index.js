@@ -32,7 +32,7 @@ const router = createRouter({
             name: "main",
             component: WebMain,
             meta: {
-                title: 'AsterCasc | Software Developer | Personal Portfolio | 秋光自挽 | 软件开发工程师 | 个人人作品集'
+                title: 'AsterCasc | Software Developer | Personal Portfolio | 将军的鱿鱼炒面 | 软件开发工程师 | 个人人作品集'
             },
         },
         {
