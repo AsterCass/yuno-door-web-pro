@@ -13,12 +13,14 @@ export function initGlobalState() {
     //show scroller bar
     document.documentElement.setAttribute('hide-scrollbar', String(globalState.hideScroller));
     //language
-    const lang = globalState.language
+    const lang = globalState.language ? globalState.language : navigator.language.slice(0, 2);
     i18n.global.locale = lang
-    if (lang === 'en') {
-        Quasar.lang.set(en)
-    } else if (lang === 'zh') {
+    if (lang === 'zh') {
         Quasar.lang.set(zh)
+        globalState.updateLanguage('zh');
+    } else  {
+        Quasar.lang.set(en)
+        globalState.updateLanguage('en');
     }
     //screen size
     globalState.updateScreenMini(isMiniScreenMethod());
