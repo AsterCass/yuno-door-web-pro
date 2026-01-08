@@ -48,7 +48,7 @@
         {{ $t('main-nav-quick-link') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="toSpecifyPage(thisRouter, 'mainArticleList')">
+           @click="toSpecifyPage(thisRouter, 'webArticleList')">
         {{ $t('main_articles') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
@@ -60,7 +60,7 @@
         {{ $t('main_board') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="notifyTopWarning($t('in_develop'))">
+           @click="toSpecifyPage(thisRouter, 'chatroom')">
         {{ $t('main_chat_room') }}
       </div>
     </div>
