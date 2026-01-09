@@ -48,19 +48,19 @@
         {{ $t('main-nav-quick-link') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="toSpecifyPage(thisRouter, 'webArticleList')">
+           @click="toSpecifyPageWithQueryNewTab(thisRouter, 'webArticleList')">
         {{ $t('main_articles') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="toSpecifyPage(thisRouter, 'mainVideoCollection')">
+           @click="toSpecifyPageWithQueryNewTab(thisRouter, 'mainVideoCollection')">
         {{ $t('main_videos') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="toSpecifyPage(thisRouter, 'board')">
+           @click="toSpecifyPageWithQueryNewTab(thisRouter, 'board')">
         {{ $t('main_board') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="toSpecifyPage(thisRouter, 'chatroom')">
+           @click="toSpecifyPageWithQueryNewTab(thisRouter, 'chatroom')">
         {{ $t('main_chat_room') }}
       </div>
     </div>
@@ -156,7 +156,7 @@ import {date} from "quasar";
 import {openLink} from "@/utils/base-tools";
 import {useRouter} from "vue-router";
 import {notifyTopWarning} from "@/utils/notification-tools";
-import {toSpecifyPage} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQueryNewTab} from "@/router";
 
 const thisRouter = useRouter()
 

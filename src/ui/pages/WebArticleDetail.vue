@@ -117,7 +117,7 @@
               </q-item>
               <q-item clickable v-ripple dense style="border-radius: 8px"
                       v-for="item in extraArticleData" :key="item"
-                      @click="()=>{toSpecifyPageWithQueryNewTab(
+                      @click="()=>{ toSpecifyPageWithQueryNewTab(
                           thisRouter, 'webArticleDetail', {articleId: item.id})}">
                 <q-item-section class="q-my-xs">
                   <h6 style="color: rgb(var(--pointer));text-decoration: underline;">
@@ -162,7 +162,7 @@ import {decrypt} from "@/utils/crypto";
 import {buildImgFormat, headToHtmlTag, importStyle, importStyleLight, marked} from "@/utils/marked-tools";
 import {delay, togoElementCenter} from "@/utils/base-tools";
 import {customPageNP} from "@/utils/page";
-import {toSpecifyPage, toSpecifyPageWithQuery} from "@/router";
+import {toSpecifyPage, toSpecifyPageWithQuery, toSpecifyPageWithQueryNewTab} from "@/router";
 import CaskDialogImage from "@/ui/components/CaskDialogImage.vue";
 import CaskBaseCommentTree from "@/ui/views/CaskBaseCommentTree.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
