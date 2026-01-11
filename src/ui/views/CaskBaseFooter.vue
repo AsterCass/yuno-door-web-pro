@@ -125,10 +125,6 @@
            @click="openLink('https://github.com/AsterCass/yuno-door-web-pro')">
         Yuno Web Door Pro
       </div>
-      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="openLink('https://github.com/AsterCass/yuno-saas-door')">
-        Yuno Saas Door
-      </div>
     </div>
 
     <div class="q-ma-sm column">
