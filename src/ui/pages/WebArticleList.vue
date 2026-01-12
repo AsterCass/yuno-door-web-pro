@@ -2,6 +2,7 @@
   <q-layout view="hhh lpr fff">
     <cask-base-header :center-elements="[
         CaskModuleElement.HOME,
+        CaskModuleElement.PLAY,
         CaskModuleElement.CHATROOM,
     ]"/>
 

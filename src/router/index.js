@@ -21,6 +21,7 @@ import WebAuthLogin from "@/ui/pages/WebAuthLogin.vue";
 import WebSpace from "@/ui/pages/WebSpace.vue";
 import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
 import WebVideoPlay from "@/ui/pages/WebVideoPlayer.vue";
+import WebPlay from "@/ui/pages/WebPlay.vue";
 
 
 const router = createRouter({
@@ -225,6 +226,14 @@ const router = createRouter({
             component: WebChatroom,
             meta: {
                 title: 'AsterCasc | Chatroom | 聊天室'
+            },
+        },
+        {
+            path: "/play",
+            name: "play",
+            component: WebPlay,
+            meta: {
+                title: 'AsterCasc | Play | 小游戏'
             },
         },
         {

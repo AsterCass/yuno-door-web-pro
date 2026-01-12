@@ -2908,11 +2908,6 @@ custom-event-polyfill@^1.0.7:
   resolved "https://registry.npmmirror.com/custom-event-polyfill/-/custom-event-polyfill-1.0.7.tgz#9bc993ddda937c1a30ccd335614c6c58c4f87aee"
   integrity sha512-TDDkd5DkaZxZFM8p+1I3yAlvM3rSr1wbrOliG4yJiwinMZN8z/iGL7BTlDkrJcYTmgUSb4ywVCc3ZaUtOtC76w==
 
-danmaku@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.npmmirror.com/danmaku/-/danmaku-2.0.9.tgz#9b25b9c4dda98a28d2279f9a8f25efba181ca6c6"
-  integrity sha512-K8XM3tWiKR7adbt45NgWucmFzY91eHKiLDPbeFXCZ2KWEju+3hgSIaWMkdg8dnxVTguKOc82vF/0DXm1Y02EUA==
-
 debounce@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmmirror.com/debounce/-/debounce-1.2.1.tgz"

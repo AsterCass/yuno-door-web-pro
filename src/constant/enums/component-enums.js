@@ -31,6 +31,7 @@ export const CaskModuleElement = Object.freeze({
     GUEST_BOOK: 3,
     CHATROOM: 4,
     TOOL: 5,
+    PLAY: 6,
 });
 
 export const CaskChatTypeEnum = Object.freeze({
