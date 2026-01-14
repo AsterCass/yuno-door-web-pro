@@ -183,7 +183,7 @@
           </div>
 
           <div class="row q-mb-sm">
-            <q-btn no-caps unelevated style="width: 100%" dense @click="openChatSetting = true">
+            <q-btn no-caps unelevated style="width: 100%" dense @click="openChatSetting = !openChatSetting">
               <div class="row items-center full-width">
                 <q-icon class="col-2" name="fa-solid fa-sliders" size="1.2rem"/>
                 <div class="col-9 row items-center q-px-sm" style="height: 2rem">
