@@ -628,6 +628,7 @@ const replyChatUserName = ref("")
 
 
 watch(() => socketChatState.chattingDataWebSelected, () => {
+  openChatSetting.value = false
   cancelReplySub()
 })
 
