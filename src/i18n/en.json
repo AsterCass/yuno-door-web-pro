@@ -412,6 +412,12 @@
   "main_video_auto_next": "Auto Next Episode",
   "main_video_enable_danmaku": "Enable Danmaku",
 
+  "main_play_setting": "Game Settings",
+  "main_play_hextris": "Hextris",
+  "main_play_tetris": "Tetris",
+  "main_play_birth": "Birth Simulator",
+  "main_play_instructions": "Instructions",
+
   "home": "Home",
   "back_home": "Back to Home"
 }
