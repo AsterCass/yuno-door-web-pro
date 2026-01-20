@@ -15,8 +15,11 @@
       <q-tab-panels v-model="tab" animated class="bg-transparent col" transition-duration="500"
                     transition-prev="jump-down" transition-next="jump-up">
         <q-tab-panel name="birth">
-          <div class="row justify-center items-center full-height">
-            this is birth
+          <div class="row justify-around items-center full-height">
+            <div class="wheel-container"></div>
+            <div class="col-4 full-height q-pa-xl">
+              game start
+            </div>
           </div>
         </q-tab-panel>
         <q-tab-panel name="tetris">
@@ -36,7 +39,7 @@
         </q-tab-panel>
       </q-tab-panels>
 
-      <div style="width: 12rem">
+      <div style="width: 18rem;">
         <h4 class="row justify-center items-center">
           {{ $t('main_play_instructions') }}
         </h4>
@@ -56,7 +59,8 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import { Wheel } from 'spin-wheel';
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -90,10 +94,37 @@ const tabs = ref([
 ])
 const tab = ref("birth");
 
+onMounted(() => {
+
+  const wheelProps = {
+    items: [
+      {
+        label: 'one',
+      },
+      {
+        label: 'two',
+      },
+      {
+        label: 'three',
+      },
+    ]
+  }
+
+  const container = document.querySelector('.wheel-container');
+  const wheel = new Wheel(container, wheelProps);
+
+})
+
 
 </script>
 
 <style lang="scss" scoped>
+
+.wheel-container {
+  overflow: hidden;
+  height: 90%;
+  aspect-ratio: 1;
+}
 
 
 </style>
