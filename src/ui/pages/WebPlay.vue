@@ -59,8 +59,9 @@ import {CaskModuleElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useRouter} from "vue-router";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
-import {onMounted, ref} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import { Wheel } from 'spin-wheel';
+import {delay} from "@/utils/base-tools";
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
@@ -94,8 +95,20 @@ const tabs = ref([
 ])
 const tab = ref("birth");
 
-onMounted(() => {
 
+watch(() => tab.value, async () => {
+  await nextTick()
+  gameInit()
+})
+
+function gameInit() {
+  if(tab.value === "birth") {
+    buildWheel()
+  }
+}
+
+
+function buildWheel() {
   const wheelProps = {
     items: [
       {
@@ -109,10 +122,12 @@ onMounted(() => {
       },
     ]
   }
-
   const container = document.querySelector('.wheel-container');
   const wheel = new Wheel(container, wheelProps);
+}
 
+onMounted(() => {
+  gameInit()
 })
 
 
