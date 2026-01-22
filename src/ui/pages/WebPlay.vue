@@ -43,6 +43,28 @@
         <h4 class="row justify-center items-center">
           {{ $t('main_play_instructions') }}
         </h4>
+
+        <q-tab-panels v-model="tab" class="bg-transparent full-height" animated transition-duration="500"
+                      transition-prev="jump-right" transition-next="jump-left">
+          <q-tab-panel name="birth">
+            <h6 class="row justify-center items-center full-height">
+             11111
+            </h6>
+          </q-tab-panel>
+          <q-tab-panel name="tetris">
+            <h6 class="row justify-center items-center full-height">
+              22222
+            </h6>
+          </q-tab-panel>
+          <q-tab-panel name="hextris">
+            <h6 class="row justify-center items-center full-height">
+             3333
+            </h6>
+          </q-tab-panel>
+          <q-tab-panel name="setting">
+
+          </q-tab-panel>
+        </q-tab-panels>
       </div>
 
     </div>
