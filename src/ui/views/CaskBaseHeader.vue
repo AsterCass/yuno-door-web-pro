@@ -147,13 +147,8 @@
          v-morph:page:withSetting:500.resize="morphWithSetting">
 
       <div v-show="morphWithSettingContentShow">
-        <div class="row justify-end">
-          <q-btn no-caps unelevated dense size="10px" class="q-mt-sm q-mr-sm q-pa-xs" round
-                 icon="fa-solid fa-down-left-and-up-right-to-center"
-                 @click="showHeaderSetting(false)"/>
-        </div>
 
-        <div class="row justify-center" style="margin-top: -15px !important">
+        <div class="row justify-center" style="margin-top: 0.6rem !important">
           <h5>
             {{ $t('main_setting_title') }}
           </h5>
