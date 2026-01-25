@@ -418,6 +418,13 @@
   "main_play_birth": "投胎模拟器",
   "main_play_instructions": "操作说明",
 
+  "main_play_birth_start": "开始投胎",
+  "main_play_birth_desc": "点击开始投胎，看一下如果现在表演空中飞人会飞到哪里吧~",
+  "main_play_birth_ref_1": "组件参考：",
+  "main_play_birth_ref_2": "数据参考：",
+  "main_play_birth_ing": "正在为您选择新的投胎地点...",
+  "main_play_birth_ed": "恭喜你！你投胎到了：",
+
   "home": "主页",
   "back_home": "回到主页"
 }

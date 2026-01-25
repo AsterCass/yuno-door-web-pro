@@ -418,6 +418,14 @@
   "main_play_birth": "Birth Simulator",
   "main_play_instructions": "Instructions",
 
+
+  "main_play_birth_start": "Start Reincarnation",
+  "main_play_birth_desc": "Click to Start Reincarnation and see where you would end up if you performed an aerial stunt right now~",
+  "main_play_birth_ref_1": "Component reference:",
+  "main_play_birth_ref_2": "Data reference:",
+  "main_play_birth_ing": "Selecting a new reincarnation destination for you...",
+  "main_play_birth_ed": "Congratulations! You have been reincarnated in:",
+
   "home": "Home",
   "back_home": "Back to Home"
 }

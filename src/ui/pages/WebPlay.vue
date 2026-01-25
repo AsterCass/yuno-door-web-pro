@@ -17,8 +17,24 @@
         <q-tab-panel name="birth">
           <div class="row justify-around items-center full-height">
             <div class="wheel-container"></div>
-            <div class="col-4 full-height q-pa-xl">
-              game start
+            <div class="col-4 full-height q-pa-xl column items-center">
+              <q-btn no-caps unelevated class="shadow-2 component-full-btn-full"
+                     @click="startBirth">
+                {{ $t('main_play_birth_start') }}
+              </q-btn>
+
+              <div v-if="currentItem" class="full-width q-mt-xl">
+                <h5>
+                  {{ inRotate ? $t('main_play_birth_ing') : $t('main_play_birth_ed') }}
+                </h5>
+                <h6 style="color: rgb(var(--pointer))">
+                  {{currentItem.label}}
+                </h6>
+                <div v-if="currentItem.desc" style="opacity: .75" class="q-mt-xl">
+                  {{currentItem.desc}}
+                </div>
+              </div>
+
             </div>
           </div>
         </q-tab-panel>
@@ -47,18 +63,37 @@
         <q-tab-panels v-model="tab" class="bg-transparent full-height" animated transition-duration="500"
                       transition-prev="jump-right" transition-next="jump-left">
           <q-tab-panel name="birth">
-            <h6 class="row justify-center items-center full-height">
-             11111
+            <div class="q-mt-md"/>
+            <div>
+              {{ $t('main_play_birth_desc') }}
+            </div>
+            <div class="q-mt-md"/>
+            <h6>
+              {{ $t('main_play_birth_ref_1') }}
             </h6>
+            <a class="cask-jump-link-in-text"
+               target="_blank"
+               href="https://github.com/CrazyTim/spin-wheel">
+              spin-wheel
+            </a>
+            <div class="q-mt-md"/>
+            <h6>
+              {{ $t('main_play_birth_ref_2') }}
+            </h6>
+            <a class="cask-jump-link-in-text"
+               target="_blank"
+               href="https://www.worldometers.info/world-population/population-by-country/">
+              Countries in the world by population
+            </a>
           </q-tab-panel>
           <q-tab-panel name="tetris">
             <h6 class="row justify-center items-center full-height">
-              22222
+              {{ $t('in_develop') }}
             </h6>
           </q-tab-panel>
           <q-tab-panel name="hextris">
             <h6 class="row justify-center items-center full-height">
-             3333
+              {{ $t('in_develop') }}
             </h6>
           </q-tab-panel>
           <q-tab-panel name="setting">
@@ -79,13 +114,11 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
-import {useRouter} from "vue-router";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
 import {nextTick, onMounted, ref, watch} from "vue";
 import { Wheel } from 'spin-wheel';
-import {delay} from "@/utils/base-tools";
+import {wheelPropsEn, wheelPropsZh} from "@/constant/play-birth";
 
-const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 
 
@@ -116,9 +149,18 @@ const tabs = ref([
   },
 ])
 const tab = ref("birth");
+const wheel = ref(null)
+const currentItem = ref(null)
+const inRotate = ref(false)
+let modifier = 0;
 
 
 watch(() => tab.value, async () => {
+  await nextTick()
+  gameInit()
+})
+
+watch(() => globalState.language,async () => {
   await nextTick()
   gameInit()
 })
@@ -129,23 +171,41 @@ function gameInit() {
   }
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function calcSpinToValues() {
+  const duration = 3000;
+  const winningItemRotaion = getRandomInt(360, 360 * 2) + modifier;
+  modifier += 360 * 2;
+  return {duration, winningItemRotaion};
+}
+
+function startBirth() {
+  const {duration, winningItemRotaion} = calcSpinToValues();
+  wheel.value.spinTo(winningItemRotaion, duration);
+}
 
 function buildWheel() {
-  const wheelProps = {
-    items: [
-      {
-        label: 'one',
-      },
-      {
-        label: 'two',
-      },
-      {
-        label: 'three',
-      },
-    ]
+  if(wheel.value) {
+    wheel.value.remove()
+    currentItem.value = null
   }
+  const conf = globalState.language === 'zh' ? wheelPropsZh : wheelPropsEn
   const container = document.querySelector('.wheel-container');
-  const wheel = new Wheel(container, wheelProps);
+  wheel.value = new Wheel(container, conf);
+  wheel.value.onCurrentIndexChange = event => {
+    currentItem.value = conf.items[event.currentIndex]
+  }
+  wheel.value.onRest = event => {
+    inRotate.value = false
+  }
+  wheel.value.onSpin = event => {
+    inRotate.value = true
+  }
 }
 
 onMounted(() => {
@@ -159,7 +219,7 @@ onMounted(() => {
 
 .wheel-container {
   overflow: hidden;
-  height: 90%;
+  height: 95%;
   aspect-ratio: 1;
 }
 
