@@ -12,9 +12,9 @@ export const wheelPropsZh = {
     pointerAngle: 90,
     lineWidth: 0,
     radius: 0.96,
-    itemLabelFont: 'Roboto Slab, sans-serif',
+    itemLabelFont: '楷体, sans-serif',
     itemLabelRadius: 0.93,
-    itemLabelRadiusMax: 0.3,
+    itemLabelRadiusMax: 0.48,
     items: [
         {
             label: '印度',
