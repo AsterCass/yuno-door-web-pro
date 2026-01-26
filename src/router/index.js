@@ -22,6 +22,7 @@ import WebSpace from "@/ui/pages/WebSpace.vue";
 import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
 import WebVideoPlay from "@/ui/pages/WebVideoPlayer.vue";
 import WebPlay from "@/ui/pages/WebPlay.vue";
+import WebVideoStream from "@/ui/pages/WebVideoStream.vue";
 
 
 const router = createRouter({
@@ -194,8 +195,18 @@ const router = createRouter({
                         colId: $route.query.colId,
                         vdoId: $route.query.vdoId,
                     }),
-                }
-
+                },
+                {
+                    path: 'stream',
+                    name: 'mainVideoStream',
+                    component: WebVideoStream,
+                    meta: {
+                        title: 'Video Stream | 视频直播'
+                    },
+                    props: ($route) => ({
+                        streamId: $route.query.streamId,
+                    }),
+                },
             ]
         },
         {
