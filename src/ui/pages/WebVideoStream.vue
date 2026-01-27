@@ -31,6 +31,7 @@
                 class="plyr"
                 playsinline
                 controls
+                autoplay
             >
             </video>
           </div>
