@@ -56,13 +56,17 @@ import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {useI18n} from "vue-i18n";
-import {defineProps, onBeforeUnmount, onMounted, watch} from "vue";
+import {defineProps, onBeforeUnmount, onMounted, watch, ref} from "vue";
 import {toSpecifyPage} from "@/router";
 import {useRouter} from "vue-router";
+import flvjs from 'flv.js'
 
 const thisRouter = useRouter()
 const globalState = useGlobalStateStore();
 const {t} = useI18n()
+
+const mainPlayerRef = ref(null)
+let flvPlayer = null
 
 //prop
 const props = defineProps({
@@ -87,11 +91,36 @@ onMounted(async () => {
     return
   }
   console.log(props.streamId);
+  if (flvjs.isSupported() && mainPlayerRef.value) {
+    flvPlayer = flvjs.createPlayer(
+        {
+          type: 'flv',
+          url: 'https://api.astercasc.com/live',
+          isLive: true
+        },
+        {
+          enableStashBuffer: false, // 关键：降低延迟
+          stashInitialSize: 128
+        }
+    )
+
+    flvPlayer.attachMediaElement(mainPlayerRef.value)
+    flvPlayer.load()
+    flvPlayer.play()
+  } else {
+    console.error('FLV is not supported in this browser')
+  }
 })
 
 
 onBeforeUnmount(() => {
-
+  if (flvPlayer) {
+    flvPlayer.pause()
+    flvPlayer.unload()
+    flvPlayer.detachMediaElement()
+    flvPlayer.destroy()
+    flvPlayer = null
+  }
 })
 
 

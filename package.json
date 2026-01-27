@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "flv.js": "1.6.2",
     "spin-wheel": "5.0.2",
     "plyr": "^3.7.8",
     "lottie-web": "5.12.2",
