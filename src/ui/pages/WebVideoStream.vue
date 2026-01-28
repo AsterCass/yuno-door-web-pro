@@ -14,6 +14,13 @@
           {{ $t('main_video_playlist') }}
         </h3>
 
+        <q-input v-model="playUrl" tabindex="0" dense outlined
+                 class="q-ma-xs component-outline-input-grow"/>
+
+        <q-btn no-caps unelevated class="q-ma-xs shadow-2 component-full-btn-grow" @click="loadUrl">
+          加载
+        </q-btn>
+
 
       </div>
 
@@ -69,6 +76,8 @@ const {t} = useI18n()
 const mainPlayerRef = ref(null)
 let flvPlayer = null
 
+const playUrl = ref("")
+
 //prop
 const props = defineProps({
   streamId: {
@@ -78,29 +87,25 @@ const props = defineProps({
   },
 })
 
-
 watch(
     () => globalState.language,
     () => {
     }
 );
 
-
-onMounted(async () => {
-  if (!globalState.isLogin) {
-    toSpecifyPage(thisRouter, "401")
+function loadUrl() {
+  if(!playUrl.value) {
     return
   }
-  console.log(props.streamId);
   if (flvjs.isSupported() && mainPlayerRef.value) {
     flvPlayer = flvjs.createPlayer(
         {
           type: 'flv',
-          url: 'https://api.astercasc.com/live',
+          url: playUrl.value,
           isLive: true
         },
         {
-          enableStashBuffer: false, // 关键：降低延迟
+          enableStashBuffer: false,
           stashInitialSize: 128
         }
     )
@@ -111,6 +116,15 @@ onMounted(async () => {
   } else {
     console.error('FLV is not supported in this browser')
   }
+}
+
+
+onMounted(async () => {
+  if (!globalState.isLogin) {
+    toSpecifyPage(thisRouter, "401")
+    return
+  }
+  console.log(props.streamId);
 })
 
 
