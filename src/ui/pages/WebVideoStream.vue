@@ -21,6 +21,10 @@
           加载
         </q-btn>
 
+<!--        <q-btn no-caps unelevated class="q-ma-xs shadow-2 component-full-btn-grow" @click="startVideo">-->
+<!--          开始-->
+<!--        </q-btn>-->
+
 
       </div>
 
