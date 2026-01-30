@@ -57,7 +57,7 @@
 
       <div style="width: 18rem;">
         <h4 class="row justify-center items-center">
-          {{ $t('main_play_instructions') }}
+          {{ tab === 'setting' ? $t('main_play_tips') : $t('main_play_instructions') }}
         </h4>
 
         <q-tab-panels v-model="tab" class="bg-transparent full-height" animated transition-duration="500"
