@@ -16,7 +16,7 @@
                     transition-prev="jump-down" transition-next="jump-up">
         <q-tab-panel name="birth">
           <div class="row justify-around items-center full-height">
-            <div class="wheel-container"></div>
+            <div class="wheel-container" style="opacity: 0.9"></div>
             <div class="col-4 full-height q-pa-xl column items-center">
               <q-btn no-caps unelevated class="shadow-2 component-full-btn-full"
                      @click="startBirth">
