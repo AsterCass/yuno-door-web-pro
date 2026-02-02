@@ -38,6 +38,11 @@
             </div>
           </div>
         </q-tab-panel>
+        <q-tab-panel name="monopoly">
+          <h5 class="row justify-center items-center full-height">
+            {{ $t('in_develop') }}
+          </h5>
+        </q-tab-panel>
         <q-tab-panel name="tetris">
           <h5 class="row justify-center items-center full-height">
             {{ $t('in_develop') }}
@@ -126,6 +131,11 @@ const tabs = ref([
   {
     value: 'birth',
     label: 'main_play_birth',
+    color: 'rgb(var(--full-container-background-color))'
+  },
+  {
+    value: 'monopoly',
+    label: 'main_play_monopoly',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
