@@ -103,6 +103,10 @@
            @click="openLink('https://aidn.jp/mikutap/')">
         Mikutap
       </div>
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="toSpecifyPage(thisRouter, 'play')">
+        {{ $t('main_play_birth' ) }}
+      </div>
     </div>
 
     <div class="q-ma-sm column">
