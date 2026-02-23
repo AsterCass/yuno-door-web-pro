@@ -7,6 +7,7 @@
         CaskModuleElement.VIDEO,
         CaskModuleElement.GUEST_BOOK,
         CaskModuleElement.PLAY,
+        CaskModuleElement.DOWNLOAD,
         CaskModuleElement.CHATROOM,
     ]"/>
 

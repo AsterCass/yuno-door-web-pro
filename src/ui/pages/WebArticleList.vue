@@ -3,6 +3,7 @@
     <cask-base-header :center-elements="[
         CaskModuleElement.HOME,
         CaskModuleElement.PLAY,
+        CaskModuleElement.DOWNLOAD,
         CaskModuleElement.CHATROOM,
     ]"/>
 

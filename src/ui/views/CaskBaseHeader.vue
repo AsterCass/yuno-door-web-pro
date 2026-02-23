@@ -71,6 +71,14 @@
             </div>
           </div>
         </q-btn>
+        <q-btn v-if="centerElements.includes(CaskModuleElement.DOWNLOAD)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" @click="toSpecifyPage(thisRouter,'download')">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_download') }}
+            </div>
+          </div>
+        </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.CHATROOM)" no-caps unelevated
                class="component-none-btn-grow q-mx-xs"
                @click="toSpecifyPage(thisRouter, 'chatroom')">

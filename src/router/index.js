@@ -23,6 +23,7 @@ import WebVideoCollection from "@/ui/pages/WebVideoCollection.vue";
 import WebVideoPlay from "@/ui/pages/WebVideoPlayer.vue";
 import WebPlay from "@/ui/pages/WebPlay.vue";
 import WebVideoStream from "@/ui/pages/WebVideoStream.vue";
+import WebDownload from "@/ui/pages/WebDownload.vue";
 
 
 const router = createRouter({
@@ -245,6 +246,14 @@ const router = createRouter({
             component: WebPlay,
             meta: {
                 title: 'AsterCasc | Play | 小游戏'
+            },
+        },
+        {
+            path: "/download",
+            name: "download",
+            component: WebDownload,
+            meta: {
+                title: 'AsterCasc | Download | 相关下载'
             },
         },
         {

@@ -4,6 +4,7 @@
         CaskModuleElement.ARTICLE,
         CaskModuleElement.HOME,
         CaskModuleElement.PLAY,
+        CaskModuleElement.DOWNLOAD,
         CaskModuleElement.CHATROOM,
     ]"/>
 
