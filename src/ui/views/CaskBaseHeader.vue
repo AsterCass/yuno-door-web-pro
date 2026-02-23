@@ -7,7 +7,7 @@
          :class="!alwaysShow && scrollState.scrollTop === 0 ?
          'top-semi-trans-header-base-top' : 'top-semi-trans-header-base-no-top'">
 
-      <div class="row items-center justify-start col-4">
+      <div class="row items-center justify-start col-3">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
                @click="toSpecifyPage(thisRouter,'previous')">
           <div class="row items-center">
@@ -18,7 +18,7 @@
         </q-btn>
       </div>
 
-      <div class="row items-center justify-center col-4">
+      <div class="row items-center justify-center col-6">
         <q-btn v-if="centerElements.includes(CaskModuleElement.ARTICLE)" no-caps unelevated
                class="component-none-btn-grow q-mx-xs"
                @click="toSpecifyPage(thisRouter,'webArticleList')">
@@ -103,7 +103,7 @@
         </q-btn>
       </div>
 
-      <div class="row items-center justify-end col-4">
+      <div class="row items-center justify-end col-3">
         <div class="row col justify-end items-center">
           <q-btn v-show="!globalState.isLogin" no-caps unelevated class="component-none-btn-grow q-mx-xs"
                  @click="showUserLogin = true">
