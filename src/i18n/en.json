@@ -429,6 +429,12 @@
   "main_play_birth_ing": "Selecting a new reincarnation destination for you...",
   "main_play_birth_ed": "Congratulations! You have been reincarnated in:",
 
+
+  "main_download_grudges": "The Book of Grudges",
+  "main_download_reader": "Meow Reader",
+  "main_download_piano": "Meow Piano",
+
+
   "home": "Home",
   "back_home": "Back to Home"
 }
