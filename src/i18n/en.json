@@ -431,8 +431,16 @@
 
 
   "main_download_grudges": "The Book of Grudges",
+  "main_download_grudges_title": "The Book of Grudges",
+  "main_download_grudges_desc": "It doesn’t just help us record every little detail from daily life and work, ensuring that nothing ever goes wrong or gets overlooked when it’s time to serve a client—it also supports custom tags and service targets, making retrieval faster and more efficient.\n\nWe’ve also added a Grudge Level option, so keeping grudges is no longer monotonous and the intensity of our “service” is always under control.\n\nEven more user-friendly, when searching records you can choose “1 by 1”, making it easy to operate with one hand on your phone and the other hand “serving,” while strictly following the core principle: “Not a single thing that’s yours is missed; not a single thing that’s not yours is forced in.”\n\nWhen client feedback fails to meet expectations, you can use “Remember +1” to log it, clearly distinguishing how fresh each old grudge still is.\n\nAnd when you’re extremely satisfied with a client’s feedback, simply mark it as “Settled” to clear that service item.",
+
   "main_download_reader": "Meow Reader",
+  "main_download_reader_title": "Meow Reader",
+  "main_download_reader_desc": "Meow Reader\n\nA simple desktop utility tool.\n\nIt automatically reads English text from your clipboard, translates it into Chinese, and plays the English pronunciation (other languages are also supported by replacing the models).\n\nIf you feel that:\n\nWhen browsing English websites or reading documents, you often need to copy → switch to a translator → check the meaning → click the pronunciation, and the back-and-forth interrupts your reading flow,\n\nyou can try this tool to assist your daily reading and comprehension.\n\nFuture updates may adjust features based on usage experience, or support additional languages (for example, allowing you to switch the target translation language directly in the UI).\n\nThe current translation and TTS models are chosen as a balance between resource usage, file size, and quality. If your machine has better performance and you don’t mind larger storage usage, you can try models such as: \n\n* TranslateGemma \n\n* HY-MT\n\n* Or other models",
+
   "main_download_piano": "Meow Piano",
+  "main_download_piano_title": "Meow Piano",
+  "main_download_piano_desc": "A desktop utility tool.\n\nDo you sometimes feel that working or studying on your computer is a bit boring? Meow Piano is here to help! When you type on your keyboard, the program will automatically play corresponding piano sounds and display animated rhythm waves around the edges of your screen.\n\nYou can disable either the sound or the visual effects if you prefer. Even when the program is minimized and running in the background, it will continue to work normally.\n\nFuture updates may introduce rhythm upgrades, such as special sound and visual effects when typing very fast or when typing specific configured key sequences.",
 
 
   "home": "Home",

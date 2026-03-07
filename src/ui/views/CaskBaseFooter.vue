@@ -107,6 +107,10 @@
            @click="toSpecifyPage(thisRouter, 'play')">
         {{ $t('main_play_birth' ) }}
       </div>
+      <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
+           @click="toSpecifyPage(thisRouter, 'download')">
+        {{ $t('main_download_grudges' ) }}
+      </div>
     </div>
 
     <div class="q-ma-sm column">

@@ -14,20 +14,23 @@
 
       <q-tab-panels v-model="tab" animated class="bg-transparent col" transition-duration="500"
                     transition-prev="jump-down" transition-next="jump-up">
-        <q-tab-panel name="grudges">
-          <h5 class="row justify-center items-center full-height">
-            {{ $t('in_develop') }}
-          </h5>
-        </q-tab-panel>
-        <q-tab-panel name="reader">
-          <h5 class="row justify-center items-center full-height">
-            {{ $t('in_develop') }}
-          </h5>
-        </q-tab-panel>
-        <q-tab-panel name="piano">
-          <h5 class="row justify-center items-center full-height">
-            {{ $t('in_develop') }}
-          </h5>
+
+        <q-tab-panel v-for="(curTab, index) in tabs" :key="index" :name="curTab.value">
+          <div class="row full-height">
+            <div class="col-6 q-px-lg">
+              <h4>
+                {{ $t(curTab.title) }}
+              </h4>
+              <div style="opacity: .75; white-space: pre-wrap; " class="q-mt-md">
+                {{ $t(curTab.desc) }}
+              </div>
+            </div>
+            <div class="col">
+
+            </div>
+
+          </div>
+
         </q-tab-panel>
       </q-tab-panels>
 
@@ -44,9 +47,7 @@ import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {CaskModuleElement} from "@/constant/enums/component-enums";
 import {useGlobalStateStore} from "@/utils/global-state";
 import CaskTabsVertical from "@/ui/components/CaskTabsVertical.vue";
-import {nextTick, onMounted, ref, watch} from "vue";
-import { Wheel } from 'spin-wheel';
-import {wheelPropsEn, wheelPropsZh} from "@/constant/play-birth";
+import {onMounted, ref} from "vue";
 
 const globalState = useGlobalStateStore();
 
@@ -55,16 +56,22 @@ const tabs = ref([
   {
     value: 'grudges',
     label: 'main_download_grudges',
+    title: 'main_download_grudges_title',
+    desc: 'main_download_grudges_desc',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
     value: 'reader',
     label: 'main_download_reader',
+    title: 'main_download_reader_title',
+    desc: 'main_download_reader_desc',
     color: 'rgb(var(--full-container-background-color))'
   },
   {
     value: 'piano',
     label: 'main_download_piano',
+    title: 'main_download_piano_title',
+    desc: 'main_download_piano_desc',
     color: 'rgb(var(--full-container-background-color))'
   },
 ])
