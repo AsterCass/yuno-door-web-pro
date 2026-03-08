@@ -429,6 +429,11 @@
   "main_play_birth_ing": "Selecting a new reincarnation destination for you...",
   "main_play_birth_ed": "Congratulations! You have been reincarnated in:",
 
+  "main_download_source_url": "Project Repositories",
+  "main_download_download_url": "Download Links",
+  "main_download_no_proxy": "Baidu Netdisk:",
+  "main_download_proxy": "GitHub Releases:",
+  "main_download_click": "Click here",
 
   "main_download_grudges": "The Book of Grudges",
   "main_download_grudges_title": "The Book of Grudges",

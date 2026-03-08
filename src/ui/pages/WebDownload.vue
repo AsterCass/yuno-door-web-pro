@@ -27,6 +27,55 @@
                 <div style="opacity: .75; white-space: pre-wrap; " class="q-mt-md">
                   {{ $t(curTab.desc) }}
                 </div>
+
+                <q-separator class="component-separator-base" spaced="18px" style="opacity: .15" />
+
+                <h5>
+                  {{$t('main_download_source_url')}}
+                </h5>
+
+                <div class="q-mt-md">
+                  {{$t('main_download_no_proxy')}}
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     :href="curTab.source1">
+                    {{$t('main_download_click')}}
+                  </a>
+                </div>
+
+                <div class="q-mt-md">
+                  {{$t('main_download_proxy')}}
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     :href="curTab.source2">
+                    {{$t('main_download_click')}}
+                  </a>
+                </div>
+
+                <q-separator class="component-separator-base" spaced="18px" style="opacity: .15" />
+
+                <h5>
+                  {{$t('main_download_download_url')}}
+                </h5>
+
+                <div class="q-mt-md">
+                  {{$t('main_download_no_proxy')}}
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     :href="curTab.download1">
+                    {{$t('main_download_click')}}
+                  </a>
+                </div>
+
+                <div class="q-mt-md">
+                  {{$t('main_download_proxy')}}
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     :href="curTab.download2">
+                    {{$t('main_download_click')}}
+                  </a>
+                </div>
+
               </div>
               <div class="col">
 
@@ -63,21 +112,33 @@ const tabs = ref([
     label: 'main_download_grudges',
     title: 'main_download_grudges_title',
     desc: 'main_download_grudges_desc',
-    color: 'rgb(var(--full-container-background-color))'
+    color: 'rgb(var(--full-container-background-color))',
+    source1: 'https://gitee.com/astercass/general-of-the-red-panda/tree/develop/The%20Book%20of%20Grudges',
+    source2: 'https://github.com/AsterCass/General-of-the-Red-Panda/tree/develop/The%20Book%20of%20Grudges',
+    download1: 'https://pan.baidu.com/s/5P4zJnQ1tJkycI24FEcJC4Q',
+    download2: 'https://github.com/AsterCass/General-of-the-Red-Panda/releases',
   },
   {
     value: 'reader',
     label: 'main_download_reader',
     title: 'main_download_reader_title',
     desc: 'main_download_reader_desc',
-    color: 'rgb(var(--full-container-background-color))'
+    color: 'rgb(var(--full-container-background-color))',
+    source1: 'https://gitee.com/astercass/general-of-the-red-panda/tree/develop/Meow%20Reader',
+    source2: 'https://github.com/AsterCass/General-of-the-Red-Panda/tree/develop/Meow%20Reader',
+    download1: 'https://pan.baidu.com/s/5P4zJnQ1tJkycI24FEcJC4Q',
+    download2: 'https://github.com/AsterCass/General-of-the-Red-Panda/releases',
   },
   {
     value: 'piano',
     label: 'main_download_piano',
     title: 'main_download_piano_title',
     desc: 'main_download_piano_desc',
-    color: 'rgb(var(--full-container-background-color))'
+    color: 'rgb(var(--full-container-background-color))',
+    source1: 'https://gitee.com/astercass/general-of-the-red-panda/tree/develop/Meow%20Piano',
+    source2: 'https://github.com/AsterCass/General-of-the-Red-Panda/tree/develop/Meow%20Piano',
+    download1: 'https://pan.baidu.com/s/5P4zJnQ1tJkycI24FEcJC4Q',
+    download2: 'https://github.com/AsterCass/General-of-the-Red-Panda/releases',
   },
 ])
 const tab = ref("grudges");
