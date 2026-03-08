@@ -77,8 +77,18 @@
                 </div>
 
               </div>
-              <div class="col">
-
+              <div v-if="curTab.value === 'grudges'" class="col row justify-evenly">
+                <q-img class="q-my-sm"  src="/img/download/grudge/phone1.jpg" width="40%"/>
+                <q-img class="q-my-sm" src="/img/download/grudge/phone2.jpg" width="40%"/>
+                <q-img class="q-my-sm" src="/img/download/grudge/web.jpg" width="45%"/>
+                <q-img class="q-my-sm" src="/img/download/grudge/desktop.jvm.jpg" width="45%"/>
+              </div>
+              <div v-if="curTab.value === 'reader'" class="col row justify-evenly">
+                <q-img class="q-my-sm"  src="/img/download/reader/img.jpg" width="50%"/>
+              </div>
+              <div v-if="curTab.value === 'piano'" class="col row justify-evenly">
+                <q-img class="q-my-sm"  src="/img/download/piano/1.jpg" width="75%"/>
+                <q-img class="q-my-sm"  src="/img/download/piano/2.jpg" width="75%"/>
               </div>
 
             </div>
