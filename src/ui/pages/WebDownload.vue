@@ -84,7 +84,7 @@
                 <q-img class="q-my-sm" src="/img/download/grudge/desktop.jvm.jpg" width="45%"/>
               </div>
               <div v-if="curTab.value === 'reader'" class="col row justify-evenly">
-                <q-img class="q-my-sm"  src="/img/download/reader/img.jpg" width="50%"/>
+                <q-img class="q-my-sm"  src="/img/download/reader/img.jpg" width="60%" fit="contain"/>
               </div>
               <div v-if="curTab.value === 'piano'" class="col row justify-evenly">
                 <q-img class="q-my-sm"  src="/img/download/piano/1.jpg" width="75%"/>
