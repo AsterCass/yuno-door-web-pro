@@ -7,7 +7,7 @@
     ]" :chatroom-select-first="true" :mini="true"/>
 
 
-    <div class="col row" style="margin: 5rem 2% 5rem 2%">
+    <div class="col row" style="margin: 5rem 0 1rem 2%">
 
       <cask-tabs-vertical :tabs="tabs" v-model="tab" width="12rem" text-width="10rem"
                           force-text-color="rgb(var(--text-color))"/>
@@ -16,20 +16,25 @@
                     transition-prev="jump-down" transition-next="jump-up">
 
         <q-tab-panel v-for="(curTab, index) in tabs" :key="index" :name="curTab.value">
-          <div class="row full-height">
-            <div class="col-6 q-px-lg">
-              <h4>
-                {{ $t(curTab.title) }}
-              </h4>
-              <div style="opacity: .75; white-space: pre-wrap; " class="q-mt-md">
-                {{ $t(curTab.desc) }}
+          <q-scroll-area class="full-width full-height" :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }">
+            <div class="row full-height q-px-lg">
+              <div class="col-6 q-pr-md">
+                <h4>
+                  {{ $t(curTab.title) }}
+                </h4>
+                <div style="opacity: .75; white-space: pre-wrap; " class="q-mt-md">
+                  {{ $t(curTab.desc) }}
+                </div>
               </div>
-            </div>
-            <div class="col">
+              <div class="col">
+
+              </div>
 
             </div>
+          </q-scroll-area>
 
-          </div>
 
         </q-tab-panel>
       </q-tab-panels>
