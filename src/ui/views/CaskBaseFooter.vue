@@ -118,7 +118,7 @@
         {{ $t('main-nav-personal-res') }}
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="openLink('https://github.com/AsterCass?tab=repositories')">
+           @click="openLink('https://github.com/AsterCass')">
         GitHub
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
@@ -126,8 +126,8 @@
         Tomoyo
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
-           @click="openLink('https://github.com/AsterCass/sql-garble-spring-boot')">
-        Mybatis Sql Garble
+           @click="openLink('https://github.com/AsterCass/General-of-the-Red-Panda')">
+        General of the Red Panda
       </div>
       <div class="cask-jump-link-in-text-origin q-my-xs " style="opacity: .5"
            @click="openLink('https://github.com/AsterCass/yuno-door-web-pro')">
