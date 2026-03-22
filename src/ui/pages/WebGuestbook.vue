@@ -409,7 +409,7 @@ const commentTree = ref([
 ])
 let lastCommentId = ref("")
 //筛选
-const selectedTagList = ref(new Set([0, 1]))
+const selectedTagList = ref(new Set([]))
 
 
 function deleteAndAddTagSet(code) {
@@ -422,7 +422,8 @@ function deleteAndAddTagSet(code) {
   if (2 === selectedTagList.value.size) {
     commentType.value = null
   } else if (0 === selectedTagList.value.size) {
-    commentType.value = -1
+    // commentType.value = -1
+    commentType.value = null
   } else {
     commentType.value = selectedTagList.value.values().next().value
   }
