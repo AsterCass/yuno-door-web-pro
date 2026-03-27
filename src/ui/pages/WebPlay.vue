@@ -4,7 +4,7 @@
             view="hhh lpr fff">
     <cask-base-header :always-show="true" :center-elements="[
         CaskModuleElement.HOME,
-    ]" :chatroom-select-first="true" :mini="true"/>
+    ]" :chatroom-select-first="true" :mini="true" :pre-suffix="''"/>
 
 
     <div class="col row" style="margin: 5rem 2% 5rem 2%">

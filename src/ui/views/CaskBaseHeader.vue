@@ -9,7 +9,7 @@
 
       <div class="row items-center justify-start col-3">
         <q-btn no-caps unelevated class="component-none-btn-grow q-mx-xs"
-               @click="toSpecifyPage(thisRouter,'previous')">
+               @click="openLink(PRE_ADD + preSuffixRet)">
           <div class="row items-center">
             <div class="q-ma-xs">
               {{ $t('main_pre_version') }}
@@ -244,9 +244,9 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref} from "vue";
+import {computed, defineProps, onMounted, ref} from "vue";
 import {hideScrollbar, switchLanguage, updateLanguage, updateSaveLoginData, updateTheme} from "@/utils/global-tools";
-import {delay} from "@/utils/base-tools";
+import {delay, openLink} from "@/utils/base-tools";
 import {useGlobalStateStore} from "@/utils/global-state";
 import {scrollState, socketChatState} from "@/utils/global-state-no-save";
 import {useRouter} from "vue-router";
@@ -279,14 +279,27 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  preSuffix: {
+    type: String,
+    required: false,
+    default: null,
+  },
 })
 
+const PRE_ADD = process.env.VUE_APP_PREVIOUS_ADD
 const globalState = useGlobalStateStore();
 const thisRouter = useRouter()
 
 const morphWithSetting = ref('btn')
 const morphWithSettingContentShow = ref(false)
 const showUserLogin = ref(false)
+
+const preSuffixRet = computed(() => {
+  if(null === props.preSuffix) {
+    return thisRouter.currentRoute.value.fullPath.slice(1)
+  }
+  return ""
+})
 
 const showHeaderSetting = (isShow) => {
   if (isShow) {

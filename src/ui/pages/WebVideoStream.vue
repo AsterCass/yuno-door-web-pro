@@ -3,7 +3,7 @@
             style="background-color: rgba(var(--background-color));background-image: url('/img/video-play-bg.png');">
     <cask-base-header :chatroom-select-first="true" :center-elements="[
         CaskModuleElement.HOME, CaskModuleElement.CHATROOM, CaskModuleElement.VIDEO,
-    ]" :always-show="true" :mini="true"/>
+    ]" :always-show="true" :mini="true" :pre-suffix="''"/>
 
 
     <div class="col row">
