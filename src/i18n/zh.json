@@ -446,6 +446,10 @@
   "main_download_piano_title": "喵喵律动",
   "main_download_piano_desc": "一个桌面工具\n\n是否感觉平时使用电脑工作、学习太无聊。【喵喵律动】启动！在你输入打字的时候，会自动发出相应的钢琴声音，以及屏幕四周出现跳动音律，当然你可以选择关掉他们中的任何一个，即使在程序最小化在后台也能正常工作\n\n后续迭代可能会考虑加入韵律升格，即打字速度过快或打出配置字符顺序，声音以及屏幕音律出现特殊效果",
 
+  "main_download_tomoyo": "Tomoyo",
+  "main_download_tomoyo_title": "Tomoyo",
+  "main_download_tomoyo_desc": "Tomoyo是一个Kotlin Multiplatform 应用程序 一方面它是一个对于该网站的功能拷贝，让其中一些功能可以在移动端和桌面端实现。 另一方面它是一个Kotlin Multiplatform下导航，socket，视频，音频，存储等常用功能的使用用例\n\n关于系统级消息推送，目前客户端/服务端的策略是：\n\n 需要按照 https://firebase.google.com/docs/cloud-messaging 处理，相关客户端代码仓库中已经给出。但出于安全考虑，并没有没有提供对应的google-services.json 文件，如果您有相似的功能需要开发借鉴，可以将其替换，并参考相关消息逻辑，但是无法和默认的服务端进行消息联动，进而收到在 Tomoyo中其他用户或者群组中发来的消息 \n\n 只要有消息且该用户没有在web端或者桌面端登录，都走FCM推送该用户的移动端。如果对于使用人数较多的场景下，可以通过移动端将活跃状态同步到服务端，只有在客户端不活跃的情况下，才进行消息推送。同时也可以通过消息合并（即对于每个/组用户每隔N秒发送最后一条消息，避免短期消息爆炸）等方式减少FCM的使用",
+
 
   "home": "主页",
   "back_home": "回到主页"

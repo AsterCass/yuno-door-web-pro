@@ -34,7 +34,7 @@
                   {{$t('main_download_source_url')}}
                 </h5>
 
-                <div class="q-mt-md">
+                <div class="q-mt-md" v-if="curTab.source1">
                   {{$t('main_download_no_proxy')}}
                   <a class="cask-jump-link-in-text"
                      target="_blank"
@@ -43,7 +43,7 @@
                   </a>
                 </div>
 
-                <div class="q-mt-md">
+                <div class="q-mt-md" v-if="curTab.source2">
                   {{$t('main_download_proxy')}}
                   <a class="cask-jump-link-in-text"
                      target="_blank"
@@ -58,7 +58,7 @@
                   {{$t('main_download_download_url')}}
                 </h5>
 
-                <div class="q-mt-md">
+                <div class="q-mt-md" v-if="curTab.download1">
                   {{$t('main_download_no_proxy')}}
                   <a class="cask-jump-link-in-text"
                      target="_blank"
@@ -67,7 +67,7 @@
                   </a>
                 </div>
 
-                <div class="q-mt-md">
+                <div class="q-mt-md" v-if="curTab.download2">
                   {{$t('main_download_proxy')}}
                   <a class="cask-jump-link-in-text"
                      target="_blank"
@@ -89,6 +89,14 @@
               <div v-if="curTab.value === 'piano'" class="col row justify-evenly">
                 <q-img class="q-my-sm"  src="/img/download/piano/1.jpg" width="75%"/>
                 <q-img class="q-my-sm"  src="/img/download/piano/2.jpg" width="75%"/>
+              </div>
+              <div v-if="curTab.value === 'tomoyo'" class="col row justify-evenly">
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/android_5.jpg" width="40%"/>
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/android_6.jpg" width="40%"/>
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/desktop_5.jpg" width="45%"/>
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/desktop_6.jpg" width="45%"/>
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/ios_5.png" width="40%"/>
+                <q-img class="q-my-sm"  src="/img/download/tomoyo/ios_6.png" width="40%"/>
               </div>
 
             </div>
@@ -149,6 +157,15 @@ const tabs = ref([
     source2: 'https://github.com/AsterCass/General-of-the-Red-Panda/tree/develop/Meow%20Piano',
     download1: 'https://pan.baidu.com/s/5P4zJnQ1tJkycI24FEcJC4Q',
     download2: 'https://github.com/AsterCass/General-of-the-Red-Panda/releases',
+  },
+  {
+    value: 'tomoyo',
+    label: 'main_download_tomoyo',
+    title: 'main_download_tomoyo_title',
+    desc: 'main_download_tomoyo_desc',
+    color: 'rgb(var(--full-container-background-color))',
+    source2: 'https://github.com/AsterCass/Tomoyo',
+    download2: 'https://github.com/AsterCass/Tomoyo/releases',
   },
 ])
 const tab = ref("grudges");
