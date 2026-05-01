@@ -407,6 +407,13 @@
   )
 }
 
+.component-full-btn-long {
+  @include component-full-btn-base(
+          $thisWidth: 12rem,
+          $thisMinWidth: 12rem,
+  )
+}
+
 .component-full-btn-grow {
   @include component-full-btn-base(
           $thisWidth: auto,

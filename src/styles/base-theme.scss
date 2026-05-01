@@ -246,6 +246,10 @@ p {
   line-height: 1.625;
 }
 
+.cask-color-negative {
+  color: rgb(var(--negative))
+}
+
 .cask-color-positive {
   color: rgb(var(--positive))
 }

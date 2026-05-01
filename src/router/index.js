@@ -24,6 +24,7 @@ import WebVideoPlay from "@/ui/pages/WebVideoPlayer.vue";
 import WebPlay from "@/ui/pages/WebPlay.vue";
 import WebVideoStream from "@/ui/pages/WebVideoStream.vue";
 import WebDownload from "@/ui/pages/WebDownload.vue";
+import WebAIAgent from "@/ui/pages/WebAIAgent.vue";
 
 
 const router = createRouter({
@@ -223,6 +224,14 @@ const router = createRouter({
                     },
                 },
             ]
+        },
+        {
+            path: '/agent',
+            name: 'aiAgent',
+            component: WebAIAgent,
+            meta: {
+                title: 'AsterCasc | AIAgent | 智能体Demo'
+            },
         },
         {
             path: "/board",
