@@ -426,6 +426,14 @@
   )
 }
 
+.component-full-btn-mini-error-full {
+  @include component-full-btn-base(
+          $thisHeight: 2rem,
+          $thisWidth: 100%,
+          $bgColor: rgb(var(--negative)),
+  )
+}
+
 .component-full-btn-error-full {
   @include component-full-btn-base(
           $thisWidth: 100%,
