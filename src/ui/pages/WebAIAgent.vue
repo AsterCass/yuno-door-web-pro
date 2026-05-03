@@ -66,8 +66,21 @@
 
       </div>
 
-      <div class="col">
+      <div class="col q-px-md column">
 
+        <div class="col">
+
+        </div>
+
+
+        <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
+                  [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
+                  [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],])"
+                              :sendCallback="sendMessage"
+                              v-model="newInput"
+                              @update:model-value="data => newInput = data"
+                              :send-enable="sendMessageEnable"
+        />
       </div>
 
 
@@ -84,18 +97,25 @@
 
 <script setup>
 
-import {CaskModuleElement} from "@/constant/enums/component-enums";
+import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/component-enums";
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {onMounted, ref} from "vue";
+import {notifyTopWarning} from "@/utils/notification-tools";
+import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 
 
 const newMessages = ref("")
 const newInput = ref("")
 const chatSessionId = ref("")
+const sendMessageEnable = ref(true)
 
 function resetRandomSessionId() {
   chatSessionId.value = Math.random().toString(36).substring(2, 10);
+}
+
+function sendMessage() {
+  console.log(newInput.value);
 }
 
 function getMessages() {
