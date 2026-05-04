@@ -10,7 +10,8 @@
     <div class="col row" style="margin: 6rem 2% 1rem 2%">
 
       <div class="column items-center" style="width: 15rem">
-        <q-btn no-caps unelevated class="shadow-2 component-full-btn-long" push>
+        <q-btn no-caps unelevated class="shadow-2 component-full-btn-long" push
+               @click="isOnlineMethod">
           检查设备在线情况
         </q-btn>
 
@@ -24,7 +25,10 @@
           <div>
             当前设备在线状态：
           </div>
-          <div class="cask-color-negative">
+          <div v-if="deviceOnline" class="cask-color-positive">
+            在线
+          </div>
+          <div v-else class="cask-color-negative">
             离线
           </div>
         </div>
@@ -44,12 +48,14 @@
                    push @click="resetRandomSessionId">
               重新随机
             </q-btn>
-            <q-btn no-caps unelevated class="shadow-2 component-full-btn-mini-grow" push>
+            <q-btn no-caps unelevated class="shadow-2 component-full-btn-mini-grow" push
+                   @click="loadHistoryMethod">
               载入对话
             </q-btn>
           </div>
 
-          <q-btn no-caps unelevated class="shadow-2 q-mt-md component-full-btn-mini-error-full" push>
+          <q-btn no-caps unelevated class="shadow-2 q-mt-md component-full-btn-mini-error-full" push
+                 @click="clearHistoryMethod">
             清除当前对话记录历史
           </q-btn>
 
@@ -136,14 +142,47 @@ import {onMounted, ref} from "vue";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
+import {clearHistory, isOnline, loadHistory} from "@/api/ai";
 
+// const
+const BASE_ADD = process.env.VUE_APP_BASE_ADD
 // components
 const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
 // data
+const deviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
+
+
+function loadHistoryMethod() {
+  loadHistory({chatSessionId: chatSessionId.value}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    messageList.value = res.data.data;
+  })
+}
+
+function clearHistoryMethod() {
+  clearHistory({chatSessionId: chatSessionId.value}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    messageList.value = []
+  })
+}
+
+function isOnlineMethod() {
+  isOnline().then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    deviceOnline.value = res.data.data;
+  })
+}
+
 
 function resetRandomSessionId() {
   chatSessionId.value = Math.random().toString(36).substring(2, 10);
@@ -156,9 +195,8 @@ function sendMessage() {
   messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
   messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
 
-
   const eventSource = new EventSource(
-      `http://localhost:5000/stream?user_input=${toSendStr}&session_id=${chatSessionId.value}`
+      `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}&chatSessionId=${chatSessionId.value}`
   );
 
   eventSource.onmessage = (event) => {
@@ -188,6 +226,7 @@ function sendMessage() {
 
 onMounted(() => {
   resetRandomSessionId()
+  isOnlineMethod()
 })
 
 </script>
