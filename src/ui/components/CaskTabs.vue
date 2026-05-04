@@ -18,7 +18,7 @@
       <q-tab
           :icon="tabItem.icon"
           no-caps
-          class="component-cask-tabs-btn"
+          class="component-cask-tabs-btn col"
           :style="dense ? 'min-height: 38px' : ''"
           :ripple="false"
           v-for="tabItem in tabs"

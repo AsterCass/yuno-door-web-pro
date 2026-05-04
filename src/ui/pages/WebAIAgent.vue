@@ -45,7 +45,7 @@
               重新随机
             </q-btn>
             <q-btn no-caps unelevated class="shadow-2 component-full-btn-mini-grow" push>
-              重新载入
+              载入对话
             </q-btn>
           </div>
 
@@ -66,19 +66,51 @@
 
       </div>
 
-      <div class="col q-px-md column">
+      <div class="cask-ai-chatroom-chat-body col q-px-lg column" style="height: 100%">
 
         <div class="col">
+          <div class="cask-ai-chatroom-chat-body-scroll-container" ref="aiChatBodyScroller">
 
+            <div v-for="(thisMessage, index) in messageList"
+                 :key="index" :style="0 === index
+                  ? 'margin-bottom: 30px' : ''" class="q-my-sm q-mx-md">
+
+              <div v-if="thisMessage.type === AiMessageTypeEnum.HUMAN" class="row justify-end">
+                <div class="relative-position" style="margin-left: 15%;">
+                  <div class="cask-chatroom-chat-body-mine">
+                    {{ thisMessage.content }}
+                  </div>
+                </div>
+              </div>
+
+              <div v-else class="row justify-start">
+                <div v-if="thisMessage.content" class="relative-position">
+                  <div class="cask-chatroom-chat-body">
+                    {{ thisMessage.content }}
+                  </div>
+                </div>
+                <div v-else class="cask-chatroom-chat-body row items-center">
+                  <q-spinner-bars size=".8rem"/>
+                  <div class="q-mx-sm">
+                    思考中
+                  </div>
+                  <q-spinner-bars size=".8rem"/>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
         </div>
 
 
-        <cask-long-text-input style="margin: 5.5rem 0 2rem 0" :elements="new Map([
+        <cask-long-text-input :elements="new Map([
                   [CaskLongTextInputElement.EMOJI, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],
                   [CaskLongTextInputElement.CALL, {callback: ()=> {notifyTopWarning($t('in_develop'))}}],])"
                               :sendCallback="sendMessage"
-                              v-model="newInput"
-                              @update:model-value="data => newInput = data"
+                              v-model="lastHumanInput"
+                              @update:model-value="data => lastHumanInput = data"
                               :send-enable="sendMessageEnable"
         />
       </div>
@@ -103,25 +135,30 @@ import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {onMounted, ref} from "vue";
 import {notifyTopWarning} from "@/utils/notification-tools";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
+import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 
-
-const newMessages = ref("")
-const newInput = ref("")
-const chatSessionId = ref("")
+// components
+const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
+// data
+const messageList = ref([])
+const lastHumanInput = ref("")
+const chatSessionId = ref("")
 
 function resetRandomSessionId() {
   chatSessionId.value = Math.random().toString(36).substring(2, 10);
 }
 
 function sendMessage() {
-  console.log(newInput.value);
-}
+  const toSendStr = lastHumanInput.value
+  lastHumanInput.value = ""
+  sendMessageEnable.value = false
+  messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
+  messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
 
-function getMessages() {
 
   const eventSource = new EventSource(
-      `http://localhost:8004/user/ai/stream?userInput=${newInput.value}&chatSessionId=${chatSessionId.value}`
+      `http://localhost:5000/stream?user_input=${toSendStr}&session_id=${chatSessionId.value}`
   );
 
   eventSource.onmessage = (event) => {
@@ -129,25 +166,24 @@ function getMessages() {
 
     if (data === '[[DONE]]') {
       eventSource.close();
+      sendMessageEnable.value = true;
       return;
     }
 
     if (data.startsWith('[[ERROR]]')) {
       eventSource.close();
+      sendMessageEnable.value = true;
       return;
     }
 
-    newMessages.value += data;
+    messageList.value[0].content += data
   };
 
-  eventSource.onerror = (err) => {
-    // console.warn('EventSource 错误:', err);
-    // eventSource.close();
+  eventSource.onerror = () => {
+    eventSource.close();
+    sendMessageEnable.value = true;
   };
 
-  eventSource.onopen = () => {
-    // console.log('EventSource 已连接');
-  };
 }
 
 onMounted(() => {
@@ -157,5 +193,60 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
+.cask-ai-chatroom-chat-body {
+
+
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--text-color-select));
+  }
+
+  .cask-ai-chatroom-chat-body-scroll-container {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+
+
+    .cask-chatroom-chat-body-mine {
+      border-radius: 8px;
+      padding: 8px;
+      background-color: rgba(var(--positive), 0.92);
+      cursor: zoom-in;
+      color: #eee;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: break-spaces;
+    }
+
+    .cask-chatroom-chat-body {
+      border-radius: 8px;
+      padding: 8px;
+      background-color: rgba(var(--text-color), 0.1);
+      cursor: zoom-in;
+      overflow-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .cask-chatroom-chat-body-mine {
+      border-radius: 8px;
+      padding: 8px;
+      background-color: rgba(var(--positive), 0.92);
+      cursor: zoom-in;
+      color: #eee;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: break-spaces;
+    }
+
+  }
+}
+
+
 
 </style>
