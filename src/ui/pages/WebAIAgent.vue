@@ -92,10 +92,10 @@
               <div v-else class="row justify-start">
                 <div v-if="thisMessage.content" class="relative-position">
                   <div class="cask-chatroom-chat-body">
-                    {{ thisMessage.content }}
+                    <CaskMarkdownRenderer :content="thisMessage.content" @img-click="handleImgClick"/>
                   </div>
                 </div>
-                <div v-else class="cask-chatroom-chat-body row items-center">
+                <div v-else class="cask-chatroom-chat-body-thinking row items-center">
                   <q-spinner-bars size=".8rem"/>
                   <div class="q-mx-sm">
                     思考中
@@ -143,6 +143,7 @@ import {notifyTopWarning} from "@/utils/notification-tools";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 import {clearHistory, isOnline, loadHistory} from "@/api/ai";
+import CaskMarkdownRenderer from "@/ui/components/CaskMarkdownRenderer.vue";
 
 // const
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
@@ -155,6 +156,9 @@ const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
 
+function handleImgClick(src) {
+  console.log(src);
+}
 
 function loadHistoryMethod() {
   loadHistory({chatSessionId: chatSessionId.value}).then(res => {
@@ -265,24 +269,21 @@ onMounted(() => {
 
     .cask-chatroom-chat-body {
       border-radius: 8px;
-      padding: 8px;
+      padding: 12px 12px 2px 12px;
       background-color: rgba(var(--text-color), 0.1);
       cursor: zoom-in;
       overflow-wrap: break-word;
       word-break: break-all;
     }
 
-    .cask-chatroom-chat-body-mine {
+    .cask-chatroom-chat-body-thinking {
       border-radius: 8px;
-      padding: 8px;
-      background-color: rgba(var(--positive), 0.92);
+      padding: 12px 12px 12px 12px;
+      background-color: rgba(var(--text-color), 0.1);
       cursor: zoom-in;
-      color: #eee;
       overflow-wrap: break-word;
-      word-break: break-word;
-      white-space: break-spaces;
+      word-break: break-all;
     }
-
   }
 }
 
