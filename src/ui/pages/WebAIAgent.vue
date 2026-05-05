@@ -92,7 +92,7 @@
               <div v-else class="row justify-start">
                 <div v-if="thisMessage.content" class="relative-position">
                   <div class="cask-chatroom-chat-body">
-                    <CaskMarkdownRenderer :content="thisMessage.content" @img-click="handleImgClick"/>
+                    <CaskMarkdownRenderer :content="thisMessage.content"/>
                   </div>
                 </div>
                 <div v-else class="cask-chatroom-chat-body-thinking row items-center">
@@ -156,10 +156,6 @@ const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
 
-function handleImgClick(src) {
-  console.log(src);
-}
-
 function loadHistoryMethod() {
   loadHistory({chatSessionId: chatSessionId.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
@@ -204,7 +200,7 @@ function sendMessage() {
   );
 
   eventSource.onmessage = (event) => {
-    const data = event.data.trim();
+    const data = event.data;
 
     if (data === '[[DONE]]') {
       eventSource.close();
