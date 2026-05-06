@@ -137,7 +137,66 @@
       </div>
 
 
-      <div class="column items-center" style="width: 15rem">
+      <div class="column" style="width: 15rem">
+        <h6>
+          <cask-badge-tips text="如果设备不在线只能选择聊天模式，且使用CPU推理，性能非常有限，仅供参考"/>
+          AI 工作模式：
+        </h6>
+        <div class="q-mb-md row">
+          <q-radio v-model="agentModel" val="chat" label="聊天"
+                   class="component-ratio-base"
+                   checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
+          <q-radio v-model="agentModel" val="project" label="项目方案构建"
+                   class="component-ratio-base"
+                   checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
+        </div>
+        <div class="ai-agent-config col full-width full-height">
+          <q-tab-panels class="full-height full-width bg-transparent" v-model="agentModel" animated>
+
+            <q-tab-panel name="chat" class="full-width full-height">
+              <div class="full-height full-width row items-center justify-center">
+                <h5 style="opacity: .5">
+                  无需配置项
+                </h5>
+              </div>
+            </q-tab-panel>
+
+            <q-tab-panel name="project">
+
+              <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                                       { background: 'white', width: '6px' } :
+                                        { background: 'black', width: '6px' }"
+                             class="full-height full-width" :visible="true">
+
+                <div class="column items-center ">
+
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                    配置虚拟人物资源
+                  </q-btn>
+
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                    配置商品资源
+                  </q-btn>
+
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                    配置宣传页面组件资源
+                  </q-btn>
+
+                </div>
+
+                <div style="opacity: .5;" class="q-mt-md">
+                  这里是工作流说明（生成方案说明以及推荐理由后，用户点击确认生成最后图片）
+                </div>
+
+
+
+
+              </q-scroll-area>
+            </q-tab-panel>
+
+          </q-tab-panels>
+        </div>
+
 
       </div>
 
@@ -160,6 +219,7 @@ import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 import {clearHistory, isOnline, loadHistory} from "@/api/ai";
 import CaskMarkdownRenderer from "@/ui/components/CaskMarkdownRenderer.vue";
 import {useGlobalStateStore} from "@/utils/global-state";
+import CaskBadgeTips from "@/ui/components/CaskBadgeTips.vue";
 
 // const
 const globalState = useGlobalStateStore();
@@ -168,6 +228,7 @@ const BASE_ADD = process.env.VUE_APP_BASE_ADD
 const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
 // data
+const agentModel = ref("project")
 const deviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
@@ -300,6 +361,17 @@ onMounted(() => {
   }
 }
 
+
+
+</style>
+
+<style lang="scss">
+
+.ai-agent-config {
+  .q-tab-panel {
+    padding: 0 !important;
+  }
+}
 
 
 </style>
