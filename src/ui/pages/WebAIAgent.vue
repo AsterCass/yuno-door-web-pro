@@ -82,6 +82,10 @@
             当设备不在线，默认使用服务器 CPU 进行推理，性能以及速度非常有限，
             并且只支持聊天模式，不支持右侧边栏的其他 AI Agent 工作流
           </div>
+
+          <div style="opacity: .5;" class="q-mt-md">
+            Demo 测试完后会接入聊天页面，支持对话
+          </div>
         </q-scroll-area>
 
 
