@@ -15,12 +15,6 @@
           检查设备在线情况
         </q-btn>
 
-        <div style="opacity: .5;" class="q-mt-md q-mx-sm">
-          本Demo使用的内网设备，消费级显卡进行推理。由于性能预算限制，设备不能保证一直启动状态。
-          如果要进行Demo测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
-          但是由于是消费级显卡，性能有限，结果仅供参考
-        </div>
-
         <div class="full-width row justify-between q-mt-md q-px-sm">
           <div>
             当前设备在线状态：
@@ -63,11 +57,32 @@
             每天凌晨3点，自动清空所有对话历史记录
           </div>
 
+          <q-separator class="component-separator-base"  spaced="1rem"/>
+
         </div>
 
 
-        <div class="col full-width">
-        </div>
+
+        <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                       class="col full-width q-px-sm" :visible="true">
+
+          <div style="opacity: .5;">
+            本 Demo 优先使用的内网设备的显卡进行推理。由于性能预算限制，设备不能保证一直启动状态。
+            如果要进行 Demo 测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
+            但是由于是消费级显卡，性能有限，结果仅供参考。
+          </div>
+
+          <div style="opacity: .5;" class="q-mt-md">
+            设备一般在下午2点-7点在线
+          </div>
+
+          <div style="opacity: .5;" class="q-mt-md">
+            当设备不在线，默认使用服务器 CPU 进行推理，性能以及速度非常有限，
+            并且只支持聊天模式，不支持右侧边栏的其他 AI Agent 工作流
+          </div>
+        </q-scroll-area>
 
 
       </div>
@@ -144,8 +159,10 @@ import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 import {clearHistory, isOnline, loadHistory} from "@/api/ai";
 import CaskMarkdownRenderer from "@/ui/components/CaskMarkdownRenderer.vue";
+import {useGlobalStateStore} from "@/utils/global-state";
 
 // const
+const globalState = useGlobalStateStore();
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
 // components
 const aiChatBodyScroller = ref(null)
