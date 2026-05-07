@@ -4,7 +4,7 @@
     <q-tooltip class="component-cask-badge-tips-tooltip"
                :anchor="isTop ? 'top middle' : 'bottom middle'"
                :self="isTop ? 'bottom middle' : 'top middle'">
-      <div class="q-pa-sm" style="max-width: 15rem;font-size: .9rem">
+      <div class="q-pa-sm" style="max-width: 15rem;font-size: .9rem; white-space: pre-wrap;">
         {{ text }}
       </div>
     </q-tooltip>

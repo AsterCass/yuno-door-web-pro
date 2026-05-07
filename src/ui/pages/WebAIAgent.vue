@@ -143,7 +143,8 @@
 
       <div class="column" style="width: 15rem">
         <h6>
-          <cask-badge-tips text="如果设备不在线只能选择聊天模式，且使用CPU推理，性能非常有限，仅供参考"/>
+          <cask-badge-tips text="如果设备不在线则只能选择【聊天】模式，且使用CPU推理，性能非常有限，仅供参考。
+【聊天】的【记录id】和其他工作模式不共享，因为运行机器不同"/>
           AI 工作模式：
         </h6>
         <div class="q-mb-md row">
@@ -151,6 +152,9 @@
                    class="component-ratio-base"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
           <q-radio v-model="agentModel" val="project" label="项目方案构建"
+                   class="component-ratio-base"
+                   checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
+          <q-radio v-model="agentModel" val="rag" label="知识库问答（开发中）"
                    class="component-ratio-base"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
         </div>
@@ -192,8 +196,23 @@
                   这里是工作流说明（生成方案说明以及推荐理由后，用户点击确认生成最后图片）
                 </div>
 
+              </q-scroll-area>
+            </q-tab-panel>
 
 
+            <q-tab-panel name="rag">
+
+              <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                                       { background: 'white', width: '6px' } :
+                                        { background: 'black', width: '6px' }"
+                             class="full-height full-width" :visible="true">
+
+                <div class="column items-center ">
+
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                    配置知识库文档
+                  </q-btn>
+                </div>
 
               </q-scroll-area>
             </q-tab-panel>
