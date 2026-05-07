@@ -1,9 +1,10 @@
 import {serviceShiro} from "@/utils/request";
 
-export function isOnline() {
+export function isOnline(param) {
     return serviceShiro({
         url: "/yui/user/ai/online",
         method: 'get',
+        params: param
     })
 }
 

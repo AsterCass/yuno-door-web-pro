@@ -17,9 +17,21 @@
 
         <div class="full-width row justify-between q-mt-md q-px-sm">
           <div>
-            当前设备在线状态：
+            当前 CPU 设备在线状态：
           </div>
-          <div v-if="deviceOnline" class="cask-color-positive">
+          <div v-if="cpuDeviceOnline" class="cask-color-positive">
+            在线
+          </div>
+          <div v-else class="cask-color-negative">
+            离线
+          </div>
+        </div>
+
+        <div class="full-width row justify-between q-px-sm">
+          <div>
+            当前 GPU 设备在线状态：
+          </div>
+          <div v-if="gpuDeviceOnline" class="cask-color-positive">
             在线
           </div>
           <div v-else class="cask-color-negative">
@@ -69,17 +81,17 @@
                        class="col full-width q-px-sm" :visible="true">
 
           <div style="opacity: .5;">
-            本 Demo 优先使用的内网设备的显卡进行推理。由于性能预算限制，设备不能保证一直启动状态。
+            本 Demo 优先使用 GPU 进行推理。由于性能预算限制，设备不能保证一直启动状态。
             如果要进行 Demo 测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
             但是由于是消费级显卡，性能有限，结果仅供参考。
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
-            设备一般在下午2点-7点在线
+            GPU 设备一般在下午2点-7点在线
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
-            当设备不在线，默认使用服务器 CPU 进行推理，性能以及速度非常有限，
+            当 GPU 设备不在线，默认使用服务器 CPU 进行推理，性能以及速度非常有限，
             并且只支持聊天模式，不支持右侧边栏的其他 AI Agent 工作流
           </div>
 
@@ -252,13 +264,18 @@ const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
 // data
 const agentModel = ref("project")
-const deviceOnline = ref(false)
+const cpuDeviceOnline = ref(false)
+const gpuDeviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
 
 function loadHistoryMethod() {
-  loadHistory({chatSessionId: chatSessionId.value}).then(res => {
+  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
+    notifyTopWarning("设备均不在线，联系管理员开启设备")
+    return
+  }
+  loadHistory({chatSessionId: chatSessionId.value, isCore: !gpuDeviceOnline.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
@@ -267,7 +284,11 @@ function loadHistoryMethod() {
 }
 
 function clearHistoryMethod() {
-  clearHistory({chatSessionId: chatSessionId.value}).then(res => {
+  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
+    notifyTopWarning("设备均不在线，联系管理员开启设备")
+    return
+  }
+  clearHistory({chatSessionId: chatSessionId.value, isCore: !gpuDeviceOnline.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
@@ -276,11 +297,17 @@ function clearHistoryMethod() {
 }
 
 function isOnlineMethod() {
-  isOnline().then(res => {
+  isOnline({isCore: true}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
-    deviceOnline.value = res.data.data;
+    cpuDeviceOnline.value = res.data.data;
+  })
+  isOnline({isCore: false}).then(res => {
+    if (!res || !res.data || 200 !== res.data.status) {
+      return
+    }
+    gpuDeviceOnline.value = res.data.data;
   })
 }
 
@@ -290,6 +317,10 @@ function resetRandomSessionId() {
 }
 
 function sendMessage() {
+  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
+    notifyTopWarning("设备均不在线，联系管理员开启设备")
+    return
+  }
   const toSendStr = lastHumanInput.value
   lastHumanInput.value = ""
   sendMessageEnable.value = false
@@ -297,7 +328,8 @@ function sendMessage() {
   messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
 
   const eventSource = new EventSource(
-      `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}&chatSessionId=${chatSessionId.value}`
+      `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
+      &chatSessionId=${chatSessionId.value}&isCore=${!gpuDeviceOnline.value}`
   );
 
   eventSource.onmessage = (event) => {
