@@ -161,13 +161,13 @@
         </h6>
         <div class="q-mb-md row">
           <q-radio v-model="agentModel" val="chat" label="聊天"
-                   class="component-ratio-base"
+                   class="component-ratio-base" @update:model-value="updateAgentModel"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
           <q-radio v-model="agentModel" val="project" label="项目方案构建"
-                   class="component-ratio-base"
+                   class="component-ratio-base" @update:model-value="updateAgentModel"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
           <q-radio v-model="agentModel" val="rag" label="知识库问答（开发中）"
-                   class="component-ratio-base"
+                   class="component-ratio-base" @update:model-value="updateAgentModel"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
         </div>
         <div class="ai-agent-config col full-width full-height">
@@ -248,7 +248,7 @@ import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/comp
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {onMounted, ref} from "vue";
-import {notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopInfo, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 import {clearHistory, isOnline, loadHistory} from "@/api/ai";
@@ -269,6 +269,12 @@ const gpuDeviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
+
+function updateAgentModel() {
+  notifyTopPositive("工作模式切换成功，不同工作模式记忆暂时不兼容，已重新生成新对话记录id", 8000)
+  resetRandomSessionId()
+  messageList.value = []
+}
 
 function loadHistoryMethod() {
   if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
