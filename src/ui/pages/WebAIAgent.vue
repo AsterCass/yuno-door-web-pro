@@ -669,39 +669,118 @@ function sendMessage() {
     notifyTopWarning("发送内容不能为空")
     return
   }
-  const toSendStr = lastHumanInput.value
-  lastHumanInput.value = ""
-  sendMessageEnable.value = false
-  messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
-  messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
 
-  const eventSource = new EventSource(
-      `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
+  if (agentModel.value === 'chat') {
+    const toSendStr = lastHumanInput.value
+    lastHumanInput.value = ""
+    sendMessageEnable.value = false
+    messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
+    messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
+
+    const eventSource = new EventSource(
+        `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
 &chatSessionId=${chatSessionId.value}&isCore=${!gpuDeviceOnline.value}`
-  );
+    );
 
-  eventSource.onmessage = (event) => {
-    const data = event.data;
+    eventSource.onmessage = (event) => {
+      const data = event.data;
 
-    if (data === '[[DONE]]') {
+      if (data === '[[DONE]]') {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      if (data.startsWith('[[ERROR]]')) {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      messageList.value[0].content += data
+    };
+
+    eventSource.onerror = () => {
       eventSource.close();
       sendMessageEnable.value = true;
-      return;
+    };
+  } else if (agentModel.value === 'project') {
+
+    const isFirst = messageList.value.length === 0
+
+    // 只有首次传递
+    const sendAvatarList = isFirst ? avatarList.value.filter(item => item.enable === true) : []
+    const sendBgList = isFirst ? bgList.value.filter(item => item.enable === true) : []
+    const sendProductList = isFirst ? productList.value.filter(item => item.enable === true) : []
+    if (isFirst) {
+      if (sendAvatarList.length === 0) {
+        notifyTopWarning("虚拟人物配置不能为空")
+        return
+      }
+      if (sendProductList.length === 0) {
+        notifyTopWarning("商品配置不能为空")
+        return
+      }
+      if (sendBgList.length === 0) {
+        notifyTopWarning("宣传背景不能为空")
+        return
+      }
     }
 
-    if (data.startsWith('[[ERROR]]')) {
+    const toSendStr = lastHumanInput.value
+    lastHumanInput.value = ""
+    sendMessageEnable.value = false
+    messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
+    messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
+
+    const params = new URLSearchParams({
+      userInput: toSendStr,
+      chatSessionId: chatSessionId.value,
+      data: JSON.stringify({
+        avatarList: sendAvatarList,
+        bgList: sendBgList,
+        productList: sendProductList
+      }),
+    })
+
+    const eventSource = new EventSource(
+        `${BASE_ADD}yui/user/ai/streamProject?${params}`
+    );
+
+    eventSource.onmessage = (event) => {
+      const data = event.data;
+
+      if (data === '[[DONE]]') {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      if (data === '[[Finish]]') {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        projectIsFinished.value = true;
+        return;
+      }
+
+      if (data.startsWith('[[ERROR]]')) {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      messageList.value[0].content += data
+    };
+
+    eventSource.onerror = () => {
       eventSource.close();
       sendMessageEnable.value = true;
-      return;
-    }
+    };
 
-    messageList.value[0].content += data
-  };
+  } else if (agentModel.value === 'rag') {
+    notifyTopWarning("当前模式正在开发中")
+  }
 
-  eventSource.onerror = () => {
-    eventSource.close();
-    sendMessageEnable.value = true;
-  };
 
 }
 
