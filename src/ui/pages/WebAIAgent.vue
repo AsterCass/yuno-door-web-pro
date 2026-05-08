@@ -207,8 +207,8 @@
                   </q-btn>
 
                   <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push
-                         @click="()=>{showProjectComponent = true}">
-                    配置宣传页面组件资源
+                         @click="()=>{showProjectBg = true}">
+                    配置宣传页面背景资源
                   </q-btn>
 
                 </div>
@@ -252,21 +252,44 @@
 
     <q-dialog :model-value="showProjectAvatar" @hide="()=>{showProjectAvatar= false}"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-judgement-std">
+      <q-card class="component-cask-dialog-judgement-large column">
 
         <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
           配置虚拟人物资源
         </h5>
 
+        <div style="opacity: .5; margin-left: .5rem">
+          只会从勾选的资源当中选择合适的组件构建项目
+        </div>
+
         <q-separator class="component-separator-base" inset spaced="1rem"/>
 
-        <div class="q-mx-lg q-mt-lg q-mb-xs">
+        <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                       class="col full-width q-px-sm " :visible="true">
+          <div class="row">
+            <div v-for="(bg, index) in avatarList" :key="index"
+                 class="q-ml-sm q-mt-sm q-mb-lg q-mr-md column items-center"
+                 @click="()=>{bg.enable = !bg.enable}">
+              <div class="relative-position cask-cursor-pointer q-mb-md">
+                <q-img :ratio="1" fit="contain" :src="bg.url"
+                       style="height: 14rem; width: 14rem; border-radius: 8px;"
+                       :style="bg.enable ? 'outline: 4px solid rgb(var(--positive));': ''"
+                >
+                </q-img>
+                <div v-if="bg.enable" class="cask-ai-chatroom-switch-btn">
+                  <q-icon size="20px" name="fa-solid fa-circle-check" style="color: rgb(var(--positive));"/>
+                </div>
+              </div>
+              <div>
+                {{ bg.name }}
+              </div>
 
-          <div class="text-center">
-            1234
+            </div>
           </div>
 
-        </div>
+        </q-scroll-area>
 
       </q-card>
     </q-dialog>
@@ -292,23 +315,46 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog :model-value="showProjectComponent" @hide="()=>{showProjectComponent= false}"
+    <q-dialog :model-value="showProjectBg" @hide="()=>{showProjectBg= false}"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-judgement-std">
+      <q-card class="component-cask-dialog-judgement-large column">
 
         <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
-          配置宣传页面组件资源
+          配置宣传页面背景资源
         </h5>
+
+        <div style="opacity: .5; margin-left: .5rem">
+          只会从勾选的资源当中选择合适的组件构建项目
+        </div>
 
         <q-separator class="component-separator-base" inset spaced="1rem"/>
 
-        <div class="q-mx-lg q-mt-lg q-mb-xs">
+        <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                       class="col full-width q-px-sm " :visible="true">
+          <div class="row">
+            <div v-for="(bg, index) in bgList" :key="index"
+                 class="q-ml-sm q-mt-sm q-mb-lg q-mr-md column items-center"
+                 @click="()=>{bg.enable = !bg.enable}">
+              <div class="relative-position cask-cursor-pointer q-mb-md">
+                <q-img :ratio="1" fit="contain" :src="bg.url"
+                       style="height: 14rem; width: 14rem; border-radius: 8px;"
+                       :style="bg.enable ? 'outline: 4px solid rgb(var(--positive));': ''"
+                >
+                </q-img>
+                <div v-if="bg.enable" class="cask-ai-chatroom-switch-btn">
+                  <q-icon size="20px" name="fa-solid fa-circle-check" style="color: rgb(var(--positive));"/>
+                </div>
+              </div>
+              <div>
+                {{ bg.name }}
+              </div>
 
-          <div class="text-center">
-            1234
+            </div>
           </div>
 
-        </div>
+        </q-scroll-area>
 
       </q-card>
     </q-dialog>
@@ -326,7 +372,7 @@
         <div class="q-mx-lg q-mt-lg q-mb-xs">
 
           <div class="text-center">
-            1234
+            开发中
           </div>
 
         </div>
@@ -354,12 +400,55 @@ import CaskBadgeTips from "@/ui/components/CaskBadgeTips.vue";
 // const
 const globalState = useGlobalStateStore();
 const BASE_ADD = process.env.VUE_APP_BASE_ADD
+const RES_ADD = process.env.VUE_APP_RES_ADD
+
+// mock data
+const avatarList = ref([
+  {name: "人物图片1", url: `${RES_ADD}agent/avatarImage1.jpg`, enable: true},
+  {name: "人物图片2", url: `${RES_ADD}agent/avatarImage2.jpg`, enable: true},
+  {name: "人物图片3", url: `${RES_ADD}agent/avatarImage3.jpg`, enable: true},
+  {name: "人物图片4", url: `${RES_ADD}agent/avatarImage4.jpg`, enable: false},
+  {name: "人物图片5", url: `${RES_ADD}agent/avatarImage5.jpg`, enable: true},
+  {name: "人物图片6", url: `${RES_ADD}agent/avatarImage6.jpg`, enable: true},
+])
+const productList = ref([
+  {name: "矿泉水", price: "1", enable: true},
+  {name: "牛奶", price: "3", enable: true},
+  {name: "咖啡", price: "5", enable: false},
+  {name: "洗发水", price: "20", enable: true},
+  {name: "洗衣液", price: "30", enable: true},
+  {name: "口红", price: "200", enable: true},
+  {name: "护肤品面霜", price: "50", enable: true},
+  {name: "湿巾", price: "3", enable: true},
+  {name: "垃圾桶", price: "50", enable: true},
+  {name: "衣架", price: "30", enable: true},
+  {name: "保鲜袋", price: "10", enable: true},
+  {name: "电池", price: "20", enable: true},
+  {name: "雨伞", price: "45", enable: true},
+  {name: "中性笔", price: "2", enable: true},
+  {name: "耳机", price: "35", enable: true},
+  {name: "胶带", price: "2", enable: true},
+  {name: "剪刀", price: "8", enable: true},
+  {name: "鼠标垫", price: "12", enable: true},
+])
+const bgList = ref([
+  {name: "背景图片1", url: `${RES_ADD}agent/bgImage01.jpg`, enable: false},
+  {name: "背景图片2", url: `${RES_ADD}agent/bgImage02.jpg`, enable: true},
+  {name: "背景图片3", url: `${RES_ADD}agent/bgImage03.jpg`, enable: true},
+  {name: "背景图片4", url: `${RES_ADD}agent/bgImage04.jpg`, enable: true},
+  {name: "背景图片5", url: `${RES_ADD}agent/bgImage05.jpg`, enable: true},
+  {name: "背景图片6", url: `${RES_ADD}agent/bgImage06.jpg`, enable: false},
+  {name: "背景图片7", url: `${RES_ADD}agent/bgImage07.jpg`, enable: false},
+  {name: "背景图片8", url: `${RES_ADD}agent/bgImage08.jpg`, enable: false},
+  {name: "背景图片9", url: `${RES_ADD}agent/bgImage09.jpg`, enable: true},
+  {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: true},
+])
 // components
 const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
 const showProjectAvatar = ref(false)
 const showProjectProduct = ref(false)
-const showProjectComponent = ref(false)
+const showProjectBg = ref(false)
 const showRagDoc = ref(false)
 // data
 const agentModel = ref("chat")
@@ -537,6 +626,14 @@ onMounted(() => {
   }
 }
 
+
+.cask-ai-chatroom-switch-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+}
 
 
 </style>

@@ -186,6 +186,20 @@
   backdrop-filter: saturate(200%) blur(30px) !important;
 }
 
+.component-cask-dialog-judgement-large {
+  min-height: 30rem;
+  height: 30rem;
+  min-width: 50rem;
+  width: 50rem;
+  padding: 1rem;
+  border-radius: 8px !important;
+  color: rgb(var(--text-color)) !important;
+  opacity: .95;
+  background-color: var(--dialog-background-color) !important;
+  box-shadow: inset 0 0 2px 1px var(--dialog-background-color-frame) !important;
+  backdrop-filter: saturate(200%) blur(30px) !important;
+}
+
 .component-cask-dialog-image-std {
   max-width: 75% !important;
   max-height: 75% !important;
