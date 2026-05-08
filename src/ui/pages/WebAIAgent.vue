@@ -91,7 +91,7 @@
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
-            GPU 设备一般在下午2点-7点在线
+            GPU 设备一般在工作日下午2点-7点在线
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
@@ -434,7 +434,7 @@ function sendMessage() {
 
   const eventSource = new EventSource(
       `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
-      &chatSessionId=${chatSessionId.value}&isCore=${!gpuDeviceOnline.value}`
+&chatSessionId=${chatSessionId.value}&isCore=${!gpuDeviceOnline.value}`
   );
 
   eventSource.onmessage = (event) => {
