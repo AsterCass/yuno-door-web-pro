@@ -572,6 +572,14 @@
   );
 }
 
+.component-outline-input-mini-est-short {
+  @include component-outline-input-base(
+          $thisWidth: 6rem,
+          $thisMinWidth: 6rem,
+          $thisHeight: 2rem,
+  );
+}
+
 .component-outline-dash-input-mini {
   @include component-outline-input-base(
           $thisWidth: 9.5rem,

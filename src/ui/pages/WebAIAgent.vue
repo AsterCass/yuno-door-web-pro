@@ -214,7 +214,26 @@
                 </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
-                  这里是工作流说明（生成方案说明以及推荐理由后，用户点击确认生成最后图片）
+                  本智能体工作流为：给出推广项目的自然语言描述，自动选择资源库中的人物资源以及合适商品资源，以及背景资源，并完成内容脚本。
+                  后续对话可以针对相关输出进行调整，最终确认后，改变当前工作流状态、
+                  （实际正常为调用外部接口或者导出相关内容，这里仅演示，故而仅总结需求改变状态）
+                </div>
+
+                <div class="q-mt-md cask-color-negative">
+                  示例输入：帮我创建一个面向年轻女性的新品推广内容项目，风格要轻松、有种草感，预算控制在 300 元以内
+                </div>
+
+                <div style="opacity: .5;" class="q-mt-md">
+                  以上相关资源数据应当预先配置在服务端，客户端拉取后，仅需要选择所需资源，再进行对话
+                </div>
+
+                <div class="q-mt-md cask-color-negative">
+                  这里仅为演示，所以不存储资源数据在服务端，也因此不处理对话过程中的配置修改。
+                  仅在首次对话将所有配置资源统一传入服务端分析，后续对话不再观察资源配置的变换
+                </div>
+
+                <div style="opacity: .5;" class="q-mt-md">
+                  使用新的对话记录id后，可以再次对新对话的资源进行配置，同样，首次对话时传入配置，后续不再监控修改
                 </div>
 
               </q-scroll-area>
@@ -259,7 +278,7 @@
         </h5>
 
         <div style="opacity: .5; margin-left: .5rem">
-          只会从勾选的资源当中选择合适的组件构建项目
+          只会从勾选的资源当中选择合适的人物构建项目
         </div>
 
         <q-separator class="component-separator-base" inset spaced="1rem"/>
@@ -269,21 +288,21 @@
                           { background: 'black', width: '6px' }"
                        class="col full-width q-px-sm " :visible="true">
           <div class="row">
-            <div v-for="(bg, index) in avatarList" :key="index"
+            <div v-for="(avatar, index) in avatarList" :key="index"
                  class="q-ml-sm q-mt-sm q-mb-lg q-mr-md column items-center"
-                 @click="()=>{bg.enable = !bg.enable}">
+                 @click="()=>{avatar.enable = !avatar.enable}">
               <div class="relative-position cask-cursor-pointer q-mb-md">
-                <q-img :ratio="1" fit="contain" :src="bg.url"
+                <q-img :ratio="1" fit="contain" :src="avatar.url"
                        style="height: 14rem; width: 14rem; border-radius: 8px;"
-                       :style="bg.enable ? 'outline: 4px solid rgb(var(--positive));': ''"
+                       :style="avatar.enable ? 'outline: 4px solid rgb(var(--positive));': ''"
                 >
                 </q-img>
-                <div v-if="bg.enable" class="cask-ai-chatroom-switch-btn">
+                <div v-if="avatar.enable" class="cask-ai-chatroom-switch-btn">
                   <q-icon size="20px" name="fa-solid fa-circle-check" style="color: rgb(var(--positive));"/>
                 </div>
               </div>
               <div>
-                {{ bg.name }}
+                {{ avatar.name }}
               </div>
 
             </div>
@@ -296,21 +315,47 @@
 
     <q-dialog :model-value="showProjectProduct" @hide="()=>{showProjectProduct= false}"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-judgement-std">
+      <q-card class="component-cask-dialog-judgement-large column">
 
-        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
-          配置商品资源
-        </h5>
+        <div class="row justify-between items-center">
+
+          <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+            配置商品资源
+          </h5>
+
+          <q-btn no-caps unelevated class="shadow-2 component-full-btn-mini-grow q-mr-md"
+                 push @click="()=>{showNewProduct = true}">
+            新增
+          </q-btn>
+        </div>
+
+        <div style="opacity: .5; margin-left: .5rem">
+          只会从勾选的资源当中选择合适的商品构建项目
+        </div>
 
         <q-separator class="component-separator-base" inset spaced="1rem"/>
 
-        <div class="q-mx-lg q-mt-lg q-mb-xs">
+        <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                       class="col full-width q-px-sm " :visible="true">
+          <div v-for="(product, index) in productList" :key="index">
+            <div class="row items-center">
+              <h6 class="col text-center">
+                {{ product.name }}
+              </h6>
+              <div class="col text-center">
+                {{ product.price }}&nbsp;元
+              </div>
+              <div class="col row justify-center">
+                <q-checkbox v-model="product.enable" class="component-ratio-base"
+                            checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
+              </div>
 
-          <div class="text-center">
-            1234
+            </div>
           </div>
 
-        </div>
+        </q-scroll-area>
 
       </q-card>
     </q-dialog>
@@ -324,7 +369,7 @@
         </h5>
 
         <div style="opacity: .5; margin-left: .5rem">
-          只会从勾选的资源当中选择合适的组件构建项目
+          只会从勾选的资源当中选择合适的背景构建项目
         </div>
 
         <q-separator class="component-separator-base" inset spaced="1rem"/>
@@ -380,6 +425,60 @@
       </q-card>
     </q-dialog>
 
+
+    <q-dialog :model-value="showNewProduct" @hide="()=>{showNewProduct= false}"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          新增商品
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="row items-center">
+            <div class="col-6">
+              <h6>
+                商品名称：
+              </h6>
+            </div>
+            <q-input v-model="newProductName" tabindex="0" dense outlined
+                     class="component-outline-input-mini-est-short" style="opacity: .92">
+            </q-input>
+          </div>
+
+          <div class="row items-center q-mt-md">
+            <div class="col-6">
+              <h6>
+                商品价格（元）：
+              </h6>
+            </div>
+            <q-input v-model="newProductPrice" tabindex="0" dense outlined mask="#####"
+                     class="component-outline-input-mini-est-short" style="opacity: .92">
+            </q-input>
+          </div>
+
+          <div class="row q-mt-xl q-mb-md justify-center">
+            <div class="q-mx-md">
+
+              <q-btn no-caps unelevated class=" shadow-1 component-outline-btn-grow"
+                     @click="()=>{showNewProduct= false}" label="取消"/>
+
+            </div>
+            <div class="q-mx-md">
+              <q-btn no-caps unelevated class=" shadow-1 component-full-btn-grow"
+                     @click="newProduct" label="确定"/>
+            </div>
+          </div>
+
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+
   </q-layout>
 </template>
 
@@ -418,7 +517,7 @@ const productList = ref([
   {name: "洗发水", price: "20", enable: true},
   {name: "洗衣液", price: "30", enable: true},
   {name: "口红", price: "200", enable: true},
-  {name: "护肤品面霜", price: "50", enable: true},
+  {name: "护肤水", price: "50", enable: true},
   {name: "湿巾", price: "3", enable: true},
   {name: "垃圾桶", price: "50", enable: true},
   {name: "衣架", price: "30", enable: true},
@@ -450,6 +549,10 @@ const showProjectAvatar = ref(false)
 const showProjectProduct = ref(false)
 const showProjectBg = ref(false)
 const showRagDoc = ref(false)
+const showNewProduct = ref(false)
+// new data
+const newProductName = ref("")
+const newProductPrice = ref(0)
 // data
 const agentModel = ref("chat")
 const cpuDeviceOnline = ref(false)
@@ -457,6 +560,22 @@ const gpuDeviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
+
+
+function newProduct() {
+  if (!newProductName.value) {
+    notifyTopWarning("商品名称不能为空")
+    return
+  }
+  if (newProductPrice.value <= 0) {
+    notifyTopWarning("商品价格需要大于0")
+    return
+  }
+  productList.value.push({name: newProductName.value, price: newProductPrice.value, enable: true})
+  newProductName.value = ''
+  newProductPrice.value = 0
+  showNewProduct.value = false
+}
 
 function updateAgentModel() {
   notifyTopPositive("工作模式切换成功，不同工作模式记忆暂时不兼容，已重新生成新对话记录id", 8000)
