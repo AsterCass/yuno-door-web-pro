@@ -159,7 +159,7 @@
       </div>
 
 
-      <div class="column" style="width: 15rem">
+      <div class="column" style="width: 20rem">
         <h6>
           <cask-badge-tips text="如果设备不在线则只能选择【聊天】模式，且使用CPU推理，性能非常有限，仅供参考。
 【聊天】的【记录id】和其他工作模式不共享，因为运行机器不同"/>
@@ -172,7 +172,7 @@
           <q-radio v-model="agentModel" val="project" label="项目方案构建"
                    class="component-ratio-base" @update:model-value="updateAgentModel"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
-          <q-radio v-model="agentModel" val="rag" label="知识库问答（开发中）"
+          <q-radio v-model="agentModel" val="rag" label="知识库问答"
                    class="component-ratio-base" @update:model-value="updateAgentModel"
                    checked-icon="task_alt" unchecked-icon="panorama_fish_eye"/>
         </div>
@@ -192,7 +192,7 @@
               <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
                                        { background: 'white', width: '6px' } :
                                         { background: 'black', width: '6px' }"
-                             class="full-height full-width" :visible="true">
+                             class="full-height full-width q-px-md" :visible="true">
 
                 <div class="column items-center ">
 
@@ -211,6 +211,18 @@
                     配置宣传页面背景资源
                   </q-btn>
 
+                </div>
+
+                <div class="full-width row justify-between q-mt-md">
+                  <div>
+                    当前对话项目生成状态：
+                  </div>
+                  <div v-if="projectIsFinished" class="cask-color-positive">
+                    已完成
+                  </div>
+                  <div v-else class="cask-color-negative">
+                    未完成
+                  </div>
                 </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
@@ -253,6 +265,11 @@
                          @click="()=>{showRagDoc = true}">
                     配置知识库文档
                   </q-btn>
+
+                  <div class="q-mt-md">
+                    本模式还在开发中
+                  </div>
+
                 </div>
 
               </q-scroll-area>
@@ -553,6 +570,8 @@ const showNewProduct = ref(false)
 // new data
 const newProductName = ref("")
 const newProductPrice = ref(0)
+// project
+const projectIsFinished = ref(false)
 // data
 const agentModel = ref("chat")
 const cpuDeviceOnline = ref(false)
