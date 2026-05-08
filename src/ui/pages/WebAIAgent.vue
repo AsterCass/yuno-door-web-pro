@@ -380,6 +380,10 @@ function loadHistoryMethod() {
     notifyTopWarning("设备均不在线，联系管理员开启设备")
     return
   }
+  if (!chatSessionId.value) {
+    notifyTopWarning("对话记录id不能为空")
+    return
+  }
   loadHistory({chatSessionId: chatSessionId.value, isCore: !gpuDeviceOnline.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
@@ -424,6 +428,18 @@ function resetRandomSessionId() {
 function sendMessage() {
   if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
     notifyTopWarning("设备均不在线，联系管理员开启设备")
+    return
+  }
+  if (!gpuDeviceOnline.value && agentModel.value !== 'chat') {
+    notifyTopWarning("GPU 设备不在线，纯 CPU 推理只支持【聊天】工作模式")
+    return
+  }
+  if (!chatSessionId.value) {
+    notifyTopWarning("对话记录id不能为空")
+    return
+  }
+  if (!lastHumanInput.value) {
+    notifyTopWarning("发送内容不能为空")
     return
   }
   const toSendStr = lastHumanInput.value
