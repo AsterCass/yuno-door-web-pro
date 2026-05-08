@@ -7,11 +7,11 @@
          :class="showEmojiBoard ? 'emoji-show' : 'emoji-hide'"
          class="absolute cask-long-text-input-emoji column q-pa-sm">
 
-      <div class="full-width">
+      <div v-if="showEmojiBoard" class="full-width">
         <cask-tabs :tabs="emojiTabs" v-model="currentEmojiTab" dense/>
       </div>
 
-      <q-tab-panels v-model="currentEmojiTab" animated class="col bg-transparent">
+      <q-tab-panels v-if="showEmojiBoard" v-model="currentEmojiTab" animated class="col bg-transparent">
         <q-tab-panel name="emoji" class="no-padding bg-transparent">
           <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
                          { background: 'white', width: '6px' } :
