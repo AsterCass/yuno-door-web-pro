@@ -736,7 +736,9 @@ function sendMessage() {
     const params = new URLSearchParams({
       userInput: toSendStr,
       chatSessionId: chatSessionId.value,
-      data: JSON.stringify({
+      isCore: false,
+      model: "PROJECT",
+      projectRes: JSON.stringify({
         avatarList: sendAvatarList,
         bgList: sendBgList,
         productList: sendProductList
@@ -744,7 +746,7 @@ function sendMessage() {
     })
 
     const eventSource = new EventSource(
-        `${BASE_ADD}yui/user/ai/streamProject?${params}`
+        `${BASE_ADD}yui/user/ai/stream?${params}`
     );
 
     eventSource.onmessage = (event) => {
