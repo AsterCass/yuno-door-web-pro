@@ -80,7 +80,11 @@
                           { background: 'black', width: '6px' }"
                        class="col full-width q-px-sm" :visible="true">
 
-          <div style="opacity: .5;">
+          <div class="cask-color-negative">
+            如果思考时间过久一般是由于当前有多人在测试，请稍后再进行尝试
+          </div>
+
+          <div style="opacity: .5;" class="q-mt-md ">
             本 Demo 优先使用 GPU 进行推理。由于性能预算限制，设备不能保证一直启动状态。
             如果要进行 Demo 测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
             但是由于是消费级显卡，性能有限，结果仅供参考。
@@ -98,6 +102,8 @@
           <div style="opacity: .5;" class="q-mt-md">
             Demo 测试完后会接入聊天页面，支持对话
           </div>
+
+
         </q-scroll-area>
 
 
@@ -190,15 +196,18 @@
 
                 <div class="column items-center ">
 
-                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push
+                         @click="()=>{showProjectAvatar = true}">
                     配置虚拟人物资源
                   </q-btn>
 
-                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push
+                         @click="()=>{showProjectProduct = true}">
                     配置商品资源
                   </q-btn>
 
-                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push
+                         @click="()=>{showProjectComponent = true}">
                     配置宣传页面组件资源
                   </q-btn>
 
@@ -221,7 +230,8 @@
 
                 <div class="column items-center ">
 
-                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push>
+                  <q-btn no-caps unelevated class="shadow-2 component-full-btn-long q-my-sm" push
+                         @click="()=>{showRagDoc = true}">
                     配置知识库文档
                   </q-btn>
                 </div>
@@ -239,6 +249,91 @@
 
     <cask-base-footer :simple="true"/>
 
+
+    <q-dialog :model-value="showProjectAvatar" @hide="()=>{showProjectAvatar= false}"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          配置虚拟人物资源
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="text-center">
+            1234
+          </div>
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+
+    <q-dialog :model-value="showProjectProduct" @hide="()=>{showProjectProduct= false}"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          配置商品资源
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="text-center">
+            1234
+          </div>
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+
+    <q-dialog :model-value="showProjectComponent" @hide="()=>{showProjectComponent= false}"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          配置宣传页面组件资源
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="text-center">
+            1234
+          </div>
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+
+    <q-dialog :model-value="showRagDoc" @hide="()=>{showRagDoc= false}"
+              transition-show="fade" transition-hide="fade">
+      <q-card class="component-cask-dialog-judgement-std">
+
+        <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
+          配置知识库文档
+        </h5>
+
+        <q-separator class="component-separator-base" inset spaced="1rem"/>
+
+        <div class="q-mx-lg q-mt-lg q-mb-xs">
+
+          <div class="text-center">
+            1234
+          </div>
+
+        </div>
+
+      </q-card>
+    </q-dialog>
+
   </q-layout>
 </template>
 
@@ -248,7 +343,7 @@ import {CaskLongTextInputElement, CaskModuleElement} from "@/constant/enums/comp
 import CaskBaseHeader from "@/ui/views/CaskBaseHeader.vue";
 import CaskBaseFooter from "@/ui/views/CaskBaseFooter.vue";
 import {onMounted, ref} from "vue";
-import {notifyTopInfo, notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
+import {notifyTopPositive, notifyTopWarning} from "@/utils/notification-tools";
 import CaskLongTextInput from "@/ui/components/CaskLongTextInput.vue";
 import {AiMessageTypeEnum} from "@/constant/enums/ai-message-type";
 import {clearHistory, isOnline, loadHistory} from "@/api/ai";
@@ -262,8 +357,12 @@ const BASE_ADD = process.env.VUE_APP_BASE_ADD
 // components
 const aiChatBodyScroller = ref(null)
 const sendMessageEnable = ref(true)
+const showProjectAvatar = ref(false)
+const showProjectProduct = ref(false)
+const showProjectComponent = ref(false)
+const showRagDoc = ref(false)
 // data
-const agentModel = ref("project")
+const agentModel = ref("chat")
 const cpuDeviceOnline = ref(false)
 const gpuDeviceOnline = ref(false)
 const messageList = ref([])
