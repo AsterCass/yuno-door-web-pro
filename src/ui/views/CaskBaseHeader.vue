@@ -79,6 +79,14 @@
             </div>
           </div>
         </q-btn>
+        <q-btn v-if="centerElements.includes(CaskModuleElement.AGENT)" no-caps unelevated
+               class="component-none-btn-grow q-mx-xs" @click="toSpecifyPage(thisRouter,'aiAgent')">
+          <div class="row items-center">
+            <div class="q-ma-xs">
+              {{ $t('main_agent') }}
+            </div>
+          </div>
+        </q-btn>
         <q-btn v-if="centerElements.includes(CaskModuleElement.CHATROOM)" no-caps unelevated
                class="component-none-btn-grow q-mx-xs"
                @click="toSpecifyPage(thisRouter, 'chatroom')">

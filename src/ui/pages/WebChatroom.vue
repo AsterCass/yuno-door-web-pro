@@ -3,6 +3,7 @@
             style="background-color: rgba(var(--background-color));background-image: url('/img/chatroom-bg.png');">
     <cask-base-header :chatroom-select-first="true" :center-elements="[
         CaskModuleElement.HOME,
+        CaskModuleElement.AGENT,
     ]" :always-show="true" :mini="true" :pre-suffix="''"/>
 
 
