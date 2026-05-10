@@ -86,8 +86,8 @@
 
           <div style="opacity: .5;" class="q-mt-md ">
             本 Demo 优先使用 GPU 进行推理。由于性能预算限制，设备不能保证一直启动状态。
-            如果要进行 Demo 测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
-            但是由于是消费级显卡，性能有限，结果仅供参考。
+            如果要进行测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
+            但是由于是消费级显卡，性能有限，结果仅供参考。输入请尽量控制在 500 字以内
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
@@ -241,7 +241,7 @@
 
                 <div class="q-mt-md cask-color-negative">
                   这里仅为演示，所以不存储资源数据在服务端，也因此不处理对话过程中的配置修改。
-                  仅在首次对话将所有配置资源统一传入服务端分析，后续对话不再观察资源配置的变换
+                  仅在成功创建的项目的对话将所有配置资源统一传入服务端分析，后续对话不再观察资源配置的变换
                 </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
@@ -706,25 +706,28 @@ function sendMessage() {
     };
   } else if (agentModel.value === 'project') {
 
-    const isFirst = messageList.value.length === 0
 
-    // 只有首次传递
-    const sendAvatarList = isFirst ? avatarList.value.filter(item => item.enable === true) : []
-    const sendBgList = isFirst ? bgList.value.filter(item => item.enable === true) : []
-    const sendProductList = isFirst ? productList.value.filter(item => item.enable === true) : []
-    if (isFirst) {
-      if (sendAvatarList.length === 0) {
-        notifyTopWarning("虚拟人物配置不能为空")
-        return
-      }
-      if (sendProductList.length === 0) {
-        notifyTopWarning("商品配置不能为空")
-        return
-      }
-      if (sendBgList.length === 0) {
-        notifyTopWarning("宣传背景不能为空")
-        return
-      }
+    const sendAvatarList = avatarList.value
+        .filter(item => item.enable === true)
+        .map(({ enable, ...rest }) => rest);
+    const sendBgList = bgList.value
+        .filter(item => item.enable === true)
+        .map(({ enable, ...rest }) => rest);
+    const sendProductList  = productList.value
+        .filter(item => item.enable === true)
+        .map(({ enable, ...rest }) => rest);
+
+    if (sendAvatarList.length === 0) {
+      notifyTopWarning("虚拟人物配置不能为空")
+      return
+    }
+    if (sendProductList.length === 0) {
+      notifyTopWarning("商品配置不能为空")
+      return
+    }
+    if (sendBgList.length === 0) {
+      notifyTopWarning("宣传背景不能为空")
+      return
     }
 
     const toSendStr = lastHumanInput.value
@@ -767,6 +770,7 @@ function sendMessage() {
 
       if (data.startsWith('[[ERROR]]')) {
         eventSource.close();
+        messageList.value[0].content += "\n\n\n系统繁忙，请稍后再试"
         sendMessageEnable.value = true;
         return;
       }
@@ -776,6 +780,7 @@ function sendMessage() {
 
     eventSource.onerror = () => {
       eventSource.close();
+      messageList.value[0].content = "系统繁忙，请稍后再试"
       sendMessageEnable.value = true;
     };
 
