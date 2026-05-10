@@ -522,9 +522,9 @@ const RES_ADD = process.env.VUE_APP_RES_ADD
 const avatarList = ref([
   {name: "人物图片1", url: `${RES_ADD}agent/avatarImage1.jpg`, enable: true},
   {name: "人物图片2", url: `${RES_ADD}agent/avatarImage2.jpg`, enable: true},
-  {name: "人物图片3", url: `${RES_ADD}agent/avatarImage3.jpg`, enable: true},
+  {name: "人物图片3", url: `${RES_ADD}agent/avatarImage3.jpg`, enable: false},
   {name: "人物图片4", url: `${RES_ADD}agent/avatarImage4.jpg`, enable: false},
-  {name: "人物图片5", url: `${RES_ADD}agent/avatarImage5.jpg`, enable: true},
+  {name: "人物图片5", url: `${RES_ADD}agent/avatarImage5.jpg`, enable: false},
   {name: "人物图片6", url: `${RES_ADD}agent/avatarImage6.jpg`, enable: true},
 ])
 const productList = ref([
@@ -549,15 +549,15 @@ const productList = ref([
 ])
 const bgList = ref([
   {name: "背景图片1", url: `${RES_ADD}agent/bgImage01.jpg`, enable: false},
-  {name: "背景图片2", url: `${RES_ADD}agent/bgImage02.jpg`, enable: true},
+  {name: "背景图片2", url: `${RES_ADD}agent/bgImage02.jpg`, enable: false},
   {name: "背景图片3", url: `${RES_ADD}agent/bgImage03.jpg`, enable: true},
   {name: "背景图片4", url: `${RES_ADD}agent/bgImage04.jpg`, enable: true},
-  {name: "背景图片5", url: `${RES_ADD}agent/bgImage05.jpg`, enable: true},
+  {name: "背景图片5", url: `${RES_ADD}agent/bgImage05.jpg`, enable: false},
   {name: "背景图片6", url: `${RES_ADD}agent/bgImage06.jpg`, enable: false},
   {name: "背景图片7", url: `${RES_ADD}agent/bgImage07.jpg`, enable: false},
   {name: "背景图片8", url: `${RES_ADD}agent/bgImage08.jpg`, enable: false},
   {name: "背景图片9", url: `${RES_ADD}agent/bgImage09.jpg`, enable: true},
-  {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: true},
+  {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: false},
 ])
 // components
 const aiChatBodyScroller = ref(null)
