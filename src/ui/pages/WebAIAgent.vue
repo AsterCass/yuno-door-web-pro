@@ -225,6 +225,21 @@
                   示例输入：帮我创建一个面向年轻女性的新品推广内容项目，风格要轻松、有种草感，预算控制在 300 元以内
                 </div>
 
+                <div class="q-mt-md">
+                  演示截图：
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     href='https://api.astercasc.com/public/resources/agent/demo1.png'>
+                   截图1
+                  </a>
+                  &nbsp;&nbsp;
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     href='https://api.astercasc.com/public/resources/agent/demo2.png'>
+                    截图2
+                  </a>
+                </div>
+
                 <div style="opacity: .5;" class="q-mt-md">
                   以上相关资源数据应当预先配置在服务端，客户端拉取后，仅需要选择所需资源，再进行对话
                 </div>
