@@ -254,6 +254,10 @@ p {
   color: rgb(var(--positive))
 }
 
+.cask-color-pointer {
+  color: rgb(var(--pointer))
+}
+
 .cask-litter-title-asterisk::before {
   content: '*';
   color: rgb(var(--negative));

@@ -114,6 +114,15 @@
         <div class="col">
           <div class="cask-ai-chatroom-chat-body-scroll-container" ref="aiChatBodyScroller">
 
+            <div v-if="!sendMessageEnable" class="q-ml-md row items-center cask-color-pointer" >
+              <q-spinner-bars size=".8rem"/>
+              <div class="q-mx-sm">
+                思考中
+              </div>
+              <q-spinner-bars size=".8rem"/>
+            </div>
+
+
             <div v-for="(thisMessage, index) in messageList"
                  :key="index" :style="0 === index
                   ? 'margin-bottom: 30px' : ''" class="q-my-sm q-mx-md">
@@ -131,13 +140,6 @@
                   <div class="cask-chatroom-chat-body">
                     <CaskMarkdownRenderer :content="thisMessage.content"/>
                   </div>
-                </div>
-                <div v-else class="cask-chatroom-chat-body-thinking row items-center">
-                  <q-spinner-bars size=".8rem"/>
-                  <div class="q-mx-sm">
-                    思考中
-                  </div>
-                  <q-spinner-bars size=".8rem"/>
                 </div>
               </div>
 
@@ -213,22 +215,10 @@
 
                 </div>
 
-                <div class="full-width row justify-between q-mt-md">
-                  <div>
-                    当前对话项目生成状态：
-                  </div>
-                  <div v-if="projectIsFinished" class="cask-color-positive">
-                    已完成
-                  </div>
-                  <div v-else class="cask-color-negative">
-                    未完成
-                  </div>
-                </div>
-
                 <div style="opacity: .5;" class="q-mt-md">
                   本智能体工作流为：给出推广项目的自然语言描述，自动选择资源库中的人物资源以及合适商品资源，以及背景资源，并完成内容脚本。
-                  后续对话可以针对相关输出进行调整，最终确认后，改变当前工作流状态、
-                  （实际正常为调用外部接口或者导出相关内容，这里仅演示，故而仅总结需求改变状态）
+                  后续对话可以针对相关输出进行调整，最终确认后，重置当前工作流状态
+                  （实际正常为调用外部接口或者导出相关内容，这里演示，故而仅总结项目并重置状态）
                 </div>
 
                 <div class="q-mt-md cask-color-negative">
@@ -241,7 +231,8 @@
 
                 <div class="q-mt-md cask-color-negative">
                   这里仅为演示，所以不存储资源数据在服务端，也因此不处理对话过程中的配置修改。
-                  仅在成功创建的项目的对话将所有配置资源统一传入服务端分析，后续对话不再观察资源配置的变换
+                  仅在成功创建的项目的对话将所有配置资源统一传入服务端分析。
+                  除非项目创建完成，开始新一轮项目，否则后续对话不再观察资源配置的变换
                 </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
@@ -546,6 +537,7 @@ const productList = ref([
   {name: "胶带", price: "2", enable: true},
   {name: "剪刀", price: "8", enable: true},
   {name: "鼠标垫", price: "12", enable: true},
+  {name: "SK2神仙水", price: "2000", enable: true},
 ])
 const bgList = ref([
   {name: "背景图片1", url: `${RES_ADD}agent/bgImage01.jpg`, enable: false},
@@ -570,8 +562,6 @@ const showNewProduct = ref(false)
 // new data
 const newProductName = ref("")
 const newProductPrice = ref(0)
-// project
-const projectIsFinished = ref(false)
 // data
 const agentModel = ref("chat")
 const cpuDeviceOnline = ref(false)
@@ -758,13 +748,6 @@ function sendMessage() {
       if (data === '[[DONE]]') {
         eventSource.close();
         sendMessageEnable.value = true;
-        return;
-      }
-
-      if (data === '[[Finish]]') {
-        eventSource.close();
-        sendMessageEnable.value = true;
-        projectIsFinished.value = true;
         return;
       }
 
