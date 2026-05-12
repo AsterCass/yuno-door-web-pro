@@ -17,21 +17,9 @@
 
         <div class="full-width row justify-between q-mt-md q-px-sm">
           <div>
-            当前 CPU 设备在线状态：
+            当前设备在线状态：
           </div>
           <div v-if="cpuDeviceOnline" class="cask-color-positive">
-            在线
-          </div>
-          <div v-else class="cask-color-negative">
-            离线
-          </div>
-        </div>
-
-        <div class="full-width row justify-between q-px-sm">
-          <div>
-            当前 GPU 设备在线状态：
-          </div>
-          <div v-if="gpuDeviceOnline" class="cask-color-positive">
             在线
           </div>
           <div v-else class="cask-color-negative">
@@ -85,18 +73,7 @@
           </div>
 
           <div style="opacity: .5;" class="q-mt-md ">
-            本 Demo 优先使用 GPU 进行推理。由于性能预算限制，设备不能保证一直启动状态。
-            如果要进行测试，页面底部联系管理员开启设备以及穿透后正常进行工作，
-            但是由于是消费级显卡，性能有限，结果仅供参考。输入请尽量控制在 500 字以内
-          </div>
-
-          <div style="opacity: .5;" class="q-mt-md">
-            GPU 设备一般在工作日下午2点-7点在线
-          </div>
-
-          <div style="opacity: .5;" class="q-mt-md">
-            当 GPU 设备不在线，默认使用服务器 CPU 进行推理，性能以及速度非常有限，
-            并且只支持聊天模式，不支持右侧边栏的其他 AI Agent 工作流
+            本 Demo 使用内网专用编译机的 CPU 进行推理。性能非常有限，结果仅供参考。同时单次输入请尽量控制在 500 字以内
           </div>
 
           <div style="opacity: .5;" class="q-mt-md">
@@ -181,12 +158,16 @@
         <div class="ai-agent-config col full-width full-height">
           <q-tab-panels class="full-height full-width bg-transparent" v-model="agentModel" animated>
 
-            <q-tab-panel name="chat" class="full-width full-height">
-              <div class="full-height full-width row items-center justify-center">
+            <q-tab-panel name="chat" class="full-width full-height column">
+              <div style="opacity: .5;" class="q-ml-sm">
+                本模式流式工作
+              </div>
+              <div class="col full-width row items-center justify-center">
                 <h5 style="opacity: .5">
                   无需配置项
                 </h5>
               </div>
+
             </q-tab-panel>
 
             <q-tab-panel name="project">
@@ -216,6 +197,10 @@
                 </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
+                  本模式非流式工作
+                </div>
+
+                <div style="opacity: .5;" class="q-mt-md">
                   本智能体工作流为：给出推广项目的自然语言描述，自动选择资源库中的人物资源以及合适商品资源，以及背景资源，并完成内容脚本。
                   后续对话可以针对相关输出进行调整，最终确认后，重置当前工作流状态
                   （实际正常为调用外部接口或者导出相关内容，这里演示，故而仅总结项目并重置状态）
@@ -240,19 +225,17 @@
                   </a>
                 </div>
 
-                <div style="opacity: .5;" class="q-mt-md">
-                  以上相关资源数据应当预先配置在服务端，客户端拉取后，仅需要选择所需资源，再进行对话
+                <div class="q-mt-md cask-color-negative">
+                  再次声明，由于使用小模型 + CPU 推理，您的最终结果未必一定可以像截图一样正常工作，
+                  本截图是在 5070ti 显卡上使用更大的模型使用相同的 AI Agent 代码获取的结果
                 </div>
 
-                <div class="q-mt-md cask-color-negative">
-                  这里仅为演示，所以不存储资源数据在服务端，也因此不处理对话过程中的配置修改。
+                <div style="opacity: .5;" class="q-mt-md">
+                  这里仅为演示，所以不存储资源数据在服务端，直接前端传入，也因此不处理对话过程中的配置修改。
                   仅在成功创建的项目的对话将所有配置资源统一传入服务端分析。
                   除非项目创建完成，开始新一轮项目，否则后续对话不再观察资源配置的变换
                 </div>
 
-                <div style="opacity: .5;" class="q-mt-md">
-                  使用新的对话记录id后，可以再次对新对话的资源进行配置，同样，首次对话时传入配置，后续不再监控修改
-                </div>
 
               </q-scroll-area>
             </q-tab-panel>
@@ -580,7 +563,6 @@ const newProductPrice = ref(0)
 // data
 const agentModel = ref("chat")
 const cpuDeviceOnline = ref(false)
-const gpuDeviceOnline = ref(false)
 const messageList = ref([])
 const lastHumanInput = ref("")
 const chatSessionId = ref("")
@@ -608,15 +590,15 @@ function updateAgentModel() {
 }
 
 function loadHistoryMethod() {
-  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
-    notifyTopWarning("设备均不在线，联系管理员开启设备")
+  if (!cpuDeviceOnline.value) {
+    notifyTopWarning("设备不在线，联系管理员开启设备")
     return
   }
   if (!chatSessionId.value) {
     notifyTopWarning("对话记录id不能为空")
     return
   }
-  loadHistory({chatSessionId: chatSessionId.value, isCore: !gpuDeviceOnline.value}).then(res => {
+  loadHistory({chatSessionId: chatSessionId.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
@@ -625,11 +607,11 @@ function loadHistoryMethod() {
 }
 
 function clearHistoryMethod() {
-  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
-    notifyTopWarning("设备均不在线，联系管理员开启设备")
+  if (!cpuDeviceOnline.value) {
+    notifyTopWarning("设备不在线，联系管理员开启设备")
     return
   }
-  clearHistory({chatSessionId: chatSessionId.value, isCore: !gpuDeviceOnline.value}).then(res => {
+  clearHistory({chatSessionId: chatSessionId.value}).then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
@@ -638,17 +620,11 @@ function clearHistoryMethod() {
 }
 
 function isOnlineMethod() {
-  isOnline({isCore: true}).then(res => {
+  isOnline().then(res => {
     if (!res || !res.data || 200 !== res.data.status) {
       return
     }
     cpuDeviceOnline.value = res.data.data;
-  })
-  isOnline({isCore: false}).then(res => {
-    if (!res || !res.data || 200 !== res.data.status) {
-      return
-    }
-    gpuDeviceOnline.value = res.data.data;
   })
 }
 
@@ -658,12 +634,8 @@ function resetRandomSessionId() {
 }
 
 function sendMessage() {
-  if (!cpuDeviceOnline.value && !gpuDeviceOnline.value) {
-    notifyTopWarning("设备均不在线，联系管理员开启设备")
-    return
-  }
-  if (!gpuDeviceOnline.value && agentModel.value !== 'chat') {
-    notifyTopWarning("GPU 设备不在线，纯 CPU 推理只支持【聊天】工作模式")
+  if (!cpuDeviceOnline.value) {
+    notifyTopWarning("设备不在线，联系管理员开启设备")
     return
   }
   if (!chatSessionId.value) {
@@ -684,7 +656,7 @@ function sendMessage() {
 
     const eventSource = new EventSource(
         `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
-&chatSessionId=${chatSessionId.value}&isCore=${!gpuDeviceOnline.value}`
+&chatSessionId=${chatSessionId.value}`
     );
 
     eventSource.onmessage = (event) => {
@@ -744,7 +716,6 @@ function sendMessage() {
     const params = new URLSearchParams({
       userInput: toSendStr,
       chatSessionId: chatSessionId.value,
-      isCore: false,
       model: "PROJECT",
       projectRes: JSON.stringify({
         avatarList: sendAvatarList,
