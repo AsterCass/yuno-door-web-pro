@@ -72,10 +72,6 @@
             如果思考时间过久一般是由于当前有多人在测试，请稍后再进行尝试
           </div>
 
-          <div style="opacity: .5;" class="q-mt-md ">
-            本 Demo 使用内网专用编译机的 CPU 进行推理。性能非常有限，结果仅供参考。同时单次输入请尽量控制在 500 字以内
-          </div>
-
           <div style="opacity: .5;" class="q-mt-md">
             Demo 测试完后会接入聊天页面，支持对话
           </div>
@@ -230,10 +226,6 @@
                   </a>
                 </div>
 
-                <div class="q-mt-md cask-color-negative">
-                  再次声明，由于使用小模型 + CPU 推理，您的最终结果未必一定可以像截图一样正常工作，
-                  本截图是在 5070ti 显卡上使用更大的模型使用相同的 AI Agent 代码获取的结果
-                </div>
 
                 <div style="opacity: .5;" class="q-mt-md">
                   这里仅为演示，所以不存储资源数据在服务端，直接前端传入，也因此不处理对话过程中的配置修改。
@@ -661,8 +653,7 @@ function sendMessage() {
 
     const eventSource = new EventSource(
         `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
-&chatSessionId=${chatSessionId.value}`
-    );
+&chatSessionId=${chatSessionId.value}`);
 
     eventSource.onmessage = (event) => {
       const data = event.data;
