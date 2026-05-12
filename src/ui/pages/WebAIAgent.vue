@@ -80,6 +80,11 @@
             Demo 测试完后会接入聊天页面，支持对话
           </div>
 
+          <div class="cask-color-negative q-mt-md">
+            如果很快失败，并提示稍后重试，一般是由于 CPU 跑小模型导致的幻觉数据没有通过验证，请直接重新发送消息即可
+            （正常来说大模型不会出现这个问题，而且即使出现也可以加入异常节点循环机制，这里是 Demo 就不加了）
+          </div>
+
 
         </q-scroll-area>
 
@@ -511,9 +516,9 @@ const RES_ADD = process.env.VUE_APP_RES_ADD
 const avatarList = ref([
   {name: "人物图片1", url: `${RES_ADD}agent/avatarImage1.jpg`, enable: true},
   {name: "人物图片2", url: `${RES_ADD}agent/avatarImage2.jpg`, enable: true},
-  {name: "人物图片3", url: `${RES_ADD}agent/avatarImage3.jpg`, enable: false},
-  {name: "人物图片4", url: `${RES_ADD}agent/avatarImage4.jpg`, enable: false},
-  {name: "人物图片5", url: `${RES_ADD}agent/avatarImage5.jpg`, enable: false},
+  {name: "人物图片3", url: `${RES_ADD}agent/avatarImage3.jpg`, enable: true},
+  {name: "人物图片4", url: `${RES_ADD}agent/avatarImage4.jpg`, enable: true},
+  {name: "人物图片5", url: `${RES_ADD}agent/avatarImage5.jpg`, enable: true},
   {name: "人物图片6", url: `${RES_ADD}agent/avatarImage6.jpg`, enable: true},
 ])
 const productList = ref([
@@ -538,16 +543,16 @@ const productList = ref([
   {name: "SK2神仙水", price: "2000", enable: true},
 ])
 const bgList = ref([
-  {name: "背景图片1", url: `${RES_ADD}agent/bgImage01.jpg`, enable: false},
-  {name: "背景图片2", url: `${RES_ADD}agent/bgImage02.jpg`, enable: false},
+  {name: "背景图片1", url: `${RES_ADD}agent/bgImage01.jpg`, enable: true},
+  {name: "背景图片2", url: `${RES_ADD}agent/bgImage02.jpg`, enable: true},
   {name: "背景图片3", url: `${RES_ADD}agent/bgImage03.jpg`, enable: true},
   {name: "背景图片4", url: `${RES_ADD}agent/bgImage04.jpg`, enable: true},
-  {name: "背景图片5", url: `${RES_ADD}agent/bgImage05.jpg`, enable: false},
-  {name: "背景图片6", url: `${RES_ADD}agent/bgImage06.jpg`, enable: false},
-  {name: "背景图片7", url: `${RES_ADD}agent/bgImage07.jpg`, enable: false},
-  {name: "背景图片8", url: `${RES_ADD}agent/bgImage08.jpg`, enable: false},
+  {name: "背景图片5", url: `${RES_ADD}agent/bgImage05.jpg`, enable: true},
+  {name: "背景图片6", url: `${RES_ADD}agent/bgImage06.jpg`, enable: true},
+  {name: "背景图片7", url: `${RES_ADD}agent/bgImage07.jpg`, enable: true},
+  {name: "背景图片8", url: `${RES_ADD}agent/bgImage08.jpg`, enable: true},
   {name: "背景图片9", url: `${RES_ADD}agent/bgImage09.jpg`, enable: true},
-  {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: false},
+  {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: true},
 ])
 // components
 const aiChatBodyScroller = ref(null)
