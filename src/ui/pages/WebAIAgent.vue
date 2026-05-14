@@ -264,6 +264,14 @@
                   当然，你可以通过重新随机或者清除历史记录，来重新传入资源配置
                 </div>
 
+                <div class="q-mt-md">
+                  <a class="cask-jump-link-in-text"
+                     target="_blank"
+                     href='https://api.astercasc.com/public/resources/agent/demo3.png'>
+                    演示截图
+                  </a>
+                </div>
+
               </q-scroll-area>
             </q-tab-panel>
 
@@ -692,8 +700,7 @@ function sendMessage() {
     messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
 
     const eventSource = new EventSource(
-        `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}
-&chatSessionId=${chatSessionId.value}`);
+        `${BASE_ADD}yui/user/ai/stream?userInput=${toSendStr}&chatSessionId=${chatSessionId.value}`);
 
     eventSource.onmessage = (event) => {
       const data = event.data;
