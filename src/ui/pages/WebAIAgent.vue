@@ -258,6 +258,12 @@
                   本模式流式工作
                 </div>
 
+                <div style="opacity: .5;" class="q-mt-md">
+                  这里仅为演示，所以不存储资源数据在服务端，直接前端传入，也因此不处理对话过程中的配置修改。
+                  同一个对话记录仅在首次对话时将所有配置资源统一传入服务端。
+                  当然，你可以通过重新随机或者清除历史记录，来重新传入资源配置
+                </div>
+
               </q-scroll-area>
             </q-tab-panel>
 
@@ -784,7 +790,63 @@ function sendMessage() {
     };
 
   } else if (agentModel.value === 'rag') {
-    notifyTopWarning("当前模式正在开发中")
+
+
+    const sendRagList = ragList.value
+        .filter(item => item.enable === true)
+        .map(({ enable, ...rest }) => rest);
+
+
+    if (sendRagList.length === 0) {
+      notifyTopWarning("知识库文档配置不能为空")
+      return
+    }
+
+    const toSendStr = lastHumanInput.value
+    lastHumanInput.value = ""
+    sendMessageEnable.value = false
+    messageList.value.unshift({type: AiMessageTypeEnum.HUMAN, content: toSendStr});
+    messageList.value.unshift({type: AiMessageTypeEnum.AI, content: ""});
+
+    const params = new URLSearchParams({
+      userInput: toSendStr,
+      chatSessionId: chatSessionId.value,
+      model: "RAG",
+      projectRes: JSON.stringify({
+        ragList: sendRagList,
+      }),
+    })
+
+    const eventSource = new EventSource(
+        `${BASE_ADD}yui/user/ai/stream?${params}`
+    );
+
+    eventSource.onmessage = (event) => {
+      const data = event.data;
+
+      if (data === '[[DONE]]') {
+        eventSource.close();
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      if (data.startsWith('[[ERROR]]')) {
+        eventSource.close();
+        messageList.value[0].content += "\n\n\n系统繁忙，请稍后再试"
+        sendMessageEnable.value = true;
+        return;
+      }
+
+      messageList.value[0].content += data
+    };
+
+    eventSource.onerror = () => {
+      eventSource.close();
+      messageList.value[0].content = "系统繁忙，请稍后再试"
+      sendMessageEnable.value = true;
+    };
+
+
   }
 
 
