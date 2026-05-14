@@ -252,10 +252,10 @@
                     配置知识库文档
                   </q-btn>
 
-                  <div class="q-mt-md">
-                    本模式还在开发中
-                  </div>
+                </div>
 
+                <div style="opacity: .5;" class="q-mt-md">
+                  本模式流式工作
                 </div>
 
               </q-scroll-area>
@@ -409,21 +409,50 @@
 
     <q-dialog :model-value="showRagDoc" @hide="()=>{showRagDoc= false}"
               transition-show="fade" transition-hide="fade">
-      <q-card class="component-cask-dialog-judgement-std">
+      <q-card class="component-cask-dialog-judgement-large column">
 
         <h5 style="font-weight: 600!important; margin-left: .5rem !important;">
           配置知识库文档
         </h5>
 
+        <div style="opacity: .5; margin-left: .5rem">
+          只会从勾选的资源检索归纳答案
+        </div>
+
         <q-separator class="component-separator-base" inset spaced="1rem"/>
 
-        <div class="q-mx-lg q-mt-lg q-mb-xs">
+        <q-scroll-area :thumb-style="globalState.curThemeName === 'dark' ?
+                         { background: 'white', width: '6px' } :
+                          { background: 'black', width: '6px' }"
+                       class="col full-width q-px-sm " :visible="true">
+          <div class="row">
+            <div v-for="(doc, index) in ragList" :key="index"
+                 class="q-ml-sm q-mt-sm q-mb-lg q-mr-md column items-center">
+              <div class="relative-position cask-cursor-pointer q-mb-md"  @click="()=>{doc.enable = !doc.enable}">
+                <q-img :ratio="3/4" fit="contain" :src="doc.url"
+                       style="height: 15rem; width: 11.25rem; border-radius: 8px;"
+                       :style="doc.enable ? 'outline: 4px solid rgb(var(--positive));': ''"
+                >
+                </q-img>
+                <div v-if="doc.enable" class="cask-ai-chatroom-switch-btn">
+                  <q-icon size="20px" name="fa-solid fa-circle-check" style="color: rgb(var(--positive));"/>
+                </div>
+              </div>
+              <div>
+                {{ doc.name }}
+              </div>
+              <div class="q-mt-sm">
+                <a class="cask-jump-link-in-text"
+                   target="_blank"
+                   :href="doc.resUrl">
+                  查看文档
+                </a>
+              </div>
 
-          <div class="text-center">
-            开发中
+            </div>
           </div>
 
-        </div>
+        </q-scroll-area>
 
       </q-card>
     </q-dialog>
@@ -545,6 +574,11 @@ const bgList = ref([
   {name: "背景图片8", url: `${RES_ADD}agent/bgImage08.jpg`, enable: true},
   {name: "背景图片9", url: `${RES_ADD}agent/bgImage09.jpg`, enable: true},
   {name: "背景图片10", url: `${RES_ADD}agent/bgImage10.jpg`, enable: true},
+])
+const ragList = ref([
+  {name: "实践论和矛盾论", url: `${RES_ADD}agent/rag1.jpg`, resUrl: `${RES_ADD}agent/rag1.pdf`, enable: true},
+  {name: "君主论", url: `${RES_ADD}agent/rag2.jpg`, resUrl: `${RES_ADD}agent/rag2.html`, enable: true},
+  {name: "凉宫春日的消失", url: `${RES_ADD}agent/rag3.jpg`, resUrl: `${RES_ADD}agent/rag3.html`, enable: true},
 ])
 // components
 const aiChatBodyScroller = ref(null)
